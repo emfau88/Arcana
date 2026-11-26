@@ -39,3 +39,6 @@ art/build/
 
 # Internal starter package (briefing) stays local, not in the public repo
 docs/briefing/
+
+# Owner reference mockup: kept local, not published in the public repo
+docs/visual/reference/
