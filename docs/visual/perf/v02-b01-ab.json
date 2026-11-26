@@ -1,0 +1,154 @@
+{
+ "measuredAt": "2026-11-26",
+ "what": "B-01 fix (D-41): A/B/C interleaved under identical conditions (perf.mjs settings: 412x915@2, CPU 4x, 40ms/10Mbit, cache off)",
+ "variants": {
+  "ref": "main @ 03abb3c",
+  "before": "V02 @ 521d17e",
+  "after": "V02 + D-41 font warm-up"
+ },
+ "revealTappedAtLoad": {
+  "note": "tap right after networkidle (the B-01 case), 5 rounds, frames over 1.5 s",
+  "results": {
+   "ref": {
+    "fps": [
+     58,
+     58,
+     59,
+     59,
+     58
+    ],
+    "worstFrameMs": [
+     67,
+     67,
+     50,
+     50,
+     67
+    ],
+    "jank": [
+     1,
+     1,
+     0,
+     0,
+     1
+    ]
+   },
+   "before": {
+    "fps": [
+     52,
+     54,
+     49,
+     53,
+     52
+    ],
+    "worstFrameMs": [
+     133,
+     117,
+     133,
+     117,
+     117
+    ],
+    "jank": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "after": {
+    "fps": [
+     54,
+     56,
+     56,
+     56,
+     56
+    ],
+    "worstFrameMs": [
+     50,
+     50,
+     50,
+     50,
+     50
+    ],
+    "jank": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  }
+ },
+ "todayVisibleInterleaved": {
+  "note": "15 rounds, revealed day, order rotated each round",
+  "results": {
+   "ref": {
+    "ready": 966,
+    "fcp": 508,
+    "lcp": 864,
+    "readyRuns": [
+     1086,
+     962,
+     932,
+     988,
+     1927,
+     1078,
+     1054,
+     935,
+     966,
+     932,
+     935,
+     989,
+     943,
+     1035,
+     905
+    ]
+   },
+   "before": {
+    "ready": 1175,
+    "fcp": 496,
+    "lcp": 1008,
+    "readyRuns": [
+     1202,
+     1140,
+     1193,
+     1238,
+     1161,
+     2844,
+     1249,
+     1222,
+     1084,
+     1186,
+     1131,
+     1175,
+     1133,
+     1117,
+     1109
+    ]
+   },
+   "after": {
+    "ready": 1230,
+    "fcp": 504,
+    "lcp": 1096,
+    "readyRuns": [
+     1251,
+     1207,
+     1230,
+     1240,
+     1394,
+     1396,
+     1290,
+     1503,
+     1220,
+     1124,
+     1135,
+     1180,
+     1230,
+     1210,
+     1154
+    ]
+   }
+  }
+ }
+}

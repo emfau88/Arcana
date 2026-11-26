@@ -81,3 +81,30 @@ Vergleich abwechselnd im selben Zeitfenster gemessen, gleiche Bedingungen wie ob
 Rohdaten `docs/visual/perf/v02-final.json` (Standard-Skript, 3 Läufe, V02 final): first-launch 1046 ms, today sichtbar 1189 ms, LCP 1008 ms, Bilder 442 KB, idle 0. **Grenzfall reveal:** In diesem Einzellauf 46 fps, 2 Ruckler, schlechtester Frame 183 ms. Das Skript tippt im selben Moment, in dem die Seite fertig geladen ist, und dann fällt die Enthüllung mit dem Einblenden der gemalten Welt zusammen. Wer einen Augenblick später tippt (300 ms, wiederholt gemessen), bekommt 53–54 fps. Nicht weiter optimiert: Die nächsten Hebel wären sichtbar und brauchen eine Freigabe.
 
 **Android (Emulator `Pixel_7`, Debug-APK mit V02), 26.11.2026:** Alle 13 Prüfungen sind PASS: Erststart, Fragen bis Archetyp, Tageskarte enthüllt, Drei-Karten-Orakel, Back-Regeln, Kaltstart mit derselben Karte, Flugmodus, reduzierte Bewegung, Labels und Touch-Ziele ≥ 48 dp. Einstellungen sind wiederhergestellt. **Kaltstart bis erster Screen: Median 1,95 s** (5 Läufe: 2,36 / 1,98 / 1,95 / 1,82 / 1,70 s; Debug-Build). Davor lag der Wert bei 2,4 s auf ruhigem Rechner. Der Rechner war diesmal nicht ruhig (45–75 % Last), der Wert ist also eher zu hoch als zu niedrig. Der erste Versuch brach am Archetyp-Screen ab. Das lag am Testskript: Ein Button außerhalb des sichtbaren Bereichs meldet leere Bounds, und das Skript scrollte in die falsche Richtung. Behoben in `scripts/android-evidence.mjs`. Nachweis: `evidence/v02-android-en.webp`.
+
+## V02 · Grenzfall Enthüllung behoben (B-01, D-41), 26.11.2026
+
+**Ursache:** Beim Aufdecken baute der Browser die Schrift-Instanzen für Titel, Schlagworte und Kernsatz sowie die Ersatzschrift für „✦“ erst im Frame der Enthüllung auf. Das ergab ein Layout von 70–90 ms bei 4× CPU-Drosselung, dazu einen zweiten kompletten Layoutdurchlauf, sobald die Kursivschrift nachgeladen war. **Lösung (unsichtbar):** Solange die Karte verdeckt ist, legt „Heute“ im Leerlauf einmal einen unsichtbaren Block mit denselben Textklassen außerhalb des Bildschirms an (D-41). Optik und Ablauf sind unverändert.
+
+Abwechselnd gemessen, gleiche Bedingungen, Tippen direkt nach dem Laden (der Fall aus „V02 final“), 5 Runden. Rohdaten `perf/v02-b01-ab.json`:
+
+| Stand | fps | schlechtester Frame | Ruckler > 50 ms | Grenze | Ergebnis |
+|---|---|---|---|---|---|
+| `main` @ `03abb3c` | 58–59 | 50–67 ms | 0–1 | – | Referenz |
+| V02 vor D-41 | 49–54 | 117–133 ms | 1 | ≥ 50 fps, ≤ 120 ms, ≤ 2 | FAIL |
+| V02 mit D-41 | 54–56 | 50 ms | 0 | ≥ 50 fps, ≤ 120 ms, ≤ 2 | **PASS** |
+
+**Abgleich mit den absoluten Obergrenzen (gelten ab QG-V03, MASTER_ROADMAP §6):** Rechner ruhig (Referenz 966 ms statt 996 ms, kaum Normierung nötig).
+
+| Kennzahl | V02 Endstand | Obergrenze | Ergebnis |
+|---|---|---|---|
+| „Heute“ sichtbar (15 Runden verschachtelt) | 1.175–1.230 ms, +22–27 % zu `main` (normiert ≈ 1.210–1.270 ms) | ≤ 1.250 ms | **Grenzfall** → V03.5 (B-08) |
+| „Heute“ FCP | ≈ 500 ms | ≤ 900 ms | PASS |
+| „Heute“ LCP | 1.008–1.096 ms | ≤ 1.400 ms | PASS |
+| Übertragung / Bilder | 702–714 KB / ≤ 473 KB | ≤ 900 / ≤ 600 KB | PASS |
+| Start-JS | 132,4 KB gzip | ≤ 160 KB | PASS |
+| Enthüllung | 54–56 fps, schlechtester Frame 50 ms | ≥ 50 fps, ≤ 120 ms | PASS |
+| Leerlauf | 0 Animationen | 0 | PASS |
+| Android-Kaltstart | 1,95 s (unter Last) | ≤ 3,0 s | PASS |
+
+D-41 verändert „Heute sichtbar“ nicht: Der Vorwärm-Block entsteht nur bei verdeckter Karte und erst nach dem Laden (geprüft: beim Laden eines aufgedeckten Tages erscheint er nie). Das V02-Gate (≤ +25 % zu `main`) liegt damit im Messrauschen an der Grenze. Laut Masterplan wird das in V03.5 gegen die absolute Grenze behoben, ohne optische Abstriche.

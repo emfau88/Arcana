@@ -32,6 +32,11 @@ export function Today() {
   // just turned. Nothing visible changes; the first screen and the reveal stay smooth (D-37).
   const [deepReady, setDeepReady] = useState(false);
   const justRevealed = useRef(false);
+  // While the card is still covered and the main thread is idle, lay out an invisible,
+  // off-screen copy of the reading's text styles once. The browser then already holds the
+  // font instances and the glyph fallback for "✦" when the card turns, so the reveal frame
+  // stays short (D-41, B-01). Removed again once the full reading is on screen.
+  const [warm, setWarm] = useState(false);
 
   // Derived so a new local day (midnight or resume) shows a face-down card again,
   // and a record created elsewhere (another tab) shows up revealed.
@@ -78,6 +83,17 @@ export function Today() {
     const to = window.setTimeout(show, 50);
     return () => window.clearTimeout(to);
   }, [shown, reduced]);
+
+  useEffect(() => {
+    if (phase !== 'hidden' || warm) return;
+    const go = () => setWarm(true);
+    if (typeof window.requestIdleCallback === 'function') {
+      const id = window.requestIdleCallback(go, { timeout: 800 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const to = window.setTimeout(go, 200);
+    return () => window.clearTimeout(to);
+  }, [phase, warm]);
 
   const skipAnimation = () => {
     if (timer.current) window.clearTimeout(timer.current);
@@ -271,6 +287,35 @@ export function Today() {
           ) : null}
         </article>
       ) : null}
+
+      {warm && !deepReady ? <ReadingWarmup /> : null}
+    </div>
+  );
+}
+
+/**
+ * Invisible, off-screen text in the same classes as the revealed reading (D-41). Sample
+ * text only: it is never shown, never read out and never focusable. Lies above the
+ * viewport so layout probes and tests that look for on-screen text skip it.
+ */
+function ReadingWarmup() {
+  const sample = 'Aa Gg Qq Ää Öö Üü ß';
+  return (
+    <div className="today__warmup" aria-hidden="true">
+      <div className="today__title">
+        <Flank className="today__oracle-flank">{sample}</Flank>
+        <p className="display today__name">{sample}</p>
+        <p className="today__keywords">
+          <span>{sample}</span>
+          <span className="today__kw-sep">{' ✦ '}</span>
+          <span>{sample}</span>
+        </p>
+        <p className="italic-serif today__essence">{sample}</p>
+      </div>
+      <div className="today__oracle">
+        <p className="today__message">{`${sample} Sternenhimmelsbeobachtungsplattform`}</p>
+      </div>
+      <p className="italic-serif today__question">{sample}</p>
     </div>
   );
 }
