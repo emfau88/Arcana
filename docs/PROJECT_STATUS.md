@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **vom Eigentümer freigegeben** (26.11.2026), B-05 und B-06 behoben (D-42), PR #2 von `design/visual-overhaul` nach `main`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** Merge → Tag `v0.2.1` → V03 auf `feature/v03-fundament` (D-40). G3 (Härtung) ist jetzt Bulk V07.5
+**Stand:** 26.11.2026 · **Version:** 0.2.1 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **vom Eigentümer freigegeben** (26.11.2026), B-05 und B-06 behoben (D-42), PR #2 von `design/visual-overhaul` nach `main`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** Merge → Tag `v0.2.1` → V03 auf `feature/v03-fundament` (D-40). G3 (Härtung) ist jetzt Bulk V07.5
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
