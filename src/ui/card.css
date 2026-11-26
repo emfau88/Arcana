@@ -1,0 +1,244 @@
+/* Oracle card: 2:3, real 3D flip, sheen on reveal. Only transform/opacity are animated. */
+.ocard {
+  --flip: var(--dur-reveal);
+  position: relative;
+  display: block;
+  aspect-ratio: 2 / 3;
+  padding: 0;
+  border: 0;
+  background: none;
+  perspective: 1400px;
+  container-type: inline-size;
+  border-radius: 6.5cqw;
+  flex: none;
+}
+.ocard--hero {
+  width: min(64vw, 272px, 46dvh);
+}
+.ocard--spread {
+  width: 100%;
+}
+.ocard--grid {
+  width: 100%;
+}
+.ocard--mini {
+  width: 56px;
+}
+.ocard.is-interactive {
+  cursor: pointer;
+}
+.ocard.is-interactive:focus-visible {
+  outline-offset: 6px;
+  border-radius: 6.5cqw;
+}
+.ocard__inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform var(--flip) var(--ease-in-out);
+}
+.ocard.is-up .ocard__inner {
+  transform: rotateY(180deg);
+}
+.ocard__face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 5cqw;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: var(--shadow-card);
+  background: var(--ink-850);
+}
+.ocard--grid .ocard__face,
+.ocard--mini .ocard__face {
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.8);
+}
+.ocard__face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.ocard__front {
+  transform: rotateY(180deg);
+}
+
+/* Lift and settle while flipping (only when the reveal plays during this mount). */
+.ocard.is-animated.is-up {
+  animation: card-lift var(--flip) var(--ease-in-out);
+}
+@keyframes card-lift {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.06) translateY(-6px);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Inscriptions in the frame (positions match art/lib.mjs: medallion y=40, plaque y=536 of 600). */
+.ocard__num,
+.ocard__title {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  color: #efd9a4;
+  text-shadow: 0 0 6px rgba(239, 217, 164, 0.35);
+  white-space: nowrap;
+  pointer-events: none;
+}
+/* The medallion is ~11% of the card width: longer numerals get a smaller size. */
+.ocard__num {
+  top: 6.67%;
+  font-size: 5.6cqw;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.ocard__num[data-len='3'] {
+  font-size: 4.3cqw;
+}
+.ocard__num[data-len='4'] {
+  font-size: 3.6cqw;
+}
+.ocard__num[data-len='5'] {
+  font-size: 3cqw;
+  letter-spacing: 0;
+}
+.ocard__title {
+  top: 89.33%;
+  max-width: 58%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 7.4cqw;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-variant-caps: all-small-caps;
+}
+
+/* Small sizes: wordless ornaments instead of unreadable micro text, so the
+   medallion and plaque never look empty. */
+.ocard__seal,
+.ocard__mark {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: #e9cf92;
+  filter: drop-shadow(0 0 2px rgba(239, 217, 164, 0.55));
+}
+.ocard__seal {
+  top: 6.67%;
+  width: 6.2%;
+  aspect-ratio: 1;
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}
+.ocard__mark {
+  top: 89.33%;
+  width: 38%;
+  height: 3.4%;
+  clip-path: polygon(0 42%, 45% 42%, 50% 0, 55% 42%, 100% 42%, 100% 58%, 55% 58%, 50% 100%, 45% 58%, 0 58%);
+  opacity: 0.8;
+}
+
+/* One sweep of light across the face after the flip. */
+.ocard__sheen {
+  position: absolute;
+  inset: -20% -60%;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 244, 214, 0.32) 48%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 244, 214, 0.32) 52%, transparent 62%);
+  transform: translateX(-70%);
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.ocard.is-animated.is-up .ocard__sheen {
+  animation: sheen 1100ms var(--ease-out) 380ms both;
+}
+@keyframes sheen {
+  0% {
+    transform: translateX(-70%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(70%);
+    opacity: 0;
+  }
+}
+
+.ocard.is-dimmed .ocard__face {
+  filter: saturate(0.4) brightness(0.55);
+}
+.ocard.is-interactive:not(.is-up):hover .ocard__inner {
+  transform: translateY(-3px);
+  transition-duration: var(--dur-med);
+}
+
+/* Aura behind the hero card: static light, no idle rendering. */
+.card-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--s-5) 0 var(--s-4);
+}
+.card-stage__aura {
+  position: absolute;
+  inset: -10% -20%;
+  background:
+    radial-gradient(closest-side, rgba(216, 184, 121, 0.22), rgba(169, 149, 203, 0.1) 55%, transparent 75%);
+  opacity: 0.75;
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 900ms var(--ease-out);
+  pointer-events: none;
+}
+.card-stage__rings {
+  position: absolute;
+  width: min(92vw, 380px, 64dvh);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(216, 184, 121, 0.12);
+  pointer-events: none;
+}
+.card-stage__rings::before,
+.card-stage__rings::after {
+  content: '';
+  position: absolute;
+  inset: 9%;
+  border-radius: 50%;
+  border: 1px dashed rgba(216, 184, 121, 0.14);
+}
+.card-stage__rings::after {
+  inset: 20%;
+  border-style: solid;
+  border-color: rgba(169, 149, 203, 0.1);
+}
+.card-stage.is-revealed .card-stage__aura {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.card-stage.is-revealing .card-stage__aura {
+  animation: aura-bloom 1200ms var(--ease-out);
+}
+@keyframes aura-bloom {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}

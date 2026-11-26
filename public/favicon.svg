@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="400" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8E9BD"/>
+      <stop offset="0.2" stop-color="#DDBD7E"/>
+      <stop offset="0.42" stop-color="#A8803F"/>
+      <stop offset="0.6" stop-color="#EED495"/>
+      <stop offset="0.8" stop-color="#B78D49"/>
+      <stop offset="1" stop-color="#F3DFA4"/>
+    </linearGradient>
+    <linearGradient id="goldV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8E9BD"/>
+      <stop offset="0.5" stop-color="#C9A462"/>
+      <stop offset="1" stop-color="#8E6A31"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="256" cy="230.4" r="384" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2C2558"/><stop offset="0.55" stop-color="#151130"/><stop offset="1" stop-color="#0A0918"/></radialGradient>
+    <radialGradient id="vignette" cx="200" cy="290" r="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0.55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.62"/>
+    </radialGradient>
+    <filter id="grainLight" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 0.95  0 0 0 0 0.86  3 0 0 0 -1.7"/>
+    </filter>
+    <filter id="grainDark" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="4" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0.02  -3 0 0 0 1.32"/>
+    </filter>
+    <filter id="mottle" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="23"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0.03  0 0 -2.2 0 1.15"/>
+    </filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowStrong" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+    <clipPath id="inner"><rect x="18" y="18" width="364" height="564" rx="9"/></clipPath>
+    <clipPath id="outer"><rect x="0" y="0" width="400" height="600" rx="20"/></clipPath>
+    
+    <radialGradient id="sigilHalo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6B5BB8" stop-opacity="0.35"/>
+      <stop offset="0.6" stop-color="#3B2F78" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#1B1640" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="starFill" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3D3280"/>
+      <stop offset="1" stop-color="#1A153A"/>
+    </radialGradient>
+    <pattern id="lattice" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0 H22 M0 0 V22" stroke="#D8B879" stroke-width="0.5" opacity="0.09"/>
+    </pattern>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+  <g clip-path="url(#roundClip)"><rect width="512" height="512" filter="url(#grainLight)" opacity="0.07"/></g>
+  <defs><clipPath id="roundClip"><circle cx="256" cy="256" r="256"/></clipPath></defs>
+  <g transform="translate(256 256) scale(1.32) translate(-200 -300)">
+    <circle cx="200" cy="300" r="114" fill="none" stroke="url(#gold)" stroke-width="3"/>
+    <circle cx="200" cy="300" r="104" fill="#0F0C22" fill-opacity="0.7" stroke="url(#gold)" stroke-width="1.2"/>
+    <polygon points="200,204 215.31,263.04 267.88,232.12 236.96,284.69 296,300 236.96,315.31 267.88,367.88 215.31,336.96 200,396 184.69,336.96 132.12,367.88 163.04,315.31 104,300 163.04,284.69 132.12,232.12 184.69,263.04" fill="url(#starFill)" stroke="url(#gold)" stroke-width="2.4" stroke-linejoin="round"/>
+    <circle cx="200" cy="300" r="36" fill="#0E0B1E" stroke="url(#gold)" stroke-width="2.4"/>
+    <path fill="url(#gold)" d="M200 274 Q205.72 294.28 226 300 Q205.72 305.72 200 326 Q194.28 305.72 174 300 Q194.28 294.28 200 274Z"/>
+    <circle cx="200" cy="300" r="4" fill="#FFF4D8"/>
+  </g>
+</svg>

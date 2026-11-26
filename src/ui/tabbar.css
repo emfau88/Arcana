@@ -1,0 +1,81 @@
+.tabbar {
+  position: relative;
+  flex: none;
+  padding: 0 calc(var(--s-2) + var(--safe-right)) var(--safe-bottom) calc(var(--s-2) + var(--safe-left));
+  background: linear-gradient(180deg, rgba(16, 13, 30, 0.86), rgba(10, 8, 20, 0.97));
+  border-top: 1px solid var(--brass-line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+}
+.tabbar::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -1px;
+  width: 40%;
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, var(--brass-300), transparent);
+  opacity: 0.55;
+}
+.tabbar ul {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  max-width: var(--stage-max);
+}
+.tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: var(--tabbar-h);
+  padding: 8px 4px 6px;
+  color: var(--text-3);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: color var(--dur-fast);
+  border-radius: var(--r-m);
+}
+.tabbar__item:hover {
+  color: var(--text-1);
+}
+.tabbar__icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 30px;
+  border-radius: var(--r-pill);
+  transition: background-color var(--dur-med) var(--ease-out);
+}
+.tabbar__item[aria-current='page'] {
+  color: var(--brass-200);
+}
+.tabbar__item[aria-current='page'] .tabbar__icon {
+  background: radial-gradient(closest-side, rgba(216, 184, 121, 0.26), rgba(216, 184, 121, 0.06));
+  box-shadow: inset 0 0 0 1px rgba(216, 184, 121, 0.35);
+}
+.tabbar__item[aria-current='page'] .tabbar__label {
+  font-weight: 800;
+}
+.tabbar__badge {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brass-300);
+  box-shadow: 0 0 0 2px var(--ink-900);
+}
+.tabbar__label {
+  line-height: 1.2;
+  text-align: center;
+}

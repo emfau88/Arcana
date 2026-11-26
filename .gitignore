@@ -1,0 +1,41 @@
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+blob-report/
+*.log
+.DS_Store
+Thumbs.db
+.vite/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Android build output (the android/ project itself is versioned)
+android/.gradle/
+android/build/
+android/app/build/
+android/capacitor-cordova-android-plugins/build/
+android/local.properties
+android/.idea/
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/src/main/res/xml/config.xml
+
+# Signing material never belongs in git
+*.jks
+*.keystore
+keystore.properties
+.env
+.env.*
+
+# Intermediate SVG output of the art pipeline
+art/build/
+
+# Local Claude/editor settings
+.claude/settings.local.json
+
+# Internal starter package (briefing) stays local, not in the public repo
+docs/briefing/

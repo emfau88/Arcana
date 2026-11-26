@@ -1,0 +1,52 @@
+{
+  "name": "personal-oracle-web",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ARCANA / Personal Oracle (Arbeitstitel) – Web-first Orakel-App, lokal und offline, Browser + Capacitor Android",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5180 --strictPort",
+    "preview": "vite preview --host 127.0.0.1 --port 5181 --strictPort",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "validate:content": "node --experimental-strip-types --no-warnings scripts/validate-content.ts",
+    "build": "vite build",
+    "art": "node scripts/render-art.mjs",
+    "android:sync": "npm run build && npx cap sync android",
+    "check": "npm run typecheck && npm run lint && npm run validate:content && npm run test && npm run build"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.6.3",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.6.3",
+    "@fontsource-variable/cormorant-garamond": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.3",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.0",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@types/node": "22.20.7",
+    "@types/react": "19.3.3",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "eslint": "10.15.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "fake-indexeddb": "6.2.8",
+    "globals": "17.14.0",
+    "jsdom": "26.1.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.74.0",
+    "vite": "8.3.8",
+    "vitest": "5.1.2"
+  }
+}
