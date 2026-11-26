@@ -2,9 +2,9 @@
 
 | Asset | Pfad | Herkunft | Lizenz / Recht |
 |---|---|---|---|
-| Kartenillustrationen v2, Stilprobe II, XIII, XIX und Rückseite, jeweils mit Thumbnail | `public/cards/`, `public/cards/thumbs/` | OpenAI ImageGen, 26.11.2026. Eigene Bildauswahl, Komposition mit dem Projektrahmen, Ausrichtung von Mond und Kompass, drehsymmetrische Rückseite mit eigenem Goldrand und WebP-Export. [Prompts und Master-Prüfsummen](assets/card-prompts.md) · [Exportskript](../scripts/assets/export-cards.py) | OpenAI überträgt dem Nutzer bzw. Geschäftskunden seine etwaigen Rechte am Output, soweit das anwendbare Recht dies zulässt. Ähnliche Ausgaben sind möglich. [EU-Nutzungsbedingungen, Abschnitt „Content“](https://openai.com/policies/eu-terms-of-use/) · [Services Agreement, § 4](https://openai.com/policies/services-agreement/) |
-| Übrige 19 Kartenillustrationen und Thumbnails | `public/cards/`, `public/cards/thumbs/` | eigenes Werk, prozedural erzeugt durch `art/lib.mjs`, `art/motifs.mjs`, `art/cards.mjs`, `art/major-a.mjs`, `art/major-b.mjs`, `art/major-c.mjs` (Registry `art/deck.mjs`), gerendert von `scripts/render-art.mjs` (SVG → WebP mit lokalem Chromium) | Projekteigentum |
-| Rahmenvorlage, Schutzzonen, Deck-Übersicht | `docs/assets/` | eigenes Werk, aus derselben Pipeline (`art/template.mjs`) | Projekteigentum |
+| Kartenillustrationen v2 (22 Vorderseiten und Rückseite), jeweils mit Thumbnail | `public/cards/`, `public/cards/thumbs/` | OpenAI ImageGen, 26.11.2026. Eigene Bildauswahl, Komposition mit dem Projektrahmen, Ausrichtung der Motive innerhalb der Schutzzonen, drehsymmetrische Rückseite mit eigenem Goldrand und WebP-Export. [Prompts und Master-Prüfsummen](assets/card-prompts.md) · [Exportskript](../scripts/assets/export-cards.py) | OpenAI überträgt dem Nutzer bzw. Geschäftskunden seine etwaigen Rechte am Output, soweit das anwendbare Recht dies zulässt. Ähnliche Ausgaben sind möglich. [EU-Nutzungsbedingungen, Abschnitt „Content“](https://openai.com/policies/eu-terms-of-use/) · [Services Agreement, § 4](https://openai.com/policies/services-agreement/) |
+| Rahmenvorlage, Schutzzonen und ursprüngliche Deckübersicht | `docs/assets/card-frame-template.png`, `card-safe-zones.png`, `deck-overview.webp` | eigenes Werk, aus der ursprünglichen Vektorpipeline (`art/template.mjs`, `scripts/render-art.mjs`) | Projekteigentum |
+| Deckübersicht v2 und Titelprüfung DE/EN | `docs/assets/deck-overview-v2.webp`, `docs/assets/title-check-v2.png` | Kontaktbogen aus den v2-Thumbnails und echter Chromium-Screenshot der Inschriften aus dem lokalen Dev-Server | Kartenillustrationen v2 und lokale Projektschriften wie hier angegeben |
 | Papier-/Kornstruktur | `public/textures/grain.webp` | eigenes Werk, generiert | Projekteigentum |
 | Favicon, App-Icons (Web 192/512, Android-Mipmaps, adaptive Icons) | `public/favicon.svg`, `public/icons/`, `android/app/src/main/res/` | eigenes Werk, aus derselben Pipeline (`render-art.mjs --android`). Die Android-Standardicons von Capacitor wurden entfernt. | Projekteigentum |
 | Archetyp-Sigillen, UI-Icons | `src/ui/Sigil.tsx`, `src/ui/Icons.tsx` | eigenes Werk (Inline-SVG) | Projekteigentum |
@@ -19,7 +19,7 @@ Für die npm-Abhängigkeiten gelten deren Lizenzen (überwiegend MIT/Apache-2.0)
 
 ## Karten später austauschen
 
-Die heutigen Illustrationen sind ein vorläufiger Stand (Eigentümerentscheidung D-22). Neue Assets lassen sich ohne Codeänderung einsetzen, wenn sie diese Regeln einhalten:
+Das Deck v2 ersetzt die vorläufigen Illustrationen aus D-22. Weitere Illustrationen lassen sich ohne Codeänderung einsetzen, wenn sie diese Regeln einhalten.
 
 | Regel | Wert |
 |---|---|
@@ -32,7 +32,7 @@ Die heutigen Illustrationen sind ein vorläufiger Stand (Eigentümerentscheidung
 
 Ablauf beim Austausch:
 
-1. Dateien mit gleichem Namen nach `public/cards/` und `public/cards/thumbs/` legen. Wer selbst gezeichnete Bilder nutzt, entfernt den jeweiligen Eintrag aus `art/deck.mjs`, damit `npm run art` sie nicht überschreibt.
+1. Die PNG-Master außerhalb des Repos aufbewahren. `python scripts/assets/export-cards.py MASTER_DIR` erzeugt Vollbilder, Thumbnails und Deckübersicht aus den Mastern. Für einzelne Karten die gewünschten `assetId`-Werte anhängen. Bis zur Anpassung der ursprünglichen Render-Pipeline würde `npm run art` die v2-WebPs überschreiben.
 2. `npm run validate:content` prüft, dass für jede Karte Vollbild und Thumbnail existieren.
 3. `node scripts/check-card-titles.mjs` (Dev-Server auf 5180) prüft, dass alle 44 Inschriften (22 × DE/EN) in den Rahmen passen.
 4. Sichtkontrolle in der App, dann Eintrag in dieser Datei ergänzen.

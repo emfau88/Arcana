@@ -1,14 +1,17 @@
 """Export ARCANA WebP pairs from external, unframed <assetId>.png masters.
 
 Usage: python scripts/assets/export-cards.py MASTER_DIR [assetId ...]
-Requires Python 3 and Pillow with WebP support.
+Requires the project's Node.js, Python 3, and Pillow 10.1+ with WebP support.
+A full export also regenerates docs/assets/deck-overview-v2.webp.
 """
 
 import argparse
+import json
+import subprocess
 from io import BytesIO
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -19,9 +22,63 @@ THUMB = (240, 360)
 LANCZOS = Image.Resampling.LANCZOS
 HALF_TURN = Image.Transpose.ROTATE_180
 
+# Vertical registration at 720 x 1080: (original row, printed row). Move the
+# illustrated symbols as a unit and take the extra space from sky, stone or water.
+LAYOUT = {
+    "card-hierophant": [(38, 52), (440, 454), (732, 653), (997, 918)],
+    "card-wheel": [(40, 72), (650, 682)],
+    "card-temperance": [(35, 75), (660, 700)],
+    "card-star": [(42, 103), (760, 821)],
+    "card-moon": [(38, 112), (840, 914)],
+    "card-judgement": [(40, 85), (560, 605)],
+}
+
+
+def read_deck():
+    # Use the same ID order and numeral formatter as the app, even if a WebP is missing.
+    query = """
+        import { DECK } from './src/content/index.ts';
+        import { toRoman } from './src/i18n/index.ts';
+        console.log(JSON.stringify(DECK.map(card => [card.assetId, toRoman(card.order)])));
+    """
+    result = subprocess.check_output(
+        ["node", "--experimental-strip-types", "--no-warnings", "--input-type=module", "-e", query],
+        cwd=ROOT, text=True, encoding="utf-8",
+    )
+    return [*json.loads(result), ("card-back", "–")]
+
+
+def write_overview(deck):
+    width, height = THUMB
+    columns, gap, caption = 6, 14, 32
+    rows = (len(deck) + columns - 1) // columns
+    sheet = Image.new("RGB", (columns * (width + gap) + gap,
+                              rows * (height + caption + gap) + gap), "#100D1C")
+    pen = ImageDraw.Draw(sheet)
+    font = ImageFont.truetype(str(ROOT / "node_modules/@fontsource-variable/manrope/files"
+                                 / "manrope-latin-wght-normal.woff2"), size=16)
+    font.set_variation_by_axes([500])
+    for index, (asset_id, numeral) in enumerate(deck):
+        x = gap + index % columns * (width + gap)
+        y = gap + index // columns * (height + caption + gap)
+        with Image.open(CARDS / "thumbs" / f"{asset_id}.webp") as thumbnail:
+            sheet.paste(thumbnail, (x, y))
+        pen.text((x + width // 2, y + height + caption // 2),
+                 f"{numeral} · {asset_id}", font=font, anchor="mm", fill="#EFD9A4")
+    path = ROOT / "docs" / "assets" / "deck-overview-v2.webp"
+    path.write_bytes(webp(sheet, quality=90))
+    print(path.relative_to(ROOT))
+
 
 def compose_front(master, asset_id, frame):
     painting = master.resize(FULL, LANCZOS)
+    if asset_id in LAYOUT:
+        aligned = Image.new("RGB", FULL)
+        stops = [(0, 0), *LAYOUT[asset_id], (FULL[1], FULL[1])]
+        for (start, top), (end, bottom) in zip(stops, stops[1:]):
+            strip = painting.crop((0, start, FULL[0], end))
+            aligned.paste(strip.resize((FULL[0], bottom - top), LANCZOS), (0, top))
+        painting = aligned
     if asset_id == "card-high-priestess":
         # Leave space between the moon and the application's numeral medallion.
         shift = 34
@@ -90,9 +147,10 @@ def main():
     parser.add_argument("masters", type=Path)
     parser.add_argument("cards", nargs="*", help="asset IDs, default: every card in the deck")
     args = parser.parse_args()
-    known_ids = {p.stem for p in CARDS.glob("card-*.webp")}
-    card_ids = args.cards or sorted(known_ids)
-    unknown = set(card_ids) - known_ids
+    deck = read_deck()
+    known_ids = [card_id for card_id, _ in deck]
+    card_ids = args.cards or known_ids
+    unknown = set(card_ids).difference(known_ids)
     if unknown:
         parser.error(f"Unknown card IDs: {', '.join(sorted(unknown))}")
 
@@ -118,6 +176,8 @@ def main():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(data)
         print(f"{len(data):7,d} B  {path.relative_to(ROOT)}")
+    if set(card_ids) == set(known_ids):
+        write_overview(deck)
 
 
 if __name__ == "__main__":
