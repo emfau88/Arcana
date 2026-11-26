@@ -6,6 +6,7 @@ import { ModuleLoadError } from '../../content/modules/registry.ts';
 import { LOCALES, type ArchetypeId, type Locale, type MotionPreference } from '../../domain/types.ts';
 import { fmt } from '../../i18n/index.ts';
 import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
+import { Flank } from '../../ui/Ornaments.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 
 export const APP_VERSION = '0.2.1';
@@ -62,7 +63,7 @@ export function Profile() {
   return (
     <div className="screen profile">
       <header className="screen-head">
-        <p className="eyebrow">{t.profile.eyebrow}</p>
+        <Flank className="screen-head__flank">{t.profile.eyebrow}</Flank>
         <h1 className="display h1" tabIndex={-1}>
           {t.profile.title}
         </h1>

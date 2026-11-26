@@ -55,6 +55,7 @@ type Action =
   | { type: 'error'; kind: 'storage' | 'content' }
   | { type: 'stale' }
   | { type: 'settings'; settings: Settings; modules?: LoadedModules }
+  | { type: 'modules'; modules: LoadedModules; locale: Locale }
   | { type: 'profile'; profile: Profile }
   | { type: 'daily'; record: DailyRecord }
   | { type: 'draft'; draft: ReadingDraft | null }
@@ -81,6 +82,9 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, status: 'stale' };
     case 'settings':
       return { ...state, settings: action.settings, modules: action.modules ?? state.modules };
+    case 'modules':
+      // A late background load must not overwrite the texts of a language switched to meanwhile.
+      return action.locale === state.settings.locale ? { ...state, modules: { ...state.modules, ...action.modules } } : state;
     case 'profile':
       return { ...state, profile: action.profile };
     case 'daily':
@@ -111,6 +115,8 @@ function reducer(state: AppState, action: Action): AppState {
 
 export interface AppActions {
   retryOpen(): void;
+  /** Loads the startup content modules of the current locale if they are missing (rejects offline). */
+  ensureModules(): Promise<void>;
   setPending(answers: Answers, theme: ThemeId | null): void;
   completeOnboarding(answers: Answers, themeId: ThemeId): Promise<Profile>;
   skipOnboarding(): Promise<void>;
@@ -193,7 +199,20 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         await repo.open();
         const snap = await repo.loadAll();
         const settings = snap.settings ?? defaultSettings();
-        const modules = settings.locale === guess ? await early : await loadModules(STARTUP_MODULES, settings.locale);
+        const pending = settings.locale === guess ? early : loadModules(STARTUP_MODULES, settings.locale);
+        // B-08: returning people start on "Heute", which needs no module text. They see it at once
+        // and the texts arrive in the background. A first start (questionnaire) waits for them.
+        let modules: LoadedModules = {};
+        if (snap.profile) {
+          pending.then(
+            (m) => {
+              if (!cancelled) dispatch({ type: 'modules', modules: m, locale: settings.locale });
+            },
+            () => undefined, // loaded again on demand (ensureModules)
+          );
+        } else {
+          modules = await pending;
+        }
         if (cancelled) return;
         dispatch({
           type: 'loaded',
@@ -242,6 +261,11 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
   const actions = useMemo<AppActions>(
     () => ({
       retryOpen: () => bumpOpen(),
+      async ensureModules() {
+        const locale = stateRef.current.settings.locale;
+        if (STARTUP_MODULES.every((id) => stateRef.current.modules[id])) return;
+        dispatch({ type: 'modules', modules: await loadModules(STARTUP_MODULES, locale), locale });
+      },
       setPending: (answers, theme) => dispatch({ type: 'pending', answers, theme }),
 
       async completeOnboarding(answers, themeId) {

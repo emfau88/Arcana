@@ -20,7 +20,8 @@ describe('content modules', () => {
     expect(text(en, 'identity', 'question.q-calling.prompt')).toBe('What is calling you most strongly these days?');
     // A missing key shows itself instead of an empty gap.
     expect(text(en, 'identity', 'question.nope.prompt')).toBe('question.nope.prompt');
-    expect(text({}, 'journey', 'x')).toBe('x');
+    // A module that is not loaded yet gives an empty string (it is on its way).
+    expect(text({}, 'journey', 'x')).toBe('');
   });
 
   it('every question and answer of the structure has a text in both languages', async () => {

@@ -170,7 +170,24 @@
     linear-gradient(180deg, rgba(6, 8, 18, 0.3), rgba(6, 8, 18, 0.6) 60%, rgba(6, 8, 18, 0.9));
 }
 
+/* V03.5: calm screens dim the painted world into a quiet backdrop (long text and lists sit
+   on panels in front of it). Fades instead of jumping when switching from "Heute". */
+.world-scene__dim {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(6, 8, 18, 0.42) 0%, rgba(6, 8, 18, 0.58) 38%, rgba(6, 8, 18, 0.8) 72%, rgba(6, 8, 18, 0.9) 100%);
+  transition: opacity 600ms var(--ease-out);
+  pointer-events: none;
+}
+.world-scene--calm .world-scene__dim {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .world-scene__dim {
+    transition: none;
+  }
   .world-scene,
   .world-star--twinkle,
   .world-scene__foliage {

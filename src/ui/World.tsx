@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './world.css';
 
 /**
@@ -17,6 +17,9 @@ const base = import.meta.env.BASE_URL;
 const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; foliage?: string }>> = {
   // A01 "Nachtterrasse" + A02 "Pflanzenecken" (ChatGPT, 26.11.2026; masters outside the repo)
   today: { src: 'world/bg-today.webp', srcSmall: 'world/bg-today-720.webp', foliage: 'world/fg-today' },
+  // V03.5: the same night world, dimmed, as the neutral backdrop of screens without their own
+  // world yet (ASSET_REQUESTS: A01 "neutraler Hintergrund in V03"). Same file: no extra download.
+  calm: { src: 'world/bg-today.webp', srcSmall: 'world/bg-today-720.webp' },
 };
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
 
@@ -46,6 +49,7 @@ export function World({ scene }: { scene: WorldScene }) {
   const image = WORLD_IMAGES[scene];
   const [loaded, setLoaded] = useState<string | null>(null);
   const painted = Boolean(image && loaded === image.src);
+  const pageLoaded = usePageLoaded();
   return (
     <div className={`world-scene world-scene--${scene} ${painted ? 'is-painted' : ''}`} aria-hidden="true">
       <div className="world-scene__sky" />
@@ -72,7 +76,10 @@ export function World({ scene }: { scene: WorldScene }) {
         </picture>
       ) : null}
       <div className="world-scene__veil" />
-      {image?.foliage && painted ? (
+      <div className="world-scene__dim" />
+      {/* B-08: the corners come after the page has loaded, so they do not compete with the card
+          for bandwidth. They used to follow the painting anyway; the moment is practically the same. */}
+      {image?.foliage && painted && pageLoaded ? (
         <div className="world-scene__foliage">
           {CORNERS.map((c) => (
             <img key={c} className={`foliage foliage--${c}`} src={`${base}${image.foliage}-${c}.webp`} alt="" decoding="async" />
@@ -81,6 +88,18 @@ export function World({ scene }: { scene: WorldScene }) {
       ) : null}
     </div>
   );
+}
+
+/** True once the window's load event has fired (decoration that may wait for it). */
+function usePageLoaded() {
+  const [done, setDone] = useState(() => document.readyState === 'complete');
+  useEffect(() => {
+    if (done) return;
+    const on = () => setDone(true);
+    window.addEventListener('load', on, { once: true });
+    return () => window.removeEventListener('load', on);
+  }, [done]);
+  return done;
 }
 
 function Moon() {

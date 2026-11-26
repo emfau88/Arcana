@@ -74,9 +74,12 @@ export async function loadModules(ids: readonly ModuleId[], locale: Locale): Pro
 }
 
 /**
- * Text lookup. The content gate guarantees completeness, so a missing key is a bug:
+ * Text lookup. A module that is not loaded yet gives an empty string (it is on its way).
+ * In a loaded module the content gate guarantees completeness, so a missing key is a bug:
  * it shows the key itself (visible in tests) instead of an empty gap.
  */
 export function text(modules: LoadedModules, id: ModuleId, key: string): string {
-  return modules[id]?.[key] ?? key;
+  const table = modules[id];
+  if (!table) return '';
+  return table[key] ?? key;
 }

@@ -88,12 +88,23 @@ export function Today() {
   useEffect(() => {
     if (phase !== 'hidden' || warm) return;
     const go = () => setWarm(true);
-    if (typeof window.requestIdleCallback === 'function') {
-      const id = window.requestIdleCallback(go, { timeout: 800 });
-      return () => window.cancelIdleCallback(id);
-    }
-    const to = window.setTimeout(go, 200);
-    return () => window.clearTimeout(to);
+    // B-08: warm up after the page has loaded (its fonts no longer delay the first screen),
+    // then at the next idle moment; at the latest 2.5 s after mounting.
+    let idle = 0;
+    let to = 0;
+    const whenIdle = () => {
+      if (typeof window.requestIdleCallback === 'function') idle = window.requestIdleCallback(go, { timeout: 800 });
+      else to = window.setTimeout(go, 200);
+    };
+    const cap = window.setTimeout(go, 2500);
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle, { once: true });
+    return () => {
+      window.removeEventListener('load', whenIdle);
+      if (idle) window.cancelIdleCallback(idle);
+      window.clearTimeout(to);
+      window.clearTimeout(cap);
+    };
   }, [phase, warm]);
 
   const skipAnimation = () => {
