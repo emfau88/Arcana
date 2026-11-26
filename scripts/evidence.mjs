@@ -1,4 +1,4 @@
-// Real-browser evidence run: walks the complete G1 flow and saves screenshots.
+// Real-browser evidence run: walks the complete app flow and saves screenshots.
 // Usage: node scripts/evidence.mjs <baseUrl> <outDir> [--locale de|en] [--width 412] [--height 915] [--font 100]
 //                                  [--desktop] [--motion reduce]
 // Only synthetic input is used. Nothing personal is typed or stored.
@@ -107,6 +107,13 @@ await page.waitForSelector('.today__cta');
 await settle();
 const firstCardMs = Date.now() - t0;
 await shot('heute-verdeckt');
+// Empty state before the first card.
+await page.getByRole('link', { name: 'Grimoire' }).click();
+await settle(600);
+await shot('grimoire-leer');
+await page.getByRole('link', { name: L ? 'Heute' : 'Today' }).click();
+await page.waitForSelector('.today__cta');
+await settle(500);
 await page.getByRole('button', { name: L ? 'Karte enthüllen' : 'Reveal card' }).click();
 await page.waitForTimeout(330);
 await shot('heute-enthuellung');
@@ -149,6 +156,16 @@ await page.getByRole('link', { name: L ? 'Profil' : 'Profile' }).click();
 await settle(600);
 await shot('profil');
 if (only === 'all') await shot('profil-lang', { long: true });
+// Manual archetype correction (all eight archetypes + open profile).
+await page.getByRole('button', { name: L ? 'Selbst wählen' : 'Choose myself' }).click();
+await settle(500);
+await page.locator('#prof-choose').scrollIntoViewIfNeeded();
+await settle(300);
+await shot('profil-archetyp-waehlen');
+await page.getByRole('button', { name: L ? 'Archetyp ansehen' : 'View archetype' }).click();
+await page.waitForSelector('.archetype__name');
+await settle(1200);
+await shot('archetyp-aus-profil');
 
 // Persistence: reload and confirm the same daily card is shown.
 await page.goto(new URL('#/today', baseUrl).toString());

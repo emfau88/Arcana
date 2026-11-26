@@ -1,6 +1,6 @@
 # RELEASE_CHECKLIST
 
-Stand G1: noch kein Release-Kandidat. Die Liste wird in G3/G4 abgehakt.
+Stand G2: noch kein Release-Kandidat. Die Liste wird in G3/G4 abgehakt.
 
 ## G3 — technischer Kandidat
 - [ ] `npm ci && npm run check && npm run test:e2e` grün auf sauberem Checkout

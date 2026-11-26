@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { navigate } from '../../app/router.ts';
+import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { getArchetype } from '../../content/index.ts';
 import type { ThemeId } from '../../domain/types.ts';
@@ -192,10 +192,6 @@ export function Questionnaire({ step }: { step: number }) {
               </button>
             ))}
           </div>
-          <p className="notice">
-            <span className="prototype-tag">{t.common.prototype}</span>
-            <span>{t.onboarding.themePrototype}</span>
-          </p>
           <p className="small onboarding__voluntary">{t.onboarding.themeHint}</p>
           <button type="button" className="btn btn--primary btn--block onboarding__finish" onClick={finish} disabled={busy}>
             {t.onboarding.finish}
@@ -208,12 +204,14 @@ export function Questionnaire({ step }: { step: number }) {
 
 /* ------------------------------------------------------- Archetype reveal */
 
-export function ArchetypeReveal() {
+export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
   const { t, pack, state } = useApp();
   const locale = state.settings.locale;
   const profile = state.profile;
   const archetype = profile?.archetypeId ? getArchetype(pack, profile.archetypeId) : null;
   const answered = profile ? Object.keys(profile.answers).length : 0;
+  const manual = profile?.archetypeSource === 'manual';
+  const fromProfile = parsed.from === '/profile';
 
   return (
     <div className="screen archetype">
@@ -246,7 +244,7 @@ export function ArchetypeReveal() {
               <p className="italic-serif archetype__question">{archetype.reflection[locale]}</p>
             </section>
           </div>
-          <p className="small archetype__basis rise rise-5">{fmt(t.archetype.basis, { n: answered })}</p>
+          <p className="small archetype__basis rise rise-5">{manual ? t.archetype.basisManual : fmt(t.archetype.basis, { n: answered })}</p>
         </>
       ) : (
         <>
@@ -254,7 +252,7 @@ export function ArchetypeReveal() {
           <h1 className="display h1 archetype__name rise rise-2" tabIndex={-1}>
             {t.archetype.neutralTitle}
           </h1>
-          <p className="lead archetype__essence rise rise-3">{t.archetype.neutralBody}</p>
+          <p className="lead archetype__essence rise rise-3">{manual ? t.archetype.neutralBodyManual : t.archetype.neutralBody}</p>
         </>
       )}
       <details className="explain rise rise-5">
@@ -263,9 +261,15 @@ export function ArchetypeReveal() {
         </summary>
         <p className="small">{t.archetype.howItWorks}</p>
       </details>
-      <button type="button" className="btn btn--primary btn--block archetype__cta rise rise-5" onClick={() => navigate('/today', { replace: true })}>
-        {t.archetype.toToday}
-      </button>
+      {fromProfile ? (
+        <button type="button" className="btn btn--primary btn--block archetype__cta rise rise-5" onClick={() => goBack(parsed)}>
+          {t.archetype.toProfile}
+        </button>
+      ) : (
+        <button type="button" className="btn btn--primary btn--block archetype__cta rise rise-5" onClick={() => navigate('/today', { replace: true })}>
+          {t.archetype.toToday}
+        </button>
+      )}
     </div>
   );
 }

@@ -22,6 +22,7 @@ export function isProfile(v: unknown): v is Profile {
     Object.values(v.answers).every(isStr) &&
     isTheme(v.themeId) &&
     isArchetypeOrNull(v.archetypeId) &&
+    (v.archetypeSource === undefined || v.archetypeSource === 'questions' || v.archetypeSource === 'manual') &&
     typeof v.profileVersion === 'number' &&
     isStr(v.updatedAt)
   );

@@ -1,8 +1,8 @@
 import type { CardContent } from './schema.ts';
 
 /**
- * G1 vertical slice: three representative cards with deliberately different light
- * (twilight · shadow · light). Texts are original, written for this project.
+ * II, XVI and XIX – the three cards of the G1 slice (twilight · shadow · light); the rest of
+ * the deck lives in cards-a/b/c.ts. Texts are original, written for this project.
  * Tone: symbolic reflection, never prediction, diagnosis or claims about other people.
  */
 export const CARDS: readonly CardContent[] = [
@@ -25,6 +25,22 @@ export const CARDS: readonly CardContent[] = [
       love: {
         de: 'Du musst nicht jede Unklarheit sofort auflösen. Achte darauf, welche Fragen zwischen euch noch offen sind und welche Antworten du bereits vermutest. Unterscheide Vermutung von dem, was du tatsächlich weißt.',
         en: 'You do not have to resolve every uncertainty right away. Notice which questions are still open between you, and which answers you already suspect. Distinguish what you know from what you assume.',
+      },
+      career: {
+        de: 'Im Beruf zählt heute vielleicht weniger das schnelle Handeln als das genaue Hinsehen. Sammle, was du beobachtest, bevor du es bewertest. Dein Gespür für Zwischentöne kann ein echter Beitrag sein.',
+        en: 'At work, careful observation may count for more today than quick action. Gather what you notice before you judge it. Your feel for nuance can be a real contribution.',
+      },
+      change: {
+        de: 'Eine Entscheidung muss nicht heute fallen, wenn wichtige Informationen noch fehlen. Schreib auf, was du weißt und was du nur vermutest. Oft wird der nächste Schritt klarer, wenn beides getrennt vor dir liegt.',
+        en: 'A decision does not have to be made today if important information is still missing. Write down what you know and what you only suspect. The next step often becomes clearer once the two lie side by side.',
+      },
+      balance: {
+        de: 'Stille ist kein Stillstand. Gönn dir einen Moment ohne neue Eindrücke und beobachte, was dann auftaucht. Was leise ist, braucht manchmal nur etwas Platz, um gehört zu werden.',
+        en: 'Stillness is not standing still. Allow yourself a moment without new input and notice what comes up. What is quiet sometimes only needs a little room to be heard.',
+      },
+      creativity: {
+        de: 'Ideen reifen oft im Verborgenen. Halte eine halbfertige Idee fest, ohne sie gleich zu zeigen oder zu bewerten. Was im Stillen wächst, darf erst einmal dir gehören.',
+        en: 'Ideas often ripen out of sight. Hold on to a half-formed idea without showing or judging it straight away. What grows in quiet is allowed to belong to you first.',
       },
     },
     positions: {
@@ -70,6 +86,22 @@ export const CARDS: readonly CardContent[] = [
         de: 'Ein offenes Wort kann zunächst unbequem sein und trotzdem Luft schaffen. Wenn sich in einer Beziehung etwas verschiebt, schau genau hin, statt die Risse zu übermalen. Ehrlichkeit braucht dabei keine Härte.',
         en: 'An honest word can be uncomfortable at first and still let air in. If something is shifting in a relationship, look closely rather than painting over the cracks. Honesty does not need to be harsh.',
       },
+      career: {
+        de: 'Wenn ein Plan im Beruf ins Wanken gerät, zeigt sich, worauf du wirklich bauen kannst. Prüfe, welche Annahme sich gerade als brüchig erweist. Ein Umbau kann mühsam sein und trotzdem zu etwas Stabilerem führen.',
+        en: 'When a plan at work starts to wobble, it shows what you can really build on. Check which assumption is turning out to be fragile. Rebuilding can be hard work and still lead to something more stable.',
+      },
+      change: {
+        de: 'Manche Veränderung kündigt sich nicht an, sondern ist plötzlich da. Du musst nicht sofort alles neu ordnen. Sichere zuerst, was trägt, und entscheide den Rest Schritt für Schritt.',
+        en: 'Some changes give no warning – they are simply there. You do not have to reorder everything at once. Secure what still holds first, and decide the rest step by step.',
+      },
+      balance: {
+        de: 'Wenn vieles gleichzeitig ins Rutschen gerät, hilft ein fester Punkt. Das kann ein Atemzug, ein vertrauter Ort oder ein Gespräch sein. Du darfst Unruhe spüren, ohne dich von ihr steuern zu lassen.',
+        en: 'When a lot starts to slide at once, a fixed point helps. It might be a breath, a familiar place or a conversation. You can feel unrest without letting it steer you.',
+      },
+      creativity: {
+        de: 'Manchmal muss eine alte Form zerbrechen, damit etwas Eigenes entstehen kann. Wenn ein Projekt nicht mehr passt, darfst du es auseinandernehmen. Aus den Bruchstücken lässt sich oft Überraschendes bauen.',
+        en: 'Sometimes an old form has to break so that something of your own can emerge. If a project no longer fits, you may take it apart. Surprising things can often be built from the pieces.',
+      },
     },
     positions: {
       situation: {
@@ -113,6 +145,22 @@ export const CARDS: readonly CardContent[] = [
       love: {
         de: 'Wärme wächst dort, wo sie gezeigt wird. Vielleicht ist jetzt ein guter Moment, Zuneigung offen auszusprechen – ohne eine bestimmte Antwort zu erwarten. Kleine, ehrliche Gesten zählen mehr als große Pläne.',
         en: 'Warmth grows where it is shown. This may be a good moment to express affection openly – without expecting a particular answer. Small, honest gestures count for more than grand plans.',
+      },
+      career: {
+        de: 'Was dir leichtfällt, ist nicht weniger wert. Zeig heute etwas von dem, was du gut kannst, ohne dich kleiner zu machen. Sichtbarkeit beginnt oft mit einem einzigen klaren Beitrag.',
+        en: 'What comes easily to you is worth no less. Show something of what you do well today, without making yourself smaller. Visibility often begins with a single clear contribution.',
+      },
+      change: {
+        de: 'Eine Entscheidung darf sich auch gut anfühlen. Achte darauf, welche Möglichkeit dir Energie gibt und welche sie dir nimmt. Freude ist kein Beweis, aber ein wertvoller Hinweis.',
+        en: 'A decision is allowed to feel good, too. Notice which option gives you energy and which one drains it. Joy is no proof, but it is a valuable hint.',
+      },
+      balance: {
+        de: 'Wärme wirkt oft schneller als jeder Plan. Such dir heute etwas, das dir guttut, und lass es klein und einfach sein. Ein heller Moment am Tag kann viel ausgleichen.',
+        en: 'Warmth often works faster than any plan. Find something today that does you good, and let it be small and simple. One bright moment in a day can balance out a lot.',
+      },
+      creativity: {
+        de: 'Spiel ist ein ernstzunehmender Anfang. Probier etwas aus, ohne dass am Ende ein Ergebnis stehen muss. Was dir dabei Freude macht, zeigt dir, wohin deine Neugier will.',
+        en: 'Play is a serious beginning. Try something out without needing a result at the end. Whatever brings you joy along the way shows you where your curiosity wants to go.',
       },
     },
     positions: {

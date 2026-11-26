@@ -7,17 +7,14 @@ import { mkdir, writeFile, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { appIcon, back, grainTile, highPriestess, sun, tower } from '../art/cards.mjs';
+import { appIcon, grainTile } from '../art/cards.mjs';
+import { CARD_BACK, DECK_ART } from '../art/deck.mjs';
+import { frameOnly, safeZones } from '../art/template.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const withAndroid = process.argv.includes('--android');
 
-const cards = [
-  ['card-high-priestess', highPriestess()],
-  ['card-tower', tower()],
-  ['card-sun', sun()],
-  ['card-back', back()],
-];
+const cards = [...DECK_ART, CARD_BACK].map(([id, numeral, draw]) => [id, draw(), numeral]);
 
 async function ensureDir(p) {
   await mkdir(dirname(p), { recursive: true });
@@ -60,6 +57,44 @@ for (const [id, svg] of cards) {
   await writeFile(join(root, 'art', 'build', `${id}.svg`), svg);
   await out(`public/cards/${id}.webp`, await raster(svg, 720, 1080, 'image/webp', 0.88));
   await out(`public/cards/thumbs/${id}.webp`, await raster(svg, 240, 360, 'image/webp', 0.86));
+}
+
+// Replacement kit (docs/assets): frame on transparent background + safe-zone guide.
+await out('docs/assets/card-frame-template.png', await raster(frameOnly(), 720, 1080, 'image/png'));
+await out('docs/assets/card-safe-zones.png', await raster(safeZones(), 720, 1080, 'image/png'));
+
+// Deck overview for review: all faces + back in one sheet (labels only here, never in the assets).
+{
+  const tiles = cards.map(([id, svg, numeral]) => ({ id, svg, numeral }));
+  const dataUrl = await page.evaluate(async (tiles) => {
+    const cols = 6;
+    const w = 240;
+    const h = 360;
+    const lh = 30;
+    const gap = 12;
+    const rows = Math.ceil(tiles.length / cols);
+    const canvas = document.createElement('canvas');
+    canvas.width = cols * (w + gap) + gap;
+    canvas.height = rows * (h + lh + gap) + gap;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#0B0A14';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.imageSmoothingQuality = 'high';
+    for (let i = 0; i < tiles.length; i++) {
+      const img = new Image();
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(tiles[i].svg);
+      await img.decode();
+      const x = gap + (i % cols) * (w + gap);
+      const y = gap + Math.floor(i / cols) * (h + lh + gap);
+      ctx.drawImage(img, x, y, w, h);
+      ctx.fillStyle = '#E8DDBF';
+      ctx.font = '15px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${tiles[i].numeral ? tiles[i].numeral + ' · ' : ''}${tiles[i].id}`, x + w / 2, y + h + 21);
+    }
+    return canvas.toDataURL('image/webp', 0.84);
+  }, tiles);
+  await out('docs/assets/deck-overview.webp', Buffer.from(dataUrl.split(',')[1], 'base64'));
 }
 
 await out('public/textures/grain.webp', await raster(grainTile(), 256, 256, 'image/webp', 0.9));

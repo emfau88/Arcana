@@ -1,11 +1,16 @@
-// Android emulator evidence run for the G1 flow.
-// Usage: node scripts/android-evidence.mjs <outDir> [--serial emulator-5554]
+// Android emulator evidence run for the complete app flow (G2: 22 cards, 6 themes).
+// Usage: node --experimental-strip-types scripts/android-evidence.mjs <outDir> [--serial emulator-5554]
+// Install the debug APK first (adb install -r android/app/build/outputs/apk/debug/app-debug.apk).
 //
 // Safety rules (AGENTS.md): only the emulator given by --serial is used, only this app's own
 // development package is cleared/launched, and every changed device setting is restored at the end.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { CONTENT } from "../src/content/index.ts";
+
+// Every card title in both languages, to recognise the drawn daily card in the UI tree.
+const CARD_TITLES = new Set(CONTENT.cards.flatMap((c) => [c.title.de, c.title.en]));
 
 const PKG = "com.energycrafted.personaloracle.dev";
 const ACTIVITY = `${PKG}/.MainActivity`;
@@ -300,9 +305,7 @@ try {
   await waitFor(T.message, { timeout: 8000 });
   await sleep(1200);
   shot("heute-enthuellt");
-  const title = nodes().find(
-    (n) => /^(Die |Der |The )/.test(label(n)) && n.h > 60,
-  );
+  const title = nodes().find((n) => CARD_TITLES.has(label(n)) && n.h > 60);
   const dailyTitle = title ? label(title) : "";
   note("Daily card revealed", "PASS", dailyTitle);
   sh("input swipe 540 1800 540 700 400");

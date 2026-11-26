@@ -76,7 +76,7 @@ export function backTarget(parsed: ParsedRoute): string | 'exit' {
     case 'onboarding':
       return route.step > 1 ? `/onboarding/${route.step - 1}` : '/welcome';
     case 'archetype':
-      return '/today';
+      return safeFrom ?? '/today';
     case 'oracle':
     case 'profile':
     case 'notfound':

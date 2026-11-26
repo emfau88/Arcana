@@ -42,9 +42,6 @@ export function Grimoire({ view }: { view: 'collection' | 'history' }) {
           <span className="muted"> / {total}</span>
         </p>
         <p className="small">{fmt(t.grimoire.progress, { n: collection.size, total })}</p>
-        <p className="small grimoire__deck">
-          <span className="prototype-tag">{t.common.prototype}</span> {fmt(t.grimoire.deckNote, { n: total, target: pack.targetDeckSize })}
-        </p>
       </section>
 
       {state.skippedCorrupt > 0 ? <p className="notice notice--error">{fmt(t.errors.corrupt, { n: state.skippedCorrupt })}</p> : null}

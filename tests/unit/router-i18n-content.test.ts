@@ -29,6 +29,8 @@ describe('router', () => {
     expect(back('#/onboarding/4')).toBe('/onboarding/3');
     expect(back('#/oracle')).toBe('/today');
     expect(back('#/profile')).toBe('/today');
+    expect(back('#/archetype')).toBe('/today');
+    expect(back('#/archetype?from=/profile')).toBe('/profile');
     expect(back('#/grimoire')).toBe('/today');
     expect(back('#/grimoire/history')).toBe('/grimoire');
     expect(back('#/grimoire/card/x')).toBe('/grimoire');
@@ -86,16 +88,32 @@ describe('i18n', () => {
 });
 
 describe('content', () => {
-  it('passes the G1 content gate', () => {
-    const r = validateContent(CONTENT, 'g1');
+  it('passes the full P0 content gate: 22 cards, 6 themes, DE/EN', () => {
+    const r = validateContent(CONTENT, 'p0');
     expect(r.errors).toEqual([]);
+    expect(r.warnings).toEqual([]);
+    expect(r.summary.cards).toBe(22);
+    expect(r.summary.targetCards).toBe(22);
+    expect(r.summary.themes).toBe(6);
+    expect(r.summary.missingP0ThemeTexts).toBe(0);
+    expect(validateContent(CONTENT, 'g1').errors).toEqual([]);
   });
 
-  it('honestly reports the P0 gap', () => {
-    const r = validateContent(CONTENT, 'p0');
-    expect(r.summary.cards).toBe(3);
-    expect(r.summary.targetCards).toBe(22);
-    expect(r.errors.some((e) => e.startsWith('P0'))).toBe(true);
+  it('still reports a gap when a card or a theme text is missing', () => {
+    const fewer = { ...CONTENT, cards: CONTENT.cards.slice(1) };
+    expect(validateContent(fewer, 'p0').errors.some((e) => e.startsWith('P0'))).toBe(true);
+    const noCareer = {
+      ...CONTENT,
+      cards: CONTENT.cards.map((c, i) => (i === 5 ? { ...c, themes: { ...c.themes, career: undefined } } : c)),
+    };
+    expect(validateContent(noCareer as typeof CONTENT, 'p0').errors.length).toBeGreaterThan(0);
+  });
+
+  it('keeps ids, orders and asset ids unique and in deck order', () => {
+    const ids = CONTENT.cards.map((c) => c.id);
+    expect(new Set(ids).size).toBe(22);
+    expect(new Set(CONTENT.cards.map((c) => c.assetId)).size).toBe(22);
+    expect(CONTENT.cards.map((c) => c.order)).toEqual(Array.from({ length: 22 }, (_, i) => i));
   });
 
   it('flags forbidden, predictive or diagnostic phrasing', () => {

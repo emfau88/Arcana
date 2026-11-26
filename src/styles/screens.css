@@ -350,9 +350,7 @@ h1[tabindex='-1']:focus {
 .oracle__section {
   margin-bottom: var(--s-5);
 }
-.oracle__proto {
-  margin-top: var(--s-3);
-}
+
 .positions {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -539,13 +537,7 @@ h1[tabindex='-1']:focus {
   font-size: 2.4rem;
   line-height: 1;
 }
-.grimoire__deck {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-top: var(--s-2);
-}
+
 .grimoire__tabs {
   margin: var(--s-4) 0 var(--s-4);
 }
@@ -690,8 +682,20 @@ h1[tabindex='-1']:focus {
 .profile__archetype-text .h3 {
   margin-bottom: 2px;
 }
-.profile__redo {
+.profile__actions {
   grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s-2);
+}
+.profile__manual {
+  color: var(--brass-300);
+  font-style: italic;
+}
+.choice--sigil {
+  gap: var(--s-3);
+}
+.choice--sigil svg {
+  flex: none;
 }
 .profile__group {
   display: grid;

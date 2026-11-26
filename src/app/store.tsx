@@ -14,6 +14,7 @@ import {
 import { cryptoRng, type Rng } from '../domain/random.ts';
 import type {
   Answers,
+  ArchetypeId,
   DailyRecord,
   Locale,
   MotionPreference,
@@ -103,6 +104,8 @@ export interface AppActions {
   completeOnboarding(answers: Answers, themeId: ThemeId): Promise<Profile>;
   skipOnboarding(): Promise<void>;
   setTheme(themeId: ThemeId): Promise<void>;
+  /** Manual correction: pick an archetype or leave the profile open (null). Answers stay stored. */
+  setArchetype(archetypeId: ArchetypeId | null): Promise<void>;
   setLocale(locale: Locale): Promise<void>;
   setMotion(motion: MotionPreference): Promise<void>;
   revealToday(): Promise<DailyRecord>;
@@ -220,6 +223,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
           answers,
           themeId,
           archetypeId: result.archetypeId,
+          archetypeSource: 'questions',
           profileVersion: PROFILE_VERSION,
           updatedAt: clock.now().toISOString(),
         };
@@ -252,6 +256,16 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         const profile: Profile = p
           ? { ...p, themeId, updatedAt: clock.now().toISOString() }
           : { answers: {}, themeId, archetypeId: null, profileVersion: PROFILE_VERSION, updatedAt: clock.now().toISOString() };
+        await repo.putProfile(profile);
+        dispatch({ type: 'profile', profile });
+      },
+
+      async setArchetype(archetypeId) {
+        const p = stateRef.current.profile;
+        const now = clock.now().toISOString();
+        const profile: Profile = p
+          ? { ...p, archetypeId, archetypeSource: 'manual', updatedAt: now }
+          : { answers: {}, themeId: pack.defaultTheme, archetypeId, archetypeSource: 'manual', profileVersion: PROFILE_VERSION, updatedAt: now };
         await repo.putProfile(profile);
         dispatch({ type: 'profile', profile });
       },

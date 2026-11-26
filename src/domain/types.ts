@@ -41,12 +41,17 @@ export type AnswerId = string;
 /** Map of question id -> chosen answer id. A missing key means "skipped". */
 export type Answers = Readonly<Record<QuestionId, AnswerId>>;
 
+/** 'questions' = scored from the answers, 'manual' = chosen or left open by the person. */
+export type ArchetypeSource = 'questions' | 'manual';
+
 export interface Profile {
   /** Voluntary answers only. No name, birth date, contact or location. */
   answers: Answers;
   themeId: ThemeId;
-  /** null = neutral profile (skipped or too few answers). Never a silently invented type. */
+  /** null = neutral profile (skipped, too few answers or left open). Never a silently invented type. */
   archetypeId: ArchetypeId | null;
+  /** How archetypeId came about. Missing in records written before G2 = 'questions'. */
+  archetypeSource?: ArchetypeSource;
   /** Bumped whenever the questionnaire mapping changes. */
   profileVersion: number;
   updatedAt: string;

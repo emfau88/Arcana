@@ -1,17 +1,23 @@
 import { ARCHETYPES } from './archetypes.ts';
 import { CARDS } from './cards.ts';
+import { CARDS_A } from './cards-a.ts';
+import { CARDS_B } from './cards-b.ts';
+import { CARDS_C } from './cards-c.ts';
 import { QUESTIONS } from './questions.ts';
 import type { ArchetypeContent, CardContent, ContentPack, ThemeContent } from './schema.ts';
 import { POSITION_LABELS, THEMES } from './themes.ts';
-import type { ArchetypeId, ThemeId } from '../domain/types.ts';
+import { ALL_THEME_IDS, type ArchetypeId, type ThemeId } from '../domain/types.ts';
+
+/** The full 22-card deck in traditional order. */
+export const DECK = [...CARDS_A, ...CARDS, ...CARDS_B, ...CARDS_C].sort((a, b) => a.order - b.order);
 
 export const CONTENT: ContentPack = {
-  version: 'g1-2026-11-26.1',
+  version: 'p0-2026-11-26.1',
   deckId: 'nocturne',
   targetDeckSize: 22,
-  availableThemes: ['self', 'love'],
+  availableThemes: ALL_THEME_IDS,
   defaultTheme: 'self',
-  cards: CARDS,
+  cards: DECK,
   themes: THEMES,
   archetypes: ARCHETYPES,
   questions: QUESTIONS,

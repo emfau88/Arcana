@@ -17,56 +17,56 @@
     "window": "1.0"
   },
   "metrics": {
-    "firstRunActivityMs": 6684,
-    "firstRunInteractiveMs": 13454,
+    "firstRunActivityMs": 6081,
+    "firstRunInteractiveMs": 13464,
     "firstRun": {
-      "htmlMs": 5795,
-      "firstScreenMs": 9027
+      "htmlMs": 4788,
+      "firstScreenMs": 7140
     },
-    "coldStartActivityMs": 4009,
-    "coldStartInteractiveMs": 16324,
+    "coldStartActivityMs": 1952,
+    "coldStartInteractiveMs": 12401,
     "coldStart": {
-      "htmlMs": 3325,
-      "firstScreenMs": 5668
+      "htmlMs": 1641,
+      "firstScreenMs": 2971
     },
     "startup_debug": {
       "runs": [
         {
-          "htmlMs": 2241,
-          "firstScreenMs": 3163
+          "htmlMs": 1594,
+          "firstScreenMs": 2413
         },
         {
-          "htmlMs": 1877,
-          "firstScreenMs": 2621
+          "htmlMs": 1469,
+          "firstScreenMs": 2313
         },
         {
-          "htmlMs": 1504,
-          "firstScreenMs": 2287
+          "htmlMs": 1589,
+          "firstScreenMs": 2289
         },
         {
-          "htmlMs": 1537,
-          "firstScreenMs": 2205
+          "htmlMs": 1500,
+          "firstScreenMs": 2419
         },
         {
-          "htmlMs": 1497,
-          "firstScreenMs": 2252
+          "htmlMs": 1459,
+          "firstScreenMs": 2423
         }
       ],
       "median": {
-        "htmlMs": 1537,
-        "firstScreenMs": 2287
+        "htmlMs": 1500,
+        "firstScreenMs": 2413
       }
     },
     "offline": {
-      "htmlMs": 4984,
-      "firstScreenMs": 7926
+      "htmlMs": 4186,
+      "firstScreenMs": 6838
     }
   },
   "results": [
     {
       "check": "First run shows the welcome screen",
       "status": "PASS",
-      "detail": "locale en, activity 6684 ms, logcat {\"htmlMs\":5795,\"firstScreenMs\":9027}"
+      "detail": "locale en, activity 6081 ms, logcat {\"htmlMs\":4788,\"firstScreenMs\":7140}"
     },
     {
       "check": "Questionnaire → archetype reveal",
@@ -76,7 +76,7 @@
     {
       "check": "Daily card revealed",
       "status": "PASS",
-      "detail": "The Sun"
+      "detail": "The Star"
     },
     {
       "check": "Three-card reading drawn, revealed, saved",
@@ -96,17 +96,17 @@
     {
       "check": "Force-stop + cold start keeps today’s card",
       "status": "PASS",
-      "detail": "The Sun; activity 4009 ms, logcat {\"htmlMs\":3325,\"firstScreenMs\":5668}"
+      "detail": "The Star; activity 1952 ms, logcat {\"htmlMs\":1641,\"firstScreenMs\":2971}"
     },
     {
       "check": "Cold start → first screen, median of 5 (debug build, this emulator)",
       "status": "PASS",
-      "detail": "{\"htmlMs\":1537,\"firstScreenMs\":2287} runs 3163/2621/2287/2205/2252"
+      "detail": "{\"htmlMs\":1500,\"firstScreenMs\":2413} runs 2413/2313/2289/2419/2423"
     },
     {
       "check": "Cold start in airplane mode",
       "status": "PASS",
-      "detail": "activity 6123 ms, logcat {\"htmlMs\":4984,\"firstScreenMs\":7926}"
+      "detail": "activity 5708 ms, logcat {\"htmlMs\":4186,\"firstScreenMs\":6838}"
     },
     {
       "check": "System font scale 1.3",

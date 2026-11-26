@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { navigate } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { getArchetype, resolveTheme } from '../../content/index.ts';
-import { LOCALES, type Locale, type MotionPreference } from '../../domain/types.ts';
+import { LOCALES, type ArchetypeId, type Locale, type MotionPreference } from '../../domain/types.ts';
 import { fmt } from '../../i18n/index.ts';
 import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 
-export const APP_VERSION = '0.1.0';
+export const APP_VERSION = '0.2.0';
 
 export function Profile() {
   const { t, pack, state, actions } = useApp();
@@ -17,6 +17,9 @@ export function Profile() {
   const archetype = profile?.archetypeId ? getArchetype(pack, profile.archetypeId) : null;
   const theme = resolveTheme(pack, profile?.themeId ?? pack.defaultTheme);
   const [confirm, setConfirm] = useState(false);
+  const [choosing, setChoosing] = useState(false);
+  const manual = profile?.archetypeSource === 'manual';
+  const current = profile?.archetypeId ?? null;
 
   const guard = async (fn: () => Promise<void>) => {
     try {
@@ -30,6 +33,13 @@ export function Profile() {
     actions.setPending(profile?.answers ?? {}, profile?.themeId ?? null);
     navigate('/onboarding/1');
   };
+
+  const pick = (id: ArchetypeId | null) =>
+    void guard(async () => {
+      if (id === current && manual) return;
+      await actions.setArchetype(id);
+      toast(t.profile.archetypeSaved);
+    });
 
   const wipe = async () => {
     setConfirm(false);
@@ -65,11 +75,53 @@ export function Profile() {
           </h2>
           <p className="display h3">{archetype ? archetype.name[locale] : t.archetype.neutralTitle}</p>
           <p className="small">{archetype ? archetype.essence[locale] : t.archetype.neutralEyebrow}</p>
+          {manual ? <p className="small profile__manual">{t.profile.manual}</p> : null}
         </div>
-        <button type="button" className="btn btn--ghost btn--block profile__redo" onClick={redo}>
-          {archetype ? t.profile.redo : t.profile.determine}
-        </button>
+        <div className="profile__actions">
+          <button type="button" className="btn btn--ghost btn--block" onClick={() => navigate('/archetype?from=/profile')}>
+            {t.profile.view}
+          </button>
+          <button type="button" className="btn btn--ghost btn--block" onClick={redo}>
+            {archetype || manual ? t.profile.redo : t.profile.determine}
+          </button>
+          <button
+            type="button"
+            className="btn btn--ghost btn--block"
+            aria-expanded={choosing}
+            aria-controls="prof-choose"
+            onClick={() => setChoosing((v) => !v)}
+          >
+            {choosing ? t.profile.chooseClose : t.profile.choose}
+          </button>
+        </div>
       </section>
+
+      {choosing ? (
+        <section id="prof-choose" className="profile__group" aria-labelledby="prof-choose-title">
+          <h2 id="prof-choose-title" className="panel__label">
+            {t.profile.chooseTitle}
+          </h2>
+          <p className="small">{t.profile.chooseHint}</p>
+          <div className="choice-list" role="radiogroup" aria-labelledby="prof-choose-title">
+            {pack.archetypes.map((a) => (
+              <button key={a.id} type="button" role="radio" aria-checked={current === a.id} className="choice choice--sigil" onClick={() => pick(a.id)}>
+                <Sigil archetype={a.id} size={40} />
+                <span className="choice__text">
+                  <span>{a.name[locale]}</span>
+                  <span className="choice__sub">{a.essence[locale]}</span>
+                </span>
+              </button>
+            ))}
+            <button type="button" role="radio" aria-checked={current === null} className="choice choice--sigil" onClick={() => pick(null)}>
+              <Sigil archetype={null} size={40} />
+              <span className="choice__text">
+                <span>{t.profile.neutralOption}</span>
+                <span className="choice__sub">{t.profile.neutralOptionSub}</span>
+              </span>
+            </button>
+          </div>
+        </section>
+      ) : null}
 
       <section className="profile__group" aria-labelledby="prof-theme">
         <h2 id="prof-theme" className="panel__label">
@@ -147,9 +199,7 @@ export function Profile() {
         <div className="panel profile__about">
           <p className="display h3">{t.common.appName}</p>
           <p className="small">{fmt(t.profile.version, { v: APP_VERSION, c: pack.version })}</p>
-          <p className="small">
-            <span className="prototype-tag">{t.common.prototype}</span> {t.profile.prototypeNote}
-          </p>
+          <p className="small">{t.profile.aboutBody}</p>
           <p className="small">{t.common.symbolic}</p>
         </div>
       </section>

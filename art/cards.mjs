@@ -1,4 +1,4 @@
-// Original illustrations for the G1 slice of the "Nocturne" deck.
+// Original illustrations of the "Nocturne" deck: II, XVI, XIX (from the G1 slice) and the card back.
 // Symbolic still-lifes (no figures): traditional major-arcana symbolism, own composition.
 import { W, H, f, polar, sparkle, crescentPath, starPoints, wave, card, baseDefs, texture, frame } from './lib.mjs';
 

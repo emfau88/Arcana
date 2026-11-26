@@ -2,6 +2,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { de, type Messages } from '../../src/i18n/de.ts';
 import { en } from '../../src/i18n/en.ts';
 import { fmt } from '../../src/i18n/index.ts';
+import { CONTENT } from '../../src/content/index.ts';
 
 /** UI strings of the locale the project emulates (the app follows the system language). */
 function ui(info: TestInfo): Messages {
@@ -38,7 +39,7 @@ async function completeOnboarding(page: Page, t: Messages) {
   await page.getByRole('button', { name: t.archetype.toToday }).click();
 }
 
-test('complete G1 flow: onboarding → daily card → reading → grimoire → profile, persisted', async ({ page }, info) => {
+test('complete flow: onboarding → daily card → reading → grimoire → profile, persisted', async ({ page }, info) => {
   const t = ui(info);
   const problems = guard(page);
   await completeOnboarding(page, t);
@@ -187,5 +188,106 @@ test('production build ships a strict CSP and only local assets', async ({ page 
   expect(grain).toContain('grain.webp');
   const status = await page.evaluate(async (u) => (await fetch(u)).status, grain.replace(/^url\("?|"?\)$/g, ''));
   expect(status).toBe(200);
+  expect(problems).toEqual([]);
+});
+
+test('all six themes give a complete three-card reading (DE/EN)', async ({ page }, info) => {
+  test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
+  const t = ui(info);
+  const locale = String(info.project.use.locale).startsWith('de') ? 'de' : 'en';
+  const problems = guard(page);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('./');
+  await page.getByRole('button', { name: t.welcome.skipAll }).click();
+  await page.getByRole('link', { name: t.nav.oracle }).click();
+  expect(CONTENT.themes).toHaveLength(6);
+  for (const [i, theme] of CONTENT.themes.entries()) {
+    const label = theme.label[locale];
+    await page.locator('.choice').filter({ has: page.getByText(label, { exact: true }) }).click();
+    await page.getByRole('button', { name: t.oracle.draw }).click();
+    await expect(page.getByRole('heading', { level: 1, name: label })).toBeVisible();
+    await page.getByRole('button', { name: t.oracle.revealAll }).click();
+    await expect(page.getByText(t.oracle.synthesis, { exact: true })).toBeVisible();
+    await expect(page.getByText(theme.readingIntro[locale], { exact: true })).toBeVisible();
+    if (i < CONTENT.themes.length - 1) {
+      await page.getByRole('button', { name: t.oracle.discard }).last().click();
+      await page.getByRole('button', { name: t.oracle.discardConfirm, exact: true }).click();
+      await expect(page.getByRole('button', { name: t.oracle.draw })).toBeVisible();
+    } else {
+      await page.getByRole('button', { name: t.oracle.save }).click();
+      await expect(page.getByRole('button', { name: t.oracle.newReading })).toBeVisible();
+    }
+  }
+  await page.goto('./#/grimoire/history');
+  await expect(page.locator('.history__row')).toHaveCount(1);
+  await expect(page.locator('.history__title')).toHaveText(CONTENT.themes.at(-1)!.label[locale]);
+  expect(problems).toEqual([]);
+});
+
+test.describe('local midnight', () => {
+  test.use({ timezoneId: 'Europe/Berlin' });
+
+  test('a new local day brings a new hidden card while yesterday stays in the history', async ({ page }, info) => {
+    test.skip(info.project.name !== 'mobile-de-412', 'covered once');
+    const problems = guard(page);
+    await page.clock.install({ time: new Date('2026-11-26T23:58:30+01:00') });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('./');
+    await page.getByRole('button', { name: de.welcome.skipAll }).click();
+    await page.getByRole('button', { name: de.today.draw }).click();
+    await expect(page.getByText(de.today.message, { exact: true })).toBeVisible();
+    // The app stays open across midnight: its timer switches to the new day without a reload.
+    await page.clock.fastForward('03:00');
+    await expect(page.getByRole('button', { name: de.today.draw })).toBeVisible();
+    await page.getByRole('button', { name: de.today.draw }).click();
+    await expect(page.getByText(de.today.message, { exact: true })).toBeVisible();
+    await page.goto('./#/grimoire/history');
+    await expect(page.locator('.history__row')).toHaveCount(2);
+    // Reopening on the same day reuses the stored card instead of drawing again.
+    const title = await page.locator('.history__title').first().textContent();
+    await page.goto('./#/today');
+    await page.reload();
+    await expect(page.locator('#today-card-title')).toHaveText(title!);
+    expect(problems).toEqual([]);
+  });
+});
+
+test('the archetype can be viewed, corrected by hand or left open from the profile', async ({ page }, info) => {
+  test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
+  const t = ui(info);
+  const locale = String(info.project.use.locale).startsWith('de') ? 'de' : 'en';
+  const problems = guard(page);
+  await completeOnboarding(page, t);
+  await page.getByRole('link', { name: t.nav.profile }).click();
+
+  // View the full archetype and come back to the profile.
+  await page.getByRole('button', { name: t.profile.view }).click();
+  await expect(page.getByText(t.archetype.strength, { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: t.archetype.toProfile }).click();
+  await expect(page.getByRole('heading', { level: 1, name: t.profile.title })).toBeVisible();
+
+  // Correct it by hand: every one of the eight archetypes is selectable.
+  await page.getByRole('button', { name: t.profile.choose }).click();
+  const options = page.locator('#prof-choose [role="radio"]');
+  await expect(options).toHaveCount(9);
+  const target = CONTENT.archetypes[5]!;
+  await options.filter({ has: page.getByText(target.name[locale], { exact: true }) }).click();
+  await expect(page.getByText(t.profile.archetypeSaved)).toBeVisible();
+  await expect(page.locator('.profile__archetype .h3')).toHaveText(target.name[locale]);
+  await expect(page.getByText(t.profile.manual, { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: t.profile.view }).click();
+  await expect(page.getByText(t.archetype.basisManual)).toBeVisible();
+  await page.getByRole('button', { name: t.archetype.toProfile }).click();
+
+  // Leave it open: neutral profile, no invented type; survives a reload.
+  await page.getByRole('button', { name: t.profile.choose }).click();
+  await options.filter({ has: page.getByText(t.profile.neutralOption, { exact: true }) }).click();
+  await expect(page.locator('.profile__archetype .h3')).toHaveText(t.archetype.neutralTitle);
+  await page.reload();
+  await expect(page.locator('.profile__archetype .h3')).toHaveText(t.archetype.neutralTitle);
+  await page.getByRole('link', { name: t.nav.today }).click();
+  await page.getByRole('button', { name: t.today.draw }).click();
+  await expect(page.getByText(t.today.message, { exact: true })).toBeVisible();
+  await expect(page.getByText(t.today.lens, { exact: true })).toHaveCount(0);
   expect(problems).toEqual([]);
 });

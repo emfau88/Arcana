@@ -418,21 +418,7 @@ a {
   border-color: rgba(243, 164, 160, 0.35);
   color: var(--error);
 }
-.prototype-tag {
-  display: inline-flex;
-  flex: none;
-  white-space: nowrap;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: var(--r-pill);
-  border: 1px dashed rgba(169, 149, 203, 0.45);
-  color: var(--mist-300);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
+
 
 /* ------------------------------------------------- Segmented / choices */
 .segmented {

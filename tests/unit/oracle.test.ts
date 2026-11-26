@@ -69,10 +69,12 @@ describe('daily card', () => {
     expect(c.lens).toBeNull();
   });
 
-  it('falls back to the default theme when a theme has no content yet', () => {
-    expect(resolveTheme(CONTENT, 'career')).toBe(CONTENT.defaultTheme);
+  it('offers all six themes and falls back to the default when a pack lacks one', () => {
+    for (const th of ['self', 'love', 'career', 'change', 'balance', 'creativity'] as const) expect(resolveTheme(CONTENT, th)).toBe(th);
+    const partial = { ...CONTENT, availableThemes: ['self', 'love'] as const };
+    expect(resolveTheme(partial, 'career')).toBe(CONTENT.defaultTheme);
     const r = createDailyRecord({
-      pack: CONTENT,
+      pack: partial,
       clock: localClock(2026, 11, 26),
       rng: seededRng(2),
       themeId: 'career',
@@ -142,7 +144,8 @@ describe('three-card reading', () => {
 describe('collection and history', () => {
   it('counts each card once, with appearances and earliest sighting', () => {
     const ds = [daily('2026-11-25', 'major-16-tower', '2026-11-25T08:00:00.000Z'), daily('2026-11-26', 'major-19-sun', '2026-11-26T08:00:00.000Z')];
-    const d = revealAll(createDraft(CONTENT, 'self', at('2026-11-24T10:00:00.000Z'), seededRng(1)));
+    const drawn = revealAll(createDraft(CONTENT, 'self', at('2026-11-24T10:00:00.000Z'), seededRng(1)));
+    const d = { ...drawn, cardIds: ['major-16-tower', 'major-19-sun', 'major-02-high-priestess'] as [string, string, string] };
     const r = finalizeReading(CONTENT, d, 'de', at('2026-11-24T10:00:00.000Z'));
     const col = deriveCollection(ds, [r]);
     expect(col.size).toBe(3);

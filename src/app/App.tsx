@@ -93,7 +93,7 @@ export function App() {
       screen = <Questionnaire key={route.step} step={route.step} />;
       break;
     case 'archetype':
-      screen = <ArchetypeReveal />;
+      screen = <ArchetypeReveal parsed={parsed} />;
       break;
     case 'today':
       screen = <Today />;
@@ -130,7 +130,7 @@ export function App() {
         {showNav ? <TabBar route={route} /> : null}
       </div>
       <p className="world__caption" aria-hidden="true">
-        {t.common.appName} · {t.common.prototype}
+        {t.common.appName}
       </p>
     </>
   );

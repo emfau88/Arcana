@@ -69,10 +69,6 @@ function OracleEntry() {
             </button>
           ))}
         </div>
-        <p className="notice oracle__proto">
-          <span className="prototype-tag">{t.common.prototype}</span>
-          <span>{t.onboarding.themePrototype}</span>
-        </p>
       </section>
 
       <section aria-labelledby="oracle-positions" className="oracle__section">

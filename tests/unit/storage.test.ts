@@ -62,6 +62,21 @@ describe('IndexedDB repository', () => {
     again.close();
   });
 
+  it('keeps a manual archetype correction and still reads profiles written before it existed', async () => {
+    const manual: Profile = { ...profile, archetypeId: 'wanderer', archetypeSource: 'manual' };
+    await repo.putProfile(manual);
+    expect((await repo.loadAll()).profile).toEqual(manual);
+    await repo.putProfile(profile); // no archetypeSource field (G1 record)
+    expect((await repo.loadAll()).profile).toEqual(profile);
+  });
+
+  it('rejects an unknown archetype source as unreadable', async () => {
+    await rawPut('kv', { ...profile, archetypeSource: 'invented' }, 'profile');
+    const all = await repo.loadAll();
+    expect(all.profile).toBeNull();
+    expect(all.skippedCorrupt).toBe(1);
+  });
+
   it('stores exactly one daily card per day, even on double tap', async () => {
     const first = record(1);
     const second = { ...record(2), cardId: CONTENT.cards.find((c) => c.id !== first.cardId)!.id };
