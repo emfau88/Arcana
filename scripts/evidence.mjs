@@ -28,6 +28,9 @@ const context = await browser.newContext({
   reducedMotion: reduce === 'reduce' ? 'reduce' : 'no-preference',
   isMobile: !desktop,
   hasTouch: !desktop,
+  // The font-size simulation injects a style tag; the production CSP (correctly) blocks
+  // inline styles, so only this test mode bypasses it.
+  bypassCSP: font !== 100,
 });
 const page = await context.newPage();
 const errors = [];

@@ -1,3 +1,4 @@
+import { cardKeywords } from './keywords.ts';
 import { ALL_THEME_IDS, ARCHETYPE_ORDER, LOCALES, POSITIONS, type ThemeId } from '../domain/types.ts';
 import type { ContentPack, Localized } from './schema.ts';
 
@@ -115,6 +116,7 @@ export function validateContent(pack: ContentPack, stage: ContentStage = 'g1'): 
     if (!['light', 'twilight', 'shadow'].includes(c.tone)) errors.push(`${w}: unknown tone`);
     checkText(`${w}.title`, c.title, { maxLen: 24 });
     checkText(`${w}.essence`, c.essence, { maxLen: 90 });
+    checkText(`${w}.keywords`, cardKeywords(c), { maxLen: 48 });
     checkText(`${w}.reflection`, c.reflection, { maxLen: 110 });
     checkText(`${w}.ritual`, c.ritual, { maxLen: 200 });
     for (const p of POSITIONS) checkText(`${w}.positions.${p}`, c.positions[p], { maxLen: 120 });

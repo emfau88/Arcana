@@ -1,0 +1,127 @@
+{
+  "measuredAt": "2026-11-26T20:41:59.707Z",
+  "baseUrl": "http://127.0.0.1:5181/",
+  "conditions": {
+    "viewport": "412x915@2",
+    "cpu": "4x",
+    "net": "40ms/10Mbit",
+    "cache": "disabled",
+    "runs": 3
+  },
+  "scenarios": {
+    "first-launch": {
+      "ready": {
+        "median": 1046,
+        "runs": [
+          1099,
+          1033,
+          1046
+        ]
+      },
+      "fcp": {
+        "median": 488,
+        "runs": [
+          488,
+          472,
+          532
+        ]
+      },
+      "lcp": {
+        "median": 0,
+        "runs": [
+          0,
+          0,
+          1128
+        ]
+      },
+      "kb": {
+        "median": 457,
+        "runs": [
+          457,
+          457,
+          457
+        ]
+      },
+      "imgKb": {
+        "median": 255,
+        "runs": [
+          255,
+          255,
+          255
+        ]
+      }
+    },
+    "today": {
+      "ready": {
+        "median": 1189,
+        "runs": [
+          1170,
+          1255,
+          1189
+        ]
+      },
+      "fcp": {
+        "median": 496,
+        "runs": [
+          496,
+          468,
+          512
+        ]
+      },
+      "lcp": {
+        "median": 1008,
+        "runs": [
+          968,
+          1008,
+          1060
+        ]
+      },
+      "kb": {
+        "median": 683,
+        "runs": [
+          549,
+          683,
+          683
+        ]
+      },
+      "imgKb": {
+        "median": 442,
+        "runs": [
+          347,
+          442,
+          442
+        ]
+      }
+    },
+    "reveal": {
+      "fps": {
+        "median": 46,
+        "runs": [
+          46
+        ]
+      },
+      "worstFrameMs": {
+        "median": 183,
+        "runs": [
+          183
+        ]
+      },
+      "jank": {
+        "median": 2,
+        "runs": [
+          2
+        ]
+      }
+    },
+    "idle": {
+      "runningAnimations": {
+        "median": 0,
+        "runs": [
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

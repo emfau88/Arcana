@@ -7,7 +7,7 @@ import { fmt } from '../../i18n/index.ts';
 import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 
-export const APP_VERSION = '0.2.0';
+export const APP_VERSION = '0.2.1';
 
 export function Profile() {
   const { t, pack, state, actions } = useApp();

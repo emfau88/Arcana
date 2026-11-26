@@ -2,9 +2,23 @@
 :root {
   color-scheme: dark;
 
-  /* Ink */
-  --ink-950: #09070f;
-  --ink-900: #100d1c;
+  /* Visual overhaul palette (docs/visual/ART_DIRECTION.md §2) */
+  --night-950: #060812;
+  --midnight-900: #0b1024;
+  --petrol-800: #0e2a36;
+  --petrol-600: #14505c;
+  --teal-glow: #4fd1c5;
+  --violet-800: #24143a;
+  --violet-600: #4a2a6e;
+  --magenta-500: #c2549a;
+  --gold-200: #f6e6b8;
+  --gold-400: #d9b56e;
+  --gold-600: #9a7338;
+  --parchment: #eadbc0;
+
+  /* Ink (mapped onto the night palette so existing screens follow the new world) */
+  --ink-950: var(--night-950);
+  --ink-900: var(--midnight-900);
   --ink-850: #141026;
   --ink-800: #1a1530;
   --ink-700: #221b3a;

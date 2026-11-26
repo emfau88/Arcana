@@ -205,3 +205,38 @@ export function previousDailyCard(dailies: readonly DailyRecord[], beforeKey: st
   for (const d of dailies) if (d.dateKey < beforeKey && (!best || d.dateKey > best.dateKey)) best = d;
   return best?.cardId ?? null;
 }
+
+/**
+ * Days of the journey = distinct local days on which the person used the oracle
+ * (a daily card or a saved reading). Pauses never reduce it (E6: no streak, no loss).
+ */
+export function journeyDays(dailies: readonly DailyRecord[], readings: readonly Reading[]): number {
+  const days = new Set<string>();
+  for (const d of dailies) days.add(d.dateKey);
+  for (const r of readings) {
+    const at = new Date(r.createdAt);
+    if (!Number.isNaN(at.getTime())) days.add(localDateKey(at));
+  }
+  return days.size;
+}
+
+export interface JourneyPosition {
+  /** 1-based day of the journey (≥ 1). */
+  day: number;
+  /** 1-based round through the 21 stations of the Fool's journey. */
+  round: number;
+  /** 0 outer path (I–VII), 1 inner path (VIII–XIV), 2 higher path (XV–XXI). */
+  path: 0 | 1 | 2;
+  /** 1-based station within the current path of seven. */
+  station: number;
+}
+
+/**
+ * Places a journey day on the traditional three rows of seven of the Fool's journey.
+ * Purely symbolic and monotonic: every day of use moves one station on, pauses move nothing.
+ */
+export function journeyPosition(day: number): JourneyPosition {
+  const d = Math.max(1, Math.floor(day));
+  const inRound = (d - 1) % 21;
+  return { day: d, round: Math.floor((d - 1) / 21) + 1, path: Math.floor(inRound / 7) as 0 | 1 | 2, station: (inRound % 7) + 1 };
+}

@@ -1,0 +1,69 @@
+/* Visible journey: plaque + star path (teal = today, gold = reached). */
+.journey {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+.journey__plaque {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+.journey__plaque-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--gold-200);
+  background:
+    radial-gradient(80% 140% at 50% 120%, rgba(79, 209, 197, 0.16), transparent 70%),
+    linear-gradient(180deg, rgba(40, 24, 66, 0.92), rgba(12, 16, 38, 0.92));
+  border: 1px solid rgba(236, 208, 143, 0.7);
+  box-shadow:
+    inset 0 0 0 2px rgba(6, 8, 18, 0.5),
+    inset 0 0 0 2.6px rgba(236, 208, 143, 0.22),
+    0 0 18px -4px rgba(236, 208, 143, 0.4);
+  text-shadow: 0 0 10px rgba(246, 230, 184, 0.4);
+}
+.journey__spark {
+  color: var(--teal-glow);
+  filter: drop-shadow(0 0 4px rgba(79, 209, 197, 0.9));
+}
+.journey__path {
+  display: block;
+  width: min(300px, 82%);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 4px rgba(236, 208, 143, 0.35));
+}
+.journey__now {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: journey-now 2.6s ease-in-out 600ms 3;
+}
+@keyframes journey-now {
+  50% {
+    filter: drop-shadow(0 0 7px rgba(79, 209, 197, 0.95));
+  }
+}
+.journey__caption {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  text-shadow: 0 1px 8px rgba(6, 8, 18, 0.95);
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey__now {
+    animation: none;
+  }
+}

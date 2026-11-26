@@ -90,6 +90,10 @@ a {
   z-index: -1;
 }
 .stage {
+  /* --main-h: height of the scrolling content area above the tab bar. Screens use it
+     to size their hero content to the first screen (e.g. the daily card). */
+  --stage-h: 100vh;
+  --main-h: calc(var(--stage-h) - var(--tabbar-h) - var(--safe-bottom) - var(--safe-top));
   position: relative;
   display: flex;
   flex-direction: column;
@@ -99,8 +103,28 @@ a {
   margin: 0 auto;
   overflow: hidden;
 }
+@supports (height: 100dvh) {
+  .stage {
+    --stage-h: 100dvh;
+  }
+}
+/* B-06: edge-to-edge Android draws the transparent status bar over the app. A dark band
+   of exactly its height keeps scrolled text from showing behind the clock. Height 0
+   wherever there is no status-bar inset (browsers, desktop). */
+.stage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--safe-top);
+  background: linear-gradient(180deg, rgba(6, 8, 22, 0.95), rgba(6, 8, 22, 0.85));
+  z-index: 3;
+  pointer-events: none;
+}
 .stage__main {
   position: relative;
+  z-index: 1;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -127,6 +151,7 @@ a {
     padding: 28px;
   }
   .stage {
+    --stage-h: min(900px, calc(100dvh - 56px));
     width: min(var(--stage-max), 100%);
     height: min(900px, calc(100dvh - 56px));
     border-radius: 30px;
@@ -140,15 +165,12 @@ a {
   .world__aside {
     display: block;
     position: fixed;
-    left: 50%;
-    top: 50%;
-    width: min(1100px, 92vw);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    background: url('/cards/card-back.webp') center / 62% no-repeat;
-    opacity: 0.06;
-    filter: blur(0.5px);
-    mask-image: radial-gradient(circle at center, #000 30%, transparent 68%);
+    inset: -40px;
+    /* The painted night world, blurred and dimmed, extends the app column outwards. */
+    background: url('/world/bg-today-720.webp') center / cover no-repeat;
+    opacity: 0.38;
+    filter: blur(28px) saturate(1.1);
+    mask-image: radial-gradient(70% 90% at 50% 50%, #000 40%, transparent 100%);
     pointer-events: none;
     z-index: -1;
   }
@@ -162,6 +184,15 @@ a {
     text-transform: uppercase;
     font-size: 0.78rem;
     color: var(--text-3);
+  }
+}
+@media (min-width: 760px) and (max-height: 880px) {
+  .world {
+    padding: 14px;
+  }
+  .stage {
+    --stage-h: calc(100dvh - 28px);
+    height: calc(100dvh - 28px);
   }
 }
 
@@ -296,6 +327,52 @@ a {
     0 14px 34px -12px rgba(216, 184, 121, 0.9),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
+/* Ritual CTA (ART_DIRECTION §5): dark jewel pill, gold rim, magenta under-glow, serif. */
+.btn--ritual {
+  min-height: 54px;
+  padding: 12px 30px;
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--gold-200);
+  background:
+    radial-gradient(90% 120% at 50% 120%, rgba(194, 84, 154, 0.45), transparent 60%),
+    linear-gradient(180deg, #2c1a48 0%, #170f2c 55%, #0b0a1c 100%) padding-box,
+    linear-gradient(180deg, #f6e6b8, #c2549a 55%, #d9b56e) border-box;
+  border: 1.5px solid transparent;
+  box-shadow:
+    0 0 0 4px rgba(217, 181, 110, 0.08),
+    0 12px 34px -12px rgba(194, 84, 154, 0.65),
+    0 0 26px -6px rgba(217, 181, 110, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  text-shadow: 0 0 12px rgba(246, 230, 184, 0.45);
+  overflow: hidden;
+}
+.btn--ritual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 246, 220, 0.28) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.btn--ritual:hover::after,
+.btn--ritual:focus-visible::after {
+  transform: translateX(120%);
+  transition: transform 900ms var(--ease-out);
+}
+.btn--ritual svg {
+  color: var(--gold-200);
+  filter: drop-shadow(0 0 4px rgba(246, 230, 184, 0.8));
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn--ritual:hover::after,
+  .btn--ritual:focus-visible::after {
+    transition: none;
+  }
+}
 .btn--ghost {
   color: var(--brass-300);
   background: rgba(216, 184, 121, 0.04);
@@ -358,7 +435,8 @@ a {
   position: relative;
   padding: var(--s-4) var(--s-4);
   border-radius: var(--r-m);
-  background: linear-gradient(180deg, rgba(38, 30, 58, 0.62), rgba(24, 19, 40, 0.62));
+  /* ≥ 82 % opacity: body text never sits directly on illustration (ART_DIRECTION §2). */
+  background: linear-gradient(180deg, rgba(34, 26, 56, 0.88), rgba(16, 18, 40, 0.9));
   border: 1px solid var(--surface-line);
   box-shadow: var(--shadow-panel), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
@@ -366,7 +444,7 @@ a {
   border-color: var(--brass-line);
   background:
     radial-gradient(120% 120% at 0% 0%, rgba(216, 184, 121, 0.09), transparent 55%),
-    linear-gradient(180deg, rgba(38, 30, 58, 0.7), rgba(24, 19, 40, 0.7));
+    linear-gradient(180deg, rgba(34, 26, 56, 0.9), rgba(16, 18, 40, 0.9));
 }
 .panel__label {
   display: flex;

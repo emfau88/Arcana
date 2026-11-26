@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS), **wartet auf die Rückmeldung des Eigentümers zum G2-Bericht** · **Nächstes Gate:** G3 (Härtung)
+**Stand:** 26.11.2026 · **Version:** 0.2.1 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **vom Eigentümer freigegeben** (26.11.2026), B-05 und B-06 behoben (D-42), PR #2 von `design/visual-overhaul` nach `main`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** Merge → Tag `v0.2.1` → V03 auf `feature/v03-fundament` (D-40). G3 (Härtung) ist jetzt Bulk V07.5
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -9,8 +9,12 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | Was | Wo |
 |---|---|
 | Projektroot (neu, isoliert) | `%USERPROFILE%\Documents\PersonalOracle-Web` |
-| Git | eigenes Repo, Branch `main`, Remote `https://github.com/emfau88/Arcana` (öffentlich) |
-| Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages, Workflow `.github/workflows/pages.yml`) |
+| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.2.0), `design/visual-overhaul` = V02 zur Freigabe. Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
+| Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages aus `main`, Workflow `.github/workflows/pages.yml`) |
+| Design-Vorschau | https://emfau88.github.io/Arcana/preview/ (Branch `design/visual-overhaul`, eigene Datenbank, D-29) |
+| Produktplan V2 | `docs/product/` (Vision, Systeme, Progression, Inhalte, Informationsarchitektur, Monetarisierung, Masterplan V02–V07) |
+| Visual Overhaul | `docs/visual/` (Audit, Art Direction, Asset-Anfragen mit Bulks B1–B7, V02-Roadmap, Performance) |
+| Deck-v2-Master (Sicherung) | `%USERPROFILE%\Documents\ARCANA-Assets\deck-v2-masters` (außerhalb Repo und Codex-Cache, mit SHA256SUMS) |
 | Lokale Preview | `npm run build && npm run preview` → http://127.0.0.1:5181/ |
 | Debug-APK | `android\app\build\outputs\apk\debug\app-debug.apk` (nicht versioniert) |
 | Nachweise | `docs/evidence/browser`, `docs/evidence/android`, `docs/assets/deck-overview-v2.webp` |
@@ -39,17 +43,36 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 
 ## Offene Punkte
 
-- **Rückmeldung des Eigentümers** zum G2-Bericht, danach G3.
-- Kartenkunst ist durch Deck v2 ersetzt (D-26). Archetyp-Sigillen und App-Icon sind noch im Vektorstil (`BACKLOG.md`).
-- Kaltstart im Emulator zuletzt 3,8 s unter Rechnerlast (vorher 2,4 s). In G3 auf ruhigem Rechner bzw. Gerät messen.
-- Menschliches Lektorat der Texte vor dem Release.
-- D-08 (geschlechtsinklusive DE-Archetypnamen) wartet noch auf ein Eigentümerurteil.
-- Name „ARCANA“ und App-ID sind vorläufig (G4).
-- TalkBack wurde nicht manuell geprüft. Als Ersatz wurden die Accessibility-Labels per uiautomator geprüft (G3).
+Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md` §0.1.
 
-## Nächstes Arbeitspaket (nach Rückmeldung)
+- [x] **Freigabe des Tagesorakel-Screens (V02)** durch den Eigentümer (26.11.2026), B-05/B-06 behoben (D-42).
+- [ ] PR-Merge nach `main`, Tag `v0.2.1` und V03 Fundament (`MASTER_ROADMAP_V2.md`, braucht keine Bilder) auf `feature/v03-fundament`.
+- [ ] **Bild-Bulk B2** (A05 + A07 als Stilprobe, dann A08–A14, A06, A19) kann parallel angefordert werden: `docs/visual/ASSET_REQUESTS.md` §0.1.
+- [ ] Offene Produktentscheidungen E8–E20: `MASTER_ROADMAP_V2.md` §9 (E19 vor V03.1, E8/E9/E20 vor V04).
+- [ ] **Rückmeldung des Eigentümers** zum G2-Bericht (G3 ist jetzt Bulk V07.5).
+- [ ] Archetyp-Sigillen und App-Icon an Deck v2 angleichen (noch Vektorstil, `BACKLOG.md`).
+- [ ] Kaltstart im Release-Build und auf echtem Gerät messen (V07.5). Emulator mit V02: Median 1,95 s unter Rechnerlast (vorher 2,4 s).
+- [ ] Menschliches Lektorat der Texte vor dem Release (E18).
+- [ ] D-08 (geschlechtsinklusive DE-Archetypnamen) wartet noch auf ein Eigentümerurteil.
+- [ ] Name „ARCANA“ und App-ID festlegen (E11, vor dem geschlossenen Test).
+- [ ] TalkBack manuell prüfen (V07.5). Bisher nicht manuell geprüft. Als Ersatz wurden die Accessibility-Labels per uiautomator geprüft (G3).
 
-G3: S11 Speicher unter Last, Abbruch und Upgrade (inkl. optionalem PWA-Cache), S12 vollständige Q01–Q16-Matrix inklusive TalkBack, S13 Release-Modus-Testbuild mit SHA-256 und Messungen.
+## Bekannte offene Fehler und Grenzfälle (Stand V02, 26.11.2026)
+
+| # | Befund | Status | Wo |
+|---|---|---|---|
+| B-01 | Enthüllung, wenn sofort beim Fertigladen getippt wird: 46 fps, 2 Ruckler, schlechtester Frame 183 ms (Grenze ≥ 50 fps, ≤ 120 ms). Mit 300 ms Abstand 53–54 fps | **erledigt** (D-41): Schriften werden vorgewärmt, solange die Karte verdeckt ist; danach schlechtester Frame 50 ms, 0 Ruckler | `docs/visual/PERFORMANCE.md` „V02 final“ |
+| B-02 | Android-Kaltstart im ersten Lauf unter Last nicht vergleichbar | **erledigt:** zweiter Lauf Median 1,95 s bis zum ersten Screen (Debug-Build, 45–75 % Last, also eher zu hoch), Grenze ≤ 3,0 s | ebenda |
+| B-03 | Android-E2E: Tippen auf „Zur Tageskarte“ kam nicht an | **erledigt:** Fehler im Testskript (Knoten außerhalb des Sichtbereichs mit leeren Bounds, falsche Scrollrichtung), behoben in `scripts/android-evidence.mjs`; zweiter Lauf 13/13 PASS | ebenda |
+| B-04 | Capacitor-Bridge loggt im Debug-Build `[object Object]` in Logcat | bekannt, im Release-Build prüfen (V07.5) | `docs/BACKLOG.md` |
+| B-05 | Bei 360 px Breite berührt die obere Goldkante der Karte die Datumszeile um wenige Pixel | erledigt (D-42): 13 px statt 8 px Luft über dem Kartenrahmen im Kompaktmodus, „Reise fortsetzen“ bleibt bei 360, 412 und Desktop über der Tab-Leiste | `evidence/v02-b05-360.webp` |
+| B-06 | Android: Beim Scrollen läuft Text unter die durchsichtige Statusleiste (vermutlich schon vor V02) | erledigt (D-42): dunkles Band in Höhe der Statusleiste, Android-Lauf 3: 13/13 PASS | `evidence/v02-b06-android.webp` |
+| B-07 | Mindestkontrast (R2, gilt ab QG-V03): bei 200 % Schrift liegt der Kernsatz über der hellen Sonnenkarte bei 3,0:1, am Desktop (EN, 1280 px) die kleine Zeile über dem Kartentitel bei 4,4:1. Bei 412 und 360 px ist jeder Text ≥ 4,9:1 | offen, optische Korrektur in V03.5 nach Rückfrage | `today-showcase.mjs --contrast` |
+| B-08 | „Heute sichtbar“ +22–27 % zu `main` (normiert ≈ 1.210–1.270 ms), Grenze ab QG-V03 ≤ 1.250 ms | offen, V03.5 (unsichtbar optimieren) | `docs/visual/PERFORMANCE.md` |
+
+## Nächstes Arbeitspaket (nach Freigabe)
+
+V03 Fundament und globales Designsystem (`docs/product/MASTER_ROADMAP_V2.md` §3): Datenmodell v2 mit Sicherungsformat, Navigation, Designsystem auf allen Screens, Mindestkontrast und Leistungsbudgets im Gate. Die frühere G3-Liste (S11–S13) steckt in V07.5.
 
 ## Schnellprüfung
 

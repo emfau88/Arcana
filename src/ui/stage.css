@@ -1,0 +1,260 @@
+/* Card stage – light around the hero card (ART_DIRECTION.md §4). */
+.cstage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 1.7dvh, 20px) 0 clamp(10px, 1.7dvh, 20px);
+  isolation: isolate;
+}
+/* Hero card size on the stage: large, but leaves room for the core message below. */
+/* The hero card takes the height the first screen leaves after brand, title, core
+   message, journey and main action (--today-chrome, set by the screen), so the
+   main action stays visible on normal phones. Card ratio 2:3. */
+.cstage .ocard--hero {
+  width: min(54vw, 236px, max(150px, calc((var(--main-h, 100dvh) - var(--today-chrome, 31.5rem)) / 1.5)));
+}
+.cstage__card {
+  position: relative;
+  z-index: 2;
+}
+
+/* Fine light rays behind the card. */
+.cstage__rays {
+  position: absolute;
+  z-index: 0;
+  width: min(140vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* Irregular, soft rays (two layers, blurred) instead of an even geometric fan. */
+  background:
+    conic-gradient(
+      from 8deg,
+      transparent 0deg 10deg,
+      rgba(255, 240, 200, 0.26) 14deg,
+      transparent 19deg 41deg,
+      rgba(255, 240, 200, 0.16) 47deg,
+      transparent 54deg 78deg,
+      rgba(255, 240, 200, 0.3) 83deg,
+      transparent 88deg 118deg,
+      rgba(255, 240, 200, 0.18) 125deg,
+      transparent 131deg 160deg,
+      rgba(255, 240, 200, 0.24) 166deg,
+      transparent 172deg 196deg,
+      rgba(255, 240, 200, 0.16) 203deg,
+      transparent 210deg 238deg,
+      rgba(255, 240, 200, 0.28) 263deg,
+      transparent 268deg 292deg,
+      rgba(255, 240, 200, 0.18) 299deg,
+      transparent 306deg 330deg,
+      rgba(255, 240, 200, 0.22) 338deg,
+      transparent 345deg
+    );
+  mask-image: radial-gradient(closest-side, #000 22%, rgba(0, 0, 0, 0.45) 48%, transparent 74%);
+  -webkit-mask-image: radial-gradient(closest-side, #000 22%, rgba(0, 0, 0, 0.45) 48%, transparent 74%);
+  filter: blur(5px);
+  opacity: 0.55;
+  transition: opacity 900ms var(--ease-out), transform 1600ms var(--ease-out);
+}
+.cstage.is-revealed .cstage__rays {
+  opacity: 1;
+  transform: rotate(7deg) scale(1.05);
+}
+
+/* Aura: gold core, magenta and violet halo. */
+.cstage__aura {
+  position: absolute;
+  z-index: 1;
+  width: min(118vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 236, 190, 0.5) 0%,
+    rgba(217, 181, 110, 0.32) 28%,
+    rgba(194, 84, 154, 0.2) 52%,
+    rgba(74, 42, 110, 0.14) 68%,
+    transparent 82%
+  );
+  opacity: 0.55;
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+}
+.cstage.is-revealed .cstage__aura {
+  opacity: 1;
+  transform: scale(1.06);
+  animation: aura-breathe 3.4s ease-in-out 900ms 3;
+}
+.cstage.is-revealing .cstage__aura {
+  animation: aura-bloom-2 1100ms var(--ease-out);
+}
+@keyframes aura-bloom-2 {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.22);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+@keyframes aura-breathe {
+  50% {
+    opacity: 0.86;
+  }
+}
+
+/* Crown light: a warm bloom behind the upper edge of the card. */
+.cstage__crown {
+  position: absolute;
+  z-index: 1;
+  top: 2%;
+  width: min(70vw, 300px);
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 244, 214, 0.55), rgba(236, 208, 143, 0.18) 55%, transparent);
+  filter: blur(8px);
+  opacity: 0.6;
+  transition: opacity 900ms var(--ease-out);
+}
+.cstage.is-revealed .cstage__crown {
+  opacity: 1;
+}
+
+/* Floating sparkles: twinkle three times after the entrance, then rest (E5). */
+.cstage__motes {
+  position: absolute;
+  z-index: 1;
+  inset: 0 max(0px, calc(50% - 190px));
+  pointer-events: none;
+}
+.cstage__motes i {
+  position: absolute;
+  color: #fff4d2;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 5px rgba(246, 230, 184, 0.9));
+  animation: mote-twinkle 3.2s ease-in-out 3;
+}
+.cstage__motes i:nth-child(3n) {
+  color: #bff3ec;
+  filter: drop-shadow(0 0 5px rgba(79, 209, 197, 0.9));
+}
+.cstage__motes svg {
+  display: block;
+}
+@keyframes mote-twinkle {
+  50% {
+    opacity: 0.2;
+    transform: scale(0.7);
+  }
+}
+
+/* Light pool on the "floor" under the card. */
+.cstage__floor {
+  position: absolute;
+  z-index: 1;
+  bottom: 8px;
+  width: min(80vw, 330px);
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(246, 230, 184, 0.42), rgba(194, 84, 154, 0.16) 60%, transparent);
+  filter: blur(4px);
+}
+
+/* Gold glow on the card faces of the hero card only. */
+.cstage .ocard__face {
+  box-shadow:
+    0 0 0 1px rgba(255, 240, 200, 0.65),
+    0 0 0 3px rgba(6, 8, 18, 0.55),
+    0 0 0 4px rgba(236, 208, 143, 0.35),
+    0 0 22px 3px rgba(236, 208, 143, 0.5),
+    0 0 60px 8px rgba(194, 84, 154, 0.24),
+    0 0 110px 20px rgba(79, 209, 197, 0.08),
+    0 34px 60px -24px rgba(0, 0, 0, 0.95);
+}
+
+/* Filigree corners just outside the card edge. */
+.cstage__frame {
+  position: absolute;
+  inset: -14px;
+  pointer-events: none;
+}
+.cstage__frame .corner {
+  width: 46px;
+  height: 46px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 6px rgba(246, 230, 184, 0.55));
+}
+.cstage__frame .corner--tl {
+  left: 0;
+  top: 0;
+}
+.cstage__frame .corner--tr {
+  right: 0;
+  top: 0;
+  transform: scaleX(-1);
+}
+.cstage__frame .corner--bl {
+  left: 0;
+  bottom: 0;
+  transform: scaleY(-1);
+}
+.cstage__frame .corner--br {
+  right: 0;
+  bottom: 0;
+  transform: scale(-1, -1);
+}
+
+/* One-time spark burst on reveal. */
+.cstage__sparks {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.cstage__sparks i {
+  grid-area: 1 / 1;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffbe8 0%, #f6e6b8 40%, rgba(217, 181, 110, 0) 72%);
+  box-shadow: 0 0 10px 2px rgba(246, 230, 184, 0.7);
+  opacity: 0;
+  animation: spark-fly 1100ms var(--ease-out) forwards;
+}
+@keyframes spark-fly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cstage__rays,
+  .cstage__aura {
+    transition: none;
+  }
+  .cstage.is-revealed .cstage__aura,
+  .cstage.is-revealing .cstage__aura {
+    animation: none;
+  }
+  .cstage__sparks {
+    display: none;
+  }
+  .cstage__motes i {
+    animation: none;
+  }
+  .cstage__crown {
+    transition: none;
+  }
+}
