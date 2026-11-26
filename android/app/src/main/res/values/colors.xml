@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- "Nocturne" tokens, mirrored from src/styles/tokens.css -->
+    <color name="oracle_ink">#100D1C</color>
+    <color name="oracle_ink_deep">#09070F</color>
+    <color name="oracle_brass">#D8B879</color>
+    <color name="colorPrimary">#100D1C</color>
+    <color name="colorPrimaryDark">#09070F</color>
+    <color name="colorAccent">#D8B879</color>
+</resources>

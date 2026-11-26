@@ -96,18 +96,18 @@
 /* The medallion is ~11% of the card width: longer numerals get a smaller size. */
 .ocard__num {
   top: 6.67%;
-  font-size: 5.6cqw;
+  font-size: calc(5.6cqw / var(--text-zoom, 1));
   font-weight: 600;
   letter-spacing: 0.02em;
 }
 .ocard__num[data-len='3'] {
-  font-size: 4.3cqw;
+  font-size: calc(4.3cqw / var(--text-zoom, 1));
 }
 .ocard__num[data-len='4'] {
-  font-size: 3.6cqw;
+  font-size: calc(3.6cqw / var(--text-zoom, 1));
 }
 .ocard__num[data-len='5'] {
-  font-size: 3cqw;
+  font-size: calc(3cqw / var(--text-zoom, 1));
   letter-spacing: 0;
 }
 .ocard__title {
@@ -115,11 +115,24 @@
   max-width: 58%;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 7.4cqw;
+  font-size: calc(7.4cqw / var(--text-zoom, 1));
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-variant-caps: all-small-caps;
+}
+.ocard__title[data-fit='m'] {
+  font-size: calc(6.2cqw / var(--text-zoom, 1));
+}
+.ocard__title[data-fit='l'] {
+  max-width: 62%;
+  font-size: calc(5.2cqw / var(--text-zoom, 1));
+  letter-spacing: 0.04em;
+}
+.ocard__title[data-fit='xl'] {
+  max-width: 64%;
+  font-size: calc(4.4cqw / var(--text-zoom, 1));
+  letter-spacing: 0.03em;
 }
 
 /* Small sizes: wordless ornaments instead of unreadable micro text, so the

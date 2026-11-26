@@ -8,6 +8,15 @@ export const cardSrc = (assetId: string, thumb = false) => `${base}cards/${thumb
 
 export type CardSize = 'hero' | 'spread' | 'grid' | 'mini';
 
+/** The plaque holds ~10 capitals at full size; longer titles step down instead of being cut. */
+export function titleFit(title: string): 'm' | 'l' | 'xl' | undefined {
+  const n = title.length;
+  if (n <= 11) return undefined;
+  if (n <= 14) return 'm';
+  if (n <= 18) return 'l';
+  return 'xl';
+}
+
 export interface OracleCardProps {
   card: CardContent | null;
   locale: Locale;
@@ -66,7 +75,7 @@ export function OracleCard({
                 <span className="ocard__num" data-len={Math.min(toRoman(card.order).length, 5)} aria-hidden="true">
                   {toRoman(card.order)}
                 </span>
-                <span className="ocard__title" aria-hidden="true">
+                <span className="ocard__title" data-fit={titleFit(card.title[locale])} aria-hidden="true">
                   {card.title[locale]}
                 </span>
               </>

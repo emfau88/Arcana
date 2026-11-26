@@ -1,6 +1,4 @@
-import '@fontsource-variable/cormorant-garamond/wght.css';
-import '@fontsource-variable/cormorant-garamond/wght-italic.css';
-import '@fontsource-variable/manrope/wght.css';
+import './styles/fonts.css';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/screens.css';
@@ -9,9 +7,11 @@ import { createRoot } from 'react-dom/client';
 import { App } from './app/App.tsx';
 import { AppProvider } from './app/store.tsx';
 import { ToastProvider } from './ui/feedback.tsx';
+import { applyTextZoom } from './platform/textZoom.ts';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('#root missing');
+applyTextZoom();
 
 createRoot(container).render(
   <StrictMode>

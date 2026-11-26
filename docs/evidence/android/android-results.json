@@ -1,0 +1,142 @@
+{
+  "serial": "emulator-5554",
+  "package": "com.energycrafted.personaloracle.dev",
+  "original": {
+    "font": "1.0",
+    "airplane": "0",
+    "animator": "null",
+    "transition": "1.0",
+    "window": "1.0",
+    "locale": ""
+  },
+  "after": {
+    "font": "1.0",
+    "airplane": "0",
+    "animator": "null",
+    "transition": "1.0",
+    "window": "1.0"
+  },
+  "metrics": {
+    "firstRunActivityMs": 6684,
+    "firstRunInteractiveMs": 13454,
+    "firstRun": {
+      "htmlMs": 5795,
+      "firstScreenMs": 9027
+    },
+    "coldStartActivityMs": 4009,
+    "coldStartInteractiveMs": 16324,
+    "coldStart": {
+      "htmlMs": 3325,
+      "firstScreenMs": 5668
+    },
+    "startup_debug": {
+      "runs": [
+        {
+          "htmlMs": 2241,
+          "firstScreenMs": 3163
+        },
+        {
+          "htmlMs": 1877,
+          "firstScreenMs": 2621
+        },
+        {
+          "htmlMs": 1504,
+          "firstScreenMs": 2287
+        },
+        {
+          "htmlMs": 1537,
+          "firstScreenMs": 2205
+        },
+        {
+          "htmlMs": 1497,
+          "firstScreenMs": 2252
+        }
+      ],
+      "median": {
+        "htmlMs": 1537,
+        "firstScreenMs": 2287
+      }
+    },
+    "offline": {
+      "htmlMs": 4984,
+      "firstScreenMs": 7926
+    }
+  },
+  "results": [
+    {
+      "check": "First run shows the welcome screen",
+      "status": "PASS",
+      "detail": "locale en, activity 6684 ms, logcat {\"htmlMs\":5795,\"firstScreenMs\":9027}"
+    },
+    {
+      "check": "Questionnaire → archetype reveal",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Daily card revealed",
+      "status": "PASS",
+      "detail": "The Sun"
+    },
+    {
+      "check": "Three-card reading drawn, revealed, saved",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Back from Profile goes to Today",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Back on Today leaves the app (minimise)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Force-stop + cold start keeps today’s card",
+      "status": "PASS",
+      "detail": "The Sun; activity 4009 ms, logcat {\"htmlMs\":3325,\"firstScreenMs\":5668}"
+    },
+    {
+      "check": "Cold start → first screen, median of 5 (debug build, this emulator)",
+      "status": "PASS",
+      "detail": "{\"htmlMs\":1537,\"firstScreenMs\":2287} runs 3163/2621/2287/2205/2252"
+    },
+    {
+      "check": "Cold start in airplane mode",
+      "status": "PASS",
+      "detail": "activity 6123 ms, logcat {\"htmlMs\":4984,\"firstScreenMs\":7926}"
+    },
+    {
+      "check": "System font scale 1.3",
+      "status": "CHECK",
+      "detail": "see screenshots"
+    },
+    {
+      "check": "System font scale 2.0",
+      "status": "CHECK",
+      "detail": "see screenshots"
+    },
+    {
+      "check": "Reduced motion (animations off) reveals instantly",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Every clickable WebView node has a label (uiautomator)",
+      "status": "PASS",
+      "detail": "0 unnamed"
+    },
+    {
+      "check": "Touch targets ≥ 48 dp (126 px @420 dpi)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Emulator settings restored",
+      "status": "PASS",
+      "detail": "{\"font\":\"1.0\",\"airplane\":\"0\",\"animator\":\"null\",\"transition\":\"1.0\",\"window\":\"1.0\"}"
+    }
+  ]
+}
