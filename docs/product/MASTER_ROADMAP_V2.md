@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 bis V03.4 fertig, nächster Bulk V03.5. E9 und E20 entschieden (D-47).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 bis V03.4 fertig, V03.5 in Arbeit (pausiert, Zwischenstand gepusht). E9 und E20 entschieden (D-47).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
