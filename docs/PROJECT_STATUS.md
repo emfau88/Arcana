@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 26.11.2026 · **Version:** 0.2.1 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **vom Eigentümer freigegeben** (26.11.2026), B-05 und B-06 behoben (D-42), PR #2 von `design/visual-overhaul` nach `main`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** Merge → Tag `v0.2.1` → V03 auf `feature/v03-fundament` (D-40). G3 (Härtung) ist jetzt Bulk V07.5
+**Stand:** 26.11.2026 · **Version:** 0.2.1 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **abgeschlossen**: freigegeben am 26.11.2026, B-05/B-06 behoben (D-42), gemergt nach `main` (`553c5d9`), **Tag `v0.2.1`** als Rücksprungpunkt. **V03 läuft** auf `feature/v03-fundament`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** V03.1 Datenmodell v2 mit Sicherungsformat (vorher E19 klären). G3 (Härtung) ist jetzt Bulk V07.5
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -9,7 +9,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | Was | Wo |
 |---|---|
 | Projektroot (neu, isoliert) | `%USERPROFILE%\Documents\PersonalOracle-Web` |
-| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.2.0), `design/visual-overhaul` = V02 zur Freigabe. Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
+| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.2.1, Tag `v0.2.1`), `feature/v03-fundament` = V03 in Arbeit, `design/visual-overhaul` = V02 (abgeschlossen, bleibt als Referenz). Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
 | Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages aus `main`, Workflow `.github/workflows/pages.yml`) |
 | Design-Vorschau | https://emfau88.github.io/Arcana/preview/ (Branch `design/visual-overhaul`, eigene Datenbank, D-29) |
 | Produktplan V2 | `docs/product/` (Vision, Systeme, Progression, Inhalte, Informationsarchitektur, Monetarisierung, Masterplan V02–V07) |
@@ -46,7 +46,8 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md` §0.1.
 
 - [x] **Freigabe des Tagesorakel-Screens (V02)** durch den Eigentümer (26.11.2026), B-05/B-06 behoben (D-42).
-- [ ] PR-Merge nach `main`, Tag `v0.2.1` und V03 Fundament (`MASTER_ROADMAP_V2.md`, braucht keine Bilder) auf `feature/v03-fundament`.
+- [x] PR-Merge nach `main` (`553c5d9`), Tag `v0.2.1`, Branch `feature/v03-fundament` angelegt.
+- [ ] V03 Fundament (`MASTER_ROADMAP_V2.md` §0.1, braucht keine Bilder) auf `feature/v03-fundament`.
 - [ ] **Bild-Bulk B2** (A05 + A07 als Stilprobe, dann A08–A14, A06, A19) kann parallel angefordert werden: `docs/visual/ASSET_REQUESTS.md` §0.1.
 - [ ] Offene Produktentscheidungen E8–E20: `MASTER_ROADMAP_V2.md` §9 (E19 vor V03.1, E8/E9/E20 vor V04).
 - [ ] **Rückmeldung des Eigentümers** zum G2-Bericht (G3 ist jetzt Bulk V07.5).
