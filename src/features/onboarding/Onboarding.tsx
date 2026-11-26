@@ -63,7 +63,7 @@ export function Welcome() {
 /* --------------------------------------------------------------- Questions */
 
 export function Questionnaire({ step }: { step: number }) {
-  const { t, pack, state, actions } = useApp();
+  const { t, tx, pack, state, actions } = useApp();
   const toast = useToast();
   const total = pack.questions.length + 1;
   const question = pack.questions[step - 1];
@@ -144,7 +144,7 @@ export function Questionnaire({ step }: { step: number }) {
       {question ? (
         <div key={question.id} className="onboarding__body fade">
           <h1 className="display h2 onboarding__prompt" id="q-prompt" tabIndex={-1}>
-            {question.prompt[locale]}
+            {tx('identity', `question.${question.id}.prompt`)}
           </h1>
           <div className="choice-list" role="radiogroup" aria-labelledby="q-prompt">
             {question.answers.map((a) => (
@@ -157,7 +157,7 @@ export function Questionnaire({ step }: { step: number }) {
                 onClick={() => choose(a.id)}
               >
                 <span className="choice__mark" aria-hidden="true" />
-                <span className="choice__text">{a.label[locale]}</span>
+                <span className="choice__text">{tx('identity', `question.${question.id}.${a.id}`)}</span>
               </button>
             ))}
           </div>

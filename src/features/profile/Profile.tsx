@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { navigate } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { getArchetype, resolveTheme } from '../../content/index.ts';
+import { ModuleLoadError } from '../../content/modules/registry.ts';
 import { LOCALES, type ArchetypeId, type Locale, type MotionPreference } from '../../domain/types.ts';
 import { fmt } from '../../i18n/index.ts';
 import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
@@ -24,8 +25,8 @@ export function Profile() {
   const guard = async (fn: () => Promise<void>) => {
     try {
       await fn();
-    } catch {
-      toast(t.errors.writeFailed, 'error');
+    } catch (e) {
+      toast(e instanceof ModuleLoadError ? t.errors.contentLoad : t.errors.writeFailed, 'error');
     }
   };
 

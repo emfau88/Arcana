@@ -46,17 +46,17 @@ export interface ArchetypeContent {
   lens: Localized;
 }
 
+/** Texts: module `identity`, key `question.<questionId>.<answerId>`. */
 export interface AnswerContent {
   id: string;
-  label: Localized;
   /** Explicit weights: primary +2, secondary +1 (see domain/archetypes.ts). */
   primary: ArchetypeId;
   secondary: ArchetypeId;
 }
 
+/** Texts: module `identity`, key `question.<questionId>.prompt`. */
 export interface QuestionContent {
   id: string;
-  prompt: Localized;
   answers: readonly AnswerContent[];
 }
 

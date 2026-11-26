@@ -3,6 +3,8 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { CONTENT } from '../src/content/index.ts';
+import { loadModule, MODULE_VERSIONS, registeredModules } from '../src/content/modules/registry.ts';
+import { MODULE_RULES, validateModule } from '../src/content/modules/validate.ts';
 import { validateContent } from '../src/content/validate.ts';
 
 const root = join(import.meta.dirname, '..');
@@ -23,6 +25,18 @@ console.log(`  themes             ${s.themes}/${s.targetThemes}`);
 console.log(`  card×theme texts   ${themeTexts}/${s.targetCards * s.targetThemes} per language`);
 console.log(`  archetypes         ${s.archetypes}/8`);
 console.log(`  questions          ${s.questions}/4`);
+
+// Lazy content modules: each one checked on its own, both locales (CONTENT_MASTERPLAN §8).
+console.log('');
+console.log('Modules (loaded per locale on demand)');
+for (const id of registeredModules()) {
+  const [de, en] = await Promise.all([loadModule(id, 'de'), loadModule(id, 'en')]);
+  const m = validateModule(id, MODULE_RULES[id], CONTENT, { de, en });
+  report.errors.push(...m.errors);
+  report.warnings.push(...m.warnings);
+  const state = m.errors.length ? `${m.errors.length} errors` : 'ok';
+  console.log(`  ${id.padEnd(18)} ${String(MODULE_VERSIONS[id] ?? '?').padEnd(24)} ${String(m.keys).padStart(4)} keys DE/EN  ${state}`);
+}
 console.log('');
 for (const w of report.warnings) console.log(`WARN  ${w}`);
 for (const e of report.errors) console.log(`ERROR ${e}`);
