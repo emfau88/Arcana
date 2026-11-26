@@ -57,7 +57,8 @@ Grundlage: `VISUAL_AUDIT.md`, `ART_DIRECTION.md`, `ASSET_REQUESTS.md`. Arbeitsbr
 - [x] 7. Medaillon in der aktiven Tab-Leiste
 - [x] 8. Lesbare Langtexte
 - [x] Leistung ohne optische Abstriche (D-37, D-41), Android 13/13 PASS
-- [ ] Freigabe durch den Eigentümer, Merge, Tag `v0.2.1` (Schritte in `docs/product/MASTER_ROADMAP_V2.md` §0.1)
+- [x] Freigabe durch den Eigentümer (26.11.2026), B-05 und B-06 behoben (D-42)
+- [ ] Merge, Tag `v0.2.1` (Schritte in `docs/product/MASTER_ROADMAP_V2.md` §0.1)
 
 Nachweise in `evidence/v02-final-*.webp`, Messwerte in `PERFORMANCE.md` (alle Grenzwerte PASS ohne optische Abstriche, D-37). Merge und V03 erst nach Freigabe des Tagesorakel-Screens.
 

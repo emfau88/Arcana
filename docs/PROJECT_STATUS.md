@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) fertig zur Freigabe auf `design/visual-overhaul` (Commit `198130c`, nicht gemergt, V03 nicht begonnen). **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** V02-Freigabe → PR nach `main` → Merge → Tag `v0.2.1` → V03 auf eigenem Branch (D-40). G3 (Härtung) ist jetzt Bulk V07.5
+**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **vom Eigentümer freigegeben** (26.11.2026), B-05 und B-06 behoben (D-42), PR #2 von `design/visual-overhaul` nach `main`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** Merge → Tag `v0.2.1` → V03 auf `feature/v03-fundament` (D-40). G3 (Härtung) ist jetzt Bulk V07.5
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -45,7 +45,8 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 
 Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md` §0.1.
 
-- [ ] **Freigabe des Tagesorakel-Screens (V02)** durch den Eigentümer in der Design-Vorschau. Danach PR-Merge nach `main`, Tag `v0.2.1` und V03 Fundament (`MASTER_ROADMAP_V2.md`, braucht keine Bilder) auf `feature/v03-fundament`.
+- [x] **Freigabe des Tagesorakel-Screens (V02)** durch den Eigentümer (26.11.2026), B-05/B-06 behoben (D-42).
+- [ ] PR-Merge nach `main`, Tag `v0.2.1` und V03 Fundament (`MASTER_ROADMAP_V2.md`, braucht keine Bilder) auf `feature/v03-fundament`.
 - [ ] **Bild-Bulk B2** (A05 + A07 als Stilprobe, dann A08–A14, A06, A19) kann parallel angefordert werden: `docs/visual/ASSET_REQUESTS.md` §0.1.
 - [ ] Offene Produktentscheidungen E8–E20: `MASTER_ROADMAP_V2.md` §9 (E19 vor V03.1, E8/E9/E20 vor V04).
 - [ ] **Rückmeldung des Eigentümers** zum G2-Bericht (G3 ist jetzt Bulk V07.5).
@@ -64,8 +65,8 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 | B-02 | Android-Kaltstart im ersten Lauf unter Last nicht vergleichbar | **erledigt:** zweiter Lauf Median 1,95 s bis zum ersten Screen (Debug-Build, 45–75 % Last, also eher zu hoch), Grenze ≤ 3,0 s | ebenda |
 | B-03 | Android-E2E: Tippen auf „Zur Tageskarte“ kam nicht an | **erledigt:** Fehler im Testskript (Knoten außerhalb des Sichtbereichs mit leeren Bounds, falsche Scrollrichtung), behoben in `scripts/android-evidence.mjs`; zweiter Lauf 13/13 PASS | ebenda |
 | B-04 | Capacitor-Bridge loggt im Debug-Build `[object Object]` in Logcat | bekannt, im Release-Build prüfen (V07.5) | `docs/BACKLOG.md` |
-| B-05 | Bei 360 px Breite berührt die obere Goldkante der Karte die Datumszeile um wenige Pixel | offen, Layout-Korrektur (≈ 5 px Abstand) wartet auf Entscheidung des Eigentümers | V02-Bericht |
-| B-06 | Android: Beim Scrollen läuft Text unter die durchsichtige Statusleiste (vermutlich schon vor V02) | offen, Abhilfe wäre eine Abdunklung hinter der Statusleiste, wartet auf Entscheidung | `evidence/v02-android-en.webp` |
+| B-05 | Bei 360 px Breite berührt die obere Goldkante der Karte die Datumszeile um wenige Pixel | erledigt (D-42): 13 px statt 8 px Luft über dem Kartenrahmen im Kompaktmodus, „Reise fortsetzen“ bleibt bei 360, 412 und Desktop über der Tab-Leiste | `evidence/v02-b05-360.webp` |
+| B-06 | Android: Beim Scrollen läuft Text unter die durchsichtige Statusleiste (vermutlich schon vor V02) | erledigt (D-42): dunkles Band in Höhe der Statusleiste, Android-Lauf 3: 13/13 PASS | `evidence/v02-b06-android.webp` |
 | B-07 | Mindestkontrast (R2, gilt ab QG-V03): bei 200 % Schrift liegt der Kernsatz über der hellen Sonnenkarte bei 3,0:1, am Desktop (EN, 1280 px) die kleine Zeile über dem Kartentitel bei 4,4:1. Bei 412 und 360 px ist jeder Text ≥ 4,9:1 | offen, optische Korrektur in V03.5 nach Rückfrage | `today-showcase.mjs --contrast` |
 | B-08 | „Heute sichtbar“ +22–27 % zu `main` (normiert ≈ 1.210–1.270 ms), Grenze ab QG-V03 ≤ 1.250 ms | offen, V03.5 (unsichtbar optimieren) | `docs/visual/PERFORMANCE.md` |
 

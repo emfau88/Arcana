@@ -8,7 +8,7 @@
 
 | Paket | Version | Inhalt | Sitzungen | Bilder (Bulk) | Abschluss |
 |---|---|---|---|---|---|
-| **V02** Tagesorakel abschließen | 0.2 | läuft (Perf-Regression, Vergleich, Freigabe) | 1–2 | B1 (fertig) | Freigabe Tagesorakel, Merge nach `main` |
+| **V02** Tagesorakel abschließen | 0.2 | freigegeben 26.11.2026, Merge offen | 1–2 | B1 (fertig) | Freigabe Tagesorakel, Merge nach `main` |
 | **V03** Fundament und globales Designsystem | 0.3 | Datenmodell v2, Content-Module, Entitlements, Designsystem auf alle Screens | 3–4 | keine | QG-V03 |
 | **V04** Identität und Reise | 0.4 | Fragebogen v2, Enthüllung, „Ich“, Linse je Karte, Narrenreise, Meilensteine, Sternkarte, Rückblicke, **teilbare Archetypkarte** | 7–8 | B2 | QG-V04, Pages-Vorschau |
 | **V05** Karten, Legungen, Grimoire | 0.5 | Kartenvertiefung, Rollen-Legungen, Grimoire als Buch, Tagebuch | 7–8 | B3 | QG-V05, **geschlossener Test** |
@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 in der Abnahme. V03 beginnt erst nach Freigabe, Merge und Tag `v0.2.1`.
+**Aktuell:** V02 freigegeben (26.11.2026), B-05 und B-06 behoben. V03 beginnt nach Merge und Tag `v0.2.1`.
 
 ### V02 · Tagesorakel abschließen (0.2) · Branch `design/visual-overhaul`
 
@@ -34,10 +34,10 @@ Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbe
 - [x] Masterplan V2 mit R1–R7 und Konsolidierung gesichert (`bfed77c`)
 - [x] Grenzfall B-01 behoben: Enthüllung beim sofortigen Tippen, unsichtbar (D-41)
 - [x] Abnahmetests auf dem Endstand: Check, E2E 19/0, Layout, Kontrast ≥ 4,9:1 bei 412/360 px, Perf (offene Grenzfälle B-07, B-08 → V03.5)
-- [ ] Pull Request nach `main`
-- [ ] **Freigabe des Tagesorakel-Screens durch den Eigentümer**
+- [x] Pull Request nach `main` ([#2](https://github.com/emfau88/Arcana/pull/2))
+- [x] **Freigabe des Tagesorakel-Screens durch den Eigentümer** (26.11.2026)
 - [ ] Merge nach `main`, Tag `v0.2.1`
-- [ ] Entscheidung zu B-05 (Abstand bei 360 px) und B-06 (Statusleiste Android)
+- [x] B-05 (Abstand bei 360 px) und B-06 (Statusleiste Android) behoben (D-42), Android 13/13 PASS
 
 ### V03 · Fundament und globales Designsystem (0.3) · Branch `feature/v03-fundament`
 
