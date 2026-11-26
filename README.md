@@ -5,7 +5,7 @@
 Link auf dem Handy öffnen (Chrome oder Safari). Die App läuft komplett im Browser. Alle Eingaben bleiben lokal auf deinem Gerät, es gibt kein Konto, keinen Server und kein Tracking.
 
 > **Stand: G2 abgeschlossen (Version 0.2.0).**
-> Alle 22 Karten und alle 6 Themen sind enthalten, in Deutsch und Englisch. Die Kartenillustrationen sind ein vorläufiger Stil und werden später eventuell durch eigene Assets ersetzt. Die Seite wird bei jedem Push auf `main` automatisch neu gebaut.
+> Alle 22 Karten und alle 6 Themen sind enthalten, in Deutsch und Englisch. Die Karten sind das gemalte Deck v2 (siehe [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md)). Die Seite wird bei jedem Push auf `main` automatisch neu gebaut.
 
 ---
 
@@ -31,7 +31,7 @@ npm run validate:content  # Inhalts-Validator (DE/EN, verbotene Begriffe, Vollst
 npm run typecheck         # TypeScript strict
 npm run lint              # ESLint, 0 Warnungen erlaubt
 npm run check             # typecheck + lint + content + test + build
-npm run art               # Karten-Artwork neu rendern (art/*.mjs → public/cards, docs/assets)
+npm run art               # Icons, Papierkorn und Kartenvorlagen rendern (art/*.mjs → public/icons, docs/assets)
 ```
 
 ## Android (nur Emulator)
@@ -56,7 +56,8 @@ adb -s emulator-5554 install -r android\app\build\outputs\apk\debug\app-debug.ap
 | `src/content` | Kuratierte DE/EN-Inhalte, Schema und Validator |
 | `src/platform` | IndexedDB-Speicher, Android-Brücke, Textzoom |
 | `src/features` | Heute, Orakel, Grimoire, Profil, Onboarding |
-| `art/` | Generatoren für die eigenen Kartenillustrationen (Registry `art/deck.mjs`) |
+| `art/` | Vektorgeneratoren für Icons, Textur, Kartenrahmen und das alte Vektordeck |
+| `scripts/assets/` | Export des gemalten Kartendecks aus den PNG-Mastern (Python + Pillow) |
 | `android/` | Capacitor-Android-Projekt |
 | `tests/` | Unit- und E2E-Tests |
 | `docs/` | Status, Entscheidungen, Gate-Berichte, Testnachweise, Screenshots |
@@ -69,4 +70,4 @@ Es gibt kein Backend, keine Runtime-KI, kein Tracking und keine CDN-Assets. Font
 
 ## Lizenzen
 
-Kartenillustrationen und Texte sind eigene Werke dieses Projekts. Die Schriften Cormorant Garamond und Manrope stehen unter der SIL Open Font License 1.1. Details und die Regeln zum späteren Austausch der Kartenbilder: [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md).
+Texte, Icons und Vektorgrafiken sind eigene Werke dieses Projekts. Die Kartenillustrationen entstanden mit dem OpenAI-Bildgenerator (Herkunft und Prompts dokumentiert). Die Schriften Cormorant Garamond und Manrope stehen unter der SIL Open Font License 1.1. Details und die Regeln zum späteren Austausch der Kartenbilder: [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md).

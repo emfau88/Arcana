@@ -2,8 +2,9 @@
 
 | Asset | Pfad | Herkunft | Lizenz / Recht |
 |---|---|---|---|
-| Kartenillustrationen (22 + Rückseite), Thumbnails | `public/cards/` | eigenes Werk, prozedural erzeugt durch `art/lib.mjs`, `art/motifs.mjs`, `art/cards.mjs`, `art/major-a.mjs`, `art/major-b.mjs`, `art/major-c.mjs` (Registry `art/deck.mjs`), gerendert von `scripts/render-art.mjs` (SVG → WebP mit lokalem Chromium) | Projekteigentum |
-| Rahmenvorlage, Schutzzonen, Deck-Übersicht | `docs/assets/` | eigenes Werk, aus derselben Pipeline (`art/template.mjs`) | Projekteigentum |
+| Kartenillustrationen v2 (22 Vorderseiten und Rückseite), jeweils mit Thumbnail | `public/cards/`, `public/cards/thumbs/` | OpenAI ImageGen, 26.11.2026. Eigene Bildauswahl, Komposition mit dem Projektrahmen, Ausrichtung der Motive innerhalb der Schutzzonen, drehsymmetrische Rückseite mit eigenem Goldrand und WebP-Export. Helle Karten (0, I, III, VI, VIII, XIV, XIX, XX, XXI) bekommen zusätzlich einen dunklen Halo unter den Rahmenlinien (`docs/assets/card-frame-halo.png`), damit Rahmen und Medaillon sichtbar bleiben. [Prompts und Master-Prüfsummen](assets/card-prompts.md) · [Exportskript](../scripts/assets/export-cards.py) | OpenAI überträgt dem Nutzer bzw. Geschäftskunden seine etwaigen Rechte am Output, soweit das anwendbare Recht dies zulässt. Ähnliche Ausgaben sind möglich. [EU-Nutzungsbedingungen, Abschnitt „Content“](https://openai.com/policies/eu-terms-of-use/) · [Services Agreement, § 4](https://openai.com/policies/services-agreement/) |
+| Rahmenvorlage, Rahmen-Halo, Schutzzonen und ursprüngliche Deckübersicht (Vektordeck G1/G2) | `docs/assets/card-frame-template.png`, `card-frame-halo.png`, `card-safe-zones.png`, `deck-overview.webp` | eigenes Werk, aus der ursprünglichen Vektorpipeline (`art/template.mjs`, `scripts/render-art.mjs`) | Projekteigentum |
+| Deckübersicht v2 und Titelprüfung DE/EN | `docs/assets/deck-overview-v2.webp`, `docs/assets/title-check-v2.webp` | Kontaktbogen aus den v2-Thumbnails und echter Chromium-Screenshot der Inschriften aus dem lokalen Dev-Server | Kartenillustrationen v2 und lokale Projektschriften wie hier angegeben |
 | Papier-/Kornstruktur | `public/textures/grain.webp` | eigenes Werk, generiert | Projekteigentum |
 | Favicon, App-Icons (Web 192/512, Android-Mipmaps, adaptive Icons) | `public/favicon.svg`, `public/icons/`, `android/app/src/main/res/` | eigenes Werk, aus derselben Pipeline (`render-art.mjs --android`). Die Android-Standardicons von Capacitor wurden entfernt. | Projekteigentum |
 | Archetyp-Sigillen, UI-Icons | `src/ui/Sigil.tsx`, `src/ui/Icons.tsx` | eigenes Werk (Inline-SVG) | Projekteigentum |
@@ -12,13 +13,13 @@
 | Texte (Karten, Themen, Archetypen, Fragen, UI) DE/EN | `src/content/`, `src/i18n/` | eigenes Werk | Projekteigentum |
 | Kartennamen der Haupt-Arkana | – | traditionelle, gemeinfreie Bezeichnungen | gemeinfrei |
 
-Es gibt keine fremden Bilder, keine Stock-Grafiken, keine KI-generierten Bilder, keine Assets aus dem Altprojekt und keine CDN-Ressourcen.
+Es gibt keine fremden Bildvorlagen, Stock-Grafiken, Assets aus dem Altprojekt oder CDN-Ressourcen.
 
 Für die npm-Abhängigkeiten gelten deren Lizenzen (überwiegend MIT/Apache-2.0). Eine vollständige Lizenzliste für Release-Builds gehört zu G3/S13.
 
 ## Karten später austauschen
 
-Die heutigen Illustrationen sind ein vorläufiger Stand (Eigentümerentscheidung D-22). Neue Assets lassen sich ohne Codeänderung einsetzen, wenn sie diese Regeln einhalten:
+Das Deck v2 ersetzt die vorläufigen Illustrationen aus D-22. Weitere Illustrationen lassen sich ohne Codeänderung einsetzen, wenn sie diese Regeln einhalten.
 
 | Regel | Wert |
 |---|---|
@@ -31,7 +32,7 @@ Die heutigen Illustrationen sind ein vorläufiger Stand (Eigentümerentscheidung
 
 Ablauf beim Austausch:
 
-1. Dateien mit gleichem Namen nach `public/cards/` und `public/cards/thumbs/` legen. Wer selbst gezeichnete Bilder nutzt, entfernt den jeweiligen Eintrag aus `art/deck.mjs`, damit `npm run art` sie nicht überschreibt.
+1. Die PNG-Master außerhalb des Repos aufbewahren. `python scripts/assets/export-cards.py MASTER_DIR` erzeugt Vollbilder, Thumbnails und Deckübersicht aus den Mastern. Für einzelne Karten die gewünschten `assetId`-Werte anhängen. Helle Karten stehen in `LIGHT_FRAMES` im Skript und erhalten den Rahmen-Halo. `npm run art` erzeugt nur noch Icons, Textur und die Vorlagen in `docs/assets/` und lässt `public/cards/` unberührt. Das alte Vektordeck gibt es nur noch auf Wunsch mit `npm run art -- --legacy-cards <Ordner außerhalb von public>`.
 2. `npm run validate:content` prüft, dass für jede Karte Vollbild und Thumbnail existieren.
-3. `node scripts/check-card-titles.mjs` (Dev-Server auf 5180) prüft, dass alle 44 Inschriften (22 × DE/EN) in den Rahmen passen.
+3. `node scripts/check-card-titles.mjs` (Dev-Server auf 5180, anderer Port per `PORT`) prüft, dass alle 44 Inschriften (22 × DE/EN) in den Rahmen passen.
 4. Sichtkontrolle in der App, dann Eintrag in dieser Datei ergänzen.
