@@ -10,7 +10,7 @@
 | Positionsimpulse (Situation / Herausforderung / Impuls) | 66 je Sprache (22 × 3) | 66 | 0 |
 | Reflexionsfrage und Mini-Ritual je Karte | 22 + 22 je Sprache | 22 + 22 | 0 |
 | Archetypen (Name, Essenz, Stärke, Schatten als Frage, Entwicklung, Reflexion, Linse) | 8 | 8 | 0 |
-| Fragebogen | 4 Fragen × 4 Antworten, jeder Typ 2× primär, 2× sekundär | 4–6 Fragen | 0 (5./6. Frage optional) |
+| Fragebogen | 4 Fragen × 4 Antworten, jeder Typ 2× primär, 2× sekundär. Struktur in `core`, Texte im Modul `identity` (D-46) | 4–6 Fragen | 0 (5./6. Frage optional) |
 | Kartenillustrationen | 22 + Rückseite | 22 + Rückseite | 0 |
 
 ## Themen

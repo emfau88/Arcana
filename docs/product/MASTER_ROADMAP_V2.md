@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 und V03.2 fertig, nächster Bulk V03.3.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 bis V03.3 fertig, nächster Bulk V03.4. E9 und E20 entschieden (D-47).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -60,12 +60,12 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Monoton über 1.000 Zufallsfolgen, 0.2-Bestand mit 40 Tagen, ≤ 30 ms bei 1.000 Tagen
   - [x] Keine Zähler gespeichert
   - [x] Nebenbei behoben: Plakette stand einen Tag zu weit, wenn heute nur eine Legung gespeichert war
-- [ ] **V03.3 Content-Module** (0/5)
-  - [ ] Inhalte in Module aufteilen, je Sprache dynamisch laden
-  - [ ] Validator je Modul meldet fehlende DE/EN-Texte
-  - [ ] Bundle-Report im Build
-  - [ ] Start-JS ≤ 160 KB gzip
-  - [ ] Offline: alle Module ohne Netz (E2E im Flugmodus)
+- [x] **V03.3 Content-Module** (5/5, D-46)
+  - [x] Inhalte in Module aufteilen, je Sprache dynamisch laden (erstes Modul `identity` mit dem Fragebogen; `core` bleibt statisch)
+  - [x] Validator je Modul meldet fehlende DE/EN-Texte, unbekannte Schlüssel, Verbotslisten, Abwechslung
+  - [x] Bundle-Report im Build (`scripts/bundle-report.mjs`, bricht bei Überschreitung ab)
+  - [x] Start-JS ≤ 160 KB gzip (132 kB; Modul `identity` 0,6 kB je Sprache, Grenze 40 kB)
+  - [x] Offline: Fragebogen ohne Netz nach dem Start (E2E im Flugmodus); fehlende Sprache meldet sich klar und ändert nichts
 - [ ] **V03.4 Entitlements** (0/3)
   - [ ] `has(right)`, `CoreOnlyProvider`, `TestProvider`
   - [ ] Unit-Tests
@@ -382,7 +382,7 @@ Regeln:
 | # | Frage | Empfehlung | gebraucht vor |
 |---|---|---|---|
 | E8 | Fünf Tabs mit „Entdecken“ ab V06 | ja | V06 |
-| E9 | Fragebogen v2 (7 Fragen) für Bestandsnutzer: Angebot zum Neubestimmen statt Zwang | Angebot, Profil bleibt | V04 |
+| E9 | Fragebogen v2 (7 Fragen) für Bestandsnutzer: Angebot zum Neubestimmen statt Zwang | **entschieden 26.11.2026 (D-47):** Angebot, Profil bleibt | V04 |
 | E10 | Kartenrücken als Meilenstein-Belohnung (A20–A22) | ja | V05 |
 | E11 | Finaler App-Name und App-ID (lässt sich nach dem ersten Play-Upload nicht mehr ändern) | vor dem geschlossenen Test festlegen | V05.6 |
 | E12 | Namenszahlen erst ab 1.3 | ja | – |
@@ -393,14 +393,14 @@ Regeln:
 | E17 | Geschlossener Test: Kanal, Testergruppe (ggf. Mindestanzahl und Dauer für neue Konten prüfen) | ab 0.5 | V05.6 |
 | E18 | Menschliches Lektorat vor 1.0 (Kosten) oder Prüfung durch den Eigentümer | mindestens Schaufenster-Texte durch Lektorat | V07 |
 | E19 | Sicherung auf Android: Datei über System-Teilen und Datei-Auswahl, oder zusätzlich das offizielle Capacitor-Dateisystem-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst). Visueller PDF-Export später Free oder Edition | **entschieden 26.11.2026 (D-43):** Teilen/Auswahl zuerst, Plugin nur wenn nötig; PDF-Export Free | V03.1 |
-| E20 | Teilen auf Android über das offizielle Capacitor-Share-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | ja | V04 |
+| E20 | Teilen auf Android über das offizielle Capacitor-Share-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | **entschieden 26.11.2026 (D-47):** ja | V04 |
 
 ## 10 · Nächste Schritte
 
 1. **V02 abschließen** (läuft): Perf-Regression behoben (Commit `198130c`), restliche Grenzfälle und Abnahmetests, Pull Request nach `main`, Merge erst nach ausdrücklicher Freigabe, dann Tag `v0.2.1` (D-40).
 2. **Bulk B2 anfordern** (parallel, damit die Bilder zu V04 bereitliegen): A05, A06, A07–A14, A19. Die Porträts werden in V04 auch für die teilbare Archetypkarte gebraucht.
 3. **V03 freigeben und umsetzen** (keine Bilder nötig) auf dem neuen Branch `feature/v03-fundament` vom Tag `v0.2.1`.
-4. Entscheidungen E8, E9 und E20 vor V04 bestätigen, E19 in V03.1 klären.
+4. Entscheidung E8 vor V06 bestätigen. E19 (D-43), E9 und E20 (D-47) sind entschieden.
 
 ## 11 · Ergänzungen nach der Freigabe (26.11.2026)
 
