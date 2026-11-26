@@ -1,12 +1,12 @@
 // QA: every card title and numeral fits its frame (no ellipsis, no overflow) in DE and EN.
 // Inscription sizes are relative to the card width (cqw), so one card size covers all screens.
-// Usage (dev server running on 5180): node scripts/check-card-titles.mjs [screenshot.png]
+// Usage (dev server running on 5180, or set PORT): node scripts/check-card-titles.mjs [screenshot.png]
 import { chromium } from '@playwright/test';
 
 const shot = process.argv[2];
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: shot ? 2 : 1 });
-await page.goto('http://127.0.0.1:5180/');
+await page.goto(`http://127.0.0.1:${process.env.PORT ?? 5180}/`);
 await page.waitForLoadState('networkidle');
 
 const results = await page.evaluate(async () => {

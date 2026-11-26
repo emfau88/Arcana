@@ -28,3 +28,25 @@ export function safeZones() {
     ${frame()}
     ${label(392, 596, 'Raster 400 x 600 = 2:3 · Export 720 x 1080 + 240 x 360 WebP', 'end')}`);
 }
+
+/**
+ * Dark halo under the frame lines for bright paintings (light tone family): without it the thin
+ * gold lines disappear on peach and gold skies. Composited between painting and frame.
+ */
+export function frameHalo() {
+  const dark = frame()
+    .replaceAll('url(#gold)', '#1B1208')
+    .replace(/stroke-width="([\d.]+)"/g, (_, w) => `stroke-width="${Math.max(2.2, Number(w) * 2.6).toFixed(2)}"`);
+  return svg(`
+    <defs>
+      <filter id="halo" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.6"/></filter>
+      <linearGradient id="edgeTop" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#100D1C" stop-opacity="0.55"/>
+        <stop offset="0.16" stop-color="#100D1C" stop-opacity="0"/>
+        <stop offset="0.84" stop-color="#100D1C" stop-opacity="0"/>
+        <stop offset="1" stop-color="#100D1C" stop-opacity="0.45"/>
+      </linearGradient>
+    </defs>
+    <rect width="${W}" height="${H}" fill="url(#edgeTop)"/>
+    <g filter="url(#halo)" opacity="0.75">${dark}</g>`);
+}

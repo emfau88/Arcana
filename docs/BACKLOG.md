@@ -12,7 +12,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 
 ## Härtung (G3)
 
-- [ ] Release-Modus-Testbuild mit zulässiger Testsignatur, SHA-256, Größe, Startup, Reveal und Scroll.
+- [ ] Release-Modus-Testbuild mit zulässiger Testsignatur, SHA-256, Größe, Startup, Reveal und Scroll. Kaltstart auf ruhigem Rechner nachmessen (zuletzt 3,8 s unter Last).
 - [ ] TalkBack manuell auf dem Emulator (bisher nur ein uiautomator-Labelcheck).
 - [ ] Upgrade-Pfad der IndexedDB (Schema-Version 2) testen, Datenbestand aus 0.1.0 → 0.2.0.
 - [ ] Zeitzonenwechsel bei laufender App und Tageswechsel im Hintergrund (Android) gezielt testen.
@@ -21,7 +21,9 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 
 ## Design-Feinschliff (später, Eigentümer entscheidet den Zeitpunkt)
 
-- [ ] Kartenkunst durch eigene Assets ersetzen (Regel in `ASSET_LICENSES.md`, Vorlagen in `docs/assets/`).
+- [x] Kartenkunst ersetzt durch Deck v2 (D-26, D-27).
+- [ ] Archetyp-Sigillen und App-Icon an das gemalte Deck angleichen (eigener kleiner Auftrag).
+- [ ] Optional nachbessern: XII (Baum kein klares T, Lichtkranz schwach), XVII (sieben kleine Sterne fehlen), Rückseite wirkt flacher als die Vorderseiten.
 - [ ] Grimoire-Sammlung: Am Anfang sind fast alle Karten verdeckt. Entdeckte Karten hervorheben oder filtern.
 - [ ] Lange Kartentitel (Längenklasse `l`, z. B. „Die Hohepriesterin“) sind in der kleinen Rasteransicht klein.
 - [ ] Menschliches Lektorat aller Texte (Ton, Rhythmus). XIII und XV dabei ruhig halten.

@@ -17,6 +17,10 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 ROOT = Path(__file__).resolve().parents[2]
 CARDS = ROOT / "public" / "cards"
 FRAME = ROOT / "docs" / "assets" / "card-frame-template.png"
+# Dark halo under the frame lines for bright paintings (rendered by `npm run art`).
+HALO = ROOT / "docs" / "assets" / "card-frame-halo.png"
+LIGHT_FRAMES = {"card-fool", "card-magician", "card-empress", "card-lovers", "card-strength",
+                "card-temperance", "card-sun", "card-judgement", "card-world"}
 FULL = (720, 1080)
 THUMB = (240, 360)
 LANCZOS = Image.Resampling.LANCZOS
@@ -70,7 +74,7 @@ def write_overview(deck):
     print(path.relative_to(ROOT))
 
 
-def compose_front(master, asset_id, frame):
+def compose_front(master, asset_id, frame, halo):
     painting = master.resize(FULL, LANCZOS)
     if asset_id in LAYOUT:
         aligned = Image.new("RGB", FULL)
@@ -85,7 +89,10 @@ def compose_front(master, asset_id, frame):
         sky = ImageOps.flip(painting.crop((0, 0, FULL[0], shift)))
         painting.paste(painting.crop((0, 0, FULL[0], FULL[1] - shift)), (0, shift))
         painting.paste(sky, (0, 0))
-    return Image.alpha_composite(painting.convert("RGBA"), frame).convert("RGB")
+    framed = painting.convert("RGBA")
+    if asset_id in LIGHT_FRAMES:
+        framed = Image.alpha_composite(framed, halo)
+    return Image.alpha_composite(framed, frame).convert("RGB")
 
 
 def compose_back(master):
@@ -158,6 +165,8 @@ def main():
         if source.size != FULL or source.mode != "RGBA":
             raise ValueError("Expected a 720 x 1080 RGBA frame")
         frame = source.copy()
+    with Image.open(HALO) as source:
+        halo = source.convert("RGBA")
 
     outputs = {}
     for asset_id in card_ids:
@@ -167,7 +176,7 @@ def main():
                 raise ValueError(f"{asset_id}: expected a 2:3 master of at least 1024 x 1536")
             master = source.convert("RGB")
         back = asset_id == "card-back"
-        image = compose_back(master) if back else compose_front(master, asset_id, frame)
+        image = compose_back(master) if back else compose_front(master, asset_id, frame, halo)
         name = f"{asset_id}.webp"
         outputs[CARDS / name] = encode(image, 200_000, back)
         outputs[CARDS / "thumbs" / name] = encode(image.resize(THUMB, LANCZOS), 35_000, back)

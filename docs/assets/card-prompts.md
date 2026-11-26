@@ -12,7 +12,7 @@ python scripts/assets/export-cards.py MASTER_DIR
 
 Für eine einzelne Karte die `assetId` anhängen, etwa `card-moon`. Der vollständige Lauf erzeugt auch das beschriftete Raster `docs/assets/deck-overview-v2.webp`.
 
-Das Skript verkleinert die Malerei mit Lanczos. Bei II, V, X, XIV, XVII, XVIII und XX richtet es das Motiv innerhalb der Schutzzonen aus. Anschließend legt es bei allen Vorderseiten die RGBA-Rahmenvorlage darüber und kodiert beide Größen als WebP mit Qualität 85. Für die Rückseite zentriert es die Kompassnabe, dreht die obere Bildhälfte um 180° und ergänzt zwei Goldlinien bei 19 und 32 px. Beide Rückseitengrößen verwenden eine reduzierte Farbpalette und verlustfreies WebP für eine pixelgenaue Drehsymmetrie.
+Das Skript verkleinert die Malerei mit Lanczos. Bei II, V, X, XIV, XVII, XVIII und XX richtet es das Motiv innerhalb der Schutzzonen aus. Bei hellen Karten (`LIGHT_FRAMES`) legt es zuerst den dunklen Rahmen-Halo `docs/assets/card-frame-halo.png` darüber. Anschließend legt es bei allen Vorderseiten die RGBA-Rahmenvorlage darüber und kodiert beide Größen als WebP mit Qualität 85. Für die Rückseite zentriert es die Kompassnabe, dreht die obere Bildhälfte um 180° und ergänzt zwei Goldlinien bei 19 und 32 px. Beide Rückseitengrößen verwenden eine reduzierte Farbpalette und verlustfreies WebP für eine pixelgenaue Drehsymmetrie.
 
 ## card-fool
 
