@@ -2,7 +2,8 @@
 
 | Asset | Pfad | Herkunft | Lizenz / Recht |
 |---|---|---|---|
-| Kartenillustrationen (22 + Rückseite), Thumbnails | `public/cards/` | eigenes Werk, prozedural erzeugt durch `art/lib.mjs`, `art/motifs.mjs`, `art/cards.mjs`, `art/major-a.mjs`, `art/major-b.mjs`, `art/major-c.mjs` (Registry `art/deck.mjs`), gerendert von `scripts/render-art.mjs` (SVG → WebP mit lokalem Chromium) | Projekteigentum |
+| Kartenillustrationen v2, Stilprobe II, XIII, XIX und Rückseite, jeweils mit Thumbnail | `public/cards/`, `public/cards/thumbs/` | OpenAI ImageGen, 26.11.2026. Eigene Bildauswahl, Komposition mit dem Projektrahmen, Ausrichtung von Mond und Kompass, drehsymmetrische Rückseite mit eigenem Goldrand und WebP-Export. [Prompts und Master-Prüfsummen](assets/card-prompts.md) · [Exportskript](../scripts/assets/export-cards.py) | OpenAI überträgt dem Nutzer bzw. Geschäftskunden seine etwaigen Rechte am Output, soweit das anwendbare Recht dies zulässt. Ähnliche Ausgaben sind möglich. [EU-Nutzungsbedingungen, Abschnitt „Content“](https://openai.com/policies/eu-terms-of-use/) · [Services Agreement, § 4](https://openai.com/policies/services-agreement/) |
+| Übrige 19 Kartenillustrationen und Thumbnails | `public/cards/`, `public/cards/thumbs/` | eigenes Werk, prozedural erzeugt durch `art/lib.mjs`, `art/motifs.mjs`, `art/cards.mjs`, `art/major-a.mjs`, `art/major-b.mjs`, `art/major-c.mjs` (Registry `art/deck.mjs`), gerendert von `scripts/render-art.mjs` (SVG → WebP mit lokalem Chromium) | Projekteigentum |
 | Rahmenvorlage, Schutzzonen, Deck-Übersicht | `docs/assets/` | eigenes Werk, aus derselben Pipeline (`art/template.mjs`) | Projekteigentum |
 | Papier-/Kornstruktur | `public/textures/grain.webp` | eigenes Werk, generiert | Projekteigentum |
 | Favicon, App-Icons (Web 192/512, Android-Mipmaps, adaptive Icons) | `public/favicon.svg`, `public/icons/`, `android/app/src/main/res/` | eigenes Werk, aus derselben Pipeline (`render-art.mjs --android`). Die Android-Standardicons von Capacitor wurden entfernt. | Projekteigentum |
@@ -12,7 +13,7 @@
 | Texte (Karten, Themen, Archetypen, Fragen, UI) DE/EN | `src/content/`, `src/i18n/` | eigenes Werk | Projekteigentum |
 | Kartennamen der Haupt-Arkana | – | traditionelle, gemeinfreie Bezeichnungen | gemeinfrei |
 
-Es gibt keine fremden Bilder, keine Stock-Grafiken, keine KI-generierten Bilder, keine Assets aus dem Altprojekt und keine CDN-Ressourcen.
+Es gibt keine fremden Bildvorlagen, Stock-Grafiken, Assets aus dem Altprojekt oder CDN-Ressourcen.
 
 Für die npm-Abhängigkeiten gelten deren Lizenzen (überwiegend MIT/Apache-2.0). Eine vollständige Lizenzliste für Release-Builds gehört zu G3/S13.
 
