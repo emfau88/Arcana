@@ -5,7 +5,8 @@ import { useApp } from '../../app/store.tsx';
 import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
 import { cardKeywords } from '../../content/keywords.ts';
 import { dateFromKey } from '../../domain/clock.ts';
-import { deriveCollection, journeyDays, journeyPosition } from '../../domain/oracle.ts';
+import { deriveCollection, journeyPosition } from '../../domain/oracle.ts';
+import { journeyDayToday } from '../../domain/progress.ts';
 import { fmt, formatLongDate, toRoman } from '../../i18n/index.ts';
 import { useToast } from '../../ui/feedback.tsx';
 import { IconCandle, IconCheck, IconEye, IconQuill, IconSparkle } from '../../ui/Icons.tsx';
@@ -106,8 +107,8 @@ export function Today() {
   const card = today ? findCard(pack, today.cardId) ?? null : null;
   const faceUp = phase === 'flipping' || phase === 'shown';
   const collection = deriveCollection(state.dailies, state.readings);
-  // Today counts as a day of the journey as soon as the person is here (E6: never decreases).
-  const position = journeyPosition(journeyDays(state.dailies, state.readings) + (today ? 0 : 1));
+  // Today counts as a day of the journey as soon as the person is here, once (E6: never decreases).
+  const position = journeyPosition(journeyDayToday({ dailies: state.dailies, readings: state.readings }, state.todayKey));
   const pathName = [t.today.pathOuter, t.today.pathInner, t.today.pathHigher][position.path];
   // Full sentence for screen readers; the plaque shows the short form.
   const journeyCaption = [

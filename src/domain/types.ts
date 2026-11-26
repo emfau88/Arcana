@@ -121,6 +121,8 @@ export interface Reading {
   contentVersion: string;
   content: ReadingContent;
   createdAt: string;
+  /** Local day at the moment of saving (since 0.3). Missing in older records: derived from createdAt. */
+  dateKey?: string;
   note: string;
 }
 

@@ -78,6 +78,7 @@ export function isReading(v: unknown): v is Reading {
     Array.isArray(v.content.positions) &&
     v.content.positions.length === 3 &&
     isStr(v.createdAt) &&
+    (v.dateKey === undefined || (isStr(v.dateKey) && isValidDateKey(v.dateKey))) &&
     isStr(v.note)
   );
 }
