@@ -1,3 +1,4 @@
+import { World } from '../ui/World.tsx';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { ArchetypeReveal, Questionnaire, Welcome } from '../features/onboarding/Onboarding.tsx';
 import { CardDetail, DayDetail, Grimoire, ReadingDetail } from '../features/grimoire/Grimoire.tsx';
@@ -124,6 +125,7 @@ export function App() {
   return (
     <>
       <div className={`stage ${showNav ? '' : 'stage--no-nav'}`}>
+        <World scene={route.name === 'today' || route.name === 'notfound' ? 'today' : 'calm'} />
         <main ref={mainRef} className="stage__main" id="main">
           {screen}
         </main>

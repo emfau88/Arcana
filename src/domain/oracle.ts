@@ -205,3 +205,17 @@ export function previousDailyCard(dailies: readonly DailyRecord[], beforeKey: st
   for (const d of dailies) if (d.dateKey < beforeKey && (!best || d.dateKey > best.dateKey)) best = d;
   return best?.cardId ?? null;
 }
+
+/**
+ * Days of the journey = distinct local days on which the person used the oracle
+ * (a daily card or a saved reading). Pauses never reduce it (E6: no streak, no loss).
+ */
+export function journeyDays(dailies: readonly DailyRecord[], readings: readonly Reading[]): number {
+  const days = new Set<string>();
+  for (const d of dailies) days.add(d.dateKey);
+  for (const r of readings) {
+    const at = new Date(r.createdAt);
+    if (!Number.isNaN(at.getTime())) days.add(localDateKey(at));
+  }
+  return days.size;
+}

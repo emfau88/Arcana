@@ -33,3 +33,17 @@ Rohdaten: `docs/visual/perf/baseline-main-03abb3c.json`
 | idle | 0 laufende Animationen |
 
 **Android-Kaltstart: BLOCKED (nicht reproduzierbar).** Lauf am 26.11.2026 bei 63 % Rechnerlast: Läufe 17,3 / 12,1 / 4,6 / 15,7 / 5,4 s. Das ist Rechnerlast, nicht die App: Frühere Messung auf ruhigem Rechner ergab 2,4 s. Ursache u. a. ein laufender Vite-Server eines anderen Projekts (nicht angefasst). Die Messung wird auf ruhigem Rechner vor und nach V02 wiederholt.
+
+## Zwischenstand V02-Grundlagen (Vektor-Welt, ohne A01), 26.11.2026
+
+Rohdaten: `docs/visual/perf/v02-groundwork-vector.json`
+
+| Szenario | Basis | V02-Grundlagen | Bewertung |
+|---|---|---|---|
+| first-launch sichtbar | 1327 ms | 980 ms | ok (Streuung) |
+| today sichtbar / FCP / LCP | 996 / 496 / 896 ms | 1087 / 736 / 1004 ms | ok, innerhalb +25 % bei „sichtbar“. FCP höher durch Welt-Ebene, im Auge behalten |
+| today Übertragung | 536 KB (Bilder 306) | 498 KB (Bilder 261) | ok |
+| reveal | 56 fps, 1 Ruckler | 54 fps, 1 Ruckler (schlechtester Frame 117 ms) | ok, Nachmessung mit A01 |
+| idle | 0 | **0** | PASS (E5) |
+
+Endgültige Messung „nach“ erfolgt mit eingebautem A01.

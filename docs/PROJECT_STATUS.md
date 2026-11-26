@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS), **wartet auf die Rückmeldung des Eigentümers zum G2-Bericht** · **Nächstes Gate:** G3 (Härtung)
+**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) in Arbeit auf `design/visual-overhaul`, wartet auf Asset A01 · **Nächstes Gate:** G3 (Härtung) nach dem Overhaul
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -10,7 +10,10 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 |---|---|
 | Projektroot (neu, isoliert) | `%USERPROFILE%\Documents\PersonalOracle-Web` |
 | Git | eigenes Repo, Branch `main`, Remote `https://github.com/emfau88/Arcana` (öffentlich) |
-| Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages, Workflow `.github/workflows/pages.yml`) |
+| Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages aus `main`, Workflow `.github/workflows/pages.yml`) |
+| Design-Vorschau | https://emfau88.github.io/Arcana/preview/ (Branch `design/visual-overhaul`, eigene Datenbank, D-29) |
+| Visual Overhaul | `docs/visual/` (Audit, Art Direction, Asset-Anfragen, Roadmap, Performance) |
+| Deck-v2-Master (Sicherung) | `%USERPROFILE%\Documents\ARCANA-Assets\deck-v2-masters` (außerhalb Repo und Codex-Cache, mit SHA256SUMS) |
 | Lokale Preview | `npm run build && npm run preview` → http://127.0.0.1:5181/ |
 | Debug-APK | `android\app\build\outputs\apk\debug\app-debug.apk` (nicht versioniert) |
 | Nachweise | `docs/evidence/browser`, `docs/evidence/android`, `docs/assets/deck-overview-v2.webp` |

@@ -1,0 +1,128 @@
+/* Gold ornament language (ART_DIRECTION.md §4). */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--gold-400);
+}
+.emblem {
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 0 6px rgba(217, 181, 110, 0.35));
+}
+.brand__word {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.55rem;
+  line-height: 1;
+  letter-spacing: 0.32em;
+  margin-right: -0.32em; /* optical centring of the tracked caps */
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #fbf0d0 10%, #e3c27e 55%, #a9813f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 8px rgba(217, 181, 110, 0.28));
+}
+.brand--compact .brand__word {
+  font-size: 1.15rem;
+}
+
+.flank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  text-align: center;
+}
+.flank__line {
+  flex: 0 1 46px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(217, 181, 110, 0.75));
+}
+.flank__line:last-child {
+  background: linear-gradient(90deg, rgba(217, 181, 110, 0.75), transparent);
+}
+.flank__star {
+  flex: none;
+  color: var(--gold-200);
+  filter: drop-shadow(0 0 4px rgba(246, 230, 184, 0.7));
+}
+.flank__text {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+/* Ornate panel: double gold rule, filigree corners, violet → petrol glass. */
+.ornate {
+  position: relative;
+  padding: var(--s-5) var(--s-5);
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(246, 230, 184, 0.07), transparent 60%),
+    linear-gradient(180deg, rgba(36, 20, 58, 0.9), rgba(14, 22, 44, 0.9) 70%, rgba(10, 30, 42, 0.9));
+  border: 1px solid rgba(217, 181, 110, 0.55);
+  box-shadow:
+    inset 0 0 0 4px rgba(6, 8, 18, 0.35),
+    inset 0 0 0 4.6px rgba(217, 181, 110, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 50px -28px rgba(0, 0, 0, 0.9),
+    0 0 30px -12px rgba(194, 84, 154, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  color: var(--gold-400);
+  pointer-events: none;
+  filter: drop-shadow(0 0 3px rgba(217, 181, 110, 0.45));
+}
+.ornate > .corner--tl {
+  left: 5px;
+  top: 5px;
+}
+.ornate > .corner--tr {
+  right: 5px;
+  top: 5px;
+  transform: scaleX(-1);
+}
+.ornate > .corner--bl {
+  left: 5px;
+  bottom: 5px;
+  transform: scaleY(-1);
+}
+.ornate > .corner--br {
+  right: 5px;
+  bottom: 5px;
+  transform: scale(-1, -1);
+}
+
+.crescent-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  width: min(220px, 70%);
+  margin: var(--s-5) auto;
+  color: var(--gold-400);
+}
+.crescent-divider > span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(217, 181, 110, 0.7));
+}
+.crescent-divider > span:last-child {
+  background: linear-gradient(90deg, rgba(217, 181, 110, 0.7), transparent);
+}
+.crescent-divider svg {
+  filter: drop-shadow(0 0 4px rgba(246, 230, 184, 0.6));
+}

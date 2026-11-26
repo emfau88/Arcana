@@ -2,13 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { navigate } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
+import { cardKeywords } from '../../content/keywords.ts';
 import { dateFromKey } from '../../domain/clock.ts';
-import { deriveCollection } from '../../domain/oracle.ts';
+import { deriveCollection, journeyDays } from '../../domain/oracle.ts';
 import { fmt, formatLongDate, toRoman } from '../../i18n/index.ts';
-import { Divider, useToast } from '../../ui/feedback.tsx';
+import { useToast } from '../../ui/feedback.tsx';
 import { IconCandle, IconCheck, IconEye, IconQuill, IconSparkle } from '../../ui/Icons.tsx';
 import { OracleCard } from '../../ui/OracleCard.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
+import { CardStage } from '../../ui/CardStage.tsx';
+import { Brand, CrescentDivider, Flank, OrnatePanel, StarGlyph } from '../../ui/Ornaments.tsx';
 import { useReducedMotion } from '../../app/motion.ts';
 
 type Phase = 'hidden' | 'drawing' | 'flipping' | 'shown';
@@ -62,22 +65,27 @@ export function Today() {
   const card = today ? findCard(pack, today.cardId) ?? null : null;
   const faceUp = phase === 'flipping' || phase === 'shown';
   const collection = deriveCollection(state.dailies, state.readings);
+  // Today counts as a day of the journey as soon as the person is here (E6: never decreases).
+  const day = journeyDays(state.dailies, state.readings) + (today ? 0 : 1);
 
   return (
     <div className="screen today">
       <header className="screen-head today__head">
-        <p className="eyebrow">{dateLabel}</p>
-        <h1 className="display h2" tabIndex={-1}>
+        <Brand name={t.common.appName} compact />
+        <Flank className="today__journey">{fmt(t.today.journeyDay, { n: day })}</Flank>
+        <h1 className="display today__heading" tabIndex={-1}>
           {t.today.eyebrow}
         </h1>
-        <span className="chip">
-          {t.today.theme} · {themeLabel}
-        </span>
+        <p className="today__meta">
+          <span>{dateLabel}</span>
+          <span aria-hidden="true">·</span>
+          <span>
+            {t.today.theme}: {themeLabel}
+          </span>
+        </p>
       </header>
 
-      <div className={`card-stage ${phase === 'flipping' ? 'is-revealing' : ''} ${faceUp ? 'is-revealed' : ''}`}>
-        <span className="card-stage__aura" aria-hidden="true" />
-        <span className="card-stage__rings" aria-hidden="true" />
+      <CardStage revealing={phase === 'flipping'} revealed={faceUp}>
         <OracleCard
           card={card}
           locale={locale}
@@ -88,7 +96,7 @@ export function Today() {
           onActivate={phase === 'hidden' ? reveal : phase === 'flipping' ? skipAnimation : undefined}
           disabled={phase === 'drawing'}
         />
-      </div>
+      </CardStage>
 
       <p className="sr-only" role="status" aria-live="polite">
         {announce}
@@ -97,8 +105,8 @@ export function Today() {
       {phase === 'hidden' || phase === 'drawing' ? (
         <div className="today__draw">
           <p className="muted today__hint">{t.today.drawHint}</p>
-          <button type="button" className="btn btn--primary today__cta" onClick={reveal} disabled={phase === 'drawing'}>
-            <IconSparkle size={18} /> {t.today.draw}
+          <button type="button" className="btn btn--ritual today__cta" onClick={reveal} disabled={phase === 'drawing'}>
+            <StarGlyph size={14} /> {t.today.draw} <StarGlyph size={14} />
           </button>
           <p className="small today__symbolic">{t.common.symbolic}</p>
         </div>
@@ -115,20 +123,22 @@ export function Today() {
       {phase === 'shown' && today ? (
         <article className="today__reading" aria-labelledby="today-card-title">
           <div className="today__title rise">
-            <p className="today__numeral">{toRoman(today.content.cardOrder)}</p>
-            <h2 id="today-card-title" className="display h1">
+            <Flank>
+              {t.today.oracleToday} · {toRoman(today.content.cardOrder)}
+            </Flank>
+            <h2 id="today-card-title" className="display today__name">
               {today.content.cardTitle}
             </h2>
+            {card && cardKeywords(card) ? <p className="today__keywords">{cardKeywords(card)?.[locale]}</p> : null}
             <p className="italic-serif today__essence">{today.content.essence}</p>
           </div>
-          <Divider />
           <div className="panel-stack">
-            <section className="panel panel--brass rise rise-1">
-              <h3 className="panel__label">
+            <OrnatePanel className="today__oracle rise rise-1">
+              <h3 className="panel__label today__oracle-label">
                 <IconSparkle size={16} /> {t.today.message}
               </h3>
               <p className="today__message">{today.content.message}</p>
-            </section>
+            </OrnatePanel>
             {today.content.lens && today.archetypeId ? (
               <section className="panel today__lens rise rise-2">
                 <Sigil archetype={today.archetypeId} size={44} />
@@ -172,7 +182,7 @@ export function Today() {
               <IconQuill size={18} /> {today.note ? t.detail.note : t.today.addNote}
             </button>
           </div>
-          <Divider />
+          <CrescentDivider />
           <p className="small today__footer">{t.today.comeBack}</p>
           <p className="small today__footer">{t.common.symbolic}</p>
           {today.locale !== locale ? (

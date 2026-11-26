@@ -56,6 +56,8 @@ export const en: Messages = {
   },
   today: {
     eyebrow: 'Your card of the day',
+    journeyDay: 'Day {n} of your journey',
+    oracleToday: 'Today’s oracle',
     draw: 'Reveal card',
     drawHint: 'Take a breath. Tap the card when you are ready.',
     cardBackLabel: 'Face-down card of the day. Tap to reveal.',

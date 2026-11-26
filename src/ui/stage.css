@@ -1,0 +1,175 @@
+/* Card stage – light around the hero card (ART_DIRECTION.md §4). */
+.cstage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--s-6) 0 var(--s-6);
+  isolation: isolate;
+}
+.cstage__card {
+  position: relative;
+  z-index: 2;
+}
+
+/* Fine light rays behind the card. */
+.cstage__rays {
+  position: absolute;
+  z-index: 0;
+  width: min(140vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(246, 230, 184, 0.16) 0deg 1.4deg, transparent 1.4deg 15deg);
+  mask-image: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, 0.5) 45%, transparent 72%);
+  -webkit-mask-image: radial-gradient(closest-side, #000 18%, rgba(0, 0, 0, 0.5) 45%, transparent 72%);
+  opacity: 0.45;
+  transition: opacity 900ms var(--ease-out), transform 1600ms var(--ease-out);
+}
+.cstage.is-revealed .cstage__rays {
+  opacity: 0.9;
+  transform: rotate(7deg) scale(1.05);
+}
+
+/* Aura: gold core, magenta and violet halo. */
+.cstage__aura {
+  position: absolute;
+  z-index: 1;
+  width: min(118vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 236, 190, 0.5) 0%,
+    rgba(217, 181, 110, 0.32) 28%,
+    rgba(194, 84, 154, 0.2) 52%,
+    rgba(74, 42, 110, 0.14) 68%,
+    transparent 82%
+  );
+  opacity: 0.55;
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+}
+.cstage.is-revealed .cstage__aura {
+  opacity: 1;
+  transform: scale(1.06);
+  animation: aura-breathe 3.4s ease-in-out 900ms 3;
+}
+.cstage.is-revealing .cstage__aura {
+  animation: aura-bloom-2 1100ms var(--ease-out);
+}
+@keyframes aura-bloom-2 {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.22);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+@keyframes aura-breathe {
+  50% {
+    opacity: 0.86;
+  }
+}
+
+/* Light pool on the "floor" under the card. */
+.cstage__floor {
+  position: absolute;
+  z-index: 1;
+  bottom: 8px;
+  width: min(80vw, 330px);
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(246, 230, 184, 0.42), rgba(194, 84, 154, 0.16) 60%, transparent);
+  filter: blur(4px);
+}
+
+/* Gold glow on the card faces of the hero card only. */
+.cstage .ocard__face {
+  box-shadow:
+    0 0 0 1px rgba(246, 230, 184, 0.55),
+    0 0 18px 2px rgba(217, 181, 110, 0.45),
+    0 0 54px 6px rgba(194, 84, 154, 0.22),
+    0 34px 60px -24px rgba(0, 0, 0, 0.95);
+}
+
+/* Filigree corners just outside the card edge. */
+.cstage__frame {
+  position: absolute;
+  inset: -12px;
+  pointer-events: none;
+}
+.cstage__frame .corner {
+  width: 34px;
+  height: 34px;
+  color: var(--gold-200);
+}
+.cstage__frame .corner--tl {
+  left: 0;
+  top: 0;
+}
+.cstage__frame .corner--tr {
+  right: 0;
+  top: 0;
+  transform: scaleX(-1);
+}
+.cstage__frame .corner--bl {
+  left: 0;
+  bottom: 0;
+  transform: scaleY(-1);
+}
+.cstage__frame .corner--br {
+  right: 0;
+  bottom: 0;
+  transform: scale(-1, -1);
+}
+
+/* One-time spark burst on reveal. */
+.cstage__sparks {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.cstage__sparks i {
+  grid-area: 1 / 1;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffbe8 0%, #f6e6b8 40%, rgba(217, 181, 110, 0) 72%);
+  box-shadow: 0 0 10px 2px rgba(246, 230, 184, 0.7);
+  opacity: 0;
+  animation: spark-fly 1100ms var(--ease-out) forwards;
+}
+@keyframes spark-fly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cstage__rays,
+  .cstage__aura {
+    transition: none;
+  }
+  .cstage.is-revealed .cstage__aura,
+  .cstage.is-revealing .cstage__aura {
+    animation: none;
+  }
+  .cstage__sparks {
+    display: none;
+  }
+}

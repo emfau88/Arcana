@@ -12,6 +12,7 @@ import {
   drawDailyCardId,
   finalizeReading,
   isFullyRevealed,
+  journeyDays,
   previousDailyCard,
   revealAll,
   revealPosition,
@@ -167,5 +168,26 @@ describe('entitlements (P0 is free)', () => {
     for (const e of CORE_ENTITLEMENTS) expect(freeCoreEntitlements.has(e)).toBe(true);
     expect(freeCoreEntitlements.has('premium.anything' as never)).toBe(false);
     expect(freeCoreEntitlements.list()).toEqual(CORE_ENTITLEMENTS);
+  });
+});
+
+describe('journeyDays', () => {
+  it('counts distinct days of use and never shrinks after a pause', () => {
+    const d1 = daily('2026-11-01', 'fool');
+    const d2 = daily('2026-11-02', 'magician');
+    const d9 = daily('2026-11-09', 'star');
+    expect(journeyDays([], [])).toBe(0);
+    expect(journeyDays([d1, d2], [])).toBe(2);
+    // A week without use: the count stays, the next day adds one.
+    expect(journeyDays([d1, d2, d9], [])).toBe(3);
+  });
+
+  it('adds days with only a saved reading, without double counting', () => {
+    const d1 = daily('2026-11-01', 'fool');
+    const draft = revealAll(createDraft(CONTENT, 'self', localClock(2026, 11, 1), seededRng(3)));
+    const sameDay = finalizeReading(CONTENT, draft, 'de', localClock(2026, 11, 1, 20));
+    const otherDay = finalizeReading(CONTENT, draft, 'de', localClock(2026, 11, 4, 20));
+    expect(journeyDays([d1], [sameDay])).toBe(1);
+    expect(journeyDays([d1], [sameDay, otherDay])).toBe(2);
   });
 });

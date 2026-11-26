@@ -54,6 +54,8 @@ export const de = {
   },
   today: {
     eyebrow: 'Deine Tageskarte',
+    journeyDay: 'Tag {n} deiner Reise',
+    oracleToday: 'Dein Orakel heute',
     draw: 'Karte enthüllen',
     drawHint: 'Nimm dir einen Atemzug Zeit. Tippe auf die Karte, wenn du bereit bist.',
     cardBackLabel: 'Verdeckte Tageskarte. Zum Enthüllen tippen.',
