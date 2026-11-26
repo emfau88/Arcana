@@ -37,6 +37,16 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 | A16 | `props-sheet.png` | zurückgestellt | Dekor-Objekte | Sheet | nur falls ein Screen es braucht |
 | A17 | `card-<id>.png` | zurückgestellt | figurative Ersatzkarten | einzeln | Entscheidung E3 |
 
+**Stand der Bulks** (wird bei jeder Lieferung abgehakt):
+
+- [x] B1 · A01, A02 geliefert und eingebaut (V02)
+- [ ] B2 · für V04, Ablauf in §0.1
+- [ ] B3 · für V05
+- [ ] B4 · für V06
+- [ ] B5 · für V07
+- [ ] B6 · für 1.1
+- [ ] B7 · für 1.2
+
 **Bis Release 1.0:** 2 geliefert, ≈ 30 neue Dateien. Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen im Code (Abschnitt 5).
 
 ## 0.1 · Aktuelle Anforderung: Bulk B2 (für V04 Identität und Reise)
@@ -51,6 +61,15 @@ V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bil
 | 3 | A08–A14 | `archetype-<id>.png` (7×) | restliche Porträts, im selben Chatverlauf wie A07. Werden in V04 auch für die teilbare Archetypkarte (1080 × 1920) gebraucht, darum möglichst hohe Auflösung |
 | 4 | A06 | `bg-welcome.png` | Willkommen und Fragen, erster Eindruck, später Store-Screenshots |
 | 5 | A19 | `bg-starmap.png` | Sternkarte im Kapitel „Reise“, Wochen- und Monatsrückblick |
+
+**Stand B2:**
+
+- [ ] A05 und A07 erzeugt und geschickt
+- [ ] Stilprobe geprüft, Serie freigegeben
+- [ ] A08–A14 erzeugt und geschickt
+- [ ] A06 erzeugt und geschickt
+- [ ] A19 erzeugt und geschickt
+- [ ] alle B2-Bilder geprüft, als WebP exportiert und im Repo
 
 **Warum diese Reihenfolge:** Die Porträts sind der größte und riskanteste Teil (acht Bilder als Serie). Eine Stilprobe mit der zugehörigen Bühne verhindert, dass acht Bilder neu erzeugt werden müssen.
 

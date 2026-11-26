@@ -45,14 +45,19 @@ Grundlage: `VISUAL_AUDIT.md`, `ART_DIRECTION.md`, `ASSET_REQUESTS.md`. Arbeitsbr
 
 **Stand 26.11.2026: V02 fertig zur Freigabe, nicht gemergt.** Umgesetzt sind Bulk 1–4 plus die acht Abschlusspunkte des Eigentümers:
 
-1. Triple-Moon-Emblem mit großer Wortmarke ARCANA
-2. Sternenpfad mit Plakette „Tag n · Weg“ (D-34)
-3. „Reise fortsetzen“ führt zur Botschaft (D-35)
-4. Erster Bildschirm gemessen von 360 × 800 bis 412 × 915 (D-36)
-5. Petrol-, Teal- und Magenta-Akzente
-6. Barocke Goldecken und Lorbeer
-7. Medaillon in der aktiven Tab-Leiste
-8. Lesbare Langtexte
+- [x] Bulk 1 · Design-Tokens und Grundlagen
+- [x] Bulk 2 · Ornament-Bibliothek (SVG)
+- [x] Bulk 3 und 4 · gemalte Welt (A01, A02), Kartenbühne, Ritual-Aktion, Tab-Leiste
+- [x] 1. Triple-Moon-Emblem mit großer Wortmarke ARCANA
+- [x] 2. Sternenpfad mit Plakette „Tag n · Weg“ (D-34)
+- [x] 3. „Reise fortsetzen“ führt zur Botschaft (D-35)
+- [x] 4. Erster Bildschirm gemessen von 360 × 800 bis 412 × 915 (D-36)
+- [x] 5. Petrol-, Teal- und Magenta-Akzente
+- [x] 6. Barocke Goldecken und Lorbeer
+- [x] 7. Medaillon in der aktiven Tab-Leiste
+- [x] 8. Lesbare Langtexte
+- [x] Leistung ohne optische Abstriche (D-37, D-41), Android 13/13 PASS
+- [ ] Freigabe durch den Eigentümer, Merge, Tag `v0.2.1` (Schritte in `docs/product/MASTER_ROADMAP_V2.md` §0.1)
 
 Nachweise in `evidence/v02-final-*.webp`, Messwerte in `PERFORMANCE.md` (alle Grenzwerte PASS ohne optische Abstriche, D-37). Merge und V03 erst nach Freigabe des Tagesorakel-Screens.
 

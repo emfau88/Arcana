@@ -54,3 +54,4 @@ Jedes abgeschlossene Arbeitspaket wird so gesichert, dass es nachvollziehbar ist
 5. **Pull Request nach `main`** vorbereiten. Gemergt wird erst nach ausdrücklicher Freigabe des Eigentümers.
 6. **Tag** auf den freigegebenen Stand nach dem Merge (`v0.2.1`, dann `v0.3.0` …) als Rücksprungpunkt.
 7. **Nächstes Paket** auf einem eigenen Branch vom getaggten Stand (`feature/v03-fundament`, `feature/v04-identitaet` …).
+8. **Checklisten abhaken**, im selben Commit wie die Arbeit: `docs/product/MASTER_ROADMAP_V2.md` §0.1 (Pakete und Bulks), `docs/PROJECT_STATUS.md` (offene Punkte und Fehler), `docs/visual/ASSET_REQUESTS.md` §0 und §0.1 (Bilder), `docs/BACKLOG.md`. `[x]` nur, wenn es erledigt, geprüft und gepusht ist.

@@ -20,6 +20,91 @@
 
 **Summe bis 1.0: ≈ 31–37 Sitzungen** (nach den Ergänzungen R1–R7, §11). Bei etwa drei Sitzungen pro Woche plus Freigaben und Bildproduktion: **≈ 11–13 Wochen** bis zum öffentlichen Release. Größter Unsicherheitsfaktor: Textproduktion und Prüfung (≈ 1.500 Texte je Sprache).
 
+## 0.1 · Fortschritt (Checkliste)
+
+Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
+
+**Aktuell:** V02 in der Abnahme. V03 beginnt erst nach Freigabe, Merge und Tag `v0.2.1`.
+
+### V02 · Tagesorakel abschließen (0.2) · Branch `design/visual-overhaul`
+
+- [x] Bulk 1–4 und die acht Abschlusspunkte des Eigentümers (`198130c`)
+- [x] Perf-Regression von Enthüllung und „Heute sichtbar“ ohne optische Abstriche behoben (D-37, `198130c`)
+- [x] Android-Emulator 13/13 PASS, Kaltstart 1,95 s (`521d17e`)
+- [x] Masterplan V2 mit R1–R7 und Konsolidierung gesichert (`bfed77c`)
+- [x] Grenzfall B-01 behoben: Enthüllung beim sofortigen Tippen, unsichtbar (D-41)
+- [x] Abnahmetests auf dem Endstand: Check, E2E 19/0, Layout, Kontrast ≥ 4,9:1 bei 412/360 px, Perf (offene Grenzfälle B-07, B-08 → V03.5)
+- [ ] Pull Request nach `main`
+- [ ] **Freigabe des Tagesorakel-Screens durch den Eigentümer**
+- [ ] Merge nach `main`, Tag `v0.2.1`
+- [ ] Entscheidung zu B-05 (Abstand bei 360 px) und B-06 (Statusleiste Android)
+
+### V03 · Fundament und globales Designsystem (0.3) · Branch `feature/v03-fundament`
+
+- [ ] V03.1 Datenmodell v2 mit Sicherungsformat (E19 klären)
+- [ ] V03.2 Abgeleitete Schicht
+- [ ] V03.3 Content-Module
+- [ ] V03.4 Entitlements
+- [ ] V03.5 Globales Designsystem, Mindestkontrast, Leistungsbudgets (inkl. B-07, B-08 aus V02)
+- [ ] QG-V03, Pull Request, Freigabe, Tag `v0.3.0`
+
+### V04 · Identität und Reise (0.4)
+
+- [ ] V04.1 Fragebogen v2 (E9)
+- [ ] V04.2 Enthüllung und Profil
+- [ ] V04.3 Heute erweitert
+- [ ] V04.4 Narrenreise und Meilensteine
+- [ ] V04.5 Sternkarte und Rückblicke
+- [ ] V04.6 „Ich“ und Gestaltung
+- [ ] V04.7 Teilen-Kern und Archetypkarte (E20)
+- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`
+
+### V05 · Karten, Legungen, Grimoire (0.5)
+
+- [ ] V05.1 Kartenseite und Vertiefung
+- [ ] V05.2 Rollen-Legungen
+- [ ] V05.3 Grimoire als Buch
+- [ ] V05.4 Tagebuch und Suche
+- [ ] V05.5 Kartenrücken (E10)
+- [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17)
+- [ ] QG-V05, geschlossener Test, Tag `v0.5.0`
+
+### V06 · Zahlen und Symbole (0.6)
+
+- [ ] V06.1 Entdecken-Tab (E8)
+- [ ] V06.2 Numerologie
+- [ ] V06.3 Engelszahlen
+- [ ] V06.4 Symbol-Lexikon
+- [ ] V06.5 Gestaltung
+- [ ] V06.6 Zweite Säule verbinden
+- [ ] QG-V06, Test-Update, Tag `v0.6.0`
+
+### V07 · Release 1.0
+
+- [ ] V07.1 Teilen (weitere Vorlagen)
+- [ ] V07.2 Erinnerung (E13)
+- [ ] V07.3 Sicherung und Wiederherstellung
+- [ ] V07.4 Edition (nur mit Freigabe E14/E15)
+- [ ] V07.5 Härtung (G3)
+- [ ] V07.6 Store (G4, E18)
+- [ ] Öffentlicher Release, Tag `v1.0.0`
+
+### Nach dem Release
+
+- [ ] 1.1 Mond
+- [ ] 1.2 erstes Premium-Deck, PDF-Export, Mondreise
+- [ ] G5 Marktvalidierung (90 Tage nach 1.0)
+
+### Bilder (Bulks, §5)
+
+- [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
+- [ ] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19 (für V04, kann jetzt angefordert werden)
+- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04)
+- [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
+- [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)
+- [ ] B6 · Mondwelt (nach 1.0)
+- [ ] B7 · erstes Premium-Deck (nach Entscheidung)
+
 ## 1 · Reihenfolge und Begründung
 
 Vorschlag aus dem Auftrag: V02 Tagesorakel · V03 Global Visual · V04 Spiritual Core · V05 Visual Excellence · V06 Esoteric Expansion · V07 Growth & Monetization.
@@ -66,7 +151,7 @@ Jedes Paket: Bulks in fester Reihenfolge, jeweils mit „Fertig, wenn“. Nach j
 
 ### V02 · Tagesorakel abschließen (läuft)
 
-Läuft in einer eigenen Sitzung. Offen: Perf-Regression der Enthüllung (29 fps) und von „Heute sichtbar“ (+39 %), Vergleichsbilder, Emulator, Bericht. **Fertig, wenn** der Eigentümer den Tagesorakel-Screen freigibt und `design/visual-overhaul` nach `main` gemergt ist (nur nach ausdrücklicher Freigabe).
+Stand und offene Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentümer den Tagesorakel-Screen freigibt und `design/visual-overhaul` nach `main` gemergt ist (nur nach ausdrücklicher Freigabe).
 
 ### V03 · Fundament und globales Designsystem (0.3)
 
