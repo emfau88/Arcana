@@ -22,7 +22,27 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 | A17 | `card-<id>.png` (ausgewählte) | P2 | figurative Ersatzkarten nach Test im neuen UI | einzeln, nach Entscheidung E3 |
 | A18 | `store-feature.png` | P2 | Store-Grafik 1024 × 500 | einzeln, erst in G4 |
 
-**Jetzt nur A01 (und optional A02).** Damit baue ich den Tagesorakel-Slice (V02). Alles Weitere erst nach deiner Designfreigabe.
+**Status 26.11.2026:** A01 und A02 sind geliefert und in V02 eingebaut (D-33). V02 braucht keine weiteren Assets. Das nächste Paket steht in Abschnitt 0.1 und wird erst nach deiner Freigabe des Tagesorakel-Screens angefragt.
+
+## 0.1 · V03-Paket (konkrete Anforderung nach V02)
+
+| Reihenfolge | ID | Datei | Wofür in V03 |
+|---|---|---|---|
+| 1 | A03 | `bg-oracle.png` | Orakel: drei Karten auf einem Tisch im Observatorium. Zweitwichtigster Screen |
+| 2 | A06 | `bg-welcome.png` | Willkommen und Fragen: erster Eindruck, später Store-Screenshots |
+| 3 | A04 | `bg-grimoire.png` | Grimoire: Sammlung als Schatzkammer |
+| 4 | A15 | `grimoire-book.png` | Buch-Objekt im Grimoire-Kopf (transparent) |
+| 5 | A05 | `bg-profile.png` | Profil und Archetyp-Enthüllung (Porträts A07–A14 folgen erst in V05) |
+
+Nicht in V03: A07–A14 (V05), A16 (P2), A17 (Entscheidung E3: Deck v2 trägt die Bühne bei hellen und dunklen Karten, Empfehlung: erst nach V03 entscheiden), A18 (G4). Die Pflanzenecken aus A02 werden auf den anderen Screens wiederverwendet, ein neues Vordergrund-Asset ist nicht nötig.
+
+**Erkenntnisse aus A01, gelten für A03–A06** (in die Prompts unten eingearbeitet):
+
+- Die App verankert Hintergründe oben und skaliert sie auf mindestens 118 % der Bildschirmbreite. Auf schmalen Handys fallen links und rechts je bis zu 9 % weg. Wichtige Motive gehören in die mittleren 80 % der Breite.
+- Die unteren etwa 15 % blenden in die Nacht über (Tab-Leiste, Pflanzenecken). Dort nichts Wichtiges.
+- Dunkle, ruhige Zonen hinter Text funktionieren: Auf A01 sind alle Texte gemessen bei mindestens 5,9:1 Kontrast. Helle Lichtquellen (Mond, Fenster, Lichtkegel) gehören nicht hinter Überschriften.
+- 1024 × 1536 PNG genügt als Master. Die Codex-Lieferung von A01/A02 hatte genau das richtige Format.
+
 
 ## Gemeinsamer Stilblock (in jedem Prompt bereits enthalten)
 
@@ -101,7 +121,7 @@ Transparent background PNG, vertical 2:3. A decorative frame made only of plants
 ```text
 Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
 
-Vertical portrait background, 2:3. Inside a quiet celestial observatory tower at night: a tall gothic arched window in the upper middle opens onto a violet galaxy and a large luminous moon. In front of it a wide round stone table with a dark velvet surface, its top seen slightly from above at 40 to 60% of the image height, lit by a soft beam of moonlight. Low drifting clouds of mist around the floor, a few faint floating gold dust motes, brass astronomical instruments only at the far left and right edges in shadow. The table surface across the middle 80% of the width must be empty and calm, because three tarot cards will be placed there later. The top 18% and the bottom 40% stay dark and quiet. Keep important details within the middle 70% of the width.
+Vertical portrait background, 2:3. Inside a quiet celestial observatory tower at night: a tall gothic arched window in the upper middle opens onto a violet galaxy and a large luminous moon. In front of it a wide round stone table with a dark velvet surface, its top seen slightly from above at 40 to 60% of the image height, lit by a soft beam of moonlight. Low drifting clouds of mist around the floor, a few faint floating gold dust motes, brass astronomical instruments only at the far left and right edges in shadow. The table surface across the middle 80% of the width must be empty and calm, because three tarot cards will be placed there later. The top 18% and the bottom 40% stay dark and quiet. Keep important details within the middle 70% of the width. The app crops up to 9% on the left and right edges and fades the bottom 15% into darkness, so keep every important motif within the middle 80% of the width and above 85% of the height.
 ```
 
 ---
@@ -121,7 +141,7 @@ Vertical portrait background, 2:3. Inside a quiet celestial observatory tower at
 ```text
 Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
 
-Vertical portrait background, 2:3. The private night library of a gentle mage: tall dark wooden bookshelves with old leather-bound books along the left and right edges, a brass lantern glowing warmly on a shelf at the upper left, moonlight falling through a tall narrow window at the top center, floating golden dust motes, a hint of violet mist. The whole middle of the image (from 10% to 90% of the width and from 15% to 95% of the height) is a calm, dark, softly textured wall in shadow with no objects, because a grid of cards will be displayed on top. Spines of books without any readable text.
+Vertical portrait background, 2:3. The private night library of a gentle mage: tall dark wooden bookshelves with old leather-bound books along the left and right edges, a brass lantern glowing warmly on a shelf at the upper left, moonlight falling through a tall narrow window at the top center, floating golden dust motes, a hint of violet mist. The whole middle of the image (from 10% to 90% of the width and from 15% to 95% of the height) is a calm, dark, softly textured wall in shadow with no objects, because a grid of cards will be displayed on top. The bookshelves reach about a quarter of the width in from each side, so they stay visible when the outer edges are cropped. Spines of books without any readable text. The app crops up to 9% on the left and right edges and fades the bottom 15% into darkness, so keep every important motif within the middle 80% of the width and above 85% of the height.
 ```
 
 ---
@@ -140,7 +160,7 @@ Vertical portrait background, 2:3. The private night library of a gentle mage: t
 ```text
 Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
 
-Vertical portrait background, 2:3. Inside a vast celestial dome at night: the curved ceiling is a deep teal and violet star map with fine glowing gold constellation lines and small engraved planetary rings, a polished dark marble floor reflects the stars. A soft column of warm golden light falls from the top center onto an empty circular dais in the middle of the floor. The central area (from 20% to 80% of the width and from 12% to 60% of the height) contains only the soft light column and no objects, because a portrait will be placed there. The bottom 40% fades into deep shadow.
+Vertical portrait background, 2:3. Inside a vast celestial dome at night: the curved ceiling is a deep teal and violet star map with fine glowing gold constellation lines and small engraved planetary rings, a polished dark marble floor reflects the stars. A soft column of warm golden light falls from the top center onto an empty circular dais in the middle of the floor. The central area (from 20% to 80% of the width and from 12% to 60% of the height) contains only the soft light column and no objects, because a portrait will be placed there. The bottom 40% fades into deep shadow. The app crops up to 9% on the left and right edges and fades the bottom 15% into darkness, so keep every important motif within the middle 80% of the width and above 85% of the height.
 ```
 
 ---
@@ -159,7 +179,7 @@ Vertical portrait background, 2:3. Inside a vast celestial dome at night: the cu
 ```text
 Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
 
-Vertical portrait background, 2:3. A large ancient open grimoire rests on a carved stone pedestal at about 55 to 70% of the image height, its parchment pages show only drawn moon phases, star charts and a sun diagram without any writing. Thin threads of golden light and tiny sparks rise from the pages into a night sky framed by a tall arched portal of dark stone covered in starlight. Lavender and crystals at the far lower edges. The upper half of the image is calm open night sky with soft stars, because a logo and a title will be placed there. The bottom 25% fades into deep shadow. Keep important details within the middle 70% of the width.
+Vertical portrait background, 2:3. A large ancient open grimoire rests on a carved stone pedestal at about 55 to 70% of the image height, its parchment pages show only drawn moon phases, star charts and a sun diagram without any writing. Thin threads of golden light and tiny sparks rise from the pages into a night sky framed by a tall arched portal of dark stone covered in starlight. Lavender and crystals at the far lower edges. The upper half of the image is calm open night sky with soft stars, because a logo and a title will be placed there. The bottom 25% fades into deep shadow. Keep important details within the middle 70% of the width. The app crops up to 9% on the left and right edges and fades the bottom 15% into darkness, so keep every important motif within the middle 80% of the width and above 85% of the height.
 ```
 
 ---

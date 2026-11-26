@@ -68,7 +68,7 @@ export function World({ scene }: { scene: WorldScene }) {
       {image ? (
         <picture className={`world-scene__image ${painted ? 'is-loaded' : ''}`}>
           <source media="(max-width: 520px)" srcSet={`${base}${image.srcSmall}`} />
-          <img src={`${base}${image.src}`} alt="" decoding="async" onLoad={() => setLoaded(image.src)} />
+          <img src={`${base}${image.src}`} alt="" decoding="async" fetchPriority="low" onLoad={() => setLoaded(image.src)} />
         </picture>
       ) : null}
       <div className="world-scene__veil" />

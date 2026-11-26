@@ -64,12 +64,26 @@ export function OracleCard({
   const inner = (
     <span className="ocard__inner">
       <span className="ocard__face ocard__back">
-        <img src={cardSrc('card-back', thumb)} alt="" draggable={false} decoding="async" loading={size === 'hero' ? 'eager' : 'lazy'} />
+        <img
+          src={cardSrc('card-back', thumb)}
+          alt=""
+          draggable={false}
+          decoding="async"
+          loading={size === 'hero' ? 'eager' : 'lazy'}
+          fetchPriority={size === 'hero' && !faceUp ? 'high' : undefined}
+        />
       </span>
       <span className="ocard__face ocard__front">
         {card ? (
           <>
-            <img src={cardSrc(card.assetId, thumb)} alt="" draggable={false} decoding="async" loading={size === 'hero' ? 'eager' : 'lazy'} />
+            <img
+              src={cardSrc(card.assetId, thumb)}
+              alt=""
+              draggable={false}
+              decoding="async"
+              loading={size === 'hero' ? 'eager' : 'lazy'}
+              fetchPriority={size === 'hero' && faceUp ? 'high' : undefined}
+            />
             {inscription ? (
               <>
                 <span className="ocard__num" data-len={Math.min(toRoman(card.order).length, 5)} aria-hidden="true">

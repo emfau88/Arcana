@@ -41,6 +41,19 @@ Grundlage: `VISUAL_AUDIT.md`, `ART_DIRECTION.md`, `ASSET_REQUESTS.md`. Arbeitsbr
 
 **Danach STOP:** Screenshots vorlegen. Merge nach `main` (öffentliche Vorschau) nur auf deine Freigabe.
 
+**Stand 26.11.2026: V02 fertig zur Freigabe, nicht gemergt.** Umgesetzt sind Bulk 1–4 plus die acht Abschlusspunkte des Eigentümers:
+
+1. Triple-Moon-Emblem mit großer Wortmarke ARCANA
+2. Sternenpfad mit Plakette „Tag n · Weg“ (D-34)
+3. „Reise fortsetzen“ führt zur Botschaft (D-35)
+4. Erster Bildschirm gemessen von 360 × 800 bis 412 × 915 (D-36)
+5. Petrol-, Teal- und Magenta-Akzente
+6. Barocke Goldecken und Lorbeer
+7. Medaillon in der aktiven Tab-Leiste
+8. Lesbare Langtexte
+
+Nachweise in `evidence/v02-final-*.webp`, Messwerte in `PERFORMANCE.md` (alle Grenzwerte PASS ohne optische Abstriche, D-37). Merge und V03 erst nach Freigabe des Tagesorakel-Screens.
+
 ## V03 · Design-System auf alle Screens
 
 **Bulk 1 · Orakel:** Themen-Chips mit Akzentfarben und Icons, Mondphasen-Kopf, drei Karten auf der Bühne (mittlere größer und vorn), Deutung in Ornament-Panels. Positionen bleiben Situation/Herausforderung/Impuls.

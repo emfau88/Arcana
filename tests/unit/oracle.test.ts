@@ -13,6 +13,7 @@ import {
   finalizeReading,
   isFullyRevealed,
   journeyDays,
+  journeyPosition,
   previousDailyCard,
   revealAll,
   revealPosition,
@@ -189,5 +190,17 @@ describe('journeyDays', () => {
     const otherDay = finalizeReading(CONTENT, draft, 'de', localClock(2026, 11, 4, 20));
     expect(journeyDays([d1], [sameDay])).toBe(1);
     expect(journeyDays([d1], [sameDay, otherDay])).toBe(2);
+  });
+});
+
+describe('journeyPosition', () => {
+  it('walks the three rows of seven and starts a new round after day 21', () => {
+    expect(journeyPosition(1)).toEqual({ day: 1, round: 1, path: 0, station: 1 });
+    expect(journeyPosition(7)).toMatchObject({ path: 0, station: 7 });
+    expect(journeyPosition(8)).toMatchObject({ path: 1, station: 1 });
+    expect(journeyPosition(12)).toMatchObject({ path: 1, station: 5 });
+    expect(journeyPosition(21)).toMatchObject({ round: 1, path: 2, station: 7 });
+    expect(journeyPosition(22)).toMatchObject({ round: 2, path: 0, station: 1 });
+    expect(journeyPosition(0)).toMatchObject({ day: 1, station: 1 });
   });
 });

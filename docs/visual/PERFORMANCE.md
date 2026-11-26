@@ -61,3 +61,21 @@ Rohdaten: `docs/visual/perf/v02-with-a01-a02.json`
 | idle | 0 | 0 | 0 | PASS |
 
 Android-Kaltstart weiter offen (Rechnerlast, siehe oben).
+
+## V02 final (Tagesorakel, zur Freigabe), 26.11.2026
+
+Die erste Messung des fertigen V02 hielt die Enthüllung nicht: 46–47 fps, 3 Ruckler, schlechtester Frame 183 ms. Ursache: Karte, Lichtschein und die ganze ausführliche Deutung entstanden im selben Frame. Die Lösung ist unsichtbar (D-37): Die Deutung unter dem ersten Bildschirm rendert kurz danach, das Kartenbild lädt vor dem Weltbild. Die Optik ist unverändert, das ist mit pixelgleichen Screenshots geprüft. Weniger Sterne oder Funken wurden erprobt, aber nicht übernommen (Designänderung nur nach Freigabe).
+
+Vergleich abwechselnd im selben Zeitfenster gemessen, gleiche Bedingungen wie oben, Rechnerlast 45–60 % durch einen fremden Prozess. Absolute Werte liegen deshalb höher als bei der Basis, aussagekräftig ist der Abstand zu `main`:
+
+| Szenario | `main` | V02 vor Fix | V02 final | Grenze | Ergebnis |
+|---|---|---|---|---|---|
+| reveal | 58 fps, 0–1 Ruckler | 46–47 fps, 3 Ruckler | 53–54 fps, 1–2 Ruckler, schlechtester Frame 67 ms | ≥ 50 fps, ≤ 2 | PASS |
+| today sichtbar (gedeckte Deutung) | 1124 / 1038 ms | 1329 / 1386 ms (+25 %) | 1291 / 1243 ms (+17 %) | ≤ +25 % | PASS |
+| today LCP | 1032 / 1028 ms | 1228 / 1272 ms | 1280 / 1240 ms | ≤ 1,8 s | PASS |
+| today Bilder | 306 KB (Basis) | 411 KB | 442 KB | ≤ 600 KB | PASS |
+| idle | 0 | 0 | 0 | 0 | PASS |
+
+Rohdaten `docs/visual/perf/v02-final.json` (Standard-Skript, 3 Läufe, V02 final): first-launch 1046 ms, today sichtbar 1189 ms, LCP 1008 ms, Bilder 442 KB, idle 0. **Grenzfall reveal:** In diesem Einzellauf 46 fps, 2 Ruckler, schlechtester Frame 183 ms. Das Skript tippt im selben Moment, in dem die Seite fertig geladen ist, und dann fällt die Enthüllung mit dem Einblenden der gemalten Welt zusammen. Wer einen Augenblick später tippt (300 ms, wiederholt gemessen), bekommt 53–54 fps. Nicht weiter optimiert: Die nächsten Hebel wären sichtbar und brauchen eine Freigabe.
+
+**Android (Emulator `Pixel_7`, Debug-APK mit V02):** Der Erststart bis zum Willkommen-Screen dauerte 3,2 s (Activity) bzw. 4,6 s (erster Screen), bei 50–75 % Rechnerlast. Als Kaltstart-Vergleich ist das weiter **BLOCKED** (Grenze: CPU-Last < 20 %). Der Ablauf Willkommen → Fragen → Archetyp ist PASS. Der erste Lauf brach danach am Archetyp-Screen ab: Das Testskript fand „Zur Tageskarte“, das Tippen kam aber nicht an (Zeitüberschreitung unter Last). Die Einstellungen des Emulators sind wiederhergestellt.

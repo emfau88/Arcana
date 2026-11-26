@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) in Arbeit auf `design/visual-overhaul`, wartet auf Asset A01 · **Nächstes Gate:** G3 (Härtung) nach dem Overhaul
+**Stand:** 26.11.2026 · **Version:** 0.2.0 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) fertig zur Freigabe auf `design/visual-overhaul` (nicht gemergt, V03 nicht begonnen) · **Nächstes Gate:** G3 (Härtung) nach dem Overhaul
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -42,6 +42,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 
 ## Offene Punkte
 
+- **Freigabe des Tagesorakel-Screens (V02)** durch den Eigentümer in der Design-Vorschau. Erst danach Merge nach `main` und V03 (Asset-Paket in `docs/visual/ASSET_REQUESTS.md` §0.1).
 - **Rückmeldung des Eigentümers** zum G2-Bericht, danach G3.
 - Kartenkunst ist durch Deck v2 ersetzt (D-26). Archetyp-Sigillen und App-Icon sind noch im Vektorstil (`BACKLOG.md`).
 - Kaltstart im Emulator zuletzt 3,8 s unter Rechnerlast (vorher 2,4 s). In G3 auf ruhigem Rechner bzw. Gerät messen.

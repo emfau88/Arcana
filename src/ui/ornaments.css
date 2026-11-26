@@ -3,30 +3,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 0;
   color: var(--gold-400);
 }
 .emblem {
   display: block;
+  width: clamp(104px, 30vw, 124px);
   height: auto;
-  filter: drop-shadow(0 0 6px rgba(217, 181, 110, 0.35));
+  margin-bottom: -2px;
+  filter: drop-shadow(0 0 8px rgba(246, 230, 184, 0.35));
 }
 .brand__word {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.55rem;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 8.4vw, 2.35rem);
   line-height: 1;
-  letter-spacing: 0.32em;
-  margin-right: -0.32em; /* optical centring of the tracked caps */
+  letter-spacing: 0.2em;
+  margin-right: -0.2em; /* optical centring of the tracked caps */
   text-transform: uppercase;
-  background: linear-gradient(180deg, #fbf0d0 10%, #e3c27e 55%, #a9813f 100%);
+  background: linear-gradient(180deg, #fff6dc 8%, #ecd08f 48%, #b58a45 78%, #e8c98a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 1px 8px rgba(217, 181, 110, 0.28));
-}
-.brand--compact .brand__word {
-  font-size: 1.15rem;
+  filter: drop-shadow(0 2px 6px rgba(6, 8, 18, 0.9)) drop-shadow(0 0 14px rgba(217, 181, 110, 0.35));
 }
 
 .flank {
@@ -44,21 +43,25 @@
   text-align: center;
 }
 .flank__line {
-  flex: 0 1 46px;
+  /* The lines give way first; the text only wraps when there is no room left. */
+  flex: 0 999 52px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(217, 181, 110, 0.75));
+  background: linear-gradient(90deg, transparent, rgba(236, 208, 143, 0.85));
+  box-shadow: 0 0 6px rgba(236, 208, 143, 0.35);
 }
 .flank__line:last-child {
-  background: linear-gradient(90deg, rgba(217, 181, 110, 0.75), transparent);
+  background: linear-gradient(90deg, rgba(236, 208, 143, 0.85), transparent);
 }
 .flank__star {
   flex: none;
   color: var(--gold-200);
-  filter: drop-shadow(0 0 4px rgba(246, 230, 184, 0.7));
+  filter: drop-shadow(0 0 5px rgba(246, 230, 184, 0.8));
 }
 .flank__text {
-  flex: 0 1 auto;
-  min-width: 0;
+  /* Never shrinks below its one-line width while the lines can still give way;
+     wraps only when even line-less it would not fit (2 stars + 4 gaps = 52px). */
+  flex: 0 0 auto;
+  max-width: calc(100% - 52px);
 }
 
 /* Ornate panel: double gold rule, filigree corners, violet → petrol glass. */
@@ -67,8 +70,9 @@
   padding: var(--s-5) var(--s-5);
   border-radius: 18px;
   background:
-    radial-gradient(120% 60% at 50% 0%, rgba(246, 230, 184, 0.07), transparent 60%),
-    linear-gradient(180deg, rgba(36, 20, 58, 0.9), rgba(14, 22, 44, 0.9) 70%, rgba(10, 30, 42, 0.9));
+    radial-gradient(120% 60% at 50% 0%, rgba(246, 230, 184, 0.08), transparent 60%),
+    radial-gradient(90% 50% at 50% 105%, rgba(79, 209, 197, 0.1), transparent 70%),
+    linear-gradient(180deg, rgba(38, 22, 62, 0.92), rgba(16, 22, 48, 0.92) 62%, rgba(10, 36, 48, 0.92));
   border: 1px solid rgba(217, 181, 110, 0.55);
   box-shadow:
     inset 0 0 0 4px rgba(6, 8, 18, 0.35),
@@ -81,29 +85,29 @@
 }
 .corner {
   position: absolute;
-  width: 26px;
-  height: 26px;
+  width: 34px;
+  height: 34px;
   color: var(--gold-400);
   pointer-events: none;
-  filter: drop-shadow(0 0 3px rgba(217, 181, 110, 0.45));
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 4px rgba(236, 208, 143, 0.4));
 }
 .ornate > .corner--tl {
-  left: 5px;
-  top: 5px;
+  left: 4px;
+  top: 4px;
 }
 .ornate > .corner--tr {
-  right: 5px;
-  top: 5px;
+  right: 4px;
+  top: 4px;
   transform: scaleX(-1);
 }
 .ornate > .corner--bl {
-  left: 5px;
-  bottom: 5px;
+  left: 4px;
+  bottom: 4px;
   transform: scaleY(-1);
 }
 .ornate > .corner--br {
-  right: 5px;
-  bottom: 5px;
+  right: 4px;
+  bottom: 4px;
   transform: scale(-1, -1);
 }
 
@@ -125,4 +129,14 @@
 }
 .crescent-divider svg {
   filter: drop-shadow(0 0 4px rgba(246, 230, 184, 0.6));
+}
+
+.laurel {
+  width: 38px;
+  height: 24px;
+  flex: none;
+  filter: drop-shadow(0 0 4px rgba(236, 208, 143, 0.45));
+}
+.laurel--right {
+  transform: scaleX(-1);
 }

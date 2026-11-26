@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
-import { Corner } from './Ornaments.tsx';
+import { Corner, StarGlyph } from './Ornaments.tsx';
 import './stage.css';
 
 /**
@@ -13,7 +13,15 @@ export function CardStage({ revealing, revealed, children }: { revealing: boolea
     <div className={`cstage ${revealing ? 'is-revealing' : ''} ${revealed ? 'is-revealed' : ''}`}>
       <span className="cstage__rays" aria-hidden="true" />
       <span className="cstage__aura" aria-hidden="true" />
+      <span className="cstage__crown" aria-hidden="true" />
       <span className="cstage__floor" aria-hidden="true" />
+      <span className="cstage__motes" aria-hidden="true">
+        {MOTES.map(([x, y, s, d], i) => (
+          <i key={i} style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${d}ms` } as CSSProperties}>
+            <StarGlyph size={s} />
+          </i>
+        ))}
+      </span>
       <div className="cstage__card">
         {children}
         <span className="cstage__frame" aria-hidden="true">
@@ -33,6 +41,20 @@ export function CardStage({ revealing, revealed, children }: { revealing: boolea
     </div>
   );
 }
+
+/** Floating sparkles around the card: x %, y %, size px, twinkle delay ms. */
+const MOTES: ReadonlyArray<readonly [number, number, number, number]> = [
+  [8, 18, 10, 0],
+  [90, 12, 12, 700],
+  [4, 52, 8, 1400],
+  [95, 44, 9, 300],
+  [12, 84, 11, 1100],
+  [88, 80, 8, 1800],
+  [22, 4, 7, 500],
+  [76, 95, 9, 900],
+  [97, 66, 6, 1600],
+  [2, 30, 6, 2100],
+];
 
 /** Spark end positions (px from centre) and delays: an even, hand-tuned burst. */
 const SPARKS: ReadonlyArray<readonly [number, number, number]> = [
