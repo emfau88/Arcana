@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 bis V03.3 fertig, nächster Bulk V03.4. E9 und E20 entschieden (D-47).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 bis V03.4 fertig, nächster Bulk V03.5. E9 und E20 entschieden (D-47).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -66,10 +66,10 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Bundle-Report im Build (`scripts/bundle-report.mjs`, bricht bei Überschreitung ab)
   - [x] Start-JS ≤ 160 KB gzip (132 kB; Modul `identity` 0,6 kB je Sprache, Grenze 40 kB)
   - [x] Offline: Fragebogen ohne Netz nach dem Start (E2E im Flugmodus); fehlende Sprache meldet sich klar und ändert nichts
-- [ ] **V03.4 Entitlements** (0/3)
-  - [ ] `has(right)`, `CoreOnlyProvider`, `TestProvider`
-  - [ ] Unit-Tests
-  - [ ] Kein UI-Element liest den Kaufstatus direkt (Lint-Regel oder Test)
+- [x] **V03.4 Entitlements** (3/3, D-48)
+  - [x] `has(right)`, `CoreOnlyProvider`, `TestProvider` (Rechte `core.*`, `edition.*`, `deck.<id>`; im UI nur `useApp().has`)
+  - [x] Unit-Tests (Provider, gespeicherter Cache schaltet nichts frei, Store mit TestProvider)
+  - [x] Kein UI-Element liest den Kaufstatus direkt (ESLint-Regel für `features/` und `ui/`, mit Test belegt)
 - [ ] **V03.5 Globales Designsystem** (0/4)
   - [ ] V02-Bausteine auf Orakel, Grimoire, Profil, Onboarding, Einstellungen
   - [ ] Screenshot-Review 360/390/412 und Desktop, keine Überläufe

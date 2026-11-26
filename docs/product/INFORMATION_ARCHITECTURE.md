@@ -240,7 +240,7 @@ Technik: Web über Blob-Download und Datei-Eingabe. Android über System-Teilen 
 
 ## 6 · Entitlements (Vorbereitung für die Edition)
 
-`src/domain/entitlements.ts` wird erweitert: `core.*` (immer) plus `edition.spreads`, `edition.identity`, `edition.numbers`, `edition.rituals`, `deck.<id>`. Ohne freigegebenes Billing liefert der Provider nur `core.*`, und Edition-Inhalte werden **nicht angezeigt** (keine Attrappen, keine Schlösser). Mit Billing (V07, Freigabe nötig) kommt ein Play-Billing-Provider dazu. Ein Testprovider für E2E schaltet alles frei.
+`src/domain/entitlements.ts` wird erweitert: `core.*` (immer) plus `edition.spreads`, `edition.identity`, `edition.numbers`, `edition.rituals`, `deck.<id>`. Ohne freigegebenes Billing liefert der Provider nur `core.*`, und Edition-Inhalte werden **nicht angezeigt** (keine Attrappen, keine Schlösser). Mit Billing (V07, Freigabe nötig) kommt ein Play-Billing-Provider dazu. Ein Testprovider für E2E schaltet alles frei. **Umgesetzt in V03.4 (D-48):** `CoreOnlyProvider`, `TestProvider`, im UI nur `useApp().has(right)`, durch eine ESLint-Regel abgesichert.
 
 ## 7 · Leistung und Paketgröße
 
