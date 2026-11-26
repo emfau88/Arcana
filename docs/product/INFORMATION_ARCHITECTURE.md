@@ -236,7 +236,7 @@ interface BackupFile {                // Datei `arcana-sicherung-YYYY-MM-DD.json
 | Datenschutz | Datei ist unverschlüsselt; Hinweis beim Erstellen. Keine Netzwerkanfrage | Netzwerk-Log im E2E |
 | Erinnerung | höchstens ein Hinweis (A6) nach je 30 Reisetagen ohne Sicherung, abschaltbar, ohne Druckwörter | Unit |
 
-Technik: Web über Blob-Download und Datei-Eingabe. Android über System-Teilen bzw. Datei-Auswahl; ob dafür ein offizielles Capacitor-Plugin (Dateisystem) nötig ist, wird in V03.1 geprüft (Entscheidung E19).
+Technik: Web über Blob-Download und Datei-Eingabe. Android über System-Teilen bzw. Datei-Auswahl; das offizielle Capacitor-Dateisystem-Plugin kommt nur dazu, wenn das nicht reicht (E19 entschieden, D-43). Format, Serialisierer und Prüfer: `src/platform/storage/backup.ts` (V03.1, D-44).
 
 ## 6 · Entitlements (Vorbereitung für die Edition)
 

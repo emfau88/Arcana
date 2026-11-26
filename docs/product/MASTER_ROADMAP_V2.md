@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`, nächster Bulk V03.1.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 fertig, nächster Bulk V03.2.
 
 ### V02 · Tagesorakel abschließen (0.2) · Branch `design/visual-overhaul`
 
@@ -41,7 +41,7 @@ Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbe
 
 ### V03 · Fundament und globales Designsystem (0.3) · Branch `feature/v03-fundament`
 
-- [ ] V03.1 Datenmodell v2 mit Sicherungsformat (E19 klären)
+- [x] V03.1 Datenmodell v2 mit Sicherungsformat (E19 entschieden, D-43, D-44): Upgrade-Test leer/voll/defekt, Daten aus 0.2 bit-gleich, Roundtrip, Löschen aller Stores (E2E)
 - [ ] V03.2 Abgeleitete Schicht
 - [ ] V03.3 Content-Module
 - [ ] V03.4 Entitlements
@@ -360,7 +360,7 @@ Regeln:
 | E16 | Abo erst nach 1.1, nur mit Inhaltsstrom | ja | nach 1.1 |
 | E17 | Geschlossener Test: Kanal, Testergruppe (ggf. Mindestanzahl und Dauer für neue Konten prüfen) | ab 0.5 | V05.6 |
 | E18 | Menschliches Lektorat vor 1.0 (Kosten) oder Prüfung durch den Eigentümer | mindestens Schaufenster-Texte durch Lektorat | V07 |
-| E19 | Sicherung auf Android: Datei über System-Teilen und Datei-Auswahl, oder zusätzlich das offizielle Capacitor-Dateisystem-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst). Visueller PDF-Export später Free oder Edition | Teilen/Auswahl zuerst, Plugin nur wenn nötig; PDF-Export Free | V03.1 |
+| E19 | Sicherung auf Android: Datei über System-Teilen und Datei-Auswahl, oder zusätzlich das offizielle Capacitor-Dateisystem-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst). Visueller PDF-Export später Free oder Edition | **entschieden 26.11.2026 (D-43):** Teilen/Auswahl zuerst, Plugin nur wenn nötig; PDF-Export Free | V03.1 |
 | E20 | Teilen auf Android über das offizielle Capacitor-Share-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | ja | V04 |
 
 ## 10 · Nächste Schritte

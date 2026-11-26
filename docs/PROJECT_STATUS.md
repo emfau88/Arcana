@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 26.11.2026 · **Version:** 0.2.1 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **abgeschlossen**: freigegeben am 26.11.2026, B-05/B-06 behoben (D-42), gemergt nach `main` (`553c5d9`), **Tag `v0.2.1`** als Rücksprungpunkt. **V03 läuft** auf `feature/v03-fundament`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** V03.1 Datenmodell v2 mit Sicherungsformat (vorher E19 klären). G3 (Härtung) ist jetzt Bulk V07.5
+**Stand:** 26.11.2026 · **Version:** 0.2.1 · **Phase:** G2 abgeschlossen (PASS). **Visual Overhaul läuft:** V00/V01 freigegeben, V02 (Tagesorakel) **abgeschlossen**: freigegeben am 26.11.2026, B-05/B-06 behoben (D-42), gemergt nach `main` (`553c5d9`), **Tag `v0.2.1`** als Rücksprungpunkt. **V03 läuft** auf `feature/v03-fundament`. **Produktvision V2** freigegeben (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md` · **Nächster Schritt:** V03.2 Abgeleitete Schicht (V03.1 Datenmodell v2 fertig, D-44). G3 (Härtung) ist jetzt Bulk V07.5
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -49,7 +49,7 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 - [x] PR-Merge nach `main` (`553c5d9`), Tag `v0.2.1`, Branch `feature/v03-fundament` angelegt.
 - [ ] V03 Fundament (`MASTER_ROADMAP_V2.md` §0.1, braucht keine Bilder) auf `feature/v03-fundament`.
 - [ ] **Bild-Bulk B2** (A05 + A07 als Stilprobe, dann A08–A14, A06, A19) kann parallel angefordert werden: `docs/visual/ASSET_REQUESTS.md` §0.1.
-- [ ] Offene Produktentscheidungen E8–E20: `MASTER_ROADMAP_V2.md` §9 (E19 vor V03.1, E8/E9/E20 vor V04).
+- [ ] Offene Produktentscheidungen E8–E20: `MASTER_ROADMAP_V2.md` §9 (E19 entschieden, D-43; E8/E9/E20 vor V04).
 - [ ] **Rückmeldung des Eigentümers** zum G2-Bericht (G3 ist jetzt Bulk V07.5).
 - [ ] Archetyp-Sigillen und App-Icon an Deck v2 angleichen (noch Vektorstil, `BACKLOG.md`).
 - [ ] Kaltstart im Release-Build und auf echtem Gerät messen (V07.5). Emulator mit V02: Median 1,95 s unter Rechnerlast (vorher 2,4 s).
