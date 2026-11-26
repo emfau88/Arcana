@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import './world.css';
 
 /**
@@ -14,7 +14,11 @@ export type WorldScene = 'today' | 'calm';
 
 const base = import.meta.env.BASE_URL;
 /** Painted backgrounds by scene; filled when the assets from ASSET_REQUESTS.md arrive. */
-const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string }>> = {};
+const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; foliage?: string }>> = {
+  // A01 "Nachtterrasse" + A02 "Pflanzenecken" (ChatGPT, 26.11.2026; masters outside the repo)
+  today: { src: 'world/bg-today.webp', srcSmall: 'world/bg-today-720.webp', foliage: 'world/fg-today' },
+};
+const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
 
 interface Star {
   x: number;
@@ -40,8 +44,10 @@ function makeStars(count: number, seed: number): Star[] {
 export function World({ scene }: { scene: WorldScene }) {
   const stars = useMemo(() => makeStars(scene === 'today' ? 120 : 80, 7), [scene]);
   const image = WORLD_IMAGES[scene];
+  const [loaded, setLoaded] = useState<string | null>(null);
+  const painted = Boolean(image && loaded === image.src);
   return (
-    <div className={`world-scene world-scene--${scene}`} aria-hidden="true">
+    <div className={`world-scene world-scene--${scene} ${painted ? 'is-painted' : ''}`} aria-hidden="true">
       <div className="world-scene__sky" />
       <div className="world-scene__milkyway" />
       <svg className="world-scene__stars" viewBox="0 0 100 100" preserveAspectRatio="xMidYMin slice">
@@ -60,12 +66,19 @@ export function World({ scene }: { scene: WorldScene }) {
       {scene === 'today' ? <Moon /> : null}
       <Landscape detailed={scene === 'today'} />
       {image ? (
-        <picture className="world-scene__image">
+        <picture className={`world-scene__image ${painted ? 'is-loaded' : ''}`}>
           <source media="(max-width: 520px)" srcSet={`${base}${image.srcSmall}`} />
-          <img src={`${base}${image.src}`} alt="" decoding="async" onLoad={(e) => e.currentTarget.parentElement?.classList.add('is-loaded')} />
+          <img src={`${base}${image.src}`} alt="" decoding="async" onLoad={() => setLoaded(image.src)} />
         </picture>
       ) : null}
       <div className="world-scene__veil" />
+      {image?.foliage && painted ? (
+        <div className="world-scene__foliage">
+          {CORNERS.map((c) => (
+            <img key={c} className={`foliage foliage--${c}`} src={`${base}${image.foliage}-${c}.webp`} alt="" decoding="async" />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

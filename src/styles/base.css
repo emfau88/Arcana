@@ -141,15 +141,12 @@ a {
   .world__aside {
     display: block;
     position: fixed;
-    left: 50%;
-    top: 50%;
-    width: min(1100px, 92vw);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    background: url('/cards/card-back.webp') center / 62% no-repeat;
-    opacity: 0.06;
-    filter: blur(0.5px);
-    mask-image: radial-gradient(circle at center, #000 30%, transparent 68%);
+    inset: -40px;
+    /* The painted night world, blurred and dimmed, extends the app column outwards. */
+    background: url('/world/bg-today-720.webp') center / cover no-repeat;
+    opacity: 0.38;
+    filter: blur(28px) saturate(1.1);
+    mask-image: radial-gradient(70% 90% at 50% 50%, #000 40%, transparent 100%);
     pointer-events: none;
     z-index: -1;
   }

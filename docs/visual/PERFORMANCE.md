@@ -46,4 +46,18 @@ Rohdaten: `docs/visual/perf/v02-groundwork-vector.json`
 | reveal | 56 fps, 1 Ruckler | 54 fps, 1 Ruckler (schlechtester Frame 117 ms) | ok, Nachmessung mit A01 |
 | idle | 0 | **0** | PASS (E5) |
 
-Endgültige Messung „nach“ erfolgt mit eingebautem A01.
+
+## Mit A01 + A02 (gemalte Welt), 26.11.2026
+
+Rohdaten: `docs/visual/perf/v02-with-a01-a02.json`
+
+| Szenario | Basis | Mit A01/A02 | Grenze | Ergebnis |
+|---|---|---|---|---|
+| first-launch sichtbar | 1327 ms | 936 ms | ≤ +25 % | PASS |
+| today sichtbar | 996 ms | 1162 ms (+17 %) | ≤ +25 % | PASS |
+| today LCP | 896 ms | 988 ms | ≤ 1,8 s | PASS |
+| today Bilder | 306 KB | 420 KB | ≤ 600 KB | PASS |
+| reveal | 56 fps, 1 Ruckler | 54 fps, 1 Ruckler | ≥ 50 fps, ≤ 2 | PASS |
+| idle | 0 | 0 | 0 | PASS |
+
+Android-Kaltstart weiter offen (Rechnerlast, siehe oben).

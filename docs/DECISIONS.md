@@ -36,6 +36,7 @@ Format: ID · Entscheidung · Begründung · Status. Eigentümerentscheidungen s
 | D-30 | Schlagworte pro Karte in `src/content/keywords.ts` (nach `assetId`), nicht im `CardContent`-Schema. Content-Gate prüft sie | Mockup-Element „Schöpfung · Fülle · Fürsorge“. Gespeicherte Datensätze und Schema bleiben unverändert | fest |
 | D-31 | Hintergrundwelt bis zur Lieferung von A01 als Vektor-Szene (`src/ui/World.tsx`). Ein gemaltes Bild wird darübergelegt, sobald es in `WORLD_IMAGES` eingetragen ist | V02 kann ohne Wartezeit vorbereitet werden. Die Szene bleibt Fallback, solange das Bild lädt | fest |
 | D-32 | `scripts/evidence.mjs` nutzt `bypassCSP` nur im Modus `--font` | Ermöglicht den 130-%-Test auf dem Produktions-Build. Ersetzt die Einschränkung aus D-24. Die App-CSP selbst bleibt unverändert streng | fest |
+| D-33 | A01 wird oben verankert und auf max(118 % Breite, 57 % Höhe) skaliert statt `cover`; unten blendet es in die Nacht aus. A02 wird in vier Eck-Ausschnitte zerlegt und an den Bildschirmecken (unten über der Tab-Leiste) platziert. WebP-Qualität 92 | Mit `cover` fielen Burg oder Wasserfall auf hohen Handys aus dem Bild. Ecken sitzen so auf jedem Seitenverhältnis exakt und sparen die leere Mitte. Qualität 80 verlor sichtbar Felsstruktur und Farbe | fest |
 
 ## Billing-Notiz (S05, technische Kurzrecherche)
 

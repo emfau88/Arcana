@@ -10,7 +10,7 @@ export const CARD_KEYWORDS: Readonly<Record<string, Localized>> = {
   'card-fool': { de: 'Aufbruch · Vertrauen · Neugier', en: 'Beginning · Trust · Curiosity' },
   'card-magician': { de: 'Wille · Können · Fokus', en: 'Will · Skill · Focus' },
   'card-high-priestess': { de: 'Intuition · Stille · Tiefe', en: 'Intuition · Stillness · Depth' },
-  'card-empress': { de: 'Fülle · Fürsorge · Schöpfung', en: 'Abundance · Nurture · Creation' },
+  'card-empress': { de: 'Schöpfung · Wachstum · Natur', en: 'Creation · Growth · Nature' },
   'card-emperor': { de: 'Struktur · Halt · Verantwortung', en: 'Structure · Stability · Responsibility' },
   'card-hierophant': { de: 'Tradition · Werte · Lernen', en: 'Tradition · Values · Learning' },
   'card-lovers': { de: 'Verbindung · Wahl · Werte', en: 'Connection · Choice · Values' },

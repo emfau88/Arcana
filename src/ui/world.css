@@ -3,6 +3,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  container-type: size;
   pointer-events: none;
   z-index: 0;
   background: var(--night-950);
@@ -83,12 +84,72 @@
 .world-scene__image.is-loaded {
   opacity: 1;
 }
+/* The painting is anchored at the top and scaled so castle (left) and waterfall (right)
+   stay visible on tall phones; its lower edge fades into the night. */
 .world-scene__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 40%;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: max(118cqw, 57cqh);
+  height: auto;
   max-width: none;
+  transform: translateX(-50%);
+  mask-image: linear-gradient(180deg, #000 86%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent 100%);
+}
+/* Vector stand-in steps back once the painting is there. */
+.world-scene__land,
+.world-scene__moon,
+.world-scene__milkyway,
+.world-scene__sky {
+  transition: opacity 900ms var(--ease-out);
+}
+.world-scene.is-painted .world-scene__land,
+.world-scene.is-painted .world-scene__moon,
+.world-scene.is-painted .world-scene__milkyway {
+  opacity: 0;
+}
+.world-scene.is-painted .world-scene__stars {
+  opacity: 0.45;
+  z-index: 1;
+}
+/* A02: plant corners in front of the world, behind the content. */
+.world-scene__foliage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  animation: foliage-in 900ms var(--ease-out) both;
+}
+@keyframes foliage-in {
+  from {
+    opacity: 0;
+  }
+}
+.foliage {
+  position: absolute;
+  height: auto;
+  max-width: none;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+}
+.foliage--tl {
+  left: -2px;
+  top: calc(var(--safe-top) - 6px);
+  width: min(26cqw, 150px);
+}
+.foliage--tr {
+  right: -2px;
+  top: calc(var(--safe-top) - 6px);
+  width: min(27cqw, 156px);
+}
+.foliage--bl {
+  left: -2px;
+  bottom: calc(var(--tabbar-h) + var(--safe-bottom) - 4px);
+  width: min(22cqw, 128px);
+}
+.foliage--br {
+  right: -2px;
+  bottom: calc(var(--tabbar-h) + var(--safe-bottom) - 4px);
+  width: min(24cqw, 138px);
 }
 /* Readability veil: darkens the bottom (panels, tab bar) and the edges. */
 .world-scene__veil {
@@ -111,7 +172,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .world-scene,
-  .world-star--twinkle {
+  .world-star--twinkle,
+  .world-scene__foliage {
     animation: none;
   }
   .world-scene__image {
@@ -123,4 +185,11 @@
     width: 58px;
     height: 58px;
   }
+}
+/* The painting already has a dark, quiet centre: lighter edge vignette so castle and
+   waterfall stay readable at the sides. */
+.world-scene.is-painted .world-scene__veil {
+  background:
+    radial-gradient(130% 70% at 50% 42%, transparent 55%, rgba(6, 8, 18, 0.35) 100%),
+    linear-gradient(180deg, rgba(6, 8, 18, 0.3) 0%, transparent 16%, transparent 60%, rgba(6, 8, 18, 0.6) 84%, rgba(6, 8, 18, 0.9) 100%);
 }
