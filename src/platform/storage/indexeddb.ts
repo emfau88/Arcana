@@ -2,7 +2,11 @@ import type { DailyRecord, Profile, Reading, ReadingDraft, Settings } from '../.
 import { SCHEMA_VERSION, StorageError, type Snapshot, type StorageRepository } from './repository.ts';
 import { isDailyRecord, isDraft, isProfile, isReading, isSettings } from './validate.ts';
 
-const DB_NAME = 'personal-oracle';
+// A separate design preview on the same origin (GitHub Pages /preview/) gets its own
+// database so it never reads or migrates the data of the main preview.
+const DB_NAME = import.meta.env.VITE_STORAGE_NAMESPACE
+  ? `personal-oracle-${import.meta.env.VITE_STORAGE_NAMESPACE}`
+  : 'personal-oracle';
 const KV = 'kv';
 const DAILY = 'daily';
 const READINGS = 'readings';

@@ -1,0 +1,22 @@
+# Runs on pushes to the design branch and type-checks/builds it. When it succeeds,
+# "Pages preview" (on main) rebuilds the site including /preview/ from this branch.
+name: Design preview trigger
+
+on:
+  push:
+    branches: [design/visual-overhaul]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck && npm run build

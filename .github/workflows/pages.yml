@@ -1,10 +1,21 @@
 # Deploys the production web build (same bundle Capacitor ships) to GitHub Pages
 # so the current state can be tried on a phone. Prototype preview, not a release.
+#
+#   /Arcana/          -> main
+#   /Arcana/preview/  -> design/visual-overhaul (separate IndexedDB namespace "design")
+#
+# Pages only accepts deployments from main, so a push to the design branch runs the
+# small "Design preview trigger" workflow, and this workflow follows it via
+# workflow_run (which always runs in the context of main). The main site is rebuilt
+# from main every time, so a design push never changes what /Arcana/ shows.
 name: Pages preview
 
 on:
   push:
     branches: [main]
+  workflow_run:
+    workflows: [Design preview trigger]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -14,22 +25,57 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
+
+env:
+  DESIGN_BRANCH: design/visual-overhaul
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
-      - run: npm run build
+          cache-dependency-path: main/package-lock.json
+      - name: Build main
+        working-directory: main
+        run: npm ci && npm run build
+
+      - name: Check for design branch
+        id: design
+        run: |
+          if git ls-remote --exit-code --heads "https://github.com/${{ github.repository }}.git" "$DESIGN_BRANCH" >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.design.outputs.exists == 'true'
+        with:
+          ref: ${{ env.DESIGN_BRANCH }}
+          path: design
+      - name: Build design preview
+        if: steps.design.outputs.exists == 'true'
+        working-directory: design
+        env:
+          VITE_STORAGE_NAMESPACE: design
+        run: npm ci && npm run build
+
+      - name: Assemble site
+        run: |
+          mkdir site
+          cp -r main/dist/. site/
+          if [ -d design/dist ]; then mkdir site/preview && cp -r design/dist/. site/preview/; fi
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
   deploy:
     needs: build
