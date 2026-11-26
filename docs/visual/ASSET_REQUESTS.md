@@ -1,48 +1,67 @@
-# ASSET_REQUESTS · Externe Bild-Assets für das Visual Overhaul
+# ASSET_REQUESTS · Externe Bild-Assets (Produktvision V2, in Bulks)
 
 Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werden. Alles andere entsteht im Code (Liste in Abschnitt 5). Jeder Prompt ist einzeln kopierbar und setzt kein Wissen über dieses Projekt voraus.
+
+**Seit 26.11.2026 nach Produktvision V2 geordnet:** Bilder kommen in **Bulks**, je einer pro Paket aus `docs/product/MASTER_ROADMAP_V2.md`. Angefordert wird **immer nur der nächste Bulk**. Spezifikationen, Prompts und Abnahmekriterien stehen schon für alle geplanten Assets hier, damit der Stil über alle Bulks gleich bleibt.
 
 **Lieferung:** Dateien mit exakt dem genannten Namen, möglichst in Originalauflösung (PNG), in einen Ordner deiner Wahl legen und mir den Pfad nennen. Den Export in WebP, die Größen und die Prüfung übernehme ich. Die Originale bitte außerhalb des Repos aufbewahren.
 
 **Hinweis zur Auflösung:** ChatGPT liefert Hochformate meist als 1024 × 1536 (2:3). Das genügt als Master. Ist eine höhere Auflösung verfügbar, bitte die höchste nehmen.
 
-## 0 · Übersicht und Reihenfolge
+**Stil-Anker:** Bei jeder Anfrage `bg-today.png` (A01) als Referenzbild mitgeben und dazuschreiben: „Match the painting style, light and palette of the attached reference image.“ Bei Kartenrücken zusätzlich `public/cards/card-back.webp`.
 
-| ID | Datei | Priorität | Wofür | Erzeugung |
-|---|---|---|---|---|
-| **A01** | `bg-today.png` | **P0** | Hintergrundwelt Tagesorakel | einzeln |
-| A02 | `fg-today-foliage.png` | P0 optional | Vordergrund-Ranken für Tiefe (Tagesorakel) | einzeln, transparent |
-| A03 | `bg-oracle.png` | P1 | Hintergrund Orakel/Readings | einzeln |
-| A04 | `bg-grimoire.png` | P1 | Hintergrund Grimoire/Sammlung | einzeln |
-| A05 | `bg-profile.png` | P1 | Hintergrund Profil und Archetyp-Enthüllung | einzeln |
-| A06 | `bg-welcome.png` | P1 | Willkommen und Onboarding | einzeln |
-| A07–A14 | `archetype-<id>.png` (8×) | P1 | Archetyp-Porträts | einzeln, gleicher Stilblock |
-| A15 | `grimoire-book.png` | P1 | Buch-Objekt im Grimoire-Kopf | einzeln, transparent |
-| A16 | `props-sheet.png` | P2 | Dekor-Objekte (Kristall, Astrolabium, Laterne, Phiole, Schlüssel, Federkiel) | Asset-Sheet, transparent |
-| A17 | `card-<id>.png` (ausgewählte) | P2 | figurative Ersatzkarten nach Test im neuen UI | einzeln, nach Entscheidung E3 |
-| A18 | `store-feature.png` | P2 | Store-Grafik 1024 × 500 | einzeln, erst in G4 |
+## 0 · Übersicht
 
-**Status 26.11.2026:** A01 und A02 sind geliefert und in V02 eingebaut (D-33). V02 braucht keine weiteren Assets. Das nächste Paket steht in Abschnitt 0.1 und wird erst nach deiner Freigabe des Tagesorakel-Screens angefragt.
+| ID | Datei | Bulk / Paket | Wofür | Erzeugung | Status |
+|---|---|---|---|---|---|
+| A01 | `bg-today.png` | B1 / V02 | Hintergrundwelt Tagesorakel | einzeln | geliefert, eingebaut |
+| A02 | `fg-today-foliage.png` | B1 / V02 | Pflanzenecken (Tiefe) | einzeln, transparent | geliefert, eingebaut |
+| A05 | `bg-profile.png` | **B2 / V04** | „Ich“, Archetyp-Enthüllung | einzeln | **jetzt angefordert** |
+| A06 | `bg-welcome.png` | **B2 / V04** | Willkommen, 7 Fragen | einzeln | **jetzt angefordert** |
+| A07–A14 | `archetype-<id>.png` (8×) | **B2 / V04** | Archetyp-Porträts | einzeln, eine Serie | **jetzt angefordert** |
+| A19 | `bg-starmap.png` | **B2 / V04** | Sternkarte (Reise), Rückblicke | einzeln | **jetzt angefordert** |
+| A03 | `bg-oracle.png` | B3 / V05 | Orakel, Legungen | einzeln | nach QG-V04 |
+| A04 | `bg-grimoire.png` | B3 / V05 | Grimoire (Buch, Kapitel) | einzeln | nach QG-V04 |
+| A15 | `grimoire-book.png` | B3 / V05 | Buch-Einband im Grimoire | einzeln, transparent | nach QG-V04 |
+| A20 | `cardback-crescent.png` | B3 / V05 | Kartenrücken „Mondsichel“ (Meilenstein 14) | einzeln | nach QG-V04 |
+| A21 | `cardback-compass.png` | B3 / V05 | Kartenrücken „Sternenkompass“ (Meilenstein 75) | einzeln | nach QG-V04 |
+| A23–A29 | `grimoire-vignettes.png` | B3 / V05 | 7 Kapitel-Vignetten plus Schlussvignette | ein Sheet, transparent | nach QG-V04 |
+| A30 | `parchment-tile.png` | B3 / V05 | Pergament der Buchseiten | einzeln, kachelbar | nach QG-V04 |
+| A32 | `bg-discover.png` | B4 / V06 | Entdecken (Zahlen, Engelszahlen, Symbole) | einzeln | nach QG-V05 |
+| A33 | `symbols-sheet-1.png`, `symbols-sheet-2.png` | B4 / V06 | 24 Symbole des Lexikons | 2 Sheets, transparent | nach QG-V05 und finaler Symbolliste |
+| A18 | `store-feature.png` | B5 / V07 | Store-Grafik 1024 × 500 | einzeln | nach QG-V06 und E11 (Name) |
+| A22 | `cardback-golden-wheel.png` | B5 / V07 | Kartenrücken „Goldenes Rad“ (Tag 365) | einzeln | nach QG-V06 |
+| A31 | `cardback-edition.png` | B5 / V07 | Kartenrücken der Edition | einzeln | nur mit Billing-Freigabe (E14) |
+| A34 | `bg-moon.png` | B6 / 1.1 | Mondwelt | einzeln | nach Release 1.0 |
+| – | Zusatzdeck (23 Bilder) | B7 / 1.2 | erstes Kartendeck als Einzelkauf | Serie | nach Entscheidung, eigene Anfrage |
+| A16 | `props-sheet.png` | zurückgestellt | Dekor-Objekte | Sheet | nur falls ein Screen es braucht |
+| A17 | `card-<id>.png` | zurückgestellt | figurative Ersatzkarten | einzeln | Entscheidung E3 |
 
-## 0.1 · V03-Paket (konkrete Anforderung nach V02)
+**Bis Release 1.0:** 2 geliefert, ≈ 30 neue Dateien. Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen im Code (Abschnitt 5).
 
-| Reihenfolge | ID | Datei | Wofür in V03 |
+## 0.1 · Aktuelle Anforderung: Bulk B2 (für V04 Identität und Reise)
+
+V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bilder werden erst in V04 eingebaut. Sie jetzt zu erzeugen spart Wartezeit, ändert aber nichts an V02 oder V03.
+
+| Reihenfolge | ID | Datei | Wofür in V04 |
 |---|---|---|---|
-| 1 | A03 | `bg-oracle.png` | Orakel: drei Karten auf einem Tisch im Observatorium. Zweitwichtigster Screen |
-| 2 | A06 | `bg-welcome.png` | Willkommen und Fragen: erster Eindruck, später Store-Screenshots |
-| 3 | A04 | `bg-grimoire.png` | Grimoire: Sammlung als Schatzkammer |
-| 4 | A15 | `grimoire-book.png` | Buch-Objekt im Grimoire-Kopf (transparent) |
-| 5 | A05 | `bg-profile.png` | Profil und Archetyp-Enthüllung (Porträts A07–A14 folgen erst in V05) |
+| 1 | A05 | `bg-profile.png` | Bühne der Enthüllung und Hintergrund von „Ich“ |
+| 2 | A07 | `archetype-seeker.png` | **Stilprobe** der Porträt-Serie |
+| – | – | – | **Stopp:** A05 und A07 zuerst schicken. Ich prüfe Beschnitt, Kontrast und Wirkung zusammen und gebe die Serie frei oder schlage Korrekturen am Prompt vor |
+| 3 | A08–A14 | `archetype-<id>.png` (7×) | restliche Porträts, im selben Chatverlauf wie A07. Werden in V04 auch für die teilbare Archetypkarte (1080 × 1920) gebraucht, darum möglichst hohe Auflösung |
+| 4 | A06 | `bg-welcome.png` | Willkommen und Fragen, erster Eindruck, später Store-Screenshots |
+| 5 | A19 | `bg-starmap.png` | Sternkarte im Kapitel „Reise“, Wochen- und Monatsrückblick |
 
-Nicht in V03: A07–A14 (V05), A16 (P2), A17 (Entscheidung E3: Deck v2 trägt die Bühne bei hellen und dunklen Karten, Empfehlung: erst nach V03 entscheiden), A18 (G4). Die Pflanzenecken aus A02 werden auf den anderen Screens wiederverwendet, ein neues Vordergrund-Asset ist nicht nötig.
+**Warum diese Reihenfolge:** Die Porträts sind der größte und riskanteste Teil (acht Bilder als Serie). Eine Stilprobe mit der zugehörigen Bühne verhindert, dass acht Bilder neu erzeugt werden müssen.
 
-**Erkenntnisse aus A01, gelten für A03–A06** (in die Prompts unten eingearbeitet):
+**Nicht in B2:** A03, A04, A15 (Orakel und Grimoire werden erst in V05 umgebaut), alle Kartenrücken (Auswahl kommt in V05), A32/A33 (V06).
+
+## 0.2 · Erkenntnisse aus A01 (gelten für alle Hintergründe)
 
 - Die App verankert Hintergründe oben und skaliert sie auf mindestens 118 % der Bildschirmbreite. Auf schmalen Handys fallen links und rechts je bis zu 9 % weg. Wichtige Motive gehören in die mittleren 80 % der Breite.
 - Die unteren etwa 15 % blenden in die Nacht über (Tab-Leiste, Pflanzenecken). Dort nichts Wichtiges.
 - Dunkle, ruhige Zonen hinter Text funktionieren: Auf A01 sind alle Texte gemessen bei mindestens 5,9:1 Kontrast. Helle Lichtquellen (Mond, Fenster, Lichtkegel) gehören nicht hinter Überschriften.
 - 1024 × 1536 PNG genügt als Master. Die Codex-Lieferung von A01/A02 hatte genau das richtige Format.
-
 
 ## Gemeinsamer Stilblock (in jedem Prompt bereits enthalten)
 
@@ -50,7 +69,7 @@ Nicht in V03: A07–A14 (V05), A16 (P2), A17 (Entscheidung E3: Deck v2 trägt di
 
 ---
 
-## A01 · Hintergrundwelt Tagesorakel (P0)
+## A01 · Hintergrundwelt Tagesorakel (Bulk B1, geliefert)
 
 | Feld | Wert |
 |---|---|
@@ -82,7 +101,7 @@ Composition is critical: the central area (middle 50% of the width, from 22% to 
 
 ---
 
-## A02 · Vordergrund-Ranken Tagesorakel (P0 optional)
+## A02 · Vordergrund-Ranken Tagesorakel (Bulk B1, geliefert)
 
 | Feld | Wert |
 |---|---|
@@ -106,12 +125,12 @@ Transparent background PNG, vertical 2:3. A decorative frame made only of plants
 
 ---
 
-## A03 · Hintergrund Orakel/Readings (P1)
+## A03 · Hintergrund Orakel/Legungen (Bulk B3, V05)
 
 | Feld | Wert |
 |---|---|
 | Datei / Ziel | `bg-oracle.png` → `public/world/bg-oracle.webp` (+ `-720`) |
-| Verwendung | Orakel-Start, Legung, Deutung |
+| Verwendung | Orakel: Wahl der Legung, Legungen mit 2–7 Karten, Deutung |
 | Master / Export / Format | wie A01 (2:3, PNG → WebP ≤ 320/160 KB, keine Transparenz) |
 | Motiv | Innenraum eines Sternenobservatoriums: großes gotisches Rundbogenfenster mit Blick auf eine Galaxie und einen großen Mond, davor ein runder Steintisch (die Karten liegen später darauf), Wolkenschleier am Boden, Mondlicht fällt auf den Tisch |
 | Komposition | Tischplatte bei 40–60 % Höhe, die mittleren 80 % der Breite frei (drei Karten nebeneinander). Fenster oben mittig |
@@ -126,12 +145,12 @@ Vertical portrait background, 2:3. Inside a quiet celestial observatory tower at
 
 ---
 
-## A04 · Hintergrund Grimoire/Sammlung (P1)
+## A04 · Hintergrund Grimoire (Bulk B3, V05)
 
 | Feld | Wert |
 |---|---|
 | Datei / Ziel | `bg-grimoire.png` → `public/world/bg-grimoire.webp` (+ `-720`) |
-| Verwendung | Sammlung, Verlauf, Detailansichten |
+| Verwendung | Grimoire: Einband, Inhaltsverzeichnis, Kapitel (die Buchseiten selbst nutzen A30) |
 | Master / Export / Format | wie A01 |
 | Motiv | Private Bibliothek eines Magiers bei Nacht: Bücherregale mit alten Folianten links und rechts, ein Lesepult, warmes Laternenlicht, Mondlicht durch ein hohes Fenster, schwebende Staubkörner |
 | Komposition | Mitte als dunkle, ruhige Wandfläche (Kartenraster liegt darüber), Licht von oben links |
@@ -146,12 +165,12 @@ Vertical portrait background, 2:3. The private night library of a gentle mage: t
 
 ---
 
-## A05 · Hintergrund Profil/Archetypen (P1)
+## A05 · Hintergrund „Ich“ und Archetyp-Enthüllung (Bulk B2, V04)
 
 | Feld | Wert |
 |---|---|
 | Datei / Ziel | `bg-profile.png` → `public/world/bg-profile.webp` (+ `-720`) |
-| Verwendung | Profil, Archetyp-Enthüllung |
+| Verwendung | „Ich“ (Profil), Archetyp-Enthüllung (Bühne, auf der das Porträt erscheint) |
 | Master / Export / Format | wie A01 |
 | Motiv | Sternenkuppel eines Planetariums mit goldenen Konstellationslinien, Bodenspiegelung, ein Lichtkegel von oben in die Mitte (dort steht später das Archetyp-Porträt) |
 | Freizuhalten | Mitte 20–80 % Breite, 12–60 % Höhe als Lichtkegel ohne Objekte, unten 60–100 % dunkel |
@@ -165,12 +184,12 @@ Vertical portrait background, 2:3. Inside a vast celestial dome at night: the cu
 
 ---
 
-## A06 · Hintergrund Willkommen (P1)
+## A06 · Hintergrund Willkommen (Bulk B2, V04)
 
 | Feld | Wert |
 |---|---|
 | Datei / Ziel | `bg-welcome.png` → `public/world/bg-welcome.webp` (+ `-720`) |
-| Verwendung | Willkommen, Fragen, Themenwahl. Erster Eindruck und Store-Screenshots |
+| Verwendung | Willkommen, 7 Fragen, Themenwahl. Erster Eindruck und Store-Screenshots |
 | Master / Export / Format | wie A01 |
 | Motiv | Ein großes, offenes, leuchtendes Grimoire auf einem Steinsockel unter einem Sternenportal, Seiten mit Mond- und Sternkarten (ohne Schrift), goldene Lichtfäden steigen auf |
 | Freizuhalten | obere Hälfte für Logo und Titel ruhig, unteres Drittel dunkel für Buttons |
@@ -184,13 +203,13 @@ Vertical portrait background, 2:3. A large ancient open grimoire rests on a carv
 
 ---
 
-## A07–A14 · Archetyp-Porträts (P1, 8 einzelne Bilder)
+## A07–A14 · Archetyp-Porträts (Bulk B2, V04, 8 einzelne Bilder)
 
 | Feld | Wert |
 |---|---|
 | Dateien | `archetype-seeker.png`, `archetype-guardian.png`, `archetype-visionary.png`, `archetype-alchemist.png`, `archetype-wanderer.png`, `archetype-creator.png`, `archetype-sage.png`, `archetype-renewer.png` |
-| Ziel | `public/archetypes/` (720 × 1080 und Thumbnail 240 × 360, WebP, ≤ 180 KB / 30 KB) |
-| Verwendung | Archetyp-Enthüllung (groß), Profil, Archetypen-Kacheln in der Sammlung |
+| Ziel | `public/archetypes/` (720 × 1080 und Thumbnail 240 × 360, WebP, ≤ 180 KB / 30 KB; zusätzlich 1080 × 1620 nur für Teilen-Bilder, lazy geladen) |
+| Verwendung | Archetyp-Enthüllung (groß, auf A05), „Ich“, Grimoire-Kapitel „Archetypen“ (alle acht lesbar), Teilen-Bild „Mein Archetyp“ (J2) |
 | Master / Format | mind. 1024 × 1536, 2:3, PNG, keine Transparenz |
 | Komposition | Figur oder Hauptsymbol mittig. Kopf bzw. Fokus bei 30–40 % Höhe. Unteres Viertel ruhig und dunkel (Name wird darunter bzw. per Verlauf eingeblendet). Kein Rahmen (den legt die App darüber) |
 | Figuren | erwachsene, mystische Figuren, divers, **individuell und ausdrucksstark, Gesichter ausdrücklich erlaubt** (Entscheidung E2). Emotional ansprechend, würdevoll, keine Sexualisierung |
@@ -218,12 +237,12 @@ Luxurious mystical high-fantasy character illustration for a premium spiritual o
 
 ---
 
-## A15 · Grimoire-Buch (P1)
+## A15 · Grimoire-Buch (Bulk B3, V05)
 
 | Feld | Wert |
 |---|---|
 | Datei / Ziel | `grimoire-book.png` → `public/world/grimoire-book.webp` (Alpha) |
-| Verwendung | Kopf des Grimoire-Screens, darüber der Sammlungsfortschritt |
+| Verwendung | Einband des Grimoires (Einstieg ins Buch) und Kopf des Inhaltsverzeichnisses |
 | Master / Export | 1536 × 1024 (3:2 quer) → 900 × 600 WebP mit Alpha, ≤ 140 KB |
 | Transparenz | ja |
 | Motiv | Geschlossenes, kostbares Grimoire, dunkelvioletter Ledereinband mit goldenen Beschlägen, Mondphasen und Stern auf dem Deckel, Lesebändchen, leicht schräge Aufsicht |
@@ -235,7 +254,7 @@ Luxurious mystical high-fantasy object illustration for a premium spiritual orac
 
 ---
 
-## A16 · Dekor-Objekte als Sheet (P2)
+## A16 · Dekor-Objekte als Sheet (zurückgestellt)
 
 | Feld | Wert |
 |---|---|
@@ -250,37 +269,222 @@ Luxurious mystical high-fantasy asset sheet for a premium spiritual oracle app, 
 
 ---
 
-## A17 · Figurative Ersatzkarten (P2, nach Entscheidung)
+## A17 · Figurative Ersatzkarten (zurückgestellt, Entscheidung E3)
 
 Erst wenn Deck v2 im neuen UI geprüft ist (V02/V03). Regeln aus `docs/CODEX_ASSET_PROMPT.md` gelten weiter: 2:3, Master ≥ 1024 × 1536, kein Rahmen, kein Text, Schutzzonen. **Figuren sind jetzt erlaubt.** Kandidaten mit dem größten Gewinn durch Figuren: III Herrscherin, VI Liebende, II Hohepriesterin, XVII Stern, IX Eremit, I Magier. Die Prompts formuliere ich pro Karte, wenn du die Auswahl bestätigst.
 
-## A18 · Store-Grafik (P2, G4)
+---
 
-Erst mit finalem Namen und Logo.
+## A19 · Sternkarte (Bulk B2, V04)
+
+| Feld | Wert |
+|---|---|
+| Datei / Ziel | `bg-starmap.png` → `public/world/bg-starmap.webp` (+ `-720`) |
+| Verwendung | Kapitel „Reise“ (Sternkarte mit einem Sternbild je Runde, Meilensteinen als hellen Sternen), Wochen- und Monatsrückblick. Steht fest, der Inhalt scrollt darüber |
+| Master / Export / Format | wie A01 (2:3, PNG → WebP ≤ 320/160 KB, keine Transparenz) |
+| Motiv | Eine alte Himmelskarte, lebendig bei Nacht: tiefer Nachthimmel, schwacher Nebelschleier, kaum sichtbare goldene Gravurlinien eines Sternatlas (konzentrische Kreise, Meridianbögen), Astrolabium-Ringe nur an den Rändern |
+| Komposition | Fläche 10–90 % Breite und 12–88 % Höhe dunkel, ruhig, kontrastarm, ohne helle Punkte. Die App zeichnet Sterne, Linien und Beschriftungen darauf |
+| Freizuhalten | keine Sternbilder, Tierkreiszeichen, Planeten, Gradzahlen oder Buchstaben (alte Atlanten enthalten oft welche) |
+| Abnahme | Goldene Punkte von 2 px (#EFD9A4) heben sich überall in der Innenfläche mit ≥ 3:1 ab. Lesetext im Panel ≥ 4,5:1. Keine Schrift und keine Zeichen. Wirkt auch bei 30 % Abdunklung noch wie eine Himmelskarte |
+
+```text
+Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
+
+Vertical portrait background, 2:3. An antique celestial chart come alive at night, seen straight on: a deep midnight-blue and petrol-teal night sky, a very faint violet nebula drifting diagonally, a few tiny dim background stars, and extremely subtle antique-gold engraved lines of an old star atlas: large concentric circles and curved meridian arcs centered slightly below the middle, like the faint grid of a planisphere, drawn at very low opacity. Delicate ornamental astrolabe rings and small engraved gold flourishes only along the outer edges and in the corners. No constellations, no zodiac signs, no planets, no symbols, no degree markings, no numbers and no letters anywhere. The entire area from 10% to 90% of the width and from 12% to 88% of the height must stay dark, calm and low in contrast with no bright spots, because glowing constellations will be drawn on top of it later. The app crops up to 9% on the left and right edges and fades the bottom 15% into darkness, so keep every important motif within the middle 80% of the width and above 85% of the height.
+```
+
+---
+
+## A20, A21, A22, A31 · Kartenrücken (Bulks B3 und B5)
+
+Wählbare Rückseiten für verdeckte Karten (Heute, Orakel). Freigeschaltet über Meilensteine (A20 an Reisetag 14, A21 an Tag 75, A22 an Tag 365) bzw. mit der Edition (A31). Gleiche Geometrie wie die vorhandene Rückseite von Deck v2.
+
+| Feld | Wert |
+|---|---|
+| Dateien / Ziel | `cardback-crescent.png`, `cardback-compass.png`, `cardback-golden-wheel.png`, `cardback-edition.png` → `public/cards/backs/<name>.webp` (720 × 1080, ≤ 140 KB) plus Thumbnail wie `public/cards/thumbs` |
+| Master / Format | mind. 1024 × 1536, 2:3, PNG, keine Transparenz. Kein Rahmen-Overlay der App: der Rand gehört zum Motiv (wie bei `card-back`) |
+| Komposition | streng spiegelsymmetrisch (links/rechts und oben/unten). Schmaler goldener Zierrand etwa 5 % vom Rand eingerückt. Äußere 3 % ruhig (die App rundet die Ecken mit 36 px bei 720 × 1080) |
+| Referenz | `public/cards/card-back.webp` mitgeben: gleiche Randstärke, gleiche Dichte, anderes Motiv |
+| Abnahme | als Thumbnail (120 px breit) klar von der Standard-Rückseite und voneinander unterscheidbar. Symmetrie sichtbar. Kein Text. Die Kartenaura der App (Gold- und Teal-Glanz) wirkt darauf nicht überladen |
+
+**Gemeinsamer Anfang** (`[MOTIV]` ersetzen):
+
+```text
+Original luxurious oracle card back design for a premium spiritual oracle app, portrait 2:3, full bleed. Painterly digital artwork with delicate antique-gold line ornament, soft inner glow and fine grain. Palette: deep midnight blue and petrol teal, dark violet, subtle magenta accents, warm antique gold. The design is perfectly mirror-symmetric left to right and top to bottom. A thin ornamental antique-gold border is inset about 5% from the edges, matching the border weight and density of the attached reference card back. The outer 3% stays calm because the corners will be rounded. Match the painting style of the attached reference. Absolutely no text, letters, numbers, logos, watermarks or signatures.
+
+[MOTIV]
+```
+
+| ID | Bulk | `[MOTIV]` |
+|---|---|---|
+| A20 Mondsichel | B3 | In the center a large slender crescent moon embraced by delicate night-blooming vines and two white lilies, tiny silver dew-like stars scattered symmetrically around it on a deep teal field. |
+| A21 Sternenkompass | B3 | In the center an ornate eight-pointed star compass rose with fine radiating gold rays and petrol-teal enamel segments, set within three concentric engraved astrolabe rings on a midnight-blue field. |
+| A22 Goldenes Rad | B5 | In the center a radiant golden wheel with eight spokes, each spoke ending in a small sun or moon disc, a wreath of laurel and wheat ears woven around it, warm antique gold dominating over a deep violet field. |
+| A31 Edition | B5 (nur mit Billing) | In the center a luminous night lotus blooming above a deep violet starfield mandala, its petals edged in gold with a soft magenta glow, fine concentric rings of tiny stars around it. |
+
+---
+
+## A23–A29 · Kapitel-Vignetten des Grimoires (Bulk B3, V05)
+
+| Feld | Wert |
+|---|---|
+| Datei / Ziel | `grimoire-vignettes.png` → einzeln ausgeschnitten nach `public/world/vignettes/<kapitel>.webp` (320 × 320, Alpha, ≤ 30 KB je Datei) |
+| Verwendung | Inhaltsverzeichnis und Kapitelanfänge des Grimoires (Karten, Archetypen, Symbole, Tagebuch, Rituale, Zahlen, Reise), Schlussvignette am Kapitelende |
+| Master | 1536 × 1024 (3:2 quer), transparent, Raster 4 × 2 mit viel Abstand |
+| Stil | wie gold gestochene Vignetten in einem alten Buch: feine antike Goldlinien, sanft gemalte Lichter in Petrol und Violett, gleiche Linienstärke für alle |
+| Abnahme | jede Vignette bei 96 px und 160 px erkennbar. Abstand zwischen den Motiven ≥ 40 px, nichts berührt sich. Saubere Alphakanten. Kein Text, keine Ziffern (auch nicht bei „Zahlen“) |
+
+| Position | ID | Kapitel | Motiv |
+|---|---|---|---|
+| oben 1 | A23 | Karten | drei aufgefächerte Karten mit leerer Rückseite, darüber ein kleiner Stern |
+| oben 2 | A24 | Archetypen | Silhouette einer Gestalt mit Kapuze im Profil in einem Ring aus acht kleinen Sternen |
+| oben 3 | A25 | Symbole | Schlüssel, Feder und ein augenförmiges Amulett, zusammen arrangiert |
+| oben 4 | A26 | Tagebuch | offenes Buch mit Federkiel und kleinem Tintenfass |
+| unten 1 | A27 | Rituale | flache Schale mit Wasser, in der sich eine Mondsichel spiegelt, daneben ein Lavendelzweig |
+| unten 2 | A28 | Zahlen | heilige Geometrie: Kreis, Dreieck und Quadrat ineinander, neun kleine Punkte |
+| unten 3 | A29 | Reise | gewundener Pfad aus kleinen Sternen, der zu einer fernen, erleuchteten Bogentür führt |
+| unten 4 | – | Schlussvignette | kleines symmetrisches Goldornament mit einem winzigen Stern |
+
+```text
+Luxurious mystical asset sheet for a premium spiritual oracle app: eight small vignettes in the style of gilded engravings from an antique grimoire, fine antique-gold line work with soft painted highlights and a gentle petrol-teal and violet glow, the same line weight and lighting for all. Transparent background PNG, horizontal 3:2. The eight vignettes are arranged in a clean grid of 4 columns and 2 rows with generous empty space between them; none touch each other; each has a roughly circular composition of the same size.
+Top row, left to right: (1) three fanned tarot cards showing only plain ornamented backs with a small star above them; (2) the silhouette of a hooded figure in profile inside a ring of eight small stars; (3) an antique key, a feather and an eye-shaped amulet arranged together; (4) an open journal with a quill and a small inkwell.
+Bottom row, left to right: (5) a shallow bowl of water reflecting a crescent moon, with a sprig of lavender; (6) sacred geometry of an interlocking circle, triangle and square with nine small dots; (7) a winding path of small stars leading to a distant glowing arched door; (8) a small symmetric gold flourish tailpiece with a tiny star in its center.
+No text, letters, numbers or numerals, no logos or watermarks, no background, no frame around the vignettes.
+```
+
+---
+
+## A30 · Pergament der Buchseiten (Bulk B3, V05)
+
+| Feld | Wert |
+|---|---|
+| Datei / Ziel | `parchment-tile.png` → `public/world/parchment-tile.webp` (512 × 512, ≤ 90 KB) |
+| Verwendung | Seitenfläche der Grimoire-Kapitel unter dunkler Tinte (Text in `#2B2238`). Ränder, Schatten und Goldschnitt entstehen per CSS |
+| Master | 1024 × 1024 (1:1), keine Transparenz |
+| Abnahme | 2 × 2 gekachelt ohne sichtbare Naht (falls nötig mache ich die Kachel selbst nahtlos). Helligkeitsschwankung gering (L* innerhalb von 8 Punkten), damit Tintentext überall ≥ 7:1 erreicht. Keine Flecken, Falten, Brandkanten, Zeichen |
+
+```text
+Seamless tileable texture, square 1:1, for the pages of a precious book in a premium app: aged warm ivory parchment paper with very subtle fibers, faint soft mottling and a gentle uneven tone, extremely low contrast, evenly lit from the front. No stains darker than a light tan, no folds, no creases, no torn or burned edges, no vignette, no shadows, no text, no letters, no symbols, no drawings. The texture must tile seamlessly in all directions.
+```
+
+---
+
+## A32 · Entdecken-Welt (Bulk B4, V06)
+
+| Feld | Wert |
+|---|---|
+| Datei / Ziel | `bg-discover.png` → `public/world/bg-discover.webp` (+ `-720`) |
+| Verwendung | Entdecken-Hub (Suche, drei Welten), Zahlen, Engelszahlen, Symbol-Lexikon |
+| Master / Export / Format | wie A01 |
+| Motiv | Mondbeschienener Kreuzgang eines alten Tempels des Wissens, offen zum Himmel: schlanke Steinbögen links und rechts, oben mittig eine schwebende Armillarsphäre aus Messing über einem stillen Spiegelbecken, feine Linien heiliger Geometrie aus Licht in der Luft, Glühwürmchen, violetter Bodennebel |
+| Komposition | Armillarsphäre klein zwischen 6 % und 26 % Höhe, weich beleuchtet, nicht heller als Mondlicht. Ab 30 % Höhe die mittleren 80 % der Breite ruhig und dunkel (Suchfeld, Welten-Kacheln, Listen) |
+| Freizuhalten | keine Ziffern, Buchstaben oder Tierkreiszeichen, auch nicht als Gravur |
+| Abnahme | Listen und Suchfeld bleiben klar lesbar (≥ 4,5:1 mit Panel). Wirkt als eigene Welt neben A03 (Observatorium) und A04 (Bibliothek) |
+
+```text
+Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
+
+Vertical portrait background, 2:3. A moonlit cloister of an ancient temple of knowledge, open to the starry night sky: slender carved stone arches along the left and right edges, faint geometric patterns in the stone, a few fireflies, soft violet mist on the floor. In the upper center, between 6% and 26% of the image height, a small brass armillary sphere floats softly lit above a still reflecting pool, surrounded by faint luminous lines of sacred geometry (circles and triangles) drawn in light in the air; it is never brighter than moonlight. No numerals, letters, zodiac signs or symbols anywhere. From 30% of the height downward, the middle 80% of the width stays calm and dark, because a search field and lists will be placed there. The app crops up to 9% on the left and right edges and fades the bottom 15% into darkness, so keep every important motif within the middle 80% of the width and above 85% of the height.
+```
+
+---
+
+## A33 · Symbole des Lexikons (Bulk B4, V06, nach finaler Symbolliste)
+
+| Feld | Wert |
+|---|---|
+| Dateien / Ziel | `symbols-sheet-1.png`, `symbols-sheet-2.png` → einzeln ausgeschnitten nach `public/symbols/<id>.webp` (256 × 256, Alpha, ≤ 20 KB) |
+| Verwendung | Symbol-Lexikon (Liste 48 px, Detailseite 160 px), Kartenseiten, Teilen (J3), entdeckte Symbole im Grimoire |
+| Master | je 1536 × 1024 (3:2 quer), transparent, Raster 4 × 3 |
+| Liste | Die Liste wird in V06 mit den Bildern von Deck v2 abgeglichen (`docs/product/CONTENT_MASTERPLAN.md` §6). Vorläufig: Sheet 1 Sonne, Mond, Stern, Lotus, Schlüssel, Schmetterling, Phönix, Schlange, Baum, Eule, Krone, Kelch. Sheet 2 Schwert, Stab, Rose, Lilie, Auge, Feder, Rad, Säulen, Waage, Laterne, Lemniskate, Ähre |
+| Abnahme | bei 48 px unterscheidbar (klare Silhouette). Gleiche Linienstärke und Lichtrichtung wie A23–A29. Kein Text. **Ersatz:** gelingt die Serie nicht, zeichne ich die Symbole als SVG-Linien im Stil der vorhandenen Icons |
+
+**Prompt (Sheet 1, für Sheet 2 die Liste tauschen):**
+
+```text
+Luxurious mystical asset sheet for a premium spiritual oracle app: twelve symbol emblems in the style of gilded engravings from an antique grimoire, fine antique-gold line work with a soft petrol-teal and violet inner glow, the same line weight, scale and lighting for all, each with a clear, simple silhouette that is still recognizable when shown very small. Transparent background PNG, horizontal 3:2. The twelve emblems are arranged in a clean grid of 4 columns and 3 rows with generous empty space between them; none touch each other; each fits inside an invisible circle of the same size.
+Row 1: a radiant sun, a crescent moon, an eight-pointed star, a lotus flower.
+Row 2: an antique key, a butterfly, a phoenix with spread wings, a coiled serpent.
+Row 3: a tree with roots and crown, an owl, a crown, a chalice.
+No text, letters, numbers, logos or watermarks, no background, no frames.
+```
+
+Sheet 2, Zeilen: `Row 1: an upright sword, a wooden staff with a few leaves, a rose, a white lily. Row 2: a single open eye, a feather, an eight-spoked wheel, two pillars side by side. Row 3: balanced scales, a small lantern with a warm flame, an infinity loop (lemniscate), an ear of wheat.`
+
+---
+
+## A18 · Store-Grafik (Bulk B5, V07, nach Entscheidung E11)
+
+| Feld | Wert |
+|---|---|
+| Datei / Ziel | `store-feature.png` → Store-Eintrag (nicht in der App) |
+| Master / Export | mind. 2048 × 1000 oder 1536 × 750 (≈ 2,05:1 quer) → 1024 × 500 PNG/JPEG |
+| Verwendung | Feature-Grafik im Play Store. Name und Emblem setze ich im Code darüber (finaler Name nach E11) |
+| Komposition | Panorama der Nachtwelt aus A01. Linke Hälfte ruhig und dunkel (dort stehen Emblem und Name), Burg und Wasserfall rechts. Ränder ohne wichtige Details |
+| Abnahme | wirkt auch in kleiner Darstellung (Breite 320 px). Gleiche Welt wie A01. Kein Text im Bild |
+
+```text
+Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
+
+Wide horizontal panorama, about 2:1. The same enchanted night landscape as the attached reference, seen from a high terrace: on the right a slender fairy-tale castle with a few warmly glowing windows on a cliff and a thin silver waterfall falling into mist, rolling violet hills and a calm valley with soft fog, a deep starry sky with a faint teal-violet milky way and a thin crescent moon. Dark silhouettes of lavender and white lilies along the lower edge. The left half of the image is calm, darker open sky and soft hills without important objects, because a logo will be placed there. Keep all important details at least 8% away from every edge.
+```
+
+---
+
+## A34 · Mondwelt (Bulk B6, Release 1.1)
+
+| Feld | Wert |
+|---|---|
+| Datei / Ziel | `bg-moon.png` → `public/world/bg-moon.webp` (+ `-720`) |
+| Verwendung | Mond-Bereich (aktuelle Phase, Mondkalender, Neumond-Intention, Vollmond-Reflexion) |
+| Master / Export / Format | wie A01 |
+| Motiv | stiller See bei Nacht, darin ein runder Steinbogen (Mondtor), dessen Öffnung leeren Sternenhimmel rahmt. Schilf und weiße Nachtblüten an den unteren Rändern, silberner Nebel |
+| Komposition | **Kein Mond im Bild.** Die App zeichnet die aktuelle Phase in die Öffnung des Tores. Öffnung horizontal mittig, Mittelpunkt bei 30–40 % Höhe, Durchmesser ≈ 45 % der Bildbreite. Ab 62 % Höhe ruhig und dunkel (Kalender, Texte) |
+| Abnahme | kein Mond, kein heller Fleck in der Öffnung. Mittelpunkt der Öffnung auf ±3 % bestimmbar (ich kalibriere die Position im Code). Mondphase als SVG darin wirkt natürlich |
+
+```text
+Luxurious mystical high-fantasy illustration for a premium spiritual oracle app. Painterly digital artwork with the depth of a matte painting: layered atmospheric perspective, soft volumetric light, fine film grain, delicate antique-gold highlights. Palette: deep petrol teal and midnight blue, dark violet, subtle magenta accents, warm antique-gold light sources. Elegant, adult, calm and enchanting, not cartoonish, not neon, no mobile-game look. Absolutely no text, letters, numbers, logos, watermarks or signatures.
+
+Vertical portrait background, 2:3. A vast still lake at night seen from the shore, the calm water mirroring the stars. In the middle distance a large circular stone moon gate (a perfectly round arch of old carved stone) stands in the shallow water; its round opening is horizontally centered, its center at about 35% of the image height, its diameter about 45% of the image width, and it frames only empty dark starry sky. Tall reeds and a few white night-blooming flowers along the lower left and lower right edges, soft silver mist on the water. Important: there is no moon anywhere in the image and no bright spot inside the opening, because the current moon phase will be drawn there later. From 62% of the height downward the image stays calm and dark. The app crops up to 9% on the left and right edges and fades the bottom 15% into darkness, so keep every important motif within the middle 80% of the width and above 85% of the height.
+```
 
 ---
 
 ## 5 · Was ich selbst im Code erstelle (keine Bilddateien)
 
-| Element | Technik |
-|---|---|
-| Logo-Emblem (Mondphasen + Stern) und Wortmarke ARCANA | SVG + Cormorant Garamond |
-| Ornamente (Kopfornamente, Eckschnörkel, Überschriften-Flanken, Trenner) | SVG-Komponenten |
-| Ornament-Panels, Buttons, Chips, Tabs, Navigation | CSS + SVG-Ecken |
-| Kartenaura, Lichtstrahlen, Glühen, Bühnenlicht | CSS-Verläufe, `box-shadow`, Masken |
-| Sterne, Funken, Partikel | CSS (wenige Elemente, zeitlich begrenzt) |
-| Sternenpfad (Fortschritt), Astrolabium-Bogen | SVG |
-| Themen-Icons (Herz, Aktentasche, Kompass, Waage, Lotus, Feder) | SVG im Stil der vorhandenen Icons |
-| Farbabdunklung und Vignette über Hintergründen | CSS-Verläufe pro Screen |
-| Desktop-Erweiterung des Hintergrunds | gleiches Bild, unscharf und abgedunkelt |
-| Soundeffekte (P2, optional) | Web-Audio-Synthese (Glocke, Papier), keine Dateien |
+| Element | Technik | Paket |
+|---|---|---|
+| Logo-Emblem (Mondphasen + Stern) und Wortmarke ARCANA | SVG + Cormorant Garamond | vorhanden |
+| Ornamente (Kopfornamente, Eckschnörkel, Überschriften-Flanken, Trenner) | SVG-Komponenten | vorhanden |
+| Ornament-Panels, Buttons, Chips, Tabs, Navigation | CSS + SVG-Ecken | vorhanden, V03 überall |
+| Kartenaura, Lichtstrahlen, Glühen, Bühnenlicht | CSS-Verläufe, `box-shadow`, Masken | vorhanden |
+| Sterne, Funken, Partikel | CSS (wenige Elemente, zeitlich begrenzt) | vorhanden |
+| Sternenpfad auf „Heute“ | SVG | V02 |
+| Sternbilder der Sternkarte (ein Sternbild je Runde), Meilenstein-Sterne | SVG auf A19 | V04 |
+| Meilenstein-Moment (Lichtaufgang) | CSS-Verläufe, reduziert: Überblenden | V04 |
+| Stufen-Symbol der Kartenvertiefung (Mondphase neu → voll) | SVG | V05 |
+| Buchseiten: Ränder, Goldschnitt, Seitenschatten, Lesebändchen | CSS auf A30 | V05 |
+| Ex Libris (Rahmen, Siegel) | SVG | V05 |
+| Zahlen-Medaillon (große Ziffer im Ornamentring) | SVG + Cormorant Garamond | V06 |
+| Engelszahl-Darstellung, Ziffernmuster | Typografie + SVG | V06 |
+| Tab-Icons „Entdecken“ (Kompass-Stern) und „Ich“ (Medaillon) | SVG im Stil der vorhandenen Icons | V04 / V06 |
+| Teilen-Vorlagen (Story und Feed) | Canvas mit eingebetteten Schriften, nutzt vorhandene Bilder | V07 |
+| Edition-Siegel | SVG | V07 |
+| Mondphasen, Mondkalender | SVG (berechnet) | 1.1 |
+| Themen-Icons (Herz, Aktentasche, Kompass, Waage, Lotus, Feder) | SVG im Stil der vorhandenen Icons | vorhanden |
+| Farbabdunklung und Vignette über Hintergründen | CSS-Verläufe pro Screen | vorhanden |
+| Desktop-Erweiterung des Hintergrunds | gleiches Bild, unscharf und abgedunkelt | vorhanden |
+| Soundeffekte (optional) | Web-Audio-Synthese (Glocke, Papier), keine Dateien | nicht geplant vor 1.0 |
 
 ## 6 · Wiederverwendung vorhandener Assets
 
 | Vorhanden | Weiter genutzt für |
 |---|---|
-| Deck v2 (22 Karten + Rückseite) | alle Karten. Glanz kommt per CSS |
-| Kartenrückseite v2 | verdeckte Karten, Logo-Motiv (Mondphasen) |
-| Rahmenvorlage und Schutzzonen (`docs/assets/`) | künftige Ersatzkarten (A17) |
+| Deck v2 (22 Karten + Rückseite) | alle Karten, Teilen (J1). Glanz kommt per CSS |
+| Kartenrückseite v2 | Standard-Rückseite, Referenz für A20–A22 und A31, Logo-Motiv (Mondphasen) |
+| A01 Nachtwelt | Heute, neutraler Hintergrund in V03 für Screens ohne eigene Welt, Referenz für alle Bulks, Basis für A18 |
+| A02 Pflanzenecken | Tiefe auf allen Welten |
+| Archetyp-Porträts (B2) | Enthüllung, „Ich“, Grimoire-Kapitel „Archetypen“, Teilen (J2) |
+| Rahmenvorlage und Schutzzonen (`docs/assets/`) | künftige Ersatzkarten (A17) und Zusatzdecks (B7) |
 | Papierkorn `grain.webp` | als Overlay auf Panels |
 | App-Icon (Vektor) | bleibt bis G4 |

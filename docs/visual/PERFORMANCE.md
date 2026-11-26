@@ -19,6 +19,8 @@ Feste Bedingungen: Playwright-Chromium headless, 412 × 915 bei 2× Pixeldichte 
 | reveal | Bilder pro Sekunde während der Enthüllung (1 Lauf, nur beim ersten Öffnen am Tag möglich) | ≥ 50 fps, ≤ 2 Ruckler > 50 ms |
 | idle | laufende Animationen 12 s nach der Enthüllung | **0** (E5: vollständige Ruhe) |
 
+> **Ab QG-V03 (D-39, R1):** Maßgeblich sind die **absoluten Obergrenzen** gegen die feste Referenz `main` @ `03abb3c` (`docs/product/MASTER_ROADMAP_V2.md` §6 „Leistungsbudgets“): Erststart ≤ 1.600 ms, „Heute“ sichtbar ≤ 1.250 ms, FCP ≤ 900 ms, LCP ≤ 1.400 ms, Übertragung ≤ 900 KB (Bilder ≤ 600 KB), Start-JS ≤ 160 KB gzip, Enthüllung ≥ 50 fps mit ≤ 2 Rucklern und schlechtestem Frame ≤ 120 ms, Leerlauf 0, Android-Kaltstart ≤ 3,0 s, APK ≤ 25 MB. Die relativen Grenzen in der Tabelle oben galten für das V02-Gate. Bei belastetem Rechner wird die Referenz im selben Lauf abwechselnd mitgemessen und jeder Wert auf sie normiert.
+
 Android-Kaltstart: `node --experimental-strip-types scripts/android-evidence.mjs <dir> --startup-only` (Median aus 5, Emulator `emulator-5554`). Nur aussagekräftig bei ruhigem Rechner (CPU-Last < 20 % vor dem Start).
 
 ## Basis: `main` @ `03abb3c` (Deck v2, vor dem Overhaul), 26.11.2026

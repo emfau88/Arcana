@@ -2,6 +2,8 @@
 
 Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine P1/P2-Funktionen ohne Freigabe.
 
+> **Seit 26.11.2026 gilt die Produktvision V2.** Neue Funktionen, Pakete und ihre Reihenfolge stehen in `docs/product/MASTER_ROADMAP_V2.md` (Bulks mit „Fertig, wenn“). Diese Liste führt nur noch offene Einzelpunkte aus G2/G3 und dem Design-Feinschliff; sie werden in den passenden Bulk übernommen (G3-Härtung → V07.5, IndexedDB-Upgrade → V03.1, Grimoire-Hervorhebung → V05.3, Fragebogen → V04.1).
+
 ## G2 (erledigt)
 
 - [x] S06: 19 Karten (Illustration + DE/EN-Texte), 4 Themen, 126 neue Karte×Thema-Botschaften. Validator-Stufe `p0` grün.
@@ -18,6 +20,13 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] Zeitzonenwechsel bei laufender App und Tageswechsel im Hintergrund (Android) gezielt testen.
 - [ ] Optionaler PWA-Cache (Service Worker) prüfen: Offline auch im Browser.
 - [ ] Vollständige Q01–Q16-Matrix, Lizenzliste der Abhängigkeiten.
+
+## Später (Produktvision V2, nach Marktdaten)
+
+- [ ] Virtuelle Talismane und spirituelle Sammelobjekte als **kostenlose** Entdeckungsinhalte (1.3+): gefunden über Reise, Kartenstufen, Meilensteine. Keine Zufallsziehung, keine Lootbox, keine virtuelle Währung, nie käuflich (R6).
+- [ ] Premium-Decks als Serie nach dem ersten Deck in 1.2 (R7, `docs/product/MONETIZATION_CONCEPT.md` §2.4).
+- [ ] Spirituelle Themenreisen (7–21 Tage) als Einzelkauf oder Abo-Inhalt (R7).
+- [ ] Visueller PDF-Export des Grimoires (E6), unabhängig von der Sicherung.
 
 ## Design-Feinschliff (später, Eigentümer entscheidet den Zeitpunkt)
 

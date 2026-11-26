@@ -2,6 +2,8 @@
 
 Grundlage: `VISUAL_AUDIT.md`, `ART_DIRECTION.md`, `ASSET_REQUESTS.md`. Arbeitsbranch `design/visual-overhaul`. Merge nach `main` nur nach Freigabe (siehe `MERGE_RECOMMENDATION.md`).
 
+> **Abgelöst seit 26.11.2026 (D-38):** Gültig ist hier nur noch **V02**. Die Pakete V03–V05 unten sind durch die Produktvision V2 ersetzt; maßgeblich sind die Pakete V03–V07 in `docs/product/MASTER_ROADMAP_V2.md` (Gates und Leistungsbudgets dort §6, Android in jedem Paket-Gate). Die Gestaltungsideen in den alten Abschnitten V03–V05 bleiben als Quelle für die V2-Bulks stehen.
+
 **Unveränderlich in allen Paketen:** IDs, Lokalisierung DE/EN, Datenmodelle und Sammelstände bleiben erhalten. Offline-Kern ohne externe Laufzeit-Abhängigkeiten, keine laufenden KI-Kosten. Reduzierte Bewegung und 200 % Systemschrift funktionieren. Kein Text in Illustrationen. AGENTS.md gilt.
 
 **Messungen nur, wo nötig:** pro Paket `npm run check`, E2E, Screenshots DE 412 + EN Desktop + DE 320/130 %. Android-Lauf nur bei V02-Abschluss und V05.
@@ -11,9 +13,9 @@ Grundlage: `VISUAL_AUDIT.md`, `ART_DIRECTION.md`, `ASSET_REQUESTS.md`. Arbeitsbr
 | Paket | Inhalt | Braucht von dir | Ergebnis |
 |---|---|---|---|
 | **V02** | Tagesorakel-Slice im Mockup-Niveau | A01 (+ optional A02), Entscheidungen E1–E4 | ein Screen, der „wie das Mockup“ wirkt |
-| V03 | Design-System auf alle Screens übertragen | A03–A06, A15 | einheitliche Welt in allen Bereichen |
-| V04 | Sichtbare Reise (Progression, ohne Druck) | Entscheidung E6 | Pfad, Meilensteine, Sammlung als Schatz |
-| V05 | Archetypen als Bilder, Feinschliff, Abnahme | A07–A14, optional A17 | Enthüllungsmoment, Release-Kandidat |
+| ~~V03~~ | ~~Design-System auf alle Screens übertragen~~ | abgelöst | siehe `MASTER_ROADMAP_V2.md` V03 Fundament |
+| ~~V04~~ | ~~Sichtbare Reise (Progression, ohne Druck)~~ | abgelöst | siehe `MASTER_ROADMAP_V2.md` V04 Identität und Reise |
+| ~~V05~~ | ~~Archetypen als Bilder, Feinschliff, Abnahme~~ | abgelöst | siehe `MASTER_ROADMAP_V2.md` V05–V07 |
 
 ---
 
