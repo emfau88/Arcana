@@ -40,12 +40,14 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 **Stand der Bulks** (wird bei jeder Lieferung abgehakt):
 
 - [x] B1 · A01, A02 geliefert und eingebaut (V02)
-- [ ] B2 · für V04, Ablauf in §0.1
-- [ ] B3 · für V05
-- [ ] B4 · für V06
-- [ ] B5 · für V07
-- [ ] B6 · für 1.1
-- [ ] B7 · für 1.2
+- [ ] B2 · für V04, Ablauf in §0.1 · **geliefert 26.11.2026 (11/11)**, Einbau in V04
+- [ ] B3 · für V05 · teilweise geliefert (A03, A04, A15, A20, A21, A23–A29, A30)
+- [ ] B4 · für V06 · teilweise geliefert (A32, zwei Symbol-Sheets A33)
+- [ ] B5 · für V07 · teilweise geliefert (A18, A22, Kartenrücken Edition)
+- [ ] B6 · für 1.1 · A34 geliefert
+- [ ] B7 · für 1.2 · Zusatzdeck in Arbeit (Rücken und erste Karten geliefert)
+
+**Lieferweg:** Ein Bild-Agent legt die Masters nach und nach in `%USERPROFILE%\Pictures\Arcana\<Bulk>\` ab (nicht im Repo). Eingebaut wird **erst im Paket, das sie braucht** (B2 in V04, B3 in V05 usw.): dort geprüft, als WebP exportiert und ins Repo übernommen. Bis dahin bleiben sie im Lieferordner.
 
 **Bis Release 1.0:** 2 geliefert, ≈ 30 neue Dateien. Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen im Code (Abschnitt 5).
 
@@ -64,12 +66,12 @@ V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bil
 
 **Stand B2:**
 
-- [ ] A05 und A07 erzeugt und geschickt
-- [ ] Stilprobe geprüft, Serie freigegeben
-- [ ] A08–A14 erzeugt und geschickt
-- [ ] A06 erzeugt und geschickt
-- [ ] A19 erzeugt und geschickt
-- [ ] alle B2-Bilder geprüft, als WebP exportiert und im Repo
+- [x] A05 und A07 erzeugt und geschickt
+- [x] Serie geprüft (26.11.2026): Stil, Farbwelt und Format (1024 × 1536) stimmig, keine Schrift im Bild. **Offen für den Eigentümer:** alle acht Porträts zeigen Frauen mit ähnlichen Gesichtszügen (meist hell und blond); die Archetypen sind für alle Menschen gedacht. Entscheidung vor dem Einbau in V04: so lassen oder einzelne Porträts vielfältiger neu erzeugen
+- [x] A08–A14 erzeugt und geschickt
+- [x] A06 erzeugt und geschickt
+- [x] A19 erzeugt und geschickt
+- [ ] alle B2-Bilder im Layout geprüft (Beschnitt, Kontrast), als WebP exportiert und im Repo (V04)
 
 **Warum diese Reihenfolge:** Die Porträts sind der größte und riskanteste Teil (acht Bilder als Serie). Eine Stilprobe mit der zugehörigen Bühne verhindert, dass acht Bilder neu erzeugt werden müssen.
 
