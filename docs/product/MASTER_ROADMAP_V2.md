@@ -24,7 +24,9 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 fertig, nächster Bulk V03.2.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 und V03.2 fertig, nächster Bulk V03.3.
+
+Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
 ### V02 · Tagesorakel abschließen (0.2) · Branch `design/visual-overhaul`
 
@@ -41,12 +43,42 @@ Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbe
 
 ### V03 · Fundament und globales Designsystem (0.3) · Branch `feature/v03-fundament`
 
-- [x] V03.1 Datenmodell v2 mit Sicherungsformat (E19 entschieden, D-43, D-44): Upgrade-Test leer/voll/defekt, Daten aus 0.2 bit-gleich, Roundtrip, Löschen aller Stores (E2E)
-- [ ] V03.2 Abgeleitete Schicht
-- [ ] V03.3 Content-Module
-- [ ] V03.4 Entitlements
-- [ ] V03.5 Globales Designsystem, Mindestkontrast, Leistungsbudgets (inkl. B-07, B-08 aus V02)
-- [ ] QG-V03, Pull Request, Freigabe, Tag `v0.3.0`
+- [x] **V03.1 Datenmodell v2 mit Sicherungsformat** (8/8, D-43, D-44)
+  - [x] Schema 2: `journal`, `events`, `favorites`, `seen`, kv `personal` und `entitlements`
+  - [x] Validatoren mit Standardwerten
+  - [x] Migration 1 → 2 additiv und idempotent (Upgrade-Test leer, voll, teilweise defekt)
+  - [x] Daten aus 0.2 bit-gleich lesbar
+  - [x] Neuere Version in anderem Tab: Verbindung schließen, Hinweis „Neu laden“
+  - [x] Sicherungsformat: Typ, Serialisierer, Prüfer, Roundtrip-Test
+  - [x] Löschen entfernt alle Stores (E2E)
+  - [x] E19 entschieden: Teilen und Datei-Auswahl zuerst
+- [x] **V03.2 Abgeleitete Schicht** (7/7, D-45)
+  - [x] Reisetag aus allen zählenden Handlungen (Tageskarte, Legung, Tagebuch, Kartenstudium)
+  - [x] Kartenbegegnungen und Stufen 0–4, Grimoire-Kopfzahl
+  - [x] Meilensteine fest und im Rhythmus, nächster Meilenstein ohne Countdown
+  - [x] Randfälle: Zeitzone, Mitternacht, doppelte Tage, defekte Datensätze, Uhr zurückgestellt
+  - [x] Monoton über 1.000 Zufallsfolgen, 0.2-Bestand mit 40 Tagen, ≤ 30 ms bei 1.000 Tagen
+  - [x] Keine Zähler gespeichert
+  - [x] Nebenbei behoben: Plakette stand einen Tag zu weit, wenn heute nur eine Legung gespeichert war
+- [ ] **V03.3 Content-Module** (0/5)
+  - [ ] Inhalte in Module aufteilen, je Sprache dynamisch laden
+  - [ ] Validator je Modul meldet fehlende DE/EN-Texte
+  - [ ] Bundle-Report im Build
+  - [ ] Start-JS ≤ 160 KB gzip
+  - [ ] Offline: alle Module ohne Netz (E2E im Flugmodus)
+- [ ] **V03.4 Entitlements** (0/3)
+  - [ ] `has(right)`, `CoreOnlyProvider`, `TestProvider`
+  - [ ] Unit-Tests
+  - [ ] Kein UI-Element liest den Kaufstatus direkt (Lint-Regel oder Test)
+- [ ] **V03.5 Globales Designsystem** (0/4)
+  - [ ] V02-Bausteine auf Orakel, Grimoire, Profil, Onboarding, Einstellungen
+  - [ ] Screenshot-Review 360/390/412 und Desktop, keine Überläufe
+  - [ ] Mindestkontrast ≥ 4,5:1 für jeden Lesetext (inkl. B-07)
+  - [ ] Absolute Perf-Grenzen eingehalten (inkl. B-08)
+- [ ] **QG-V03** (0/3)
+  - [ ] `npm run check` und alle E2E grün
+  - [ ] Android-Debug-Build startet und migriert einen 0.2-Datenbestand
+  - [ ] Pull Request, Freigabe, Tag `v0.3.0`
 
 ### V04 · Identität und Reise (0.4)
 
