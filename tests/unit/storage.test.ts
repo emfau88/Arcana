@@ -47,7 +47,20 @@ async function rawPut(store: string, value: unknown, key?: string): Promise<void
 describe('IndexedDB repository', () => {
   it('starts empty', async () => {
     const s = await repo.loadAll();
-    expect(s).toEqual({ settings: null, profile: null, dailies: [], readings: [], draft: null, skippedCorrupt: 0 });
+    expect(s).toEqual({
+      settings: null,
+      profile: null,
+      dailies: [],
+      readings: [],
+      draft: null,
+      personal: null,
+      entitlements: null,
+      journal: [],
+      events: [],
+      favorites: [],
+      seen: [],
+      skippedCorrupt: 0,
+    });
   });
 
   it('persists settings and profile across reopen', async () => {

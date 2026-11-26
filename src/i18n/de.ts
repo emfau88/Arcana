@@ -9,6 +9,7 @@ export const de = {
     cancel: 'Abbrechen',
     close: 'Schließen',
     retry: 'Erneut versuchen',
+    reload: 'Neu laden',
     loading: 'Orakel wird geöffnet …',
   },
   nav: {
@@ -178,6 +179,8 @@ export const de = {
     storageBody: 'Deine Daten konnten nicht geöffnet werden. Es wurde nichts gelöscht.',
     writeFailed: 'Speichern hat nicht geklappt. Es wurde nichts verändert – bitte versuche es erneut.',
     corrupt: '{n} Einträge sind unlesbar und werden ausgeblendet. Sie wurden nicht gelöscht.',
+    staleTitle: 'Eine neuere Version ist geöffnet',
+    staleBody: 'In einem anderen Fenster läuft eine aktualisierte Version der App. Lade neu, um weiterzumachen. Es wurde nichts gelöscht.',
   },
   languages: { de: 'Deutsch', en: 'English' },
 } as const;

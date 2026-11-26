@@ -30,7 +30,8 @@ import { IndexedDbRepository } from '../platform/storage/indexeddb.ts';
 import type { StorageRepository } from '../platform/storage/repository.ts';
 
 export interface AppState {
-  status: 'loading' | 'ready' | 'error';
+  /** 'stale' = a newer version of the app took over the database in another tab. */
+  status: 'loading' | 'ready' | 'error' | 'stale';
   settings: Settings;
   profile: Profile | null;
   dailies: DailyRecord[];
@@ -46,6 +47,7 @@ export interface AppState {
 type Action =
   | { type: 'loaded'; state: Partial<AppState> }
   | { type: 'error' }
+  | { type: 'stale' }
   | { type: 'settings'; settings: Settings }
   | { type: 'profile'; profile: Profile }
   | { type: 'daily'; record: DailyRecord }
@@ -69,6 +71,8 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, ...action.state, status: 'ready' };
     case 'error':
       return { ...state, status: 'error' };
+    case 'stale':
+      return { ...state, status: 'stale' };
     case 'settings':
       return { ...state, settings: action.settings };
     case 'profile':
@@ -166,6 +170,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     let cancelled = false;
     (async () => {
       try {
+        repo.onVersionChange(() => dispatch({ type: 'stale' }));
         await repo.open();
         const snap = await repo.loadAll();
         if (cancelled) return;

@@ -139,3 +139,85 @@ export interface CollectionEntry {
   firstSeenAt: string;
   appearances: number;
 }
+
+/* ------------------------------------------------------------------ Schema v2 (V03.1, IA §5.3)
+ * Facts only. Progress (journey day, levels, milestones) is always derived, never stored.
+ */
+
+/** kv 'personal'. Sensitive, deletable on its own, never part of a share model. */
+export interface PersonalData {
+  /** 'YYYY-MM-DD', local only. */
+  birthDate?: string;
+  savedAt: string;
+}
+
+export type JournalKind = 'reflection' | 'study' | 'number-encounter' | 'moon-intention' | 'moon-reflection' | 'free';
+export const JOURNAL_KINDS: readonly JournalKind[] = ['reflection', 'study', 'number-encounter', 'moon-intention', 'moon-reflection', 'free'];
+
+export interface JournalRefs {
+  cardId?: CardId;
+  readingId?: string;
+  sequence?: string;
+  moonCycle?: string;
+  ritualId?: string;
+}
+
+/** Store 'journal' (keyPath id, indexes dateKey and kind). */
+export interface JournalEntry {
+  id: string;
+  kind: JournalKind;
+  /** Local calendar day of the entry. */
+  dateKey: string;
+  /** May be empty (an encounter without a note). Missing in a record = ''. */
+  text: string;
+  /** Missing = {}. */
+  refs: JournalRefs;
+  createdAt: string;
+  /** Missing = createdAt. */
+  updatedAt: string;
+}
+
+export type ActivityType = 'card.studied' | 'ritual.done' | 'review.opened' | 'world.introduced';
+export const ACTIVITY_TYPES: readonly ActivityType[] = ['card.studied', 'ritual.done', 'review.opened', 'world.introduced'];
+
+export interface ActivityRefs {
+  cardId?: CardId;
+  part?: 1 | 2;
+  ritualId?: string;
+  reviewId?: string;
+  world?: string;
+}
+
+/** Store 'events' (keyPath id, indexes type and dateKey). Append only. */
+export interface ActivityEvent {
+  id: string;
+  type: ActivityType;
+  dateKey: string;
+  at: string;
+  /** Missing = {}. */
+  refs: ActivityRefs;
+}
+
+export type FavoriteKind = 'angel' | 'symbol' | 'ritual' | 'card';
+export const FAVORITE_KINDS: readonly FavoriteKind[] = ['angel', 'symbol', 'ritual', 'card'];
+
+/** Store 'favorites' (keyPath key). */
+export interface Favorite {
+  /** `${kind}:${id}`. Missing = derived from kind and id. */
+  key: string;
+  kind: FavoriteKind;
+  id: string;
+  createdAt: string;
+}
+
+/** Store 'seen' (keyPath key). Only "new" markers, e.g. 'milestone:21', 'level:major-03:2'. */
+export interface SeenFlag {
+  key: string;
+  seenAt: string;
+}
+
+/** kv 'entitlements'. Cached purchase rights; never part of a backup (restored via the store). */
+export interface EntitlementCache {
+  rights: string[];
+  checkedAt: string;
+}
