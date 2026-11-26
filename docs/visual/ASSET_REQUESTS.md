@@ -67,7 +67,7 @@ V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bil
 **Stand B2:**
 
 - [x] A05 und A07 erzeugt und geschickt
-- [x] Serie geprüft (26.11.2026): Stil, Farbwelt und Format (1024 × 1536) stimmig, keine Schrift im Bild. **Offen für den Eigentümer:** alle acht Porträts zeigen Frauen mit ähnlichen Gesichtszügen (meist hell und blond); die Archetypen sind für alle Menschen gedacht. Entscheidung vor dem Einbau in V04: so lassen oder einzelne Porträts vielfältiger neu erzeugen
+- [x] Serie geprüft (26.11.2026): Stil, Farbwelt und Format (1024 × 1536) stimmig, keine Schrift im Bild. **Offen für den Eigentümer:** alle acht Porträts zeigen Frauen mit ähnlichen Gesichtszügen (meist hell und blond); die Archetypen sind für alle Menschen gedacht. **Eigentümer 26.11.2026: vorerst so lassen**
 - [x] A08–A14 erzeugt und geschickt
 - [x] A06 erzeugt und geschickt
 - [x] A19 erzeugt und geschickt
