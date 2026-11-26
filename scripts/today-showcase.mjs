@@ -131,9 +131,25 @@ async function shot(page, name, firstScreen = true) {
     const card = document.querySelector('.cstage .ocard');
     if (!cta || !bar) return null;
     const c = cta.getBoundingClientRect();
-    return { ctaBottom: Math.round(c.bottom), barTop: Math.round(bar.getBoundingClientRect().top), cardWidth: Math.round(card?.getBoundingClientRect().width ?? 0) };
+    // Inscriptions on the face: the name must not be cut off (ellipsis) and the numeral
+    // must stay inside its medallion (~11 % of the card width).
+    const title = document.querySelector('.cstage .ocard__title');
+    const num = document.querySelector('.cstage .ocard__num');
+    const w = card?.getBoundingClientRect().width ?? 0;
+    const px = (el) => (el ? Math.round(parseFloat(getComputedStyle(el).fontSize) * 10) / 10 : null);
+    return {
+      ctaBottom: Math.round(c.bottom),
+      barTop: Math.round(bar.getBoundingClientRect().top),
+      cardWidth: Math.round(w),
+      titlePx: px(title),
+      titleCut: title ? title.scrollWidth > title.clientWidth + 1 : null,
+      numPx: px(num),
+      numShare: num && w ? Math.round((num.getBoundingClientRect().width / w) * 1000) / 1000 : null,
+    };
   });
   if (fold && firstScreen) folds.push({ name, ...fold, ctaAboveFold: fold.ctaBottom <= fold.barTop });
+  if (fold?.titleCut) errors.push(`${name}: card name cut off`);
+  if (fold?.numShare > 0.11) errors.push(`${name}: numeral wider than its medallion (${fold.numShare})`);
   const file = join(outDir, `${name}-${tag}.png`);
   if (measureContrast) contrasts.push(...(await auditContrast(page, name)));
   await page.screenshot({ path: file });
