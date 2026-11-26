@@ -319,7 +319,8 @@ h1[tabindex='-1']:focus {
    and the main action still fit together. */
 @media (max-height: 880px) {
   .screen.today {
-    --today-chrome: 28.4rem;
+    /* +5 px over the former 28.4rem: room above the card frame (B-05). */
+    --today-chrome: 28.72rem;
     padding-top: var(--s-1);
   }
   .today__head {
@@ -332,7 +333,9 @@ h1[tabindex='-1']:focus {
     font-size: clamp(1.7rem, 7.4vw, 2rem);
   }
   .today .cstage {
-    padding-block: 8px;
+    /* B-05: the frame's gold corners reach above the card; 13 px keeps them clear of
+       the date line at 360 × 800. */
+    padding-block: 13px 8px;
   }
   .today .today__essence {
     font-size: 1.14rem;
@@ -349,7 +352,7 @@ h1[tabindex='-1']:focus {
 /* Framed desktop stage: vw-based type reaches its maximum there. */
 @media (min-width: 760px) and (max-height: 880px) {
   .screen.today {
-    --today-chrome: 29.2rem;
+    --today-chrome: 29.52rem;
   }
 }
 .today__continue {

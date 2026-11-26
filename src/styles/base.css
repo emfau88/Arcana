@@ -108,6 +108,20 @@ a {
     --stage-h: 100dvh;
   }
 }
+/* B-06: edge-to-edge Android draws the transparent status bar over the app. A dark band
+   of exactly its height keeps scrolled text from showing behind the clock. Height 0
+   wherever there is no status-bar inset (browsers, desktop). */
+.stage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--safe-top);
+  background: linear-gradient(180deg, rgba(6, 8, 22, 0.95), rgba(6, 8, 22, 0.85));
+  z-index: 3;
+  pointer-events: none;
+}
 .stage__main {
   position: relative;
   z-index: 1;
