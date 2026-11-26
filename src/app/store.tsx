@@ -27,6 +27,7 @@ import type {
 } from '../domain/types.ts';
 import { detectLocale, MESSAGES, type Messages } from '../i18n/index.ts';
 import { onResume } from '../platform/native.ts';
+import { CoreOnlyProvider, type EntitlementProvider, type Right } from '../domain/entitlements.ts';
 import { IndexedDbRepository } from '../platform/storage/indexeddb.ts';
 import type { StorageRepository } from '../platform/storage/repository.ts';
 
@@ -136,6 +137,8 @@ interface AppContextValue {
   t: Messages;
   /** Text from a lazy content module of the current locale. */
   tx: (module: ModuleId, key: string) => string;
+  /** The only way the UI learns about rights (never the purchase state itself, D-48). */
+  has: (right: Right) => boolean;
   today: DailyRecord | null;
 }
 
@@ -147,13 +150,15 @@ export interface AppProviderProps {
   clock?: Clock;
   rng?: Rng;
   pack?: ContentPack;
+  /** Rights source. Default: the free core only (no billing). Tests pass a `TestProvider`. */
+  entitlements?: EntitlementProvider;
 }
 
 function defaultSettings(): Settings {
   return { locale: detectLocale(), motion: 'system', onboardingDone: false };
 }
 
-export function AppProvider({ children, repo: repoProp, clock = systemClock, rng = cryptoRng, pack = CONTENT }: AppProviderProps) {
+export function AppProvider({ children, repo: repoProp, clock = systemClock, rng = cryptoRng, pack = CONTENT, entitlements = CoreOnlyProvider }: AppProviderProps) {
   const repo = useMemo(() => repoProp ?? new IndexedDbRepository(), [repoProp]);
   const [state, dispatch] = useReducer(reducer, undefined, (): AppState => ({
     status: 'loading',
@@ -399,7 +404,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
   const t = MESSAGES[state.settings.locale];
   const today = state.dailies.find((d) => d.dateKey === state.todayKey) ?? null;
   const tx = useCallback((module: ModuleId, key: string) => text(state.modules, module, key), [state.modules]);
-  const value = useMemo(() => ({ state, actions, pack, t, tx, today }), [state, actions, pack, t, tx, today]);
+  const has = useCallback((right: Right) => entitlements.has(right), [entitlements]);
+  const value = useMemo(() => ({ state, actions, pack, t, tx, has, today }), [state, actions, pack, t, tx, has, today]);
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

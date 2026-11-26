@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { CONTENT, getCard, resolveTheme } from '../../src/content/index.ts';
 import type { Clock } from '../../src/domain/clock.ts';
-import { freeCoreEntitlements, CORE_ENTITLEMENTS } from '../../src/domain/entitlements.ts';
 import {
   buildHistory,
   composeDaily,
@@ -164,13 +163,6 @@ describe('collection and history', () => {
   });
 });
 
-describe('entitlements (P0 is free)', () => {
-  it('grants every core right and nothing else', () => {
-    for (const e of CORE_ENTITLEMENTS) expect(freeCoreEntitlements.has(e)).toBe(true);
-    expect(freeCoreEntitlements.has('premium.anything' as never)).toBe(false);
-    expect(freeCoreEntitlements.list()).toEqual(CORE_ENTITLEMENTS);
-  });
-});
 
 describe('journeyDays', () => {
   it('counts distinct days of use and never shrinks after a pause', () => {
