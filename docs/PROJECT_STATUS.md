@@ -48,7 +48,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 - Offene Produktentscheidungen E8–E20: `MASTER_ROADMAP_V2.md` §9 (E19 vor V03.1, E8/E9/E20 vor V04).
 - **Rückmeldung des Eigentümers** zum G2-Bericht, danach G3.
 - Kartenkunst ist durch Deck v2 ersetzt (D-26). Archetyp-Sigillen und App-Icon sind noch im Vektorstil (`BACKLOG.md`).
-- Kaltstart im Emulator zuletzt 3,8 s unter Rechnerlast (vorher 2,4 s). In G3 auf ruhigem Rechner bzw. Gerät messen.
+- Kaltstart im Emulator mit V02: Median 1,95 s unter Rechnerlast (vorher 2,4 s). Release-Build und echtes Gerät in V07.5.
 - Menschliches Lektorat der Texte vor dem Release.
 - D-08 (geschlechtsinklusive DE-Archetypnamen) wartet noch auf ein Eigentümerurteil.
 - Name „ARCANA“ und App-ID sind vorläufig (G4).
@@ -59,9 +59,11 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | # | Befund | Status | Wo |
 |---|---|---|---|
 | B-01 | Enthüllung, wenn sofort beim Fertigladen getippt wird: 46 fps, 2 Ruckler, schlechtester Frame 183 ms (Grenze ≥ 50 fps, ≤ 120 ms). Mit 300 ms Abstand 53–54 fps | offen, wird vor der V02-Freigabe unsichtbar behoben | `docs/visual/PERFORMANCE.md` „V02 final“ |
-| B-02 | Android-Kaltstart unter Rechnerlast nicht vergleichbar messbar (3,2 s Activity, 4,6 s erster Screen bei 50–75 % Last) | BLOCKED (Messbedingung CPU < 20 %), Nachmessung auf ruhigem Rechner | ebenda |
-| B-03 | Android-E2E: Tippen auf „Zur Tageskarte“ kam unter Last nicht an (Zeitüberschreitung im Testskript) | in Prüfung (zweiter Lauf) | ebenda |
+| B-02 | Android-Kaltstart im ersten Lauf unter Last nicht vergleichbar | **erledigt:** zweiter Lauf Median 1,95 s bis zum ersten Screen (Debug-Build, 45–75 % Last, also eher zu hoch), Grenze ≤ 3,0 s | ebenda |
+| B-03 | Android-E2E: Tippen auf „Zur Tageskarte“ kam nicht an | **erledigt:** Fehler im Testskript (Knoten außerhalb des Sichtbereichs mit leeren Bounds, falsche Scrollrichtung), behoben in `scripts/android-evidence.mjs`; zweiter Lauf 13/13 PASS | ebenda |
 | B-04 | Capacitor-Bridge loggt im Debug-Build `[object Object]` in Logcat | bekannt, im Release-Build prüfen (V07.5) | `docs/BACKLOG.md` |
+| B-05 | Bei 360 px Breite berührt die obere Goldkante der Karte die Datumszeile um wenige Pixel | offen, Layout-Korrektur (≈ 5 px Abstand) wartet auf Entscheidung des Eigentümers | V02-Bericht |
+| B-06 | Android: Beim Scrollen läuft Text unter die durchsichtige Statusleiste (vermutlich schon vor V02) | offen, Abhilfe wäre eine Abdunklung hinter der Statusleiste, wartet auf Entscheidung | `evidence/v02-android-en.webp` |
 
 ## Nächstes Arbeitspaket (nach Freigabe)
 

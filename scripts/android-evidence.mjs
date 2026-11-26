@@ -119,8 +119,11 @@ const VISIBLE_BOTTOM = 2040; // the tab bar covers ~2170–2340 px
 /** Taps a node, scrolling the WebView first if the node is outside the visible area. */
 async function tap(match, opts) {
   let n = await waitFor(match, opts);
-  for (let i = 0; i < 8 && (n.y < VISIBLE_TOP || n.y > VISIBLE_BOTTOM); i++) {
-    if (n.y > VISIBLE_BOTTOM) sh("input swipe 540 1900 540 900 350");
+  // The WebView reports nodes far outside the viewport with empty bounds [0,0][0,0].
+  // In this forward flow such a node lies further down, so scroll down to it.
+  const offscreen = (m) => m.w === 0 && m.h === 0;
+  for (let i = 0; i < 8 && (offscreen(n) || n.y < VISIBLE_TOP || n.y > VISIBLE_BOTTOM); i++) {
+    if (offscreen(n) || n.y > VISIBLE_BOTTOM) sh("input swipe 540 1900 540 900 350");
     else sh("input swipe 540 700 540 1700 350");
     await sleep(600);
     n = await waitFor(match, opts);
