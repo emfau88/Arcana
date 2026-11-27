@@ -59,6 +59,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-47 | 27.11.2026 | Rückblick-Legung | roter Faden aus den eigenen Karten der letzten 7 bzw. 30 Reisetage plus eine neue Karte, alle Karten des Zeitraums als Reihe | V05.2 |
 | S-48 | 27.11.2026 | Tagebuch als Chronik | alle Tageskarten, Legungen und eigenen Einträge, neueste zuerst; Filter nur für vorhandene Arten, nach Karte und „nur mit eigenen Worten“; lokale Suche über eigene Worte, Kartentitel, Thema und Legungsname | V05.4, PRODUCT_SYSTEMS E3 |
 | S-49 | 27.11.2026 | Löschen im Tagebuch | nimmt die eigenen Worte, nicht den Tag: Eintrag geleert mit `deletedAt`, Notiz geleert, `notedAt` hält die Reflexion; Reisetag und Kartenstufe sinken nicht | V05.4, IA §5.5, PROGRESSION_DESIGN |
+| S-50 | 27.11.2026 | Export von B3 | wie B2 (D-55) nach `art/b3/`, außerhalb von `public/`; Vignetten in einem gemeinsamen Maßstab ausgeschnitten, auch die Schlussvignette quadratisch; Rücken-Vorschau 240 × 360 ≤ 30 KB | V05, ASSET_REQUESTS |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -639,3 +640,22 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 **Folgen:** Eine Notiz, die schon vor 0.5 geleert wurde, hat kein `notedAt` und zählt nicht (wie bisher). Der Löschdialog im Screen (V05.3) soll sagen, dass die Worte gelöscht werden und der Tag Teil der Reise bleibt.
 
 **Wechsel kostet:** `erasedEntry` in `src/domain/journal.ts`, `firstNoted` in `src/platform/storage/indexeddb.ts` und die Zählung in `cardEncounters`. Die Felder sind optional und additiv, das Schema bleibt bei Version 2.
+
+## S-50 · Export von B3
+
+**Entschieden:** Die sieben B3-Master (A03, A04, A15, A20, A21, A23–A29 als Sheet, A30) sind geprüft und mit `scripts/export-art.mjs b3` in 18 WebP-Dateien exportiert, alle im Budget (`art/b3/export-report.json`, Kontaktbogen `docs/visual/evidence/v05-b3-export.webp`). Wie bei B2 (D-55) liegen sie unter `art/b3/` und kommen erst mit dem Screen, der sie nutzt, per `git mv` nach `public/`.
+
+- **Vignetten:** Das Sheet wird an den Grenzen der Motive ausgeschnitten, alle acht im selben Maßstab (Quadrat = größtes Motiv plus 6 % Luft, 334 px im Master → 320 px), damit die Goldlinien überall gleich stark wirken. Auch die Schlussvignette ist ein Quadrat wie die anderen (ASSET_REQUESTS nennt 320 × 320 für alle). Um ≤ 30 KB zu halten, liegt die Qualität bei 0,68–0,84; bei 96 und 160 px ist kein Unterschied zu sehen.
+- **Kartenrücken:** Groß 720 × 1080 (≤ 140 KB) und Vorschau 240 × 360 wie `public/cards/thumbs`. Für die Vorschau nennt ASSET_REQUESTS kein Budget, gewählt sind 30 KB wie bei den Porträt-Vorschauen (19–20 KB erreicht).
+- **Prüfung:** Kein Motiv berührt den Rand seiner Zelle. Das Buch (A15) hat saubere Kanten und überall transparente Ecken. Der Buchkörper hat Alpha 250–254 statt 255, ist also fast deckend; durchscheinend wirkt er nicht. Das Pergament (A30) ist nahtlos (Randspalten gleich) und schwankt in L* nur um 1,2 Punkte (Grenze 8), Tinte `#2B2238` erreicht darauf etwa 10,7:1. Beide Rücken sind als Vorschau klar von der Standard-Rückseite und voneinander zu unterscheiden.
+- Das Skript kann jetzt Ausschnitte aus einem Sheet (nur für die Vignetten) und prüft Alpha und Pergament. Ein neuer Lauf für B2 ergibt dieselben 30 Dateien in gleicher Größe und Qualität.
+
+**Warum:** Gleiches Vorgehen wie bei B2, damit Web-Build und APK erst wachsen, wenn ein Screen die Bilder zeigt. Der gemeinsame Maßstab ist die einzige Art, die Vignetten als eine Serie wirken zu lassen.
+
+**Alternativen:**
+- Direkt nach `public/`: wäre sofort im Build und in der APK, auch für Screens, die noch fehlen.
+- Jede Vignette auf 320 px füllen: Motive gleich groß, aber verschieden dicke Linien.
+- Vignetten verlustfrei: deutlich über 30 KB je Datei.
+- Schlussvignette im eigenen flachen Format (etwa 320 × 140): kleiner, aber abweichend von der Vorgabe; lässt sich beim Einbau noch ändern.
+
+**Wechsel kostet:** ein neuer Lauf des Skripts; die Master bleiben unverändert im Lieferordner.

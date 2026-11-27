@@ -181,7 +181,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 - [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
 - [x] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19: geliefert (11/11), als WebP im Budget, eingebaut in `public/` und im Layout geprüft (Beschnitt, Kontrast, D-58)
-- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04)
+- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04): geprüft und als WebP exportiert (`art/b3/`, S-50), Einbau mit den V05-Screens
 - [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
 - [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)
 - [ ] B6 · Mondwelt (nach 1.0)
