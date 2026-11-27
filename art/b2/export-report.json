@@ -1,0 +1,242 @@
+[
+  {
+    "file": "world/bg-profile.webp",
+    "size": "1024x1536",
+    "kb": 135.8,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "world/bg-profile-720.webp",
+    "size": "720x1080",
+    "kb": 66.7,
+    "budgetKb": 160,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "world/bg-welcome.webp",
+    "size": "1024x1536",
+    "kb": 209.7,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "world/bg-welcome-720.webp",
+    "size": "720x1080",
+    "kb": 106,
+    "budgetKb": 160,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "world/bg-starmap.webp",
+    "size": "1024x1536",
+    "kb": 125.1,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "world/bg-starmap-720.webp",
+    "size": "720x1080",
+    "kb": 59.9,
+    "budgetKb": 160,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-seeker.webp",
+    "size": "720x1080",
+    "kb": 116.5,
+    "budgetKb": 180,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-seeker-240.webp",
+    "size": "240x360",
+    "kb": 15.5,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-seeker-1024.webp",
+    "size": "1024x1536",
+    "kb": 235.2,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-guardian.webp",
+    "size": "720x1080",
+    "kb": 167.9,
+    "budgetKb": 180,
+    "quality": 0.88,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-guardian-240.webp",
+    "size": "240x360",
+    "kb": 26.9,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-guardian-1024.webp",
+    "size": "1024x1536",
+    "kb": 313.6,
+    "budgetKb": 320,
+    "quality": 0.88,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-visionary.webp",
+    "size": "720x1080",
+    "kb": 142.7,
+    "budgetKb": 180,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-visionary-240.webp",
+    "size": "240x360",
+    "kb": 17.9,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-visionary-1024.webp",
+    "size": "1024x1536",
+    "kb": 281.3,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-alchemist.webp",
+    "size": "720x1080",
+    "kb": 160.8,
+    "budgetKb": 180,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-alchemist-240.webp",
+    "size": "240x360",
+    "kb": 22.8,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-alchemist-1024.webp",
+    "size": "1024x1536",
+    "kb": 300.9,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-wanderer.webp",
+    "size": "720x1080",
+    "kb": 124.7,
+    "budgetKb": 180,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-wanderer-240.webp",
+    "size": "240x360",
+    "kb": 15.4,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-wanderer-1024.webp",
+    "size": "1024x1536",
+    "kb": 254.7,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-creator.webp",
+    "size": "720x1080",
+    "kb": 155.9,
+    "budgetKb": 180,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-creator-240.webp",
+    "size": "240x360",
+    "kb": 21.3,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-creator-1024.webp",
+    "size": "1024x1536",
+    "kb": 303.5,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-sage.webp",
+    "size": "720x1080",
+    "kb": 133.2,
+    "budgetKb": 180,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-sage-240.webp",
+    "size": "240x360",
+    "kb": 16.7,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-sage-1024.webp",
+    "size": "1024x1536",
+    "kb": 271.3,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-renewer.webp",
+    "size": "720x1080",
+    "kb": 127,
+    "budgetKb": 180,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-renewer-240.webp",
+    "size": "240x360",
+    "kb": 17.2,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  },
+  {
+    "file": "archetypes/archetype-renewer-1024.webp",
+    "size": "1024x1536",
+    "kb": 243.8,
+    "budgetKb": 320,
+    "quality": 0.92,
+    "ok": true
+  }
+]
