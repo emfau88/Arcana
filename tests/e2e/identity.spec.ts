@@ -92,6 +92,13 @@ test('V04: the star map grows with recorded days and the first weekly review quo
   await entry.click();
   await expect(page.getByRole('heading', { level: 1, name: screensDe.journeyMap.title })).toBeVisible();
   await expect(page.locator('.starmap__star')).toHaveCount(21);
+  // Three rings (D-64): the caption names today's station; tapping a star names card, path and state.
+  const caption = page.locator('.starmap__caption');
+  await expect(caption).toContainText(`${de.today.pathInner} · ${screensDe.journeyMap.current}`);
+  await page.locator('.starmap__star').nth(2).locator('.starmap__hit').click();
+  await expect(caption).toContainText('III');
+  await expect(caption).toContainText(`${de.today.pathOuter} · ${screensDe.journeyMap.reached}`);
+  await expect(page.locator('.starmap__num')).toHaveCount(1);
 
   const week = fmt(screensDe.review.weekTitle, { n: 1 });
   await page.getByRole('button', { name: week }).click();

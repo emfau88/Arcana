@@ -3,7 +3,7 @@ import { CONTENT } from '../../src/content/index.ts';
 import type { Clock } from '../../src/domain/clock.ts';
 import { createDailyRecord } from '../../src/domain/oracle.ts';
 import { seededRng } from '../../src/domain/random.ts';
-import { STARMAP_VIEW, starMapModel, starPosition } from '../../src/domain/starmap.ts';
+import { RING_RADII, STARMAP_VIEW, starMapModel, starPosition, wayPath } from '../../src/domain/starmap.ts';
 import type { DailyRecord, Profile } from '../../src/domain/types.ts';
 import { availableChapters, availableReviews, builtRewards, milestoneMoment, unseenKeys } from '../../src/domain/unlocks.ts';
 import { milestoneAt } from '../../src/domain/progress.ts';
@@ -44,17 +44,37 @@ describe('star map (V04.5)', () => {
     expect(starMapModel(400).completedRounds).toBe(19);
   });
 
-  it('keeps every star inside the drawing and the rows apart (serpentine)', () => {
+  it('sets the three paths on three rings and leads the way inwards (D-64, variant A)', () => {
+    const c = STARMAP_VIEW.width / 2;
+    const dist = (s: number) => Math.hypot(starPosition(s).x - c, starPosition(s).y - c);
     for (let s = 1; s <= 21; s++) {
       const p = starPosition(s);
-      expect(p.x).toBeGreaterThan(0);
-      expect(p.x).toBeLessThan(STARMAP_VIEW.width);
-      expect(p.y).toBeGreaterThan(20);
-      expect(p.y).toBeLessThan(STARMAP_VIEW.height - 20);
+      expect(p.path).toBe(Math.floor((s - 1) / 7));
+      expect(dist(s)).toBeCloseTo(RING_RADII[p.path], 0);
+      expect(p.x).toBeGreaterThan(10);
+      expect(p.x).toBeLessThan(STARMAP_VIEW.width - 10);
+      expect(p.y).toBeGreaterThan(10);
+      expect(p.y).toBeLessThan(STARMAP_VIEW.height - 10);
     }
-    // Station 7 ends the outer path on the right, station 8 starts the inner path on the right.
-    expect(starPosition(7).x).toBe(starPosition(8).x);
-    expect(starPosition(14).x).toBe(starPosition(15).x);
+    // Station 1 at the top; each path starts half a step after the last star of the one before.
+    expect(starPosition(1)).toMatchObject({ x: c, y: c - RING_RADII[0] });
+    const angle = (s: number) => (Math.atan2(starPosition(s).y - c, starPosition(s).x - c) * 180) / Math.PI;
+    const half = 360 / 14;
+    expect(((angle(8) - angle(7) + 360) % 360)).toBeCloseTo(half, 0);
+    expect(((angle(15) - angle(14) + 360) % 360)).toBeCloseTo(half, 0);
+    // No two stars closer than a tap target apart (radius 18 in the drawing).
+    for (let a = 1; a <= 21; a++)
+      for (let b = a + 1; b <= 21; b++)
+        expect(Math.hypot(starPosition(a).x - starPosition(b).x, starPosition(a).y - starPosition(b).y)).toBeGreaterThan(36);
+  });
+
+  it('draws the way as arcs along a ring and straight steps between rings', () => {
+    expect(wayPath(1)).toMatch(/^M[\d.]+ [\d.]+$/);
+    const full = wayPath(21);
+    expect(full.match(/A/g)).toHaveLength(18);
+    expect(full.match(/L/g)).toHaveLength(2);
+    expect(wayPath(9).match(/L/g)).toHaveLength(1);
+    expect(wayPath(99)).toBe(full);
   });
 });
 
