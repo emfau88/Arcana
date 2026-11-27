@@ -1,5 +1,7 @@
 # GATE_REPORTS
 
+G0 bis G2 sind die Gates des ersten Plans (26.11.2026). Seit der Produktvision V2 (D-38) endet jedes Paket mit einem Paket-Gate **QG-Vxx**; die frühere Härtung G3 ist Bulk V07.5, G4 (Store) ist V07.6. Die Paket-Gates stehen am Ende dieser Datei als Kurzbericht, die vollständigen Nachweise in `PROJECT_STATUS.md`.
+
 ---
 
 # Gate G0 — PASS
@@ -122,5 +124,66 @@ S06 Content-Produktion (22 Karten, 6 Themen), S07 Onboarding und Profil, S08 rob
 - Der erste Start nach Neuinstallation dauert im Emulator ~7 s. Auf einem echten Gerät in G3 messen.
 
 ## Nächstes Arbeitspaket
-G3 (Härtung: S11 Speicher unter Last und Upgrade, S12 Q01–Q16-Matrix inklusive TalkBack, S13 Release-Modus-Testbuild). Start erst nach Rückmeldung des Eigentümers zum G2-Bericht.
+Damals geplant: G3 (Härtung: S11 Speicher unter Last und Upgrade, S12 Q01–Q16-Matrix inklusive TalkBack, S13 Release-Modus-Testbuild). Seit der Produktvision V2 folgen stattdessen die Pakete V02 bis V07; G3 steckt in V07.5.
 
+---
+
+# Paket-Gates seit der Produktvision V2
+
+Kurzberichte. Kriterien je Paket: `product/MASTER_ROADMAP_V2.md` §3 und §6. Einzelnachweise, offene Fehler und Messwerte: `PROJECT_STATUS.md`.
+
+## V02 · Tagesorakel abschließen — PASS, freigegeben 26.11.2026
+
+Version 0.2.1 · Pull Request [#2](https://github.com/emfau88/Arcana/pull/2) · Merge `553c5d9` · Tag `v0.2.1`
+
+| Prüfung | Ergebnis |
+|---|---|
+| Check und E2E | PASS, E2E 19 bestanden, 0 fehlgeschlagen |
+| Layout und Kontrast | PASS bei 412 und 360 px (≥ 4,9:1); Grenzfälle B-07 und B-08 offen, nach V03.5 verschoben |
+| Leistung | PASS nach D-37 und D-41 (Enthüllung ohne Ruckler, schlechtester Frame 50 ms) |
+| Android-Emulator | PASS 13/13, Kaltstart Median 1,95 s (Grenze 3,0 s) |
+| Freigabe | Tagesorakel-Screen durch den Eigentümer; B-05 und B-06 danach behoben (D-42) |
+
+## QG-V03 · Fundament und globales Designsystem — PASS mit Ausnahmen (D-52), freigegeben 27.11.2026
+
+Version 0.3.0 · Pull Request [#3](https://github.com/emfau88/Arcana/pull/3) · Merge `2f1e1de` · Tag `v0.3.0`
+
+| Prüfung | Ergebnis |
+|---|---|
+| Check | PASS, 118 Unit-Tests, Start-JS 132 kB (Grenze 160 kB) |
+| E2E | PASS, 20 bestanden |
+| Migration | PASS, Android übernimmt einen 0.2.0-Datenbestand, 9/9, jeder Datensatz unverändert |
+| Android-Emulator | PASS, Kaltstart 1,58 s, APK 8,1 MB (Grenze 25 MB) |
+| Layout | PASS bei 360/390/412 px, DE/EN, 130 % Schrift (B-10 behoben) |
+| Kontrast | PASS außer B-07 (Fußzeile auf „Heute“), per Ausnahme nach V04.3 verschoben und dort behoben (D-59) |
+| Leistung gegen die Referenz | NOT RUN, per Ausnahme vor QG-V05 (D-52) |
+
+## QG-V04 · Identität und Reise — PASS, freigegeben 27.11.2026 (D-61)
+
+Version 0.4.0 · Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) · Merge `8b2419b` · Tag `v0.4.0` · Pages-Vorschau aktualisiert
+
+| Prüfung | Ergebnis |
+|---|---|
+| Check | PASS, 199 Unit-Tests, Content-Gate 0 Fehler und 0 Warnungen, Start-JS 139,1 kB |
+| E2E | PASS, 27 bestanden, 41 bewusst übersprungen, 0 fehlgeschlagen |
+| Kontrast | PASS, kein Lesetext unter 4,5:1 bei 360/390/412 px, DE/EN, 130 % Schrift (B-07 mit Variante B behoben, D-59) |
+| Bildbudget | PASS, schwerster Screen 364 KB (Budget 600 KB) |
+| Android-Emulator | PASS 15/15, Kaltstart Median 1,49 s, APK 12,8 MB; Enthüllung 56,6–58,8 fps (B-13), Teilen-Export ≤ 1,5 s (B-14) |
+| Leistung gegen die Referenz | NOT RUN (D-52: vor QG-V05) |
+| Bekannt | Der Tag trägt in Paket, Android-Projekt und App noch die Nummer 0.3.0; behoben mit 0.4.1 |
+
+## 0.4.1 · Textdurchsicht und Design-Korrekturen — PASS, gemergt 27.11.2026 (kein Paket-Gate)
+
+Pull Requests [#5](https://github.com/emfau88/Arcana/pull/5) (D-62) und [#6](https://github.com/emfau88/Arcana/pull/6) (D-63) · Merge `dae2854` · Tag `v0.4.1`
+
+| Prüfung | Ergebnis |
+|---|---|
+| Check | PASS, 204 Unit-Tests, Content-Gate 0 Fehler und 0 Warnungen, Start-JS 139,5 kB |
+| E2E | PASS, 32 bestanden, 44 bewusst übersprungen, 0 fehlgeschlagen; nach zwei späteren CSS-Korrekturen nicht erneut gelaufen |
+| Android-Emulator | PASS 13/13 in drei Läufen, Update 0.3.0 → 0.4.1 behält die Daten, Kaltstart 1,55 s und 1,50 s, APK 12,6 MB |
+| Kontrast der klebenden Leiste | NOT RUN |
+| Leistung gegen die Referenz | NOT RUN (D-52) |
+
+## Nächstes Gate
+
+QG-V05 (Karten, Legungen, Grimoire) mit geschlossenem Test. V05 beginnt erst auf Zuruf des Eigentümers (D-60); vorher werden die Punkte 2, 5 und 6 des Design-Plans an Mustern entschieden (D-63).
