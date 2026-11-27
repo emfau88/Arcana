@@ -199,6 +199,172 @@ const cards: Record<string, DeepCard> = {
     reflections: ['Welche Richtung fühlt sich heute stimmig an?', 'Was bremst mich, und was davon darf ich ernst nehmen?'],
     ritual: 'Geh ein paar Minuten zügig und mit klarem Ziel, etwa bis zur nächsten Ecke, und spüre, wie sich eine gewählte Richtung anfühlt.',
   },
+  // Gruppe 2 (S-29): VIII–XIV, der innere Weg.
+  'major-08-strength': {
+    light:
+      'Die Kraft zeigt eine Stärke, die nicht laut sein muss. Sie zähmt nicht mit Gewalt, sondern mit Geduld und Zuwendung, auch das Wilde in einem selbst. In ihrem Licht wird Sanftheit zu Standhaftigkeit.',
+    shadow:
+      'Wer immer sanft bleiben will, schluckt manchmal, was gesagt werden müsste. Dann wird aus Geduld Duldung, und die eigene Kraft richtet sich nach innen. Wo hältst du dich zurück, obwohl dir ein klares Wort zustünde?',
+    keyword: 'Sanftheit ist hier keine Schwäche, sondern Kraft, die sich nicht beweisen muss. Sie hält das Wilde, statt es zu bekämpfen.',
+    symbols:
+      'Ein ruhiger Löwe liegt mit gekreuzten Pranken im Morgenlicht, neben ihm wächst eine Blume aus einem gesprungenen Stein, umgeben von einem schwebenden Blütenkranz. Darüber schwebt eine goldene liegende Acht. Das Starke und das Zarte teilen dasselbe Licht, keines bedroht das andere.',
+    roles: {
+      light: 'Geduld mit dir selbst gibt dir mehr Kraft, als Druck es könnte.',
+      shadow: 'Gut möglich, dass du deine Stärke unterschätzt, weil sie leise ist.',
+      root: 'Etwas Schweres, das du früher getragen hast, steckt noch als Kraft in dir. Vielleicht ist sie größer, als du ihr zutraust.',
+      possibility: 'Wenn du dem Schwierigen freundlich begegnest, könnte es seine Wucht verlieren.',
+      bridge: 'Die Kraft verbindet Mut und Zärtlichkeit. Beides darf in derselben Hand liegen.',
+    },
+    study: [
+      'Ein Löwe ruht neben einer Blume, die aus einem gesprungenen Stein wächst. Keiner der beiden weicht dem anderen aus. Was in diesem Bild ist für dich das Starke, und was das Zarte?',
+      'Erinnere dich an eine Situation, in der du ruhig geblieben bist, obwohl es in dir getobt hat. Was hat dir damals geholfen, freundlich mit dir zu bleiben? Wo könntest du diese Ruhe gerade gebrauchen?',
+    ],
+    question: 'Welches Wilde in mir möchte gehalten werden, nicht bekämpft?',
+    reflections: ['Wie kann ich heute freundlich und klar zugleich sein?', 'Wem gegenüber darf ich heute geduldiger sein, mir selbst eingeschlossen?'],
+    ritual: 'Leg eine Hand auf deinen Bauch, spüre drei Atemzüge lang, wie er sich hebt und senkt, und lass die Schultern sinken.',
+  },
+  'major-09-hermit': {
+    light:
+      'Der Eremit sucht die Stille nicht, um zu fliehen, sondern um zu finden. Er trägt sein eigenes Licht und braucht keinen Beifall, um seinem Weg zu trauen. In seinem Licht wird Alleinsein zu Sammlung.',
+    shadow:
+      'Rückzug kann auch Schutz vor einer Nähe sein, die gerade unbequem ist. Dann wird aus Einkehr Abschottung, und die Antwort bleibt oben auf dem Berg. Mit wem würdest du gern teilen, was du im Stillen gefunden hast?',
+    keyword:
+      'Rückzug heißt beim Eremiten, für eine Weile den Lärm zu verlassen, um die eigene Stimme wieder zu hören. Er ist ein Weg nach innen, kein Abschied von der Welt.',
+    symbols:
+      'Auf einem verschneiten Gipfel in tiefer Nacht steht ein Wanderstab, an seinem gebogenen Ende hängt eine Laterne. In ihrem Glas leuchtet ein kleiner Stern, der den Schnee ringsum warm färbt. Das Licht reicht nicht weit, aber genau so weit, wie der nächste Schritt es braucht.',
+    roles: {
+      light: 'Deine Fähigkeit, allein zu sein, ohne dich einsam zu fühlen, ist eine stille Stütze.',
+      shadow: 'Unter Umständen ziehst du dich zurück, wo ein Gespräch dir mehr helfen würde.',
+      root: 'Vielleicht hat dir eine frühere Zeit des Alleinseins gezeigt, was dir wichtig ist. Diese Klarheit kannst du wieder aufsuchen.',
+      possibility: 'In einer stillen Stunde könnte eine Antwort auftauchen, die im Trubel keinen Platz hatte.',
+      bridge: 'Der Eremit verbindet Rückzug und Rückkehr. Was du im Stillen findest, darf wieder unter Menschen.',
+    },
+    study: [
+      'Die Laterne hängt am Stab, niemand hält ihn, und sie leuchtet trotzdem. Ihr Licht reicht nur ein Stück in die Nacht. Welcher Schritt in deinem Leben braucht gerade nicht mehr Licht als dieses?',
+      'Nimm dir fünf Minuten ohne Bildschirm und ohne Gespräch. Achte darauf, welcher Gedanke immer wiederkommt, wenn es still wird. Was möchte er dir sagen?',
+    ],
+    question: 'Was weiß ich nur, wenn ich ganz bei mir bin?',
+    reflections: ['Wann war ich heute ganz bei mir?', 'Welches Licht trage ich, das anderen den Weg zeigen könnte?'],
+    ritual: 'Schalte am Abend für ein paar Minuten alle Lampen bis auf eine aus und sitz still in ihrem Licht.',
+  },
+  'major-10-wheel': {
+    light:
+      'Das Glücksrad erinnert daran, dass nichts stillsteht. Was oben ist, dreht sich weiter, und was unten war, kommt wieder ins Licht. In seinem Licht wird Wandel zu einer Bewegung, der man vertrauen kann.',
+    shadow:
+      'Wer nur auf das Rad schaut, kann vergessen, was in der eigenen Hand liegt. Dann wird Wandel zur Ausrede, nichts zu tun, oder zur Angst vor jeder Drehung. Was hängt in dieser Lage wirklich von dir ab?',
+    keyword:
+      'Wandel ist beim Glücksrad der Normalfall, nicht die Ausnahme: Zeiten wechseln, wie ein Rad sich dreht. Wer das annimmt, kann in schweren Phasen hoffen und in leichten dankbar sein.',
+    symbols:
+      'Ein goldenes Rad mit acht Speichen schwebt in einem violetten Himmel, sein Rand ist mit kleinen Sonnen, Monden und Sternen verziert. Unter ihm liegt eine weite Landschaft, um es herum ziehen leichte Wolken. Das Rad hat keinen Anfang und kein Ende, nur eine Mitte, die ruhig bleibt, während der Rand sich dreht.',
+    roles: {
+      light: 'Dich stützt das Wissen, dass sich Dinge wenden können, auch zum Guten.',
+      shadow: 'Unbewusst wartest du vielleicht auf eine Wende, statt selbst einen Schritt zu tun.',
+      root: 'Ein wiederkehrendes Muster aus früheren Jahren dreht sich noch mit. Es zu erkennen, ist der erste Schritt, anders zu antworten.',
+      possibility: 'Eine Wendung könnte sich zeigen, wenn du beweglich bleibst und hinschaust.',
+      bridge: 'Das Glücksrad verbindet Oben und Unten zu einem Kreis. Beides gehört zum selben Weg.',
+    },
+    study: [
+      'Acht Speichen führen vom Rand zur Mitte des Rades. Der Rand dreht sich, die Nabe bleibt an ihrem Platz. Was ist in deinem Leben gerade der bewegte Rand, und was die ruhige Mitte?',
+      'Leg zwei Zeitabschnitte deines Lebens nebeneinander: eine schwere Phase, die sich gewendet hat, und eine leichte, die vorüberging. Was haben dir beide über Wandel beigebracht? Welche Haltung möchtest du in die nächste Drehung mitnehmen?',
+    ],
+    question: 'Welchen Kreis möchte ich in meinem Leben nicht noch einmal drehen?',
+    reflections: ['Was darf sich heute verändern, ohne dass ich es festhalte?', 'Was bleibt in mir ruhig, während sich außen viel bewegt?'],
+    ritual: 'Zeichne einen Kreis auf ein Blatt, schreib an den Rand, was sich gerade bewegt, und in die Mitte, was gleich bleibt.',
+  },
+  'major-11-justice': {
+    light:
+      'Die Gerechtigkeit sieht genau hin und wägt ab, bevor sie urteilt. Sie verlangt Ehrlichkeit nach außen und nach innen und steht zu den Folgen des eigenen Handelns. In ihrem Licht wird Klarheit zu Frieden mit der eigenen Entscheidung.',
+    shadow:
+      'Wer ganz gerecht sein will, wird manchmal hart, mit anderen oder mit sich. Dann wiegt jeder Fehler zu schwer, und Milde scheint verboten. Wo urteilst du strenger, als es der Sache dient?',
+    keyword:
+      'Klarheit bedeutet bei der Gerechtigkeit, die Dinge so zu sehen, wie sie sind, nicht wie man sie gern hätte. Erst dann lässt sich fair abwägen.',
+    symbols:
+      'Ein aufrechtes Schwert ist die Achse einer goldenen Waage, beide Schalen hängen auf gleicher Höhe. Dahinter fällt ein tiefroter Vorhang, zwei Säulen und flache Stufen rahmen die Nische. Das Schwert trennt, die Waage gleicht aus: Klarheit und Ausgleich gehören zusammen.',
+    roles: {
+      light: 'Deine Ehrlichkeit mit dir selbst ist ein fester Boden.',
+      shadow: 'Leicht kann ein Urteil über dich oder andere den Blick auf die ganze Lage verstellen.',
+      root: 'Eine frühere Entscheidung und ihre Folgen sind noch spürbar. Sie lädt dich ein, Verantwortung zu übernehmen, ohne dich zu verurteilen.',
+      possibility: 'Ein ehrliches Gespräch könnte etwas ins Gleichgewicht bringen, das lange schief hing.',
+      bridge: 'Die Gerechtigkeit verbindet Strenge und Fairness. Wer klar sieht, kann auch milde urteilen.',
+    },
+    study: [
+      'Das Schwert steht senkrecht, die beiden Schalen der Waage hängen genau auf einer Höhe. Nichts wiegt hier schwerer als das andere. Was würdest du in die eine Schale legen, und was in die andere?',
+      'Wähle eine Entscheidung, die du vor dir herschiebst. Schreib ehrlich auf, was für jede Möglichkeit spricht, auch das, was du ungern zugibst. Was zeigt sich, wenn beides auf dem Papier steht?',
+    ],
+    question: 'Wo bin ich mir selbst gegenüber ungerecht, ohne es zu merken?',
+    reflections: ['Was wäre heute ehrlich, auch wenn es unbequem ist?', 'Wem schulde ich noch ein klärendes Wort?'],
+    ritual: 'Schreib einen Satz auf, in dem du dir selbst etwas verzeihst, und lies ihn einmal laut.',
+  },
+  'major-12-hanged-man': {
+    light:
+      'Der Gehängte lässt los, wo Kämpfen nichts mehr bringt. Er hält inne, sieht die Dinge von der anderen Seite und findet darin eine neue Ordnung. In seinem Licht wird eine Pause zu einer Einsicht.',
+    shadow:
+      'Abwarten kann zu einer Haltung werden, hinter der man sich versteckt. Dann bleibt etwas in der Schwebe, obwohl längst ein Schritt möglich wäre. Wartest du gerade, weil die Zeit es braucht, oder weil du es brauchst?',
+    keyword:
+      'Innehalten ist beim Gehängten keine Untätigkeit, sondern bewusstes Anhalten, damit sich etwas zeigen kann. Wer stillhält, sieht oft, was im Laufen verborgen bleibt.',
+    symbols:
+      'Ein lebendiger Baum wächst am Ufer eines stillen Sees, sein Stamm teilt sich oben in zwei weit ausladende Äste. Hinter der Gabelung leuchtet ein heller Schein am Abendhimmel und spiegelt sich im Wasser. Nichts hängt hier, nichts ist gefesselt: Das Bild zeigt eine Pause, in der sich der Blick weitet.',
+    roles: {
+      light: 'Dich trägt die Bereitschaft, eine Lage auch von der anderen Seite zu sehen.',
+      shadow: 'Es kann sein, dass du an einer Sichtweise festhältst, weil ein Wechsel unbequem wäre.',
+      root: 'Eine Zeit, in der du warten musstest, ist noch in dir. Vielleicht hat sie dich gelehrt, was sich nicht erzwingen lässt.',
+      possibility: 'Wenn du aufhörst zu ziehen, könnte sich etwas von selbst lösen.',
+      bridge: 'Der Gehängte verbindet Hingabe und Einsicht. Im Loslassen kann sich ein neuer Blick öffnen.',
+    },
+    study: [
+      'Der Baum steht still am Wasser, hinter seiner Gabelung leuchtet ein Schein, der sich im See spiegelt. Im Spiegel steht alles kopfüber und ist doch dasselbe Bild. Welche Lage in deinem Leben würde sich verändern, wenn du sie einmal umgekehrt betrachtest?',
+      'Nimm eine Frage, die dich gerade beschäftigt, und schreib sie so auf, wie ein wohlwollender Mensch sie dir stellen würde. Was verändert sich, wenn du sie so liest? Welche Antwort hattest du bisher übersehen?',
+    ],
+    question: 'Was in meinem Leben möchte ich nicht länger erzwingen?',
+    reflections: ['Wo könnte mir eine Pause heute mehr zeigen als Eile?', 'Wie sähe mein Tag aus, wenn ich ihn von seinem Ende her betrachte?'],
+    ritual: 'Stell für eine Minute alles ab, was dich antreibt, und schau nur zu, wie sich draußen etwas bewegt: Blätter, Wolken, Menschen.',
+  },
+  'major-13-death': {
+    light:
+      'Die Karte Tod steht für Abschiede, die Raum schaffen. Sie erlaubt, etwas zu beenden, das seine Zeit gehabt hat, und vertraut darauf, dass danach etwas wachsen kann. In ihrem Licht wird Loslassen zu einem Akt der Fürsorge.',
+    shadow:
+      'Abschiede können zu schnell kommen, wenn sie nur der Unruhe folgen. Oder sie werden so lange vermieden, dass das Alte alle Kraft bindet. Was beendest du zu früh, und was zu spät?',
+    keyword: 'Abschied heißt bei dieser Karte, ein Kapitel bewusst zu schließen, statt es offen ausfransen zu lassen. Er schmerzt und befreit zugleich.',
+    symbols:
+      'Im Vordergrund blüht eine weiße Rose, dahinter liegt ein nachtdunkles Tal. Ein Fluss zieht eine schmale Linie aus Licht zu einer aufgehenden Sonne zwischen zwei Türmen. Das Bild ist still und dunkel, doch der Weg des Wassers führt zum Morgen.',
+    roles: {
+      light: 'Halt gibt dir deine Fähigkeit, Abschied zu nehmen, wenn etwas vorbei ist.',
+      shadow: 'Vielleicht bindet etwas Vergangenes mehr Kraft, als du dir eingestehst.',
+      root: 'Ein früherer Abschied ist noch nicht ganz zu Ende erzählt. Er darf betrauert und gewürdigt werden.',
+      possibility: 'Wo etwas endet, könnte Raum für etwas entstehen, das du dir noch nicht vorstellen kannst.',
+      bridge: 'Die Karte Tod verbindet Ende und Anfang. Zwischen beiden liegt ein stiller Übergang.',
+    },
+    study: [
+      'Eine weiße Rose blüht hell vor dem dunklen Tal, und hinten, am Ende des Flusses, geht die Sonne auf. Ein Abschied und ein Anfang stehen im selben Bild. Was davon zieht deinen Blick zuerst an?',
+      'Schreib auf, was in deinem Leben zu Ende gegangen ist oder zu Ende gehen möchte. Notiere daneben, wofür du ihm dankbar bist. Was könnte in dem Raum wachsen, der dadurch frei wird?',
+    ],
+    question: 'Welchen Abschied habe ich noch nicht gewürdigt?',
+    reflections: ['Was darf heute zu Ende gehen?', 'Welche Erinnerung möchte ich behalten, wenn ich das Alte loslasse?'],
+    ritual: 'Räume eine Sache weg, die du nicht mehr brauchst, und sag ihr innerlich danke, bevor du sie weglegst.',
+  },
+  'major-14-temperance': {
+    light:
+      'Die Mäßigkeit findet das rechte Maß zwischen zu viel und zu wenig. Sie mischt, was getrennt scheint, mit Geduld und ruhiger Hand. In ihrem Licht wird Ausgleich zu einer Kunst, die man üben kann.',
+    shadow:
+      'Wer immer ausgleichen will, kann die eigene Haltung verlieren. Dann wird aus der Mitte ein Kompromiss, der niemandem gerecht wird, am wenigsten dir. Wo verdünnst du, was eigentlich klar sein dürfte?',
+    keyword: 'Maß meint bei der Mäßigkeit nicht Verzicht, sondern die Mischung, die gerade guttut. Es wird nicht einmal gefunden, sondern immer wieder neu abgestimmt.',
+    symbols:
+      'Zwei goldene Kelche, einer über dem anderen, sind durch einen klaren Bogen aus Wasser verbunden. Neben dem Teich blühen Iris, ein Pfad führt durch grüne Wiesen zu fernen Bergen im Morgenlicht. Nichts geht beim Umgießen verloren: Das Wasser fließt ruhig von einer Form in die andere.',
+    roles: {
+      light: 'Dein Sinn für das rechte Maß hilft dir, auch in vollen Zeiten im Gleichgewicht zu bleiben.',
+      shadow: 'Möglicherweise suchst du einen Mittelweg, wo eine klare Entscheidung leichter wäre.',
+      root: 'Eine Zeit, in der du zu viel oder zu wenig hattest, prägt noch dein Gespür für Maß.',
+      possibility: 'Aus zwei Dingen, die nicht zusammenzupassen scheinen, könnte etwas Neues entstehen.',
+      bridge: 'Die Mäßigkeit verbindet Gegensätze, indem sie sie geduldig mischt. Keines muss verschwinden.',
+    },
+    study: [
+      'Ein Kelch gießt Wasser in einen zweiten, ohne dass eine Hand ihn hält. Der Bogen des Wassers ist ruhig und ununterbrochen. Was in deinem Leben möchte gerade ebenso langsam und stetig von einem Zustand in einen anderen fließen?',
+      'Schau auf eine gewöhnliche Woche deines Lebens: Arbeit, Ruhe, Menschen, Zeit für dich. Wo ist zu viel, wo zu wenig? Welche kleine Verschiebung würde die Mischung stimmiger machen?',
+    ],
+    question: 'Welche zwei Seiten in mir möchten miteinander wirken statt gegeneinander?',
+    reflections: ['Wovon nehme ich heute ein wenig weniger, und wovon ein wenig mehr?', 'Was bringt mich zurück in meine Mitte?'],
+    ritual: 'Mach heute eine Sache bewusst halb so schnell wie sonst, etwa das Anziehen oder den Abwasch, und spüre, wie sich das Tempo anfühlt.',
+  },
 };
 
 export const texts: TextTable = deepTable(cards);

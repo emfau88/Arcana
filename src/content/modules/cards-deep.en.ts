@@ -199,6 +199,171 @@ const cards: Record<string, DeepCard> = {
     reflections: ['Which direction feels right today?', 'What is holding me back, and which part of it should I take seriously?'],
     ritual: 'Walk briskly for a few minutes with a clear aim, perhaps to the next corner, and feel what a chosen direction is like.',
   },
+  // Group 2 (S-29): VIII–XIV, the inner path.
+  'major-08-strength': {
+    light:
+      'Strength shows a power that does not need to be loud. It tames not by force but with patience and care, including what is wild in oneself. In its light, gentleness becomes steadfastness.',
+    shadow:
+      'Wanting always to stay gentle can mean swallowing what needs to be said. Then patience turns into putting up with things, and your strength turns inwards. Where are you holding back although a clear word would be yours to say?',
+    keyword: 'Gentleness here is not weakness but strength that has nothing to prove. It holds what is wild instead of fighting it.',
+    symbols:
+      'A calm lion rests with folded paws in the morning light, and beside it a flower grows from a cracked stone, circled by a floating garland of blossoms. Above them floats a golden figure eight lying on its side. The strong and the tender share the same light, and neither threatens the other.',
+    roles: {
+      light: 'Patience with yourself gives you more strength than pressure ever could.',
+      shadow: 'Quite possibly you underestimate your strength because it is quiet.',
+      root: 'Something heavy you carried in the past is still in you as strength. It may be greater than you give it credit for.',
+      possibility: 'If you meet what is difficult kindly, it could lose some of its force.',
+      bridge: 'Strength joins courage and tenderness. Both may rest in the same hand.',
+    },
+    study: [
+      'A lion rests beside a flower that grows out of a cracked stone. Neither moves away from the other. What in this picture is the strong part for you, and what the tender one?',
+      'Remember a moment when you stayed calm although a storm was raging inside you. What helped you stay kind to yourself then? Where could you use that calm right now?',
+    ],
+    question: 'Which wild part of me wants to be held, not fought?',
+    reflections: ['How can I be kind and clear at the same time today?', 'Towards whom can I be more patient today, myself included?'],
+    ritual: 'Rest a hand on your belly, feel it rise and fall for three breaths, and let your shoulders drop.',
+  },
+  'major-09-hermit': {
+    light:
+      'The Hermit seeks silence not to escape but to find. A light of one’s own needs no applause to trust the path. In this light, being alone becomes a way of gathering yourself.',
+    shadow:
+      'Retreat can also protect you from a closeness that feels uncomfortable. Then reflection turns into shutting yourself off, and the answer stays up on the mountain. With whom would you like to share what you found in the quiet?',
+    keyword:
+      'For the Hermit, solitude means leaving the noise for a while to hear your own voice again. It is a path inwards, not a farewell to the world.',
+    symbols:
+      'On a snowy peak in the deep night stands a walking staff with a lantern hanging from its curved end. In its glass shines a small star that tints the snow around it warm. The light does not reach far, but exactly as far as the next step needs.',
+    roles: {
+      light: 'Your ability to be alone without feeling lonely is a quiet support.',
+      shadow: 'Perhaps you withdraw where a conversation would help you more.',
+      root: 'Perhaps an earlier time on your own showed you what matters to you. You can return to that clarity.',
+      possibility: 'In a quiet hour, an answer could surface that had no room in the bustle.',
+      bridge: 'The Hermit joins retreat and return. What you find in the quiet may come back among people.',
+    },
+    study: [
+      'The lantern hangs from the staff, no one holds it, and still it shines. Its light reaches only a little way into the night. Which step in your life needs no more light than this right now?',
+      'Take five minutes without a screen and without conversation. Notice which thought keeps coming back once it is quiet. What might it want to tell you?',
+    ],
+    question: 'What do I only know when I am fully with myself?',
+    reflections: ['When was I fully myself today?', 'What light do I carry that could show others the way?'],
+    ritual: 'In the evening, switch off every lamp but one for a few minutes and sit quietly in its light.',
+  },
+  'major-10-wheel': {
+    light:
+      'The Wheel of Fortune is a reminder that nothing stands still. What is on top turns on, and what was below comes back into the light. In its light, change becomes a movement you can trust.',
+    shadow:
+      'Watching only the wheel can make you forget what lies in your own hands. Then change becomes an excuse to do nothing, or a fear of every turn. What in this situation really depends on you?',
+    keyword:
+      'For the Wheel, change is the rule, not the exception: times shift as a wheel turns. Accepting that lets you hope in hard phases and be grateful in light ones.',
+    symbols:
+      'A golden wheel with eight spokes floats in a violet sky, its rim decorated with tiny suns, moons and stars. Below it lies a wide landscape, and light clouds drift around it. The wheel has no beginning and no end, only a centre that stays calm while the rim turns.',
+    roles: {
+      light: 'You are supported by knowing that things can turn, for the better too.',
+      shadow: 'Without realising it, you may be waiting for a turn instead of taking a step yourself.',
+      root: 'A recurring pattern from earlier years is still turning with you. Recognising it is the first step towards answering differently.',
+      possibility: 'A turn could show itself if you stay flexible and keep looking.',
+      bridge: 'The Wheel joins above and below into one circle. Both belong to the same path.',
+    },
+    study: [
+      'Eight spokes lead from the rim to the centre of the wheel. The rim turns, the hub stays in place. What in your life is the moving rim right now, and what is the calm centre?',
+      'Set two stretches of your life side by side: a hard phase that turned, and an easy one that passed. What did both teach you about change? Which attitude do you want to take into the next turn?',
+    ],
+    question: 'Which circle in my life do I not want to go round again?',
+    reflections: ['What may change today without my holding on to it?', 'What stays calm in me while much is moving outside?'],
+    ritual: 'Draw a circle on a sheet of paper, write what is moving around its edge, and in the middle what stays the same.',
+  },
+  'major-11-justice': {
+    light:
+      'Justice looks closely and weighs things before judging. It asks for honesty, outwards and inwards, and stands by the consequences of its own actions. In its light, clarity becomes peace with your own decision.',
+    shadow:
+      'Wanting to be perfectly fair can turn into harshness, towards others or yourself. Then every mistake weighs too much, and mildness seems forbidden. Where do you judge more strictly than the matter needs?',
+    keyword: 'Clarity, for Justice, means seeing things as they are, not as you would like them to be. Only then can you weigh them fairly.',
+    symbols:
+      'An upright sword is the axis of a golden scale, both pans hanging at the same height. Behind them falls a deep red curtain, and two columns and shallow steps frame the niche. The sword divides, the scale balances: clarity and fairness belong together.',
+    roles: {
+      light: 'Your honesty with yourself is solid ground.',
+      shadow: 'A judgement about yourself or others can easily block your view of the whole situation.',
+      root: 'An earlier decision and its consequences can still be felt. It invites you to take responsibility without condemning yourself.',
+      possibility: 'An honest conversation could bring something into balance that has long been tilted.',
+      bridge: 'Justice joins strictness and fairness. Seeing clearly also makes a mild judgement possible.',
+    },
+    study: [
+      'The sword stands upright, and the two pans of the scale hang at exactly the same height. Nothing here weighs more than the other. What would you place in one pan, and what in the other?',
+      'Pick a decision you keep putting off. Write down honestly what speaks for each option, including what you are reluctant to admit. What shows itself once both are on paper?',
+    ],
+    question: 'Where am I unfair to myself without noticing?',
+    reflections: ['What would be honest today, even if it is uncomfortable?', 'To whom do I still owe a clarifying word?'],
+    ritual: 'Write down one sentence in which you forgive yourself something, and read it aloud once.',
+  },
+  'major-12-hanged-man': {
+    light:
+      'The Hanged Man lets go where struggling no longer helps. He pauses, sees things from the other side and finds a new order in it. In his light, a pause becomes an insight.',
+    shadow:
+      'Waiting can become a stance to hide behind. Then something stays suspended although a step would have been possible long ago. Are you waiting because the moment needs it, or because you do?',
+    keyword:
+      'For the Hanged Man, a pause is not idleness but a deliberate stop so that something can show itself. Holding still often reveals what stays hidden while running.',
+    symbols:
+      'A living tree grows on the shore of a calm lake, its trunk dividing at the top into two wide-spreading branches. Behind the fork a soft glow lights the evening sky and is mirrored in the water. Nothing hangs here, nothing is bound: the picture shows a pause in which the view widens.',
+    roles: {
+      light: 'Your willingness to see a situation from the other side holds you up.',
+      shadow: 'It may be that you hold on to one view because changing it would be uncomfortable.',
+      root: 'A time when you had to wait is still in you. Perhaps it taught you what cannot be forced.',
+      possibility: 'If you stop pulling, something could loosen by itself.',
+      bridge: 'The Hanged Man joins surrender and insight. In letting go, a new view can open.',
+    },
+    study: [
+      'The tree stands still by the water, and behind its fork a glow is mirrored in the lake. In the mirror everything is upside down, and yet it is the same picture. Which situation in your life would change if you looked at it the other way round?',
+      'Take a question that is on your mind and write it down the way a kind-hearted person might ask it of you. What changes when you read it like this? Which answer have you overlooked so far?',
+    ],
+    question: 'What in my life do I no longer want to force?',
+    reflections: ['Where could a pause show me more than haste today?', 'What would my day look like if I saw it from its end?'],
+    ritual: 'Switch off everything that drives you for one minute and simply watch something move outside: leaves, clouds, people.',
+  },
+  'major-13-death': {
+    light:
+      'The Death card stands for farewells that make room. It allows something to end that has had its time, and trusts that something can grow afterwards. In its light, letting go becomes an act of care.',
+    shadow:
+      'Endings can come too fast when they only follow restlessness. Or they are avoided for so long that the old ties up all your strength. What are you ending too early, and what too late?',
+    keyword: 'Release, with this card, means closing a chapter deliberately instead of letting it fray. It hurts and frees at the same time.',
+    symbols:
+      'A white rose blooms in the foreground, and behind it lies a valley dark as night. A river draws a narrow line of light towards a rising sun between two towers. The picture is still and dark, yet the water’s path leads to morning.',
+    roles: {
+      light: 'Your ability to say goodbye when something is over gives you footing.',
+      shadow: 'Something past may be tying up more strength than you admit to yourself.',
+      root: 'An earlier farewell has not been fully told yet. It may be mourned and honoured.',
+      possibility: 'Where something ends, room could open for something you cannot imagine yet.',
+      bridge: 'The Death card joins ending and beginning. Between the two lies a quiet passage.',
+    },
+    study: [
+      'A white rose blooms brightly before the dark valley, and far behind, at the end of the river, the sun is rising. A farewell and a beginning share one picture. Which of them draws your eye first?',
+      'Write down what in your life has come to an end or would like to. Next to it, note what you are grateful it gave you. What could grow in the space this sets free?',
+    ],
+    question: 'Which farewell have I not yet honoured?',
+    reflections: ['What may come to an end today?', 'Which memory do I want to keep as I let the old go?'],
+    ritual: 'Put away one thing you no longer need, and silently thank it before you set it aside.',
+  },
+  'major-14-temperance': {
+    light:
+      'Temperance finds the right measure between too much and too little. It blends what seems separate with patience and a steady hand. In its light, balance becomes an art you can practise.',
+    shadow:
+      'Always wanting to balance things out can cost you your own stance. Then the middle becomes a compromise that does justice to no one, least of all you. Where are you watering down what could simply be clear?',
+    keyword: 'Moderation, for Temperance, is not going without but finding the blend that does you good right now. It is not found once but tuned again and again.',
+    symbols:
+      'Two golden cups, one above the other, are joined by a clear arc of water. Irises bloom by the pond, and a path leads through green meadows to distant mountains in the morning light. Nothing is lost in the pouring: the water flows calmly from one shape into the next.',
+    roles: {
+      light: 'Your sense of the right measure helps you keep your balance even in full times.',
+      shadow: 'You might be looking for a middle way where a clear decision would be easier.',
+      root: 'A time when you had too much or too little still shapes your feeling for measure.',
+      possibility: 'From two things that do not seem to fit, something new could emerge.',
+      bridge: 'Temperance joins opposites by blending them patiently. Neither has to disappear.',
+    },
+    study: [
+      'One cup pours water into a second, with no hand holding it. The arc of water is calm and unbroken. What in your life would like to flow just as slowly and steadily from one state into another?',
+      'Look at an ordinary week in your life: work, rest, people, time for yourself. Where is there too much, and where too little? Which small shift would make the blend feel more right?',
+    ],
+    question: 'Which two sides of me want to work with each other instead of against each other?',
+    reflections: ['What could I take a little less of today, and what a little more?', 'What brings me back to my centre?'],
+    ritual: 'Do one thing today at half your usual speed, such as getting dressed or washing up, and notice how the pace feels.',
+  },
 };
 
 export const texts: TextTable = deepTable(cards);

@@ -43,7 +43,7 @@ export const DEEP_DECK_ORDER: readonly string[] = LENS_CARD_IDS;
  * the outer path), VIII–XIV (inner path), XV–XXI (higher path). The content gate requires exactly
  * these cards, so each group passes the gate on its own.
  */
-export const DEEP_CARD_IDS: readonly string[] = DEEP_DECK_ORDER.slice(0, 8);
+export const DEEP_CARD_IDS: readonly string[] = DEEP_DECK_ORDER.slice(0, 15);
 
 export function deepKeys(cardId: string): string[] {
   return [
