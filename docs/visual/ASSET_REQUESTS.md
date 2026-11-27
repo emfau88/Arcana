@@ -40,7 +40,7 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 **Stand der Bulks** (wird bei jeder Lieferung abgehakt):
 
 - [x] B1 · A01, A02 geliefert und eingebaut (V02)
-- [ ] B2 · für V04, Ablauf in §0.1 · **geliefert 26.11.2026 (11/11)**, Einbau in V04
+- [ ] B2 · für V04, Ablauf in §0.1 · **geliefert 26.11.2026 (11/11)**, als WebP exportiert und in `art/b2/` vorbereitet (27.11.2026, D-55), Einbau mit den neuen V04-Screens
 - [ ] B3 · für V05 · teilweise geliefert (A03, A04, A15, A20, A21, A23–A29, A30)
 - [ ] B4 · für V06 · teilweise geliefert (A32, zwei Symbol-Sheets A33)
 - [ ] B5 · für V07 · teilweise geliefert (A18, A22, Kartenrücken Edition)
@@ -71,7 +71,8 @@ V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bil
 - [x] A08–A14 erzeugt und geschickt
 - [x] A06 erzeugt und geschickt
 - [x] A19 erzeugt und geschickt
-- [ ] alle B2-Bilder im Layout geprüft (Beschnitt, Kontrast), als WebP exportiert und im Repo (V04)
+- [x] alle B2-Bilder als WebP exportiert und im Repo (27.11.2026): `art/b2/world/` und `art/b2/archetypes/`, alle im Budget, unverändert wie geliefert (nur skaliert), Kontaktbogen `docs/visual/evidence/v04-b2-export.webp`, Skript `scripts/export-art.mjs` (D-55)
+- [ ] alle B2-Bilder im Layout geprüft (Beschnitt, Kontrast) und nach `public/` übernommen. Geht erst mit den neuen V04-Screens (Enthüllung, „Ich“, Sternkarte), deren Muster der Eigentümer zuerst sieht
 
 **Warum diese Reihenfolge:** Die Porträts sind der größte und riskanteste Teil (acht Bilder als Serie). Eine Stilprobe mit der zugehörigen Bühne verhindert, dass acht Bilder neu erzeugt werden müssen.
 

@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 fertig auf `feature/v03-fundament` (Version 0.3.0), Pull Request nach `main` wartet auf Freigabe; B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft gestapelt auf `feature/v04-identitaet`. E9 und E20 entschieden (D-47).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 fertig auf `feature/v03-fundament` (Version 0.3.0), Pull Request [#3](https://github.com/emfau88/Arcana/pull/3) nach `main` wartet auf Freigabe; B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft gestapelt auf `feature/v04-identitaet`: V04.1 fertig, V04.4 Logik und Texte fertig (Oberfläche wartet auf ein Muster für den Eigentümer), B2 als WebP vorbereitet. E9 und E20 entschieden (D-47).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -80,12 +80,23 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Android-Debug-Build 0.3.0 startet und migriert einen 0.2.0-Datenbestand: 9/9 PASS, jeder Datensatz unverändert (`scripts/android-migration.mjs`)
   - [ ] Pull Request, Freigabe, Tag `v0.3.0`
 
-### V04 · Identität und Reise (0.4)
+### V04 · Identität und Reise (0.4) · Branch `feature/v04-identitaet`
 
-- [ ] V04.1 Fragebogen v2 (E9)
+- [x] V04.1 Fragebogen v2 (E9) (6/6, D-53)
+  - [x] 7 Fragen, Punktmodell +2/+1, die ersten vier unverändert; Texte DE/EN
+  - [x] Haupt- und Ergänzungsarchetyp, Schwelle 75 % statt 60 % (D-53, Bestätigung durch den Eigentümer offen), `questionnaireVersion`, `scores`
+  - [x] Balance-Test über alle 16.384 Kombinationen: Haupt 11,3–14,2 %, Ergänzung 65,8 % (ohne 34,2 %), alle 56 Paare erreichbar
+  - [x] Ablauf ≤ 75 s: gemessene App-Zeit 2,7 s + 7 × 8 s Lesezeit = 58,7 s (E2E)
+  - [x] Bestehende Profile bleiben gültig, Angebot zum Neubestimmen im Profil, kein Zwang (E9, Unit + E2E)
+  - [x] Prüfskripte (Evidence, Perf, Showcase, Android) beantworten die Fragen bis zur Themenwahl statt fest vier, damit sie gegen die Referenz und gegen V04 laufen
 - [ ] V04.2 Enthüllung und Profil
 - [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49)
-- [ ] V04.4 Narrenreise und Meilensteine
+- [ ] V04.4 Narrenreise und Meilensteine (3/5, D-54)
+  - [x] 63 Stationen, 9 Wegeinführungen, 4 Rundenabschlüsse, 20 Meilensteintexte DE/EN im Modul `journey`
+  - [x] Tabellen-Test Reisetag 1–400: genau eine Station, richtige Wegeinführung, Rundenabschluss und Meilensteintext
+  - [x] Content-Gate: keine Druckwörter, kein Countdown
+  - [ ] Stilprobe der Reisetexte durch den Eigentümer freigegeben
+  - [ ] Meilenstein-Moment und „Neu“-Markierungen in der Oberfläche (nach einem Muster für den Eigentümer)
 - [ ] V04.5 Sternkarte und Rückblicke
 - [ ] V04.6 „Ich“ und Gestaltung
 - [ ] V04.7 Teilen-Kern und Archetypkarte (E20)
@@ -130,7 +141,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 ### Bilder (Bulks, §5)
 
 - [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
-- [ ] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19 (für V04, kann jetzt angefordert werden)
+- [ ] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19: geliefert (11/11), als WebP exportiert und im Budget (`art/b2/`, D-55); Einbau und Layoutprüfung mit den V04-Screens
 - [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04)
 - [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
 - [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)

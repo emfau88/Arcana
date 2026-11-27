@@ -36,7 +36,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] Grimoire-Sammlung: Am Anfang sind fast alle Karten verdeckt. Entdeckte Karten hervorheben oder filtern.
 - [ ] Lange Kartentitel (Längenklasse `l`, z. B. „Die Hohepriesterin“) sind in der kleinen Rasteransicht klein.
 - [ ] Menschliches Lektorat aller Texte (Ton, Rhythmus). XIII und XV dabei ruhig halten.
-- [ ] Optional 5. oder 6. Frage im Fragebogen.
+- [x] Optional 5. oder 6. Frage im Fragebogen. Erledigt in V04.1: sieben Fragen, Ergänzungs-Archetyp, Angebot an Bestandsnutzer (D-53).
 
 ## Bekannte Kleinigkeiten
 
