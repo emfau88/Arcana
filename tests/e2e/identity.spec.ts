@@ -228,3 +228,36 @@ test('V05.5: card backs open on journey days 2, 5 and 10 and change every face-d
   await expect(page.locator('.spread button.ocard .ocard__back img').first()).toHaveAttribute('src', /cards\/backs\/thumbs\/cardback-golden-wheel\.webp$/);
   expect(problems).toEqual([]);
 });
+
+test('V05.1: the card page shows the level as a moon phase and every layer that level opened', async ({ page }, info) => {
+  test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
+  const t = ui(info);
+  const s = screens(info).card;
+  const problems = guard(page);
+  await completeOnboarding(page, t);
+  const profile = await readProfile(page);
+  // Card A on four days with a note (level 4), card B on two days (level 2). Facts only, no counter.
+  const a = CONTENT.cards[3]!.id;
+  const b = CONTENT.cards[5]!.id;
+  const seeded = pastDays(profile, 6, { 0: 'Mein Satz zu dieser Karte.' }).map((d, k) => ({ ...d, cardId: k < 4 ? a : b }));
+  await putDaily(page, seeded);
+
+  await page.goto(`/#/grimoire/card/${b}`);
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 2, name: s.levelNames[2]! }), { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.light, exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.keyword, exact: true })).toBeVisible();
+  // Not opened yet: simply not there, nothing locked is shown.
+  await expect(page.getByRole('heading', { name: s.themes, exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: s.question, exact: true })).toHaveCount(0);
+
+  await page.goto(`/#/grimoire/card/${a}`);
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 4, name: s.levelNames[4]! }), { exact: true })).toBeVisible();
+  await expect(page.getByText(s.deeper)).toHaveCount(0);
+  for (const h of [s.light, s.shadow, s.keyword, s.otherThemes, s.roles, s.symbols, s.notes, s.ritual, s.question]) {
+    await expect(page.getByRole('heading', { name: h, exact: true })).toBeVisible();
+  }
+  await expect(page.getByText('Mein Satz zu dieser Karte.')).toBeVisible();
+  expect(problems).toEqual([]);
+});

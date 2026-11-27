@@ -1,0 +1,76 @@
+/* Card page (V05.1): level as a moon phase and the open layers, each on a calm panel. */
+.card-layers {
+  display: grid;
+  gap: var(--s-3);
+  margin: var(--s-4) 0 var(--s-5);
+}
+.card-level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  text-align: left;
+}
+.card-level__text {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  max-width: 30ch;
+}
+.card-level__name {
+  font-weight: 700;
+  color: var(--brass-200);
+}
+.card-layer {
+  display: grid;
+  gap: var(--s-2);
+}
+.card-layer__text {
+  margin: 0;
+  color: var(--text-1);
+  line-height: 1.6;
+}
+.card-layer__question {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+.card-layer__list {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+}
+.card-layer__list dt {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--brass-300);
+}
+.card-layer__list dd {
+  margin: 2px 0 0;
+  color: var(--text-1);
+  line-height: 1.55;
+}
+.card-layer__notes {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card-layer__notes p {
+  margin: 2px 0 0;
+}
+.moon-phase {
+  flex: none;
+}
+.moon-phase__dark {
+  fill: rgba(10, 8, 20, 0.65);
+}
+.moon-phase__lit {
+  fill: var(--brass-200);
+}
+.moon-phase__rim {
+  fill: none;
+  stroke: var(--brass-300);
+  stroke-width: 1;
+}

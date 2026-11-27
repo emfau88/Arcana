@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
 import { factsOf, useApp } from '../../app/store.tsx';
 import { findCard } from '../../content/index.ts';
@@ -193,6 +193,8 @@ export function NotFound({ parsed }: { parsed: ParsedRoute }) {
 
 /* ------------------------------------------------------------- Card detail */
 
+const CardLayers = lazy(() => import('../cards/CardLayers.tsx'));
+
 export function CardDetail({ id, parsed }: { id: string; parsed: ParsedRoute }) {
   const { t, pack, state } = useApp();
   const locale = state.settings.locale;
@@ -217,6 +219,9 @@ export function CardDetail({ id, parsed }: { id: string; parsed: ParsedRoute }) 
         <p className="italic-serif today__essence">{card.essence[locale]}</p>
         <p className="small">{fmt(t.grimoire.firstSeen, { date: formatDate(toDate(entry.firstSeenAt), locale) })}</p>
       </div>
+      <Suspense fallback={null}>
+        <CardLayers id={id} />
+      </Suspense>
       <Divider />
       <section>
         <h2 className="panel__label">{t.detail.appearances}</h2>
