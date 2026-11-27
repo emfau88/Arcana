@@ -437,7 +437,7 @@ Regeln:
 
 Stand 27.11.2026, nach 0.4.1. V02, V03 und V04 sind abgeschlossen.
 
-1. **Muster für den Design-Plan** (D-63): Punkt 2 (Bühnen für Orakel und Legung), Punkt 5 (Enthüllung als Moment) und Punkt 6 (Sternkarte) als echte Screens in je zwei Varianten; der Eigentümer wählt.
+1. **Muster für den Design-Plan** (D-63): Punkt 2 (Bühnen für Orakel und Legung), Punkt 5 (Enthüllung als Moment) und Punkt 6 (Sternkarte) als echte Screens in je zwei Varianten; der Eigentümer wählt. Die Muster liegen vor (Branch `muster/design-plan`, S-42).
 2. **V05 freigeben und umsetzen** auf `feature/v05-karten` (D-60), Reihenfolge nach S-29: V05.1 Logik und Texte, V05.2 Legungs-Engine, V05.4 Tagebuch und Suche, dann B3 exportieren und die Screens (V05.1, V05.3, V05.5, V05.6).
 3. **Vor QG-V05:** Leistungsmessung gegen die Referenz (D-52, B-08).
 4. **Eigentümer:** E10 Kartenrücken, E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor V05.6); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) sind entschieden.
