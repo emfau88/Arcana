@@ -1,6 +1,6 @@
 # MASTER_ROADMAP_V2 · Pakete, Bulks, Aufwand, Release-Umfang
 
-**Stand:** 26.11.2026 · **Status:** verbindliche Planungsgrundlage. Umgesetzt wird **nur ein vom Eigentümer freigegebenes Paket**. Jedes Paket endet mit einem Bericht und wartet auf Freigabe. Grundlage: `PRODUCT_VISION_V2.md`, `PRODUCT_SYSTEMS.md`, `PROGRESSION_DESIGN.md`, `CONTENT_MASTERPLAN.md`, `INFORMATION_ARCHITECTURE.md`, `MONETIZATION_CONCEPT.md`. Bilder: `docs/visual/ASSET_REQUESTS.md`.
+**Stand:** 27.11.2026 (Plan vom 26.11.2026; Fortschritt bis 0.4.1 in §0.1) · **Status:** verbindliche Planungsgrundlage. Umgesetzt wird **nur ein vom Eigentümer freigegebenes Paket**. Jedes Paket endet mit einem Bericht und wartet auf Freigabe. Grundlage: `PRODUCT_VISION_V2.md`, `PRODUCT_SYSTEMS.md`, `PROGRESSION_DESIGN.md`, `CONTENT_MASTERPLAN.md`, `INFORMATION_ARCHITECTURE.md`, `MONETIZATION_CONCEPT.md`. Bilder: `docs/visual/ASSET_REQUESTS.md`.
 
 **Aufwand** in Agenten-Sitzungen (eine Sitzung ≈ ein zusammenhängender Arbeitslauf mit Tests und Bericht). Kalenderzeit hängt zusätzlich an Freigaben, Bildproduktion und Textprüfung durch den Eigentümer.
 
@@ -9,8 +9,8 @@
 | Paket | Version | Inhalt | Sitzungen | Bilder (Bulk) | Abschluss |
 |---|---|---|---|---|---|
 | **V02** Tagesorakel abschließen | 0.2 | abgeschlossen, Tag `v0.2.1` | 1–2 | B1 (fertig) | Freigabe Tagesorakel, Merge nach `main` |
-| **V03** Fundament und globales Designsystem | 0.3 | Datenmodell v2, Content-Module, Entitlements, Designsystem auf alle Screens | 3–4 | keine | QG-V03 |
-| **V04** Identität und Reise | 0.4 | Fragebogen v2, Enthüllung, „Ich“, Linse je Karte, Narrenreise, Meilensteine, Sternkarte, Rückblicke, **teilbare Archetypkarte** | 7–8 | B2 | QG-V04, Pages-Vorschau |
+| **V03** Fundament und globales Designsystem | 0.3 | abgeschlossen, Tag `v0.3.0`: Datenmodell v2, Content-Module, Entitlements, Designsystem auf alle Screens | 3–4 | keine | QG-V03 |
+| **V04** Identität und Reise | 0.4 | abgeschlossen, Tag `v0.4.0` (0.4.1 mit Textdurchsicht und Design-Korrekturen, Tag `v0.4.1`): Fragebogen v2, Enthüllung, „Ich“, Linse je Karte, Narrenreise, Meilensteine, Sternkarte, Rückblicke, **teilbare Archetypkarte** | 7–8 | B2 (fertig) | QG-V04, Pages-Vorschau |
 | **V05** Karten, Legungen, Grimoire | 0.5 | Kartenvertiefung, Rollen-Legungen, Grimoire als Buch, Tagebuch | 7–8 | B3 | QG-V05, **geschlossener Test** |
 | **V06** Zahlen und Symbole | 0.6 | Entdecken-Tab, Numerologie als **zweite Säule der Identität**, Engelszahlen, Symbol-Lexikon | 6–7 | B4 | QG-V06, Test-Update |
 | **V07** Release 1.0 | 1.0 | weitere Teilen-Vorlagen, Erinnerung, **Sicherung und Wiederherstellung**, Edition (falls Billing freigegeben), Härtung (G3), Store (G4) | 7–8 | B5 | G3, G4 → **öffentlicher Release** |
@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. V05 beginnt erst auf Zuruf des Eigentümers (D-60); der Plan liegt auf `feature/v05-karten` (S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 werden vor den V05-Screens an Mustern entschieden.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. V05 beginnt erst auf Zuruf des Eigentümers (D-60); der Plan liegt auf `feature/v05-karten` (S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden in V05 eingebaut.
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -219,11 +219,11 @@ Ein Release ohne Identität, Reise und Grimoire wäre „noch eine Tarot-App“.
 
 Jedes Paket: Bulks in fester Reihenfolge, jeweils mit „Fertig, wenn“. Nach jedem Bulk: `npm run check`, betroffene E2E, `PROJECT_STATUS.md` und `DECISIONS.md` aktualisieren.
 
-### V02 · Tagesorakel abschließen (läuft)
+### V02 · Tagesorakel abschließen (abgeschlossen, Tag `v0.2.1`)
 
-Stand und offene Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentümer den Tagesorakel-Screen freigibt und `design/visual-overhaul` nach `main` gemergt ist (nur nach ausdrücklicher Freigabe).
+Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentümer den Tagesorakel-Screen freigibt und `design/visual-overhaul` nach `main` gemergt ist. Erfüllt am 26.11.2026 (Pull Request [#2](https://github.com/emfau88/Arcana/pull/2), Merge `553c5d9`).
 
-### V03 · Fundament und globales Designsystem (0.3)
+### V03 · Fundament und globales Designsystem (0.3) · abgeschlossen, Tag `v0.3.0`
 
 **Ziel:** Alles, was die folgenden Pakete brauchen, einmal sauber legen. Alte Screens sehen danach zum V02-Screen passend aus, ohne neue Bilder.
 **Abhängigkeiten:** V02 gemergt. **Bilder:** keine. **Inhalte:** keine neuen Texte außer UI-Schlüsseln.
@@ -238,10 +238,10 @@ Stand und offene Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentü
 
 **Aufwand:** 3–4 Sitzungen. **Gate QG-V03:** alle Fertig-Kriterien, `npm run check` und alle E2E grün, Android-Debug-Build startet und migriert einen 0.2.0-Datenbestand.
 
-### V04 · Identität und Reise (0.4)
+### V04 · Identität und Reise (0.4) · abgeschlossen, Tag `v0.4.0`
 
 **Ziel:** Die App kennt den Menschen (Archetypen) und zeigt seinen Weg (Reise).
-**Abhängigkeiten:** V03. **Bilder:** Bulk B2 (A05, A06, A07–A14, A19), Anfrage **jetzt** (siehe `ASSET_REQUESTS.md`). **Inhalte (je Sprache):** ≈ 520 Texte (Linsen 176, Fragebogen 15, Archetyp-Profile ≈ 150, Kapitel 40, Reise 96, Rückblick-Bausteine 40) plus UI-Schlüssel.
+**Abhängigkeiten:** V03. **Bilder:** Bulk B2 (A05, A06, A07–A14, A19), geliefert und eingebaut (D-58). **Inhalte (je Sprache):** ≈ 520 Texte (Linsen 176, Fragebogen 15, Archetyp-Profile ≈ 150, Kapitel 40, Reise 96, Rückblick-Bausteine 40) plus UI-Schlüssel.
 
 | Bulk | Arbeit | Fertig, wenn |
 |---|---|---|
@@ -258,7 +258,7 @@ Stand und offene Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentü
 ### V05 · Karten, Legungen, Grimoire (0.5 → geschlossener Test)
 
 **Ziel:** Tiefe. Jede Handlung hinterlässt eine Spur im Buch.
-**Abhängigkeiten:** V04 (Reise, Kapitel I–IV). **Bilder:** Bulk B3 (A03, A04, A15, A20, A21, A23–A29, A30). **Inhalte:** ≈ 390 Texte (Kartentiefe 330, Legungen ≈ 40, Kapitel- und Systemtexte).
+**Abhängigkeiten:** V04 (Reise, Kapitel I–IV). **Design-Plan (D-64, entschieden 27.11.2026):** Punkt 2 Variante A (Orakel als Bühne, Karten in einer Reihe) mit V05.6 und der Legung aus V05.2; Punkt 6 Variante A (Sternkarte als drei Ringe) mit V05.3; Punkt 5 Variante B (Enthüllung behält alles, nur der doppelte Aufklapper entfällt) als kleine Korrektur. Vorlage: Branch `muster/design-plan` (S-42), nicht mergen. Punkt 7 (Bibliothek) kommt mit V05.3. **Bilder:** Bulk B3 (A03, A04, A15, A20, A21, A23–A29, A30), liegt vollständig im Lieferordner. **Inhalte:** ≈ 390 Texte (Kartentiefe 330, Legungen ≈ 40, Kapitel- und Systemtexte).
 
 | Bulk | Arbeit | Fertig, wenn |
 |---|---|---|
@@ -315,17 +315,17 @@ Stand und offene Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentü
 
 ## 5 · Bilder je Paket (Bulks)
 
-Angefordert wird **immer nur der nächste Bulk**. Details, Prompts und Abnahmekriterien in `docs/visual/ASSET_REQUESTS.md`.
+Angefordert wird **immer nur der nächste Bulk**; eingebaut, geprüft und ins Repo übernommen wird ein Bulk erst in seinem Paket. Stand der Lieferungen: 27.11.2026. Details, Prompts und Abnahmekriterien in `docs/visual/ASSET_REQUESTS.md`.
 
 | Bulk | Paket | Assets | Anzahl | Status |
 |---|---|---|---|---|
 | B1 | V02 | A01 Nachtwelt, A02 Pflanzenecken | 2 | geliefert |
-| **B2** | V04 | A05 Ich/Enthüllung, A06 Willkommen, A07–A14 Archetyp-Porträts, A19 Sternkarte | 11 | **jetzt anfordern** |
-| B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (12 Dateien) | nach QG-V04 |
-| B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | nach QG-V05 |
-| B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“, A31 Edition-Rücken (nur mit Billing) | 2–3 | nach QG-V06 |
-| B6 | 1.1 | A34 Mondwelt | 1 | nach 1.0 |
-| B7 | 1.2 | Zusatzdeck | 23 | nach Entscheidung |
+| B2 | V04 | A05 Ich/Enthüllung, A06 Willkommen, A07–A14 Archetyp-Porträts, A19 Sternkarte | 11 | geliefert, eingebaut (D-58) |
+| B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | im Lieferordner vollständig, Einbau in V05 |
+| B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | im Lieferordner vollständig, Einbau in V06 |
+| B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“, A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
+| B6 | 1.1 | A34 Mondwelt | 1 | im Lieferordner, Einbau in 1.1 |
+| B7 | 1.2 | Zusatzdeck | 23 | im Lieferordner (23 Dateien), Einbau erst nach Entscheidung |
 | zurückgestellt | – | A16 Dekor-Sheet (nur falls ein Screen es braucht), A17 figurative Ersatzkarten (E3) | – | – |
 
 **Bewertung des Bildbedarfs:** ≈ 32 neue Bilddateien bis 1.0 (plus 2 vorhanden). Das ist bewusst klein: Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen als SVG/CSS im Code.
@@ -365,7 +365,7 @@ Angefordert wird **immer nur der nächste Bulk**. Details, Prompts und Abnahmekr
 | Enthüllung und Übergänge | 56 fps, 1 Ruckler | ≥ 50 fps, ≤ 2 Ruckler über 50 ms, schlechtester Frame ≤ 120 ms | – |
 | Leerlauf | 0 | 0 laufende Animationen 12 s nach der Enthüllung | – |
 | Android-Kaltstart (Emulator, ruhiger Rechner) | 2,4 s | ≤ 3,0 s | – |
-| Android-APK | wird in V03 gemessen | ≤ 25 MB | – |
+| Android-APK | 8,1 MB (V03), 12,6 MB (0.4.1) | ≤ 25 MB | – |
 
 Regeln:
 
@@ -422,7 +422,7 @@ Regeln:
 | E8 | Fünf Tabs mit „Entdecken“ ab V06 | ja | V06 |
 | E9 | Fragebogen v2 (7 Fragen) für Bestandsnutzer: Angebot zum Neubestimmen statt Zwang | **entschieden 26.11.2026 (D-47):** Angebot, Profil bleibt | V04 |
 | E10 | Kartenrücken als Meilenstein-Belohnung (A20–A22) | ja | V05 |
-| E11 | Finaler App-Name und App-ID (lässt sich nach dem ersten Play-Upload nicht mehr ändern) | vor dem geschlossenen Test festlegen | V05.6 |
+| E11 | Finaler App-Name und App-ID (lässt sich nach dem ersten Play-Upload nicht mehr ändern). Eigentümer 27.11.2026: Es gibt eine alte Live-App ohne Nutzer, die ARCANA ersetzen soll; ob ihr Eintrag überschrieben wird oder ein neuer entsteht, hängt am Kontotyp und am Erstellungsdatum des Play-Kontos (noch offen) | vor dem geschlossenen Test festlegen | V05.6 |
 | E12 | Namenszahlen erst ab 1.3 | ja | – |
 | E13 | Lokale Benachrichtigungen über das offizielle Capacitor-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | ja | V07 |
 | E14 | Billing für 1.0 und Technik Option A (eigenes Plugin mit Play Billing) | Entscheidung bis V06 | V07 |
@@ -435,10 +435,13 @@ Regeln:
 
 ## 10 · Nächste Schritte
 
-1. **V02 abschließen** (läuft): Perf-Regression behoben (Commit `198130c`), restliche Grenzfälle und Abnahmetests, Pull Request nach `main`, Merge erst nach ausdrücklicher Freigabe, dann Tag `v0.2.1` (D-40).
-2. **Bulk B2 anfordern** (parallel, damit die Bilder zu V04 bereitliegen): A05, A06, A07–A14, A19. Die Porträts werden in V04 auch für die teilbare Archetypkarte gebraucht.
-3. **V03 freigeben und umsetzen** (keine Bilder nötig) auf dem neuen Branch `feature/v03-fundament` vom Tag `v0.2.1`.
-4. Entscheidung E8 vor V06 bestätigen. E19 (D-43), E9 und E20 (D-47) sind entschieden.
+Stand 27.11.2026, nach 0.4.1. V02, V03 und V04 sind abgeschlossen.
+
+1. **Design-Plan einbauen** (D-64): Die Muster sind entschieden (Punkt 2 A, Punkt 5 B, Punkt 6 A); eingebaut wird in V05 nach der Vorlage `muster/design-plan` (S-42), mit Texten in `i18n`, Tests, Android und Kontrastmessung.
+2. **V05 freigeben und umsetzen** auf `feature/v05-karten` (D-60), Reihenfolge nach S-29: V05.1 Logik und Texte, V05.2 Legungs-Engine, V05.4 Tagebuch und Suche, dann B3 exportieren und die Screens (V05.1, V05.3, V05.5, V05.6).
+3. **Vor QG-V05:** Leistungsmessung gegen die Referenz (D-52, B-08).
+4. **Eigentümer:** E10 Kartenrücken, E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor V05.6); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) sind entschieden.
+5. **Kleine Reste:** Design-Plan Punkte 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request), noch nicht beauftragt.
 
 ## 11 · Ergänzungen nach der Freigabe (26.11.2026)
 

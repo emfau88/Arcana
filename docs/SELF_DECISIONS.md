@@ -51,6 +51,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-39 | 27.11.2026 | Hauptaktion bleibt sichtbar | klebt am unteren Rand der Scrollfläche, Schleier dahinter; auf der Enthüllung als eigenes Element des Screens | D-63, Punkt 1 |
 | S-40 | 27.11.2026 | Absätze in langen Texten | Leerzeile im Inhalt, Regel nach Sinnabschnitten, Schlussfrage abgesetzt | D-63, Punkt 3 |
 | S-41 | 27.11.2026 | Positionsnamen der Legung | engere Laufweite, das Etikett darf in die Lücke neben seiner Karte reichen | D-63, Punkt 4 |
+| S-42 | 27.11.2026 | Muster für die Design-Punkte 2, 5 und 6 | eigener Branch, echte Screens, per Schalter zuschaltbar, nicht zum Mergen | D-63 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -487,3 +488,23 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** kürzeres Wort („Hürde“; ändert die Deutungssprache und alle Hilfetexte); kleinere Schrift (schlechter lesbar); Umbruch lassen.
 
 **Wechsel kostet:** drei Zeilen CSS. In V05.2 wird die Legung ohnehin neu gebaut (B-12).
+
+## S-42 · Muster für die Design-Punkte 2, 5 und 6
+
+**Entschieden:** Die Muster entstehen auf dem Branch `muster/design-plan` (von `main` 0.4.1) als echte Screens der App, je zwei Varianten. Ein Muster ersetzt einen Screen nur, wenn es im Browser zugeschaltet ist (`localStorage` „arcana.muster“, z. B. `oracle=a;reveal=a;starmap=b`, gelesen in `src/app/muster.ts`); ohne Schalter gleicht die App 0.4.1. Der Branch wird nicht gemergt; die gewählten Varianten werden in V05 ordentlich gebaut (Texte in `i18n`, Tests, Android, Kontrast).
+
+- **Punkt 2, Orakel als Bühne:** gemalte Sternwarte (A03 aus B3, nur für das Muster exportiert), die drei Karten stehen am Tisch und drehen sich nach dem Ziehen an derselben Stelle um. A: Reihe, Themen als eine Zeile zum Wischen. B: Fächer, Themen als Raster.
+- **Punkt 5, Enthüllung:** A ein Moment auf einem Bildschirm (Porträt, Name, ein Satz, zweite Stimme, „Zur Tageskarte“, leise „Mein Profil ansehen“). B wie 0.4.1 ohne den doppelten Aufklapper.
+- **Punkt 6, Sternkarte:** A drei Ringe für die drei Wege, der Weg führt als Spirale nach innen. B ein frei gesetztes Sternbild. In beiden: Wegenden größer, heutiger Stern leuchtet, Ziffer nur am gewählten Stern, Antippen nennt Karte, Weg und Stand.
+
+Empfehlung an den Eigentümer: dreimal A; beim Orakel lassen sich Reihe (A) und Themen-Raster (B) mischen.
+
+**Entscheidung des Eigentümers (27.11.2026, D-64):** Punkt 2 **A**, Punkt 5 **B**, Punkt 6 **A**. Zu Punkt 5 gegen die Empfehlung: Bei einem einzigen Moment würden Nutzer nicht verstehen, dass im Profil mehr steht.
+
+**Warum:** Entschieden wird am echten Screen mit echten Bildern und Texten, nicht an einer Zeichnung (AGENTS.md: kein Mockup als Beleg). Der Schalter hält `main` und die Vorschau unberührt, bis der Eigentümer gewählt hat.
+
+**Alternativen:** Zeichnungen oder Bildmontagen (schneller, aber ohne Aussage über Layout und Schrift); Varianten direkt in V05 bauen und eine wieder entfernen (mehr Aufwand, Risiko halber Reste); Varianten in der Pages-Vorschau umschaltbar machen (sichtbar für alle, braucht eine Oberfläche dafür).
+
+**Wechsel kostet:** nichts; der Branch bleibt als Referenz und kann gelöscht werden.
+
+**Geprüft:** `npm run check` PASS (204 Unit-Tests, Budgets eingehalten). Aufnahmen bei 375 × 812 px, Deutsch, Browser. **NOT RUN:** Android, Englisch, 130 % Schrift, Kontrastmessung, E2E mit zugeschaltetem Muster.

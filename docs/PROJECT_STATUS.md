@@ -9,7 +9,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | Was | Wo |
 |---|---|
 | Projektroot (neu, isoliert) | `%USERPROFILE%\Documents\PersonalOracle-Web` |
-| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.3.0, Tag `v0.3.0`), `feature/v03-fundament` = V03 (gemergt, bleibt als Referenz), `feature/v04-identitaet` = V04 in Arbeit (vom Tag `v0.3.0`), `design/visual-overhaul` = V02 (abgeschlossen, bleibt als Referenz). Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
+| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.4.1, Tag `v0.4.1`), `feature/v05-karten` = V05 (bisher nur Plan und Doku, kein V05-Code), `feature/v04-identitaet`, `feature/v03-fundament` und `design/visual-overhaul` = V04, V03 und V02 (gemergt, bleiben als Referenz), `fix/v04-texte` und `fix/v041-layout` = 0.4.1 (gemergt). Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
 | Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages aus `main`, Workflow `.github/workflows/pages.yml`) |
 | Design-Vorschau | https://emfau88.github.io/Arcana/preview/ (Branch `design/visual-overhaul`, eigene Datenbank, D-29) |
 | Produktplan V2 | `docs/product/` (Vision, Systeme, Progression, Inhalte, Informationsarchitektur, Monetarisierung, Masterplan V02–V07) |
@@ -31,18 +31,26 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | G2 | PASS | `docs/GATE_REPORTS.md`, `docs/TEST_EVIDENCE.md`, `docs/G2_PLAN.md` |
 | QG-V03 | PASS mit Ausnahmen (D-52) | Check 118/118, E2E 20 bestanden, Android-Migration 9/9, Kaltstart 1,58 s, APK 8,1 MB, Screenshots 360/390/412 DE/EN 130 % (`visual/evidence/v03-*`) |
 | QG-V04 | **PASS, freigegeben** (D-61): Funktion, Kontrast (B-07, D-59), Android (B-13, B-14, S-30, S-31); Merge `8b2419b`, Tag `v0.4.0`, Pages-Vorschau aktualisiert. Prüfliste „Nachprüfen“ bleibt für Rückmeldungen | siehe „Nachweise V04“ unten |
+| 0.4.1 (kein Paket-Gate) | **PASS, gemergt** (D-62, D-63): Textdurchsicht und Design-Plan Punkte 1, 3, 4; Merge `dae2854`, Tag `v0.4.1` | Check 204 Unit-Tests, E2E 32 bestanden, Android 13/13, Kaltstart 1,55 s, APK 12,6 MB; siehe „Korrekturen aus dem Design-Plan“ unten |
 | G3–G5 | NOT RUN | G3 ist Bulk V07.5 |
 
 ## Was funktioniert (Browser und Android-Emulator)
 
-- First-Run mit Willkommen, 7 freiwilligen Fragen (Fragebogen v2, V04.1), Wahl aus 6 Themen und Archetyp-Enthüllung. Überspringen führt zum neutralen Profil. Haupt- und Ergänzungsarchetyp werden berechnet und gespeichert; die Ergänzung wird erst mit V04.2 sichtbar.
-- Bestehende Profile aus dem kürzeren Fragebogen bleiben gültig und sehen im Profil das Angebot „Drei neue Fragen“ (E9, D-53).
-- Volles Deck: 22 gemalte Karten plus Rückseite (Deck v2), 6 Themen, alle Texte in DE und EN.
-- Tageskarte: eine Karte pro lokalem Kalendertag (auch über Mitternacht und nach dem Zurückkehren aus dem Hintergrund), freiwillige Enthüllung, Botschaft, Reflexionsfrage, Mini-Ritual, Notiz. Nach Neustart erscheint dieselbe Karte.
-- Drei-Karten-Orakel mit Situation, Herausforderung und Impuls in allen 6 Themen, einzeln aufdeckbar, speichern oder verwerfen. Die Deutung wird unveränderlich gespeichert. Ein halb aufgedecktes Reading wird wiederhergestellt.
-- Grimoire mit Sammlung (x/22), Verlauf und Detailansicht.
-- Profil: Archetyp ansehen, Fragen erneut beantworten, Archetyp selbst wählen oder offen lassen. Thema, Sprache (DE/EN), Bewegung, „Alle Daten löschen“.
-- Android: gebündelter Build ohne Remote-URL, offline lauffähig. Back-Regeln, Insets, Schriftgrößen 130 %/200 % und reduzierte Bewegung sind geprüft.
+Stand 0.4.1 (27.11.2026).
+
+- **Erste Sitzung:** Willkommen, 7 freiwillige Fragen (Fragebogen v2), Wahl aus 6 Themen und Archetyp-Enthüllung mit Porträt (4,3 s, überspringbar, bei reduzierter Bewegung statisch). Überspringen führt zum offenen Profil. Die Hauptaktion bleibt auf jedem Schritt im ersten Bildschirm (0.4.1).
+- **Identität („Ich“):** Hauptarchetyp und zweite Stimme (bei höchstens 1 Punkt Abstand ab 4 Antworten), ausführliches Profil in Absätzen, „Warum?“ als Rechnung aus den eigenen Antworten, Bibliothek der acht Archetypen, Archetyp selbst wählen oder offen lassen, Fragen erneut beantworten. Bestehende Profile aus dem kürzeren Fragebogen bleiben gültig und sehen das Angebot „Drei neue Fragen“ (E9, D-53).
+- **Deck:** 22 gemalte Karten plus Rückseite (Deck v2), 6 Themen, alle Texte in DE und EN, in beiden Sprachen vollständig durchgesehen (D-62).
+- **Tageskarte:** eine Karte pro lokalem Kalendertag (auch über Mitternacht und nach dem Zurückkehren aus dem Hintergrund), freiwillige Enthüllung, Botschaft, Linse je Archetyp und Karte (zweite Stimme jeden dritten Reisetag), Reflexionsfrage, Mini-Ritual, Notiz, höchstens ein Hinweis pro Tag. Nach Neustart erscheint dieselbe Karte.
+- **Reise:** Reisetag aus allen zählenden Handlungen (abgeleitet, nie gezählt), Narrenreise mit 63 Stationen, Meilensteine mit Meilenstein-Moment, Sternkarte mit Liste als Textalternative, Wochen- und Monatsrückblick aus eigenen Daten, Archetyp-Kapitel I–IV und „Zwei Stimmen“. Keine Streaks, kein Verlust bei Pausen.
+- **Drei-Karten-Orakel** mit Situation, Herausforderung und Impuls in allen 6 Themen, einzeln aufdeckbar, speichern oder verwerfen. Die Deutung wird unveränderlich gespeichert. Ein halb aufgedecktes Reading wird wiederhergestellt.
+- **Grimoire** mit Sammlung (x/22), Verlauf, Detailansicht, Reise, Rückblicken, Kapiteln und „Neu“-Markierungen. Das Buch mit sieben Kapiteln kommt in V05.3.
+- **Teilen:** Archetypkarte als Story (1080 × 1920) und Beitrag (1080 × 1350) über das Teilen-Blatt des Systems, ohne private Felder, auch offline.
+- **Einstellungen** (eigene Seite unter „Ich“): Thema, Sprache (DE/EN), Bewegung, „Alle Daten löschen“.
+- **Daten:** Schema 2 mit additiver Migration aus 0.2, Sicherungsformat als Typ mit Prüfer (die Oberfläche dazu kommt in V07.3), Rechteabfrage ohne Billing.
+- **Android:** gebündelter Build ohne Remote-URL, offline lauffähig. Zurück-Regeln, Insets, Schriftgrößen 130 %/200 % und reduzierte Bewegung sind geprüft; das Update von 0.3.0 auf 0.4.1 behält die Daten.
+
+**Noch nicht gebaut (Plan bis 1.0):** Kartenseite mit Vertiefung, Rollen-Legungen, Grimoire als Buch, Tagebuch mit Suche, Kartenrücken (V05); Entdecken-Tab, Numerologie, Engelszahlen, Symbol-Lexikon (V06); weitere Teilen-Vorlagen, Erinnerung, Sicherung und Wiederherstellung, Edition, Härtung, Store (V07).
 
 ## Offene Punkte
 
@@ -71,9 +79,10 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 - [ ] Name „ARCANA“ und App-ID festlegen (E11, vor dem geschlossenen Test).
 - [ ] TalkBack manuell prüfen (V07.5). Bisher nicht manuell geprüft. Als Ersatz wurden die Accessibility-Labels per uiautomator geprüft (G3).
 - [x] **0.4.1** gemergt (27.11.2026, `dae2854`), Tag `v0.4.1`: Textdurchsicht (#5, D-62) und Design-Plan Punkte 1, 3 und 4 (#6, D-63); danach `main` in `feature/v05-karten` gemergt. Der Tag `v0.4.0` trug intern noch Version 0.3.0; 0.4.1 ist die erste Version mit stimmender Nummer in Paket, Android-Projekt und App.
-- [ ] Design-Plan (`SELF_DECISIONS.md` S-39 bis S-41, D-63): Punkte 2 (Bühnen), 5 (Enthüllung als Moment) und 6 (Sternkarte) an Mustern entscheiden, bevor V05 die Screens baut; 7 kommt mit V05.3; 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request) sind noch nicht beauftragt.
+- [ ] Design-Plan (`SELF_DECISIONS.md` S-39 bis S-41, D-63): Punkte 2 (Bühnen), 5 (Enthüllung als Moment) und 6 (Sternkarte) an Mustern entscheiden, bevor V05 die Screens baut. **Die Muster liegen vor** (27.11.2026, Branch `muster/design-plan`, je zwei Varianten als echte Screens, S-42; Aufnahmen im Design-Plan des Eigentümers), **entschieden vom Eigentümer am 27.11.2026 (D-64): Punkt 2 Variante A, Punkt 5 Variante B, Punkt 6 Variante A**; der Einbau in V05 ist offen; 7 kommt mit V05.3; 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request) sind noch nicht beauftragt.
 - [ ] **Eigentümer:** Kontotyp und Erstellungsdatum des Play-Kontos nennen (alte App überschreiben oder neuer Eintrag, E11/E17). Die alte App hat laut Eigentümer keine Nutzer.
-- [ ] Live-Seite des Eigentümers (Claude-Dokument „ARCANA · Masterplan V2“) auf den Stand 0.4.1 bringen; sie steht noch auf dem Stand vor dem V04-Merge.
+- [x] Live-Seite des Eigentümers (Claude-Dokument „ARCANA · Masterplan V2“) auf den Stand 0.4.1 gebracht (27.11.2026): Fortschritt, V04 im Detail, 0.4.1, nächste Schritte.
+- [x] Doku-Altlasten bereinigt (27.11.2026): README (stand auf G2/0.2.0), Roadmap §0, §3, §5, §9 und §10, `ASSET_REQUESTS.md` §0 und §0.1, `GATE_REPORTS.md` (Berichte je Paket ergänzt), „Orte“ und „Was funktioniert“ in dieser Datei. Der Stand liegt jetzt auch auf `main`.
 
 ## Bekannte offene Fehler und Grenzfälle (Stand V04, 27.11.2026)
 
@@ -170,7 +179,7 @@ Prüfungen auf dem Branch: `npm run check` PASS (204 Unit-Tests, Content-Gate 0 
 
 ## Nächstes Arbeitspaket
 
-V04 ist freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`); `main` ist in `feature/v05-karten` übernommen. Auftrag D-57 sah danach V05 vor; der Eigentümer hat am 27.11.2026 entschieden, zuerst V04 abzuschließen und V05 noch nicht zu beginnen (D-60). Der Branch `feature/v05-karten` enthält bisher nur den Plan (S-29), keinen V05-Code. Geplante Reihenfolge, sobald der Eigentümer V05 freigibt (S-29):
+V04 ist freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`), danach 0.4.1 mit Textdurchsicht und den ersten Design-Korrekturen (Tag `v0.4.1`); `main` ist in `feature/v05-karten` übernommen. Die Punkte 2, 5 und 6 des Design-Plans sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden mit den V05-Screens eingebaut; Vorlage ist der Branch `muster/design-plan` (S-42). Auftrag D-57 sah danach V05 vor; der Eigentümer hat am 27.11.2026 entschieden, zuerst V04 abzuschließen und V05 noch nicht zu beginnen (D-60). Der Branch `feature/v05-karten` enthält bisher nur den Plan (S-29), keinen V05-Code. Geplante Reihenfolge, sobald der Eigentümer V05 freigibt (S-29):
 
 1. **V05.1 Logik und Texte:** Modul `cards-deep` je Sprache (Licht, Schatten, Schlüsselwort, Symbolik, Rollen R4–R8, Studium in zwei Teilen, persönliche Frage, zwei Reflexionsfragen, Ritual; ≈ 330 Texte), geschrieben in drei Gruppen zu sieben Karten (die drei Wege der Narrenreise), mit Content-Gate; Studien-Logik (jede Stufe in ≤ 2 Sitzungen, Unit).
 2. **V05.2 Legungs-Engine** mit Rollen R1–R8 und Matrix-Test (jede Kombination vollständig in DE/EN, keine Zukunftsversprechen); alte Legungen bleiben unverändert.
