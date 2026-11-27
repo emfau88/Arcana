@@ -4,6 +4,7 @@
  * varied openings. Pure; used by `npm run validate:content` and the unit tests.
  */
 import { journeyTextKeys } from '../../domain/journey.ts';
+import { archetypeKeys } from './archetype-keys.ts';
 import { ARCHETYPE_ORDER, LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
 import type { ContentPack } from '../schema.ts';
@@ -66,6 +67,21 @@ export const FORBIDDEN_PRESSURE: readonly RegExp[] = [
   /\b\d+ (more )?days? (left|to go)\b/i,
 ];
 
+/** Rituals and suggestions name only what everyone has (§2, §7 "Rituale"): no fire, smoke, substances, purchases. */
+export const FORBIDDEN_RITUAL: readonly RegExp[] = [
+  /Kerze/i,
+  /Feuer/i,
+  /Räucher/i,
+  /Salbei/i,
+  /Kristall/i,
+  /\bFasten\b/,
+  /candle/i,
+  /\bfire\b/i,
+  /incense/i,
+  /\bcrystals?\b/i,
+  /\bfasting\b/i,
+];
+
 export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
   identity: {
     required: (pack) => [
@@ -78,6 +94,20 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
       { pattern: /^question\.[a-z0-9-]+\.[a-z0-9-]+$/, maxLen: 70 },
       { pattern: /^lens\.[a-z]+\.major-\d{2}-[a-z-]+$/, maxLen: 190, sentences: [1, 1], words: [12, 28], group: 'lens' },
     ],
+  },
+  archetypes: {
+    required: () => archetypeKeys(),
+    rules: [
+      { pattern: /^description\.[a-z]+$/, maxLen: 1300, words: [120, 180], sentences: [6, 14] },
+      { pattern: /^strength\.[a-z]+\.[1-3]$/, maxLen: 200, sentences: [1, 3], group: 'strength' },
+      { pattern: /^shadow\.[a-z]+\.[2-3]$/, maxLen: 160, question: true },
+      { pattern: /^growth\.[a-z]+\.2$/, maxLen: 160, sentences: [1, 1] },
+      { pattern: /^reflection\.[a-z]+\.[2-5]$/, maxLen: 120, question: true, group: 'reflection' },
+      { pattern: /^reveal\.[a-z]+$/, maxLen: 160, sentences: [1, 2] },
+      { pattern: /^complement\.[a-z]+$/, maxLen: 200, sentences: [1, 2] },
+      { pattern: /^symbol\.[a-z]+$/, maxLen: 30 },
+    ],
+    forbidden: FORBIDDEN_RITUAL,
   },
   journey: {
     required: () => journeyTextKeys(),

@@ -33,6 +33,49 @@ function emptyScores(): Record<ArchetypeId, number> {
   return Object.fromEntries(ARCHETYPE_ORDER.map((id) => [id, 0])) as Record<ArchetypeId, number>;
 }
 
+interface Tally {
+  scores: Record<ArchetypeId, number>;
+  primaryHits: Record<ArchetypeId, number>;
+  firstPrimaryIndex: Partial<Record<ArchetypeId, number>>;
+  answeredCount: number;
+}
+
+function tally(questions: readonly QuestionContent[], answers: Answers): Tally {
+  const t: Tally = { scores: emptyScores(), primaryHits: emptyScores(), firstPrimaryIndex: {}, answeredCount: 0 };
+  questions.forEach((q, qi) => {
+    const answerId = answers[q.id];
+    if (answerId === undefined) return;
+    const answer = q.answers.find((a) => a.id === answerId);
+    if (!answer) return; // unknown ids (e.g. from an older questionnaire) are ignored, not guessed
+    t.answeredCount++;
+    t.scores[answer.primary] += PRIMARY_WEIGHT;
+    t.scores[answer.secondary] += SECONDARY_WEIGHT;
+    t.primaryHits[answer.primary] += 1;
+    if (t.firstPrimaryIndex[answer.primary] === undefined) t.firstPrimaryIndex[answer.primary] = qi;
+  });
+  return t;
+}
+
+/** Ranking rule: score, primary hits, earliest primary question, canonical order. */
+function outranksBy(t: Tally): (a: ArchetypeId, b: ArchetypeId) => boolean {
+  const idx = (id: ArchetypeId) => t.firstPrimaryIndex[id] ?? Number.POSITIVE_INFINITY;
+  return (a, b) => {
+    if (t.scores[a] !== t.scores[b]) return t.scores[a] > t.scores[b];
+    if (t.primaryHits[a] !== t.primaryHits[b]) return t.primaryHits[a] > t.primaryHits[b];
+    if (idx(a) !== idx(b)) return idx(a) < idx(b);
+    return ARCHETYPE_ORDER.indexOf(a) < ARCHETYPE_ORDER.indexOf(b);
+  };
+}
+
+/**
+ * All eight archetypes in the order of the scoring rule (first = main archetype when there are
+ * enough answers, second = candidate for the complement). Used by "Why?" (V04.2).
+ */
+export function rankArchetypes(questions: readonly QuestionContent[], answers: Answers): ArchetypeId[] {
+  const outranks = outranksBy(tally(questions, answers));
+  return [...ARCHETYPE_ORDER].sort((a, b) => (a === b ? 0 : outranks(a, b) ? -1 : 1));
+}
+
 /**
  * Transparent local scoring.
  * 1. Each chosen answer adds +2 to its primary and +1 to its secondary archetype.
@@ -47,35 +90,15 @@ function emptyScores(): Record<ArchetypeId, number> {
  * The result only changes when the answers change.
  */
 export function scoreArchetype(questions: readonly QuestionContent[], answers: Answers): ScoreResult {
-  const scores = emptyScores();
-  const primaryHits = emptyScores();
-  const firstPrimaryIndex: Partial<Record<ArchetypeId, number>> = {};
-  let answeredCount = 0;
-
-  questions.forEach((q, qi) => {
-    const answerId = answers[q.id];
-    if (answerId === undefined) return;
-    const answer = q.answers.find((a) => a.id === answerId);
-    if (!answer) return; // unknown ids (e.g. from an older questionnaire) are ignored, not guessed
-    answeredCount++;
-    scores[answer.primary] += PRIMARY_WEIGHT;
-    scores[answer.secondary] += SECONDARY_WEIGHT;
-    primaryHits[answer.primary] += 1;
-    if (firstPrimaryIndex[answer.primary] === undefined) firstPrimaryIndex[answer.primary] = qi;
-  });
+  const t = tally(questions, answers);
+  const { scores, primaryHits, answeredCount } = t;
 
   if (answeredCount < MIN_ANSWERS_FOR_ARCHETYPE) {
     return { archetypeId: null, complementId: null, scores, answeredCount, reason: 'neutral-too-few-answers' };
   }
 
-  // Same order as the main rule: score, primary hits, earliest primary question, canonical order.
-  const idx = (id: ArchetypeId) => firstPrimaryIndex[id] ?? Number.POSITIVE_INFINITY;
-  const outranks = (a: ArchetypeId, b: ArchetypeId): boolean => {
-    if (scores[a] !== scores[b]) return scores[a] > scores[b];
-    if (primaryHits[a] !== primaryHits[b]) return primaryHits[a] > primaryHits[b];
-    if (idx(a) !== idx(b)) return idx(a) < idx(b);
-    return ARCHETYPE_ORDER.indexOf(a) < ARCHETYPE_ORDER.indexOf(b);
-  };
+  const idx = (id: ArchetypeId) => t.firstPrimaryIndex[id] ?? Number.POSITIVE_INFINITY;
+  const outranks = outranksBy(t);
   const complementOf = (main: ArchetypeId | null): ArchetypeId | null => {
     if (!main || scores[main] <= 0 || answeredCount < MIN_ANSWERS_FOR_COMPLEMENT) return null;
     let second: ArchetypeId | null = null;
