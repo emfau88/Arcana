@@ -120,7 +120,15 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 
 ## Nächstes Arbeitspaket
 
-V04 ist gebaut, Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen (Merge und Tag `v0.4.0` nach Freigabe). Auftrag D-57: danach V05 Karten, Legungen, Grimoire (`docs/product/MASTER_ROADMAP_V2.md` §3) auf eigenem Branch `feature/v05-karten`, gestapelt auf den V04-Kopf, bis V04 gemergt ist (wie D-52 für V04). Der Eigentümer prüft gesammelt (`SELF_DECISIONS.md`, Nachprüfen). Die frühere G3-Liste (S11–S13) steckt in V07.5.
+V04 ist gebaut, Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen (Merge und Tag `v0.4.0` nach Freigabe). Auftrag D-57: danach V05 Karten, Legungen, Grimoire (`docs/product/MASTER_ROADMAP_V2.md` §3) auf dem Branch `feature/v05-karten` (angelegt und gepusht 27.11.2026), gestapelt auf den V04-Kopf; ändert sich V04 noch, wird per Merge nachgezogen (kein Rebase). Reihenfolge (S-29):
+
+1. **V05.1 Logik und Texte:** Modul `cards-deep` je Sprache (Licht, Schatten, Schlüsselwort, Symbolik, Rollen R4–R8, Studium in zwei Teilen, persönliche Frage, zwei Reflexionsfragen, Ritual; ≈ 330 Texte), geschrieben in drei Gruppen zu sieben Karten (die drei Wege der Narrenreise), mit Content-Gate; Studien-Logik (jede Stufe in ≤ 2 Sitzungen, Unit).
+2. **V05.2 Legungs-Engine** mit Rollen R1–R8 und Matrix-Test (jede Kombination vollständig in DE/EN, keine Zukunftsversprechen); alte Legungen bleiben unverändert.
+3. **V05.4 Tagebuch und Suche** als Logik (Suche über 1.000 Einträge ≤ 50 ms, einzeln löschen).
+4. **B3 exportieren** wie B2 (D-55), dann die Screens als Vorschlag: V05.1 Kartenseite, V05.3 Grimoire als Buch, V05.5 Kartenrücken, V05.6 Orakel-Gestaltung.
+5. Vor QG-V05: Leistungsmessung gegen die Referenz (D-52) zusammen mit B-08, B-13 und B-14.
+
+**Braucht den Eigentümer:** Merge von #4 (dann `main` in den V05-Branch), E10 Kartenrücken, E11 App-ID und E17 geschlossener Test (vor V05.6), E15 nur falls Edition-Inhalte sichtbar werden sollen. Der Eigentümer prüft gesammelt (`SELF_DECISIONS.md`, Nachprüfen). Die frühere G3-Liste (S11–S13) steckt in V07.5.
 
 ## Schnellprüfung
 

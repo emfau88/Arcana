@@ -36,6 +36,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-26 | 27.11.2026 | Notizen im Rückblick | als Zitat im Text statt eigener Abschnitt, kurze Daten unter den Karten | V04.5 |
 | S-27 | 27.11.2026 | A06 hinter Willkommen und Fragen | abgedunkelt wie die ruhigen Screens | V04.6 |
 | S-28 | 27.11.2026 | Bildvergleich der Teilen-Karte | Feed-Karte auf ein Viertel verkleinert, je Sprache eine Referenz | V04.7 |
+| S-29 | 27.11.2026 | Reihenfolge in V05 | Logik und Texte zuerst (Kartentiefe, Legungen, Suche), danach B3 und die Screens | D-57, V05 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -335,3 +336,13 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** volle Größe (genauer, aber groß); Prüfsumme der Pixel (bricht bei jeder Glättungsänderung); nur Layoutmaße aus dem Renderer (schon als Unit-Test vorhanden, sieht aber keine Bildfehler).
 
 **Wechsel kostet:** ein Aufruf in `identity.spec.ts`; neue Referenzen mit `--update-snapshots`.
+
+## S-29 · Reihenfolge in V05
+
+**Entschieden:** V05 beginnt auf `feature/v05-karten`, gestapelt auf den V04-Kopf, solange Pull Request #4 offen ist. Zuerst entsteht, was ohne Gestaltung prüfbar ist: das Modul `cards-deep` mit der Studien-Logik (V05.1), die Legungs-Engine mit Rollen (V05.2) und Tagebuch und Suche als Logik (V05.4). Danach werden die B3-Bilder exportiert und die Screens als Vorschlag gebaut (Kartenseite, Grimoire als Buch, Kartenrücken, Orakel). Die Texte entstehen in drei Gruppen zu sieben Karten, damit jede Gruppe für sich durch das Content-Gate geht.
+
+**Warum:** Die Textmenge (≈ 330 je Sprache) ist der Engpass (CONTENT_MASTERPLAN §3). Logik und Texte sind ohne Oberfläche vollständig testbar und ändern sich nicht, wenn die Durchsicht von V04 Gestaltungswünsche bringt. Die Screens profitieren dann von den Rückmeldungen zu V04.
+
+**Alternativen:** mit dem Grimoire als Buch beginnen (sichtbarer Fortschritt, aber Gestaltung vor der V04-Durchsicht); auf den Merge von #4 warten (sauberer, aber Stillstand); Texte für alle 22 Karten in einem Zug (schneller, aber eine einzige große Prüfung).
+
+**Wechsel kostet:** nichts; die Bulks sind unabhängig.
