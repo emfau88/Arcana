@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 27.11.2026 · **Version:** 0.3.0 · **Phase:** G2 abgeschlossen (PASS). V02 (Tagesorakel) abgeschlossen und gemergt, **Tag `v0.2.1`**. **V03 freigegeben und gemergt** (27.11.2026, `2f1e1de`, **Tag `v0.3.0`**): Datenmodell v2 mit Migration und Sicherungsformat, abgeleitete Schicht, Content-Module, Rechte, globales Designsystem (D-43 bis D-51). QG-V03 PASS mit den Eigentümer-Ausnahmen aus D-52 (B-07 → V04.3, Leistungsmessung → vor QG-V05, Desktop kein Kriterium). Pull Request [#3](https://github.com/emfau88/Arcana/pull/3) gemergt. **V04 fertig gebaut** auf `feature/v04-identitaet` (vom Tag `v0.3.0`), Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` offen, Merge erst nach Freigabe: Fragebogen v2 (D-53), Enthüllung, „Ich“, „Warum?“, Bibliothek der acht, Linsen, Narrenreise mit Meilenstein-Moment, Sternkarte, Rückblicke, Kapitel und Teilen-Karte; alle neuen Screens als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-58). B-07 ist mit Variante B behoben (Eigentümer, D-59), B-13 und B-14 sind behoben (S-30, S-31). Offen ist nur noch die Durchsicht der Screens und Schaufenster-Texte durch den Eigentümer; V05 beginnt erst nach V04 (D-60). Seit D-57 stellt der Agent V04 im Alleingang fertig; neue Screens entstehen als Vorschlag zur gesammelten Durchsicht. Seit 27.11.2026 entscheidet der Agent offene Punkte selbst und hält die Alternativen in `docs/SELF_DECISIONS.md` fest (D-56). **Produktvision V2** (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md`. G3 (Härtung) ist Bulk V07.5
+**Stand:** 27.11.2026 · **Version:** 0.4.0 · **Phase:** G2 abgeschlossen (PASS). V02 (Tagesorakel) abgeschlossen und gemergt, **Tag `v0.2.1`**. **V03 freigegeben und gemergt** (27.11.2026, `2f1e1de`, **Tag `v0.3.0`**): Datenmodell v2 mit Migration und Sicherungsformat, abgeleitete Schicht, Content-Module, Rechte, globales Designsystem (D-43 bis D-51). QG-V03 PASS mit den Eigentümer-Ausnahmen aus D-52 (B-07 → V04.3, Leistungsmessung → vor QG-V05, Desktop kein Kriterium). Pull Request [#3](https://github.com/emfau88/Arcana/pull/3) gemergt. **V04 freigegeben und gemergt** (27.11.2026, `8b2419b`, **Tag `v0.4.0`**, Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), D-61), Pages-Vorschau aktualisiert: Fragebogen v2 (D-53), Enthüllung, „Ich“, „Warum?“, Bibliothek der acht, Linsen, Narrenreise mit Meilenstein-Moment, Sternkarte, Rückblicke, Kapitel und Teilen-Karte; alle neuen Screens als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-58). B-07 ist mit Variante B behoben (Eigentümer, D-59), B-13 und B-14 sind behoben (S-30, S-31). Die Prüfliste „Nachprüfen“ in `SELF_DECISIONS.md` bleibt für Rückmeldungen offen. V05 ist auf `feature/v05-karten` geplant (S-29) und beginnt erst auf Zuruf des Eigentümers (D-60). Seit D-57 stellt der Agent V04 im Alleingang fertig; neue Screens entstehen als Vorschlag zur gesammelten Durchsicht. Seit 27.11.2026 entscheidet der Agent offene Punkte selbst und hält die Alternativen in `docs/SELF_DECISIONS.md` fest (D-56). **Produktvision V2** (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md`. G3 (Härtung) ist Bulk V07.5
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -30,7 +30,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | G1 | PASS, Stil vorläufig freigegeben (D-22) | `docs/GATE_REPORTS.md` |
 | G2 | PASS | `docs/GATE_REPORTS.md`, `docs/TEST_EVIDENCE.md`, `docs/G2_PLAN.md` |
 | QG-V03 | PASS mit Ausnahmen (D-52) | Check 118/118, E2E 20 bestanden, Android-Migration 9/9, Kaltstart 1,58 s, APK 8,1 MB, Screenshots 360/390/412 DE/EN 130 % (`visual/evidence/v03-*`) |
-| QG-V04 | Funktion PASS, Kontrast PASS (B-07, D-59), Android PASS (B-13, B-14 behoben, S-30, S-31); offen: Screenshot- und Textdurchsicht durch den Eigentümer, Pages-Vorschau (nach Freigabe) | siehe „Nachweise V04“ unten |
+| QG-V04 | **PASS, freigegeben** (D-61): Funktion, Kontrast (B-07, D-59), Android (B-13, B-14, S-30, S-31); Merge `8b2419b`, Tag `v0.4.0`, Pages-Vorschau aktualisiert. Prüfliste „Nachprüfen“ bleibt für Rückmeldungen | siehe „Nachweise V04“ unten |
 | G3–G5 | NOT RUN | G3 ist Bulk V07.5 |
 
 ## Was funktioniert (Browser und Android-Emulator)
@@ -52,9 +52,10 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 - [x] PR-Merge nach `main` (`553c5d9`), Tag `v0.2.1`, Branch `feature/v03-fundament` angelegt.
 - [x] V03 Fundament auf `feature/v03-fundament` (Version 0.3.0), QG-V03 mit Ausnahmen D-52.
 - [x] **Freigabe und Merge von V03** durch den Eigentümer (27.11.2026, Merge-Commit `2f1e1de`), Tag `v0.3.0`, `main` in `feature/v04-identitaet` gemergt.
-- [ ] V04 Identität und Reise auf `feature/v04-identitaet` (`MASTER_ROADMAP_V2.md` §0.1): V04.1, V04.2, V04.3, V04.4, V04.5, V04.7 [x]; V04.6 bis auf die Durchsicht fertig. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` offen, **Merge und Tag `v0.4.0` erst nach Freigabe**.
+- [x] V04 Identität und Reise (`MASTER_ROADMAP_V2.md` §0.1): freigegeben und gemergt (27.11.2026, Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61).
 - [x] **Eigentümer:** B-07-Variante gewählt: B, Panel unter der Fußzeile (27.11.2026, D-59), eingebaut und geprüft.
-- [ ] **Eigentümer:** die neuen Screens durchsehen (`SELF_DECISIONS.md`, Nachprüfen).
+- [x] **Eigentümer:** V04 freigegeben (27.11.2026, D-61). Die Prüfliste „Nachprüfen“ in `SELF_DECISIONS.md` bleibt als Liste für spätere Rückmeldungen.
+- [ ] **Eigentümer:** Start von V05 freigeben (D-60); Plan in S-29.
 - [x] Schwelle der Ergänzung: im Auftrag des Eigentümers selbst entschieden, höchstens 1 Punkt Abstand ab 4 Antworten (D-53; Vergleich und Alternativen in `SELF_DECISIONS.md` S-01).
 - [x] Reisetexte: Eigentümer 27.11.2026 „nach eigenem Ermessen, später optimieren“ (D-54, S-02); Feinschliff im Lektorat.
 - [ ] Bei Gelegenheit: selbst entschiedene Punkte durchsehen (`docs/SELF_DECISIONS.md`, D-56).
@@ -117,11 +118,11 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 | B-07 | Varianten A, B, C bei 100 % und 130 % Schrift, nur B ohne Verstoß; B eingebaut (D-59), Fußzeile auf Tod, Teufel, Wagen ohne Verstoß (110 bzw. 108 Texte, 100 % und 130 % Schrift) | `visual/evidence/v04-b07-varianten.webp`, `v04-b07-varianten-zoom.webp`, `v04-b07-panel-de-360.webp` |
 | B2-Bilder | PASS: 30 Dateien im Budget (4,2 MB), in `public/` eingebaut | `art/b2/export-report.json`, `visual/evidence/v04-b2-export.webp` |
 | Leistung gegen die Referenz | NOT RUN (D-52: vor QG-V05) | – |
-| Pages-Vorschau | NOT RUN (braucht Freigabe; Pages baut aus `main`) | – |
+| Pages-Vorschau | PASS: nach dem Merge automatisch gebaut (Workflow „Pages preview“, Lauf 46040386919); https://emfau88.github.io/Arcana/ lädt mit demselben Start-Bundle wie der geprüfte Build, Willkommen sichtbar, CSP aktiv, keine Konsolenfehler | `.github/workflows/pages.yml` |
 
 ## Nächstes Arbeitspaket
 
-V04 ist gebaut, Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen (Merge und Tag `v0.4.0` nach Freigabe). Auftrag D-57 sah danach V05 vor; der Eigentümer hat am 27.11.2026 entschieden, zuerst V04 abzuschließen und V05 noch nicht zu beginnen (D-60). Der Branch `feature/v05-karten` enthält bisher nur den Plan (S-29), keinen V05-Code. Geplante Reihenfolge, sobald der Eigentümer V05 freigibt (S-29):
+V04 ist freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`); `main` ist in `feature/v05-karten` übernommen. Auftrag D-57 sah danach V05 vor; der Eigentümer hat am 27.11.2026 entschieden, zuerst V04 abzuschließen und V05 noch nicht zu beginnen (D-60). Der Branch `feature/v05-karten` enthält bisher nur den Plan (S-29), keinen V05-Code. Geplante Reihenfolge, sobald der Eigentümer V05 freigibt (S-29):
 
 1. **V05.1 Logik und Texte:** Modul `cards-deep` je Sprache (Licht, Schatten, Schlüsselwort, Symbolik, Rollen R4–R8, Studium in zwei Teilen, persönliche Frage, zwei Reflexionsfragen, Ritual; ≈ 330 Texte), geschrieben in drei Gruppen zu sieben Karten (die drei Wege der Narrenreise), mit Content-Gate; Studien-Logik (jede Stufe in ≤ 2 Sitzungen, Unit).
 2. **V05.2 Legungs-Engine** mit Rollen R1–R8 und Matrix-Test (jede Kombination vollständig in DE/EN, keine Zukunftsversprechen); alte Legungen bleiben unverändert.
@@ -129,7 +130,7 @@ V04 ist gebaut, Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach
 4. **B3 exportieren** wie B2 (D-55), dann die Screens als Vorschlag: V05.1 Kartenseite, V05.3 Grimoire als Buch, V05.5 Kartenrücken, V05.6 Orakel-Gestaltung.
 5. Vor QG-V05: Leistungsmessung gegen die Referenz (D-52) zusammen mit B-08 (B-13 und B-14 sind behoben, S-30, S-31).
 
-**Braucht den Eigentümer:** Merge von #4 (dann `main` in den V05-Branch), E10 Kartenrücken, E11 App-ID und E17 geschlossener Test (vor V05.6), E15 nur falls Edition-Inhalte sichtbar werden sollen. Der Eigentümer prüft gesammelt (`SELF_DECISIONS.md`, Nachprüfen). Die frühere G3-Liste (S11–S13) steckt in V07.5.
+**Braucht den Eigentümer:** Freigabe für den Start von V05 (D-60), E10 Kartenrücken, E11 App-ID und E17 geschlossener Test (vor V05.6), E15 nur falls Edition-Inhalte sichtbar werden sollen. Der Eigentümer prüft gesammelt (`SELF_DECISIONS.md`, Nachprüfen). Die frühere G3-Liste (S11–S13) steckt in V07.5.
 
 ## Schnellprüfung
 

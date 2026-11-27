@@ -42,7 +42,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
-Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird erst nach der Durchsicht.
+Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird erst nach der Durchsicht. V04 ist freigegeben und gemergt (D-61); die offenen Punkte bleiben als Liste für Rückmeldungen.
 
 - [ ] Angebot „Drei neue Fragen“ im Profil (`visual/evidence/v04-angebot-profil-360.webp`, S-05)
 - [ ] Ton der Reisetexte, Stichprobe: Stationen 1, 13, 21 in allen drei Lesarten und Meilenstein Tag 7 (`src/content/modules/journey.de.ts`, S-02)
