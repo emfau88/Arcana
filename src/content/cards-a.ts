@@ -303,8 +303,8 @@ export const CARDS_A: readonly CardContent[] = [
         en: 'Work feels lighter when it fits your values. Check where your job and your convictions meet and where they rub against each other. Good collaboration begins with clear agreements.',
       },
       change: {
-        de: 'Vor dir liegt eine Wahl, die mehr ist als ein Abwägen von Vor- und Nachteilen. Frag dich, welcher Weg zu dem Menschen passt, der du sein möchtest. Diese Frage ergänzt deine Liste, sie ersetzt sie nicht.',
-        en: 'Ahead of you lies a choice that is more than weighing pros and cons. Ask yourself which path fits the person you want to be. That question complements your list; it does not replace it.',
+        de: 'Vielleicht liegt eine Wahl vor dir, die mehr ist als ein Abwägen von Vor- und Nachteilen. Frag dich, welcher Weg zu dem Menschen passt, der du sein möchtest. Diese Frage ergänzt deine Liste, sie ersetzt sie nicht.',
+        en: 'Perhaps a choice lies ahead of you that is more than weighing pros and cons. Ask yourself which path fits the person you want to be. That question complements your list; it does not replace it.',
       },
       balance: {
         de: 'Balance entsteht, wenn du mit dir im Einklang bist. Achte heute darauf, wo du Ja sagst und Nein meinst. Ein ehrliches Ja zu dir selbst gibt Ruhe.',
@@ -355,8 +355,8 @@ export const CARDS_A: readonly CardContent[] = [
         en: 'Connections sometimes need a shared direction, too. Talk about where you want to go instead of drifting. Differences can be steered when both of you take a hand.',
       },
       career: {
-        de: 'Jetzt ist ein guter Moment, ein Vorhaben entschlossen voranzubringen. Setz dir ein konkretes Etappenziel und bleib dran. Hindernisse sind leichter zu nehmen, wenn das Ziel klar ist.',
-        en: 'Now is a good moment to push a project forward with determination. Set yourself a concrete milestone and stay with it. Obstacles are easier to take when the goal is clear.',
+        de: 'Vielleicht ist jetzt ein guter Moment, ein Vorhaben entschlossen voranzubringen. Setz dir ein konkretes Etappenziel und bleib dran. Hindernisse sind leichter zu nehmen, wenn das Ziel klar ist.',
+        en: 'This may be a good moment to push a project forward with determination. Set yourself a concrete milestone and stay with it. Obstacles are easier to take when the goal is clear.',
       },
       change: {
         de: 'Bewegung entsteht, wenn du eine Richtung wählst. Du musst nicht jede Unsicherheit klären, um loszufahren. Lege fest, was dein nächster Abschnitt ist, und korrigiere unterwegs.',

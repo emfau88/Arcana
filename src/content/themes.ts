@@ -80,5 +80,5 @@ export const THEMES: readonly ThemeContent[] = [
 export const POSITION_LABELS: Readonly<Record<PositionId, Localized>> = {
   situation: { de: 'Situation', en: 'Situation' },
   challenge: { de: 'Herausforderung', en: 'Challenge' },
-  impulse: { de: 'Impuls', en: 'Impulse' },
+  impulse: { de: 'Impuls', en: 'Next step' },
 };

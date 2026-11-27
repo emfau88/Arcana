@@ -86,6 +86,15 @@ export const FORBIDDEN_RITUAL: readonly RegExp[] = [
   /\bfasting\b/i,
 ];
 
+/**
+ * The German archetype names are titles without article (D-08). "Als Suchende gehst du …" would
+ * address the reader as feminine singular, so the texts never use that form (S-32).
+ */
+export const FORBIDDEN_ADDRESS: readonly RegExp[] = [/\b[Aa]ls (?:Suchende|Hütende|Sehende|Verwandelnde|Wandernde|Schaffende|Weise|Erneuernde)\b/];
+
+/** A lens is one or two plain sentences, not two clauses held together by a semicolon (S-33). */
+export const FORBIDDEN_SEMICOLON: readonly RegExp[] = [/;/];
+
 export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
   identity: {
     required: (pack) => [
@@ -96,8 +105,10 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
     rules: [
       { pattern: /^question\.[a-z0-9-]+\.prompt$/, maxLen: 90 },
       { pattern: /^question\.[a-z0-9-]+\.[a-z0-9-]+$/, maxLen: 70 },
-      { pattern: /^lens\.[a-z]+\.major-\d{2}-[a-z-]+$/, maxLen: 190, sentences: [1, 1], words: [12, 28], group: 'lens' },
+      // One or two plain sentences (S-33): a thought and an invitation, without a semicolon holding them together.
+      { pattern: /^lens\.[a-z]+\.major-\d{2}-[a-z-]+$/, maxLen: 190, sentences: [1, 2], words: [12, 28], group: 'lens' },
     ],
+    forbidden: [...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON],
   },
   archetypes: {
     required: () => archetypeKeys(),
@@ -111,7 +122,7 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
       { pattern: /^complement\.[a-z]+$/, maxLen: 200, sentences: [1, 2] },
       { pattern: /^symbol\.[a-z]+$/, maxLen: 30 },
     ],
-    forbidden: FORBIDDEN_RITUAL,
+    forbidden: [...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS],
   },
   journey: {
     required: () => [...journeyTextKeys(), ...reviewTextKeys()],
@@ -126,12 +137,12 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
       { pattern: /^review\.notes\.\d$/, maxLen: 60, group: 'review' },
       { pattern: /^review\.(?:open\.(?:week|month)|balance\.(?:light|twilight|shadow|even)|quiet|close)\.\d$/, maxLen: 160, sentences: [1, 2], group: 'review' },
     ],
-    forbidden: FORBIDDEN_PRESSURE,
+    forbidden: [...FORBIDDEN_PRESSURE, ...FORBIDDEN_ADDRESS],
   },
   chapters: {
     required: () => chapterKeys(),
     rules: [{ pattern: /^chapter\.[a-z]+\.(?:[1-4]|second-voice)$/, maxLen: 1900, words: [150, 250], sentences: [7, 22], group: 'chapter' }],
-    forbidden: [...FORBIDDEN_PRESSURE, ...FORBIDDEN_RITUAL],
+    forbidden: [...FORBIDDEN_PRESSURE, ...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS],
   },
 };
 

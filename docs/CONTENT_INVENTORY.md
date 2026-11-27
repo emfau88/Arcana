@@ -36,10 +36,10 @@ Texte außerhalb des Kerns liegen als Module in `src/content/modules/` und werde
 
 | Modul | Version | Schlüssel je Sprache | Inhalt | Sichtbar in der App |
 |---|---|---|---|---|
-| `identity` | `identity-2026-11-27.2` | 211 | 7 Fragen und 28 Antworten des Fragebogens; 176 Linsen (8 Archetypen × 22 Karten, je ein Satz, V04.3) | ja (Fragebogen, Linse auf „Heute“ und im Grimoire) |
-| `archetypes` | `archetypes-2026-11-27.1` | 125 | je Archetyp: Beschreibung (120–180 Wörter, nennt die drei Resonanzkarten und das Leitsymbol), 3 Stärken, Schattenfragen 2–3, Entwicklung 2, Reflexionsfragen 2–5, Enthüllungssatz, Text als zweite Stimme; 21 Symbolnamen (V04.2). Edition-Texte (innere Spannungen, Beziehungsmuster, Ritualreihe) nicht geschrieben, solange es kein Billing gibt | nein, Oberfläche folgt (V04.2/V04.6) |
-| `chapters` | `chapters-2026-11-27.1` | 40 | 8 Archetypen × Kapitel I „Deine Gabe“, II „Deine Verbindungen“, III „Dein Schatten“, IV „Dein Weg“ und „Zwei Stimmen“, je 150–250 Wörter, endet mit einer offenen Frage (V04.5) | nein, Oberfläche folgt (V04.5) |
-| `journey` | `journey-2026-11-27.2` | 136 | 63 Stationstexte (21 Stationen × 3 Lesarten Begegnung, Wiederkehr, Weisheit), 9 Pfadtexte, 4 Rundentexte, 20 Meilensteintexte (D-54), 40 Rückblick-Bausteine mit Platzhaltern `{theme}`, `{card}`, `{count}` (V04.5). Keine Countdown- oder Druckformulierungen (Validator) | nein, noch keine Oberfläche (V04.4/V04.5 Logik und Texte) |
+| `identity` | `identity-2026-11-27.3` | 211 | 7 Fragen und 28 Antworten des Fragebogens; 176 Linsen (8 Archetypen × 22 Karten, je ein bis zwei Sätze ohne Semikolon, V04.3, S-33) | ja (Fragebogen, Linse auf „Heute“ und im Grimoire) |
+| `archetypes` | `archetypes-2026-11-27.2` | 125 | je Archetyp: Beschreibung (120–180 Wörter, nennt die drei Resonanzkarten und das Leitsymbol), 3 Stärken, Schattenfragen 2–3, Entwicklung 2, Reflexionsfragen 2–5, Enthüllungssatz, Text als zweite Stimme; 21 Symbolnamen (V04.2). Edition-Texte (innere Spannungen, Beziehungsmuster, Ritualreihe) nicht geschrieben, solange es kein Billing gibt | nein, Oberfläche folgt (V04.2/V04.6) |
+| `chapters` | `chapters-2026-11-27.2` | 40 | 8 Archetypen × Kapitel I „Deine Gabe“, II „Deine Verbindungen“, III „Dein Schatten“, IV „Dein Weg“ und „Zwei Stimmen“, je 150–250 Wörter, endet mit einer offenen Frage (V04.5) | nein, Oberfläche folgt (V04.5) |
+| `journey` | `journey-2026-11-27.3` | 136 | 63 Stationstexte (21 Stationen × 3 Lesarten Begegnung, Wiederkehr, Weisheit), 9 Pfadtexte, 4 Rundentexte, 20 Meilensteintexte (D-54), 40 Rückblick-Bausteine mit Platzhaltern `{theme}`, `{card}`, `{count}` (V04.5). Keine Countdown- oder Druckformulierungen (Validator) | nein, noch keine Oberfläche (V04.4/V04.5 Logik und Texte) |
 
 ## Was automatisch geprüft wird
 
@@ -50,4 +50,5 @@ Texte außerhalb des Kerns liegen als Module in `src/content/modules/` und werde
 ## Hinweise für die spätere Redaktion
 
 - XIII (Tod) und XV (Teufel) sind bewusst ruhig und nicht beängstigend formuliert. Bei einer Überarbeitung so lassen.
-- Die Texte sind eigene Arbeit und automatisch geprüft. Ein menschlicher Lektoratsdurchgang (Ton, Rhythmus) ist vor dem Release sinnvoll und steht im Backlog.
+- Die Texte sind eigene Arbeit und automatisch geprüft. Am 27.11.2026 hat der Agent alle Texte in DE und EN vollständig gelesen und korrigiert (D-62, `PROJECT_STATUS.md` „Textdurchsicht V04“). Ein menschlicher Lektoratsdurchgang (Ton, Rhythmus) ist vor dem Release weiter sinnvoll (E18).
+- Tagesbotschaften behaupten nichts über die Lage der Person; was sein könnte, steht mit „vielleicht“ (S-37).
