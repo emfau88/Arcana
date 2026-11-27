@@ -41,7 +41,7 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 
 - [x] B1 · A01, A02 geliefert und eingebaut (V02)
 - [x] B2 · für V04, Ablauf in §0.1 · geliefert 26.11.2026 (11/11), als WebP exportiert (D-55) und mit den V04-Screens in `public/` eingebaut (27.11.2026, D-58)
-- [ ] B3 · für V05 · teilweise geliefert (A03, A04, A15, A20, A21, A23–A29, A30)
+- [ ] B3 · für V05 · im Lieferordner vollständig (7 Dateien: A03, A04, A15, A20, A21, A23–A29 als ein Sheet, A30; Stand 27.11.2026); Prüfung, Export und Einbau mit den V05-Screens
 - [ ] B4 · für V06 · teilweise geliefert (A32, zwei Symbol-Sheets A33)
 - [ ] B5 · für V07 · teilweise geliefert (A18, A22, Kartenrücken Edition)
 - [ ] B6 · für 1.1 · A34 geliefert

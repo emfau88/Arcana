@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1–V04.5 und V04.7 fertig (B-07 mit Variante B, D-59; B-13 und B-14 behoben, S-30, S-31); V04.6 wartet auf die Durchsicht. V05 beginnt erst nach V04 (D-60). Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. V05 beginnt erst auf Zuruf des Eigentümers (D-60); der Plan liegt auf `feature/v05-karten` (S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 werden vor den V05-Screens an Mustern entschieden.
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -80,7 +80,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Android-Debug-Build 0.3.0 startet und migriert einen 0.2.0-Datenbestand: 9/9 PASS, jeder Datensatz unverändert (`scripts/android-migration.mjs`)
   - [x] Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Freigabe (27.11.2026), Merge `2f1e1de`, Tag `v0.3.0`
 
-### V04 · Identität und Reise (0.4) · Branch `feature/v04-identitaet`
+### V04 · Identität und Reise (0.4) · Branch `feature/v04-identitaet` · gemergt, Tag `v0.4.0`
 
 - [x] V04.1 Fragebogen v2 (E9) (6/6, D-53)
   - [x] 7 Fragen, Punktmodell +2/+1, die ersten vier unverändert; Texte DE/EN
@@ -114,12 +114,12 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Archetyp-Kapitel I–IV und Kapitel „Zwei Stimmen“ (8 × 5 je Sprache, 150–250 Wörter) im Modul `chapters` (S-13)
   - [x] Sternkarte (SVG auf A19) mit Liste als Textalternative; 400 Tage beim Scrollen mit 4× CPU-Drosselung: Median 16,7 ms, p95 16,8 ms, Maximum 16,8 ms Abstand zwischen Frames, also jeder Frame im 60-Hz-Takt (16,7 ms), kein ausgelassener Frame
   - [x] Rückblick- und Kapitelansicht als Vorschlag (D-57, S-26; E2E: Wochenrückblick zitiert die eigene Notiz, zeigt 7 Karten)
-- [ ] V04.6 „Ich“ und Gestaltung (4/5)
+- [x] V04.6 „Ich“ und Gestaltung (5/5)
   - [x] Profil wird „Ich“: Archetyp, zweite Stimme, Wahl von Hand, Profil, Bibliothek, Teilen; Einstellungen auf eigener Unterseite (S-18); Zahlen-Säule erst in V06
   - [x] Welten A05 (Ich, Enthüllung, abgedunkelt bei „Warum?“ und Teilen), A06 (Willkommen, Fragen, abgedunkelt, S-27), A19 (Reise, Rückblick, Kapitel)
   - [x] Bildbudget ≤ 600 KB je Screen: schwerster Screen 364 KB
   - [x] Erste Sitzung bis zur Karte ≤ 90 s (E2E-Pfad, Fragebogen 58,7 s); Kontrast aller Lesetexte ≥ 4,5:1 bei 360/390/412 px DE/EN und 130 % Schrift (B-07 behoben, D-59)
-  - [ ] Screenshot-Review durch den Eigentümer (`SELF_DECISIONS.md`, Nachprüfen)
+  - [x] Freigabe durch den Eigentümer mit dem Merge (27.11.2026, D-61); die Prüfliste „Nachprüfen“ in `SELF_DECISIONS.md` bleibt für Rückmeldungen
 - [x] V04.7 Teilen-Kern und Archetypkarte (E20) (6/6)
   - [x] `ShareModel` ohne private Felder: Typ-Test schlägt fehl, sobald Antworten, Scores, Notizen oder Geburtsdatum hinzukommen; Schlüssel-Whitelist zur Laufzeit (Unit)
   - [x] Vorlage J2 in Story 1080 × 1920 und Feed 1080 × 1350: alle acht Archetypen DE/EN passen, Branding ≤ 6 %, Text ≥ 4,5:1 auf undurchsichtiger Fläche (Unit)
@@ -127,7 +127,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Einstieg aus Enthüllung und „Ich“ als Vorschlag (D-57); Vorschau als Data-URL bei strenger CSP (S-24); Bildvergleichstest je Sprache (S-28); im Browser Story 75–312 ms, Feed ≈ 50 ms
   - [x] Teilen-Blatt des Systems öffnet sich offline mit der Bilddatei (Emulator, 8 von 8 Läufen; geschlossen ohne Ziel, nichts geteilt)
   - [x] Export ≤ 1,5 s auf dem Referenz-Emulator: nach S-30 (PNG-Kodierung im Worker) in 7 von 7 Läufen, Story 0,23–0,64 s, Beitrag 0,09–0,14 s, auch direkt nach dem Fragebogen und offline nach dem Kaltstart; vorher in 4 von 19 Läufen ≈ 13,3 s (B-14)
-- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) offen; Funktion PASS, offen sind die Durchsicht und die Pages-Vorschau (nach Freigabe)
+- [x] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: freigegeben und gemergt (27.11.2026, `8b2419b`), Tag `v0.4.0`, Pages-Vorschau automatisch aus `main` gebaut und geprüft (D-61)
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 
