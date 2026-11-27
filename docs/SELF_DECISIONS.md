@@ -62,6 +62,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-50 | 27.11.2026 | Export von B3 | wie B2 (D-55) nach `art/b3/`, außerhalb von `public/`; Vignetten in einem gemeinsamen Maßstab ausgeschnitten, auch die Schlussvignette quadratisch; Rücken-Vorschau 240 × 360 ≤ 30 KB | V05, ASSET_REQUESTS |
 | S-51 | 27.11.2026 | Kartenrücken an Tag 2, 5 und 10 | Mondsichel an Tag 2, Sternenkompass an Tag 5, Goldenes Rad (A22, aus B5 vorgezogen) an Tag 10; die Meilensteine 14 und 75 entfallen, Tag 365 behält das Jahresbuch | D-66, V05.5, PROGRESSION_DESIGN §3.2 |
 | S-52 | 27.11.2026 | Auswahl der Kartenrücken | in den Einstellungen nur freigeschaltete Rücken als Vorschau mit Namen, der Standard heißt „Klassisch“; gilt für jede verdeckte Karte; Meilenstein-Moment nennt den Rücken mit Namen, „Ansehen“ führt zur Auswahl; Tagestext nur, wenn alles von diesem Tag gebaut ist | V05.5, D-66, D-54 |
+| S-53 | 27.11.2026 | Kartenseite, Teil 1 | Stufe als Mondphase mit Namen unter Titel und Essenz, darunter jede offene Ebene in einem eigenen Panel in der Reihenfolge der Stufen; nicht Geöffnetes fehlt einfach; das Profilthema steht oben als Botschaft, die Themenliste zeigt dann die anderen fünf; eigener Lade-Chunk | V05.1, PRODUCT_SYSTEMS D, D3, D4 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -87,6 +88,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] **Rahmen der Legungen** (V05.2, S-46, S-47): Namen, Kurzbeschreibungen, Einleitungen und Fragen aller sieben Legungen in DE und EN (`src/content/modules/spreads.de.ts`, `spreads.en.ts`); besonders Zwei Wege und Verbindung (nur die eigene Seite) und der Rückblick
 - [ ] **Löschen im Tagebuch** (V05.4, S-49): Worte weg, Tag bleibt. Passt das zu deiner Erwartung, oder sollen auch ganze Tageskarten und Legungen einzeln löschbar sein?
 - [ ] **Auswahl der Kartenrücken** (V05.5, S-52, Nachweis `docs/visual/evidence/v05-kartenruecken.webp` und `v05-kartenruecken-android.webp`): eigener Abschnitt in den Einstellungen unter Sprache und Bewegung, vier Vorschauen in einer Reihe, der gewählte Rücken wie ein gewähltes Segment gerahmt. Bei 412 px werden „Mondsichel“ und „Sternenkompass“ getrennt. Passt das, oder soll die Auswahl größer (zwei Spalten) oder auch auf „Ich“ sichtbar sein?
+- [ ] **Kartenseite, Teil 1** (V05.1, S-53, Nachweis `docs/visual/evidence/v05-kartenseite.webp` und `v05-kartenseite-android.webp`): Stufe als Mondphase („Stufe 4 · Verinnerlicht“), darunter je Ebene ein Panel mit goldener Überschrift. Stufennamen: Entdeckt, Verstanden, Vertieft, Verinnerlicht. Passt die Länge der Seite bei Stufe 4, oder sollen die Ebenen ab Stufe 3 aufklappbar sein?
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -708,3 +710,23 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 **Folgen:** Auf der Reise-Seite stehen in der Liste der erreichten Meilensteine weiter die Tagestexte von Tag 2, 4, 6 und 10, die auch die Welten aus V06 nennen. So ist es schon seit V04, und mit V06 erledigt es sich.
 
 **Wechsel kostet:** `src/domain/cardbacks.ts`, der Abschnitt in `src/features/profile/Profile.tsx`, `CardBackContext` in `src/ui/OracleCard.tsx` und `MilestoneMoment.tsx`.
+
+## S-53 · Kartenseite, Teil 1
+
+**Entschieden:** Die Kartenseite im Grimoire (`#/grimoire/card/<id>`) zeigt unter Bild, Titel und Essenz die Stufe der Karte und alle Ebenen, die diese Stufe geöffnet hat. Das Studium (Teil 2) folgt als eigener Schritt.
+
+- **Stufe:** ein Mondphasen-Symbol (D3: Neumond bis Vollmond, gezeichnet als SVG, kein Balken) mit „Stufe {n} · {Name}“. Die Namen folgen PRODUCT_SYSTEMS D und PROGRESSION_DESIGN: Entdeckt, Verstanden, Vertieft, Verinnerlicht (EN: Discovered, Understood, Deepened, Taken to heart). Unter Stufe 4 steht ein ruhiger Satz, dass sich weitere Ebenen mit neuen Begegnungen und dem Kartenstudium öffnen; es gibt keinen Zähler und kein „noch 2 Tage“.
+- **Ebenen:** jede offene Ebene in einem eigenen Panel mit goldener Überschrift, in der Reihenfolge der Stufen: Botschaft für das Profilthema (1), Licht, Schatten, Schlüsselwort (2), die anderen Lebensthemen, die Karte in Legungen (R1–R8) und das Bild (3), deine Worte zu dieser Karte, ein zweites Ritual und deine Frage (4). Was noch nicht offen ist, fehlt einfach: kein Schloss, keine grauen Platzhalter (D4, L-Leitplanken).
+- **Keine Dopplung:** Die Botschaft zum eigenen Thema steht oben; die Liste der Themen auf Stufe 3 heißt dann „In den anderen Lebensthemen“ und zeigt die übrigen fünf. Ohne Profilthema zeigt sie alle sechs.
+- **Deine Worte:** Notizen aus Tageskarten, Legungen und Tagebuch, die diese Karte nennen und Text haben (aus `journalItems`), mit Datum.
+- **Laden:** Die Ebenen sind ein eigener Lade-Chunk (`src/features/cards/CardLayers.tsx`, 0,9 kB CSS) und holen die Module `cards-deep` und `spreads`; der Startpfad wächst nicht. Fehlen die Module, steht ein Satz mit „Erneut versuchen“, Botschaft und Themen (aus dem Kern) bleiben.
+
+**Warum:** Die Panels halten jeden Lesetext auf einer ruhigen Fläche über dem gemalten Hintergrund (Kontrast als Mindestwert). Die Stufen-Reihenfolge macht sichtbar, was mit der Zeit dazukam, ohne dass etwas verschlossen wirkt.
+
+**Alternativen:**
+- Ebenen als aufklappbare Liste: kürzer, aber versteckt Inhalte hinter einem Tippen; bleibt als Frage in der Prüfliste.
+- Gesperrte Ebenen grau mit „ab Stufe 3“ zeigen: verstößt gegen „keine gesperrten Wissensinhalte“.
+- Fortschrittsbalken statt Mondphase: D3 sieht die Mondphase vor.
+- Alle sechs Themen inklusive Profilthema: doppelt den obersten Text wörtlich.
+
+**Wechsel kostet:** `src/features/cards/CardLayers.tsx`, `card-page.css` und der Block `card` in `src/i18n/screens.*.ts`.
