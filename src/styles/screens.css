@@ -500,10 +500,24 @@ h1[tabindex='-1']:focus {
   /* Free-standing over the misty valley of A01: the design's halo (130 % font: 4.48 → ≥ 4.5:1). */
   text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95);
 }
+/* B-07 variant B (owner's choice, D-59): one quiet panel behind the footer lines, so they stay
+   readable where the lilies of A02 lie behind them (130 % text at 360 px: 3.47 → ≥ 4.5:1).
+   The font size matches .small, so 36ch is the same measure as before. */
+.today__footer-panel {
+  font-size: var(--fs-small);
+  max-width: 36ch;
+  margin: 0 auto var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: rgba(16, 14, 36, 0.82);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--r-m);
+}
 .today__footer {
   text-align: center;
-  max-width: 36ch;
   margin: 0 auto var(--s-2);
+}
+.today__footer:last-child {
+  margin-bottom: 0;
 }
 
 /* -------------------------------------------------------------- Oracle */

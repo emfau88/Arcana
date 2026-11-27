@@ -297,12 +297,14 @@ export function Today() {
                 </button>
               </div>
               <CrescentDivider />
-              <p className="small today__footer">{t.today.journeyNote}</p>
-              <p className="small today__footer">{t.today.comeBack}</p>
-              <p className="small today__footer">{t.common.symbolic}</p>
-              {today.locale !== locale ? (
-                <p className="small today__footer">{fmt(t.today.storedLocale, { lang: t.languages[today.locale] })}</p>
-              ) : null}
+              <div className="today__footer-panel">
+                <p className="small today__footer">{t.today.journeyNote}</p>
+                <p className="small today__footer">{t.today.comeBack}</p>
+                <p className="small today__footer">{t.common.symbolic}</p>
+                {today.locale !== locale ? (
+                  <p className="small today__footer">{fmt(t.today.storedLocale, { lang: t.languages[today.locale] })}</p>
+                ) : null}
+              </div>
             </>
           ) : null}
         </article>
