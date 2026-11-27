@@ -24,6 +24,18 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-14 | 27.11.2026 | Aufbau der Rückblicke | über Reisetage, ruhiger Satz bei weniger als zwei Karten, keine Rückblick-Legung vor V05 | V04.5 |
 | S-15 | 27.11.2026 | Edition-Texte (Spannungen, Beziehungsmuster, Ritualreihe) | noch nicht geschrieben | V04.2, AGENTS.md |
 | S-16 | 27.11.2026 | Teilen in der Android-App | Bild in den App-Cache schreiben, dann Capacitor Share | V04.7 |
+| S-17 | 27.11.2026 | Neue V04-Screens als Vorschlag | aus vorhandenen Bausteinen und B2-Bildern, Enthüllung 4,3 s in vier Schritten | D-57, V04.2–V04.7 |
+| S-18 | 27.11.2026 | Einstellungen auf „Ich“ | eigene Unterseite `#/me/settings` | V04.6 |
+| S-19 | 27.11.2026 | Neue Screens laden | bei Bedarf, Texte in eigener Datei, im Leerlauf vorgeladen | V04, Start-JS |
+| S-20 | 27.11.2026 | Wann der Meilenstein-Moment erscheint | einmal, auf „Heute“ nach der Karte, nur wenn etwas Gebautes aufgeht | V04.4 |
+| S-21 | 27.11.2026 | Resonanzkarten im Profil | alle Bilder sichtbar, Kartenseite erst nach der Begegnung | V04.2, Leitplanken |
+| S-22 | 27.11.2026 | Jubiläen und Hundert-Tage-Rückblick | eigener Bereich, noch nicht gebaut, kein Hinweis darauf | V04.5 |
+| S-23 | 27.11.2026 | Lesbarkeit über A05 (Lichtsäule) | Halo, helleres Gold, abgedunkelte Bühne für „Warum?“ und Teilen, Schleier unten | V04.6, D-49 |
+| S-24 | 27.11.2026 | Vorschau des Teilen-Bildes | Data-URL statt Blob-URL, CSP bleibt streng | V04.7 |
+| S-25 | 27.11.2026 | Zurück über zwei Ebenen | Herkunft der Herkunft einmal im Link | V04 |
+| S-26 | 27.11.2026 | Notizen im Rückblick | als Zitat im Text statt eigener Abschnitt, kurze Daten unter den Karten | V04.5 |
+| S-27 | 27.11.2026 | A06 hinter Willkommen und Fragen | abgedunkelt wie die ruhigen Screens | V04.6 |
+| S-28 | 27.11.2026 | Bildvergleich der Teilen-Karte | Feed-Karte auf ein Viertel verkleinert, je Sprache eine Referenz | V04.7 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -37,6 +49,13 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] Neue Kartenzuordnung je Archetyp (Sehende mit Glücksrad, Hütende mit Herrscher, Verwandelnde mit Teufel, Wandernde mit Liebenden, Weise mit Gehängtem; S-12)
 - [ ] Kapitel, Stichprobe: Suchende I, Hütende III, Weise IV, Erneuernde „Zwei Stimmen“ (`src/content/modules/chapters.de.ts`)
 - [ ] Rückblick-Bausteine, besonders der Ton bei vielen Schattenkarten (`review.balance.shadow.*` in `journey.de.ts`, S-14)
+- [ ] **Neue V04-Screens** als Ganzes (S-17): `visual/evidence/v04-identitaet-de-412.webp` (Enthüllung, „Ich“, „Warum?“, Bibliothek, Profil), `v04-reise-teilen-de-412.webp` (Sternkarte, Rückblick, Kapitel, Teilen) und `v04-screens-en-360.webp`
+- [ ] Takt der Enthüllung: Porträt, Name nach 0,9 s, Satz nach 1,5 s, zweite Stimme nach 2,7 s, Rest nach 3,5 s (S-17)
+- [ ] Abgedunkelte Bühne A05 bei „Warum?“ und Teilen, Schleier unten bei „Ich“ (S-23)
+- [ ] A06 abgedunkelt hinter Willkommen und Fragen; Alternative „Buch als Bühne“ (S-27)
+- [ ] **B-07 wählen:** Varianten A, B, C in `visual/evidence/v04-b07-varianten.webp`; Empfehlung B (Panel), nur B besteht bei 100 % und 130 % Schrift
+- [ ] Meilenstein-Moment auf „Heute“ (Gestaltung und Zeitpunkt, S-20)
+- [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -197,3 +216,122 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 
 **Wechsel kostet:** eine Funktion in `src/share/share.ts`; die Plugins lassen sich ohne Datenmigration entfernen.
 
+## S-17 · Neue V04-Screens als Vorschlag
+
+**Entschieden:** Enthüllung, „Ich“, „Warum?“, Bibliothek der acht Archetypen, Profilseite, Sternkarte, Rückblick, Kapitel, Meilenstein-Moment und Teilen entstehen ausschließlich aus vorhandenen Bausteinen (Panel, Messing-Panel, Flank, Ghost- und Quiet-Button, Kartenraster, Chips) auf den B2-Bildern. Die Enthüllung läuft in Schritten: Porträt sofort, Name nach 0,9 s, Enthüllungssatz nach 1,5 s, zweite Stimme nach 2,7 s, Erklärung und Knopf nach 3,5 s; nach 4,3 s steht alles. „Überspringen“ zeigt sofort alles, reduzierte Bewegung zeigt es ohne Animation (E2E: Knopf nach höchstens 800 ms sichtbar). Die Bibliothek zeigt die acht in fester Reihenfolge, der eigene Archetyp und die zweite Stimme tragen einen Chip.
+
+**Warum:** D-57: Gestaltung wird an echten Screens entschieden. Neue Bausteine hätten zuerst ein eigenes Muster gebraucht.
+
+**Alternativen:** Enthüllung in einem Schritt (schneller, aber ohne Moment); längerer Takt bis 8 s (Grenze aus V04.2, wirkt beim zweiten Ansehen zäh); Bibliothek mit dem eigenen Archetyp zuerst (persönlicher, aber die Reihenfolge springt je Person).
+
+**Wechsel kostet:** Der Takt ist eine Konstante (`REVEAL_STEPS` in `Onboarding.tsx`), die Reihenfolge eine Zeile in `Identity.tsx`. Gestaltung je Screen in der zugehörigen CSS-Datei.
+
+## S-18 · Einstellungen auf „Ich“
+
+**Entschieden:** Sprache, Bewegung, Datenschutz (mit „Alle Daten löschen“) und Info liegen auf einer eigenen Unterseite `#/me/settings`, erreichbar über „Einstellungen“ unten auf „Ich“. „Ich“ zeigt nur noch Identität: Archetyp, zweite Stimme, Wahl von Hand, Profil, Bibliothek, Teilen.
+
+**Warum:** „Ich“ wird mit der zweiten Säule (V06: Zahlen) lang; Einstellungen dazwischen würden das Profil zerteilen.
+
+**Alternativen:** Einstellungen unten auf „Ich“ wie bis 0.3 (ein Tipp weniger); eigener Tab (die Tab-Leiste hat vier Plätze).
+
+**Wechsel kostet:** eine Route und eine Zeile; die Einstellungen sind ein eigener Baustein.
+
+## S-19 · Neue Screens laden
+
+**Entschieden:** Alle neuen Screens sind eigene Chunks (`React.lazy`), ihre Texte liegen in `src/i18n/screens.de.ts` und `screens.en.ts` statt im Start-Bundle. Nach dem Start lädt die App im Leerlauf alle Screens und das Modul `archetypes` vor, damit die Enthüllung auch offline vollständig ist. Start-JS 139,1 kB (V03: 132 kB, Schrittbudget +8 kB, Grenze 160 kB).
+
+**Warum:** Ohne Aufteilung läge das Start-JS über dem Schrittbudget.
+
+**Alternativen:** alles im Start-Bundle (einfacher, ≈ 25 kB mehr); Screen-Texte im Content-Modul (einheitlicher, aber es sind Oberflächentexte, keine Inhalte); kein Vorladen (spart Daten, aber offline fehlen Screens).
+
+**Wechsel kostet:** je Screen eine Importzeile in `App.tsx`.
+
+## S-20 · Wann der Meilenstein-Moment erscheint
+
+**Entschieden:** Der Moment steht auf „Heute“ unter der aufgedeckten Karte, nur an dem Reisetag, an dem ein Meilenstein erreicht wird, nur wenn dieser Meilenstein etwas öffnet, das es in der App schon gibt (Kapitel, Rückblick, Sternbild), und nur einmal (Gesehen-Markierung). Er nennt, was aufgegangen ist; „Ansehen“ führt zur Reise, „Schön“ schließt ihn. „Neu“ im Grimoire bleibt, bis der Eintrag geöffnet wurde.
+
+**Warum:** Ein Moment ohne gebautes Ziel wäre eine Ankündigung (D-54). Vor der Karte würde er das Tagesritual unterbrechen.
+
+**Alternativen:** eigenes Overlay (stärker, aber unterbricht); nur „Neu“ im Grimoire (leiser, aber Meilensteine gehen unter); an Folgetagen zeigen, bis gesehen (verlässlicher, aber nach Pausen gestapelt).
+
+**Wechsel kostet:** eine Funktion (`milestoneMoment` in `src/domain/unlocks.ts`).
+
+## S-21 · Resonanzkarten im Profil
+
+**Entschieden:** Die drei Resonanzkarten eines Archetyps zeigen immer Bild und Namen, auch wenn die Person die Karte noch nicht gezogen hat. Die Kartenseite öffnet sich erst nach der ersten Begegnung, wie überall im Grimoire.
+
+**Warum:** Wissen wird nie gesperrt (Leitplanken); das Profil soll vollständig lesbar sein. Die Kartenseite gehört zur eigenen Sammlung.
+
+**Alternativen:** unbekannte Karten verdeckt zeigen (wirkt wie eine Sperre); Kartenseite immer öffnen (die Sammlung verliert ihre Bedeutung).
+
+**Wechsel kostet:** eine Bedingung in `Identity.tsx`.
+
+## S-22 · Jubiläen und Hundert-Tage-Rückblick
+
+**Entschieden:** Hundert-Tage- und Jubiläums-Rückblicke, Jahrbuch und das Sternbild „Hundert“ bilden einen eigenen Bereich (`jubilees`), der noch nicht gebaut ist. Hinweise verweisen nur auf gebaute Bereiche, bis dahin also nicht darauf. Gebaut sind Kapitel, Wochen- und Monatsrückblick und die Sternkarte.
+
+**Warum:** V04.5 verlangt Woche und Monat. Ein gemeinsamer Bereich „Rückblicke“ hätte Hinweise auf noch fehlende Jubiläen ausgelöst.
+
+**Alternativen:** Jubiläen jetzt mitbauen (Texte und Gestaltung ohne Auftrag); gemeinsamer Bereich mit Ausnahme im Code (unübersichtlich).
+
+**Wechsel kostet:** ein Eintrag in `BUILD_FEATURES` (`src/domain/hints.ts`), sobald die Ansicht steht (BACKLOG).
+
+## S-23 · Lesbarkeit über A05 (Lichtsäule)
+
+**Entschieden:** A05 hat in der Mitte eine helle Lichtsäule. Damit jeder Lesetext 4,5:1 erreicht, gilt auf „Ich“, der Enthüllung und der Profilseite: Schrift-Halo für Überschriften, Augenbrauen und freistehenden Text; Augenbrauen und freistehende Beschriftungen im helleren Gold (wie auf der Karte von „Heute“, ebenso auf A06); freistehender Kleintext in Hellgrau statt Grau; Ghost-Knöpfe mit dunklerer Füllung; ein Schleier, der A05 nach unten abdunkelt. „Warum?“ und Teilen zeigen A05 abgedunkelt (Szene `profile-calm`, wie die ruhigen Screens). Der Hinweis vor der Archetyp-Wahl steht in der Textfarbe statt in Grau, weil er beim Aufklappen genau vor der Lichtsäule liegt.
+
+**Warum:** Messung mit `scripts/evidence.mjs --contrast` (360/390/412 px, DE/EN, 130 % Schrift). Der Halo allein reichte nicht.
+
+**Alternativen:** A05 überall abdunkeln (sicher, aber das Licht verschwindet); Texte auf Panels legen (lesbar, aber schwer); Bildausschnitt verschieben, damit die Säule seitlich liegt (verliert die Mitte des Bildes).
+
+**Wechsel kostet:** CSS in `screens.css` und `world.css`, keine Logik.
+
+## S-24 · Vorschau des Teilen-Bildes
+
+**Entschieden:** Die Vorschau zeigt das gerenderte PNG als Data-URL. Die CSP bleibt bei `img-src 'self' data:`.
+
+**Warum:** Eine Blob-URL wird von der strengen CSP blockiert.
+
+**Alternativen:** `blob:` in der CSP erlauben (öffnet die Richtlinie für alle Bilder); Vorschau als Canvas im DOM (zweiter Zeichenweg).
+
+**Wechsel kostet:** eine Funktion in `SharePreview.tsx`.
+
+## S-25 · Zurück über zwei Ebenen
+
+**Entschieden:** Ein `from` im Link darf selbst einmal ein `from` tragen (URL-kodiert), z. B. Ich → Bibliothek → Archetyp → Zurück → Zurück → Ich. Tiefer geht es nicht; `isSafeFrom` prüft Pfad und inneres `from`.
+
+**Warum:** Der zweite Zurück-Schritt landete sonst im Grimoire statt auf „Ich“ (im E2E gefunden).
+
+**Alternativen:** Browser-Verlauf (`history.back`, nach Neuladen oder Deep Link nicht deterministisch); Stapel im Speicher (geht beim Neuladen verloren).
+
+**Wechsel kostet:** `originOf` und `isSafeFrom` in `src/app/router.ts`; Unit-Test vorhanden.
+
+## S-26 · Notizen im Rückblick
+
+**Entschieden:** Eigene Notizen stehen als Zitat direkt nach dem Satz, der sie ankündigt, nicht in einem eigenen Abschnitt am Ende. Unter den Karten steht ein kurzes Datum (z. B. „21. Nov.“).
+
+**Warum:** Der ankündigende Satz stand sonst weit von den Notizen entfernt.
+
+**Alternativen:** eigener Abschnitt „Deine Worte“ (klarer getrennt); keine Daten unter den Karten (ruhiger).
+
+**Wechsel kostet:** Markup in `JourneyScreens.tsx`.
+
+## S-27 · A06 hinter Willkommen und Fragen
+
+**Entschieden:** A06 (das leuchtende Buch) wird hinter Willkommen, Fragen und Themenwahl abgedunkelt wie die ruhigen Screens. Das Buch bleibt sichtbar.
+
+**Warum:** Ohne Abdunkelung liegen Überschrift und Themenliste über dem hellsten Teil des Bildes; der Kontrast fiel unter 4,5:1.
+
+**Alternativen:** „Buch als Bühne“: Titel in die obere Hälfte, Fächer der Karten weglassen (zeigt A06 voll, aber eigener Umbau); Nachtwelt A01 wie bisher (kein neues Bild); Texte auf Panels.
+
+**Wechsel kostet:** eine Zeile in `world.css`; „Buch als Bühne“ wäre ein eigener Umbau des Willkommens.
+
+## S-28 · Bildvergleich der Teilen-Karte
+
+**Entschieden:** Der Bildvergleichstest (V04.7) verkleinert die Feed-Karte im selben Browser auf ein Viertel (270 × 338) und vergleicht sie mit einer Referenz je Sprache (höchstens 1 % abweichende Pixel). Die Referenzen liegen unter `tests/e2e/identity.spec.ts-snapshots/` und gelten für Chromium unter Windows.
+
+**Warum:** Volle Größe wären ≈ 1,5 MB je Referenz im öffentlichen Repo; ein Viertel zeigt Layoutfehler (Umbruch, Lage, Farben) genauso.
+
+**Alternativen:** volle Größe (genauer, aber groß); Prüfsumme der Pixel (bricht bei jeder Glättungsänderung); nur Layoutmaße aus dem Renderer (schon als Unit-Test vorhanden, sieht aber keine Bildfehler).
+
+**Wechsel kostet:** ein Aufruf in `identity.spec.ts`; neue Referenzen mit `--update-snapshots`.

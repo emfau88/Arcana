@@ -38,6 +38,12 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] Menschliches Lektorat aller Texte (Ton, Rhythmus). XIII und XV dabei ruhig halten.
 - [x] Optional 5. oder 6. Frage im Fragebogen. Erledigt in V04.1: sieben Fragen, Ergänzungs-Archetyp, Angebot an Bestandsnutzer (D-53).
 
+## Reise und Identität (nach V04)
+
+- [ ] Hundert-Tage- und Jubiläums-Rückblicke, Jahrbuch, Sternbild „Hundert“: eigener Bereich `jubilees`, noch nicht gebaut; danach in `BUILD_FEATURES` eintragen (S-22).
+- [ ] B-07: die vom Eigentümer gewählte Variante einbauen (Empfehlung B, Panel unter der Fußzeile, `scripts/b07/`).
+- [ ] Optional: Willkommen als „Buch als Bühne“ neu anordnen, damit A06 unabgedunkelt wirkt (S-27).
+
 ## Bekannte Kleinigkeiten
 
 - [ ] Capacitor-Bridge loggt im Debug-Build `[object Object]`-Zeilen in Logcat (Bridge-eigenes Logging, kein App-Fehler). In Release-Builds prüfen.
