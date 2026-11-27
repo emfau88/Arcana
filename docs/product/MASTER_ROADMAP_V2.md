@@ -136,7 +136,11 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Texte: Modul `cards-deep`, 22 Karten × 15 Texte in DE und EN, in drei Gruppen gegen die Bilder geschrieben; Content-Gate mit Verbotsliste für Zukunftsversprechen (S-43, S-44)
   - [x] A4 wechselnde Reflexion und Ritual auf „Heute“: Variante aus den Begegnungstagen, im Datensatz gespeichert; 66 simulierte Tage ohne gleiche Kombination in 21 Tagen (Unit, S-45)
   - [ ] Kartenseite (Screen) mit vier Ebenen, Mondphasen-Symbol und Studium; Studien-Ereignisse und Tagebucheinträge im Store
-- [ ] V05.2 Rollen-Legungen
+- [ ] V05.2 Rollen-Legungen (3/4)
+  - [x] Engine: Rollen R1–R8 und sieben Legungen (Drei Karten, Licht und Schatten, Neuanfang, Rückblick auf Woche und Monat; Zwei Wege und Verbindung nur mit `edition.spreads`); Legung und Rollen im Datensatz, die klassische Legung bleibt unverändert (`src/domain/spreads.ts`, S-46, S-47)
+  - [x] Texte: Modul `spreads` mit 72 Rahmentexten je Sprache; Content-Gate ohne Ergebnis-Positionen, Zukunftsversprechen und Aussagen über andere (S-46)
+  - [x] Matrix-Test: 10.000 gezogene Legungen je Sprache über alle Themen ohne Lücke; alte Legungen werden unverändert angezeigt (Unit, E2E)
+  - [ ] Auswahl und Anzeige im Orakel (Screen) mit V05.6, dabei B-12
 - [ ] V05.3 Grimoire als Buch
 - [ ] V05.4 Tagebuch und Suche
 - [ ] V05.5 Kartenrücken (E10)

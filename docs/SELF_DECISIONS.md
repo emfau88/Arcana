@@ -55,6 +55,8 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-43 | 27.11.2026 | Aufbau des Moduls `cards-deep` | 15 Texte je Karte, Schlüsselwort = erstes der drei Schlagworte, Studium als Impuls mit Frage, Schatten endet als Frage, Gruppen über eine Liste geschriebener Karten | V05.1, CONTENT_MASTERPLAN §3 |
 | S-44 | 27.11.2026 | Keine Zukunftsversprechen in Kartentiefe und Rollen | eigene Verbotsliste (`wirst`, `bald`, `Zukunft`, `you will`, `soon`, `future` …) für das ganze Modul | V05.1, V05.2, PRODUCT_SYSTEMS F |
 | S-45 | 27.11.2026 | Wechselnde Reflexion und Ritual auf „Heute“ (A4) | Reflexion = Begegnungstage mod 3, Ritual = Begegnungstage mod 2, Variante 0 = Kerntext; `cards-deep` lädt beim Ziehen | V05.1, PRODUCT_SYSTEMS A4 |
+| S-46 | 27.11.2026 | Legungs-Engine und gespeicherte Legungen | Rollen R1–R8, sieben Legungen, R1–R3 behalten die alten Positions-IDs, klassische Legung unverändert, Modul `spreads`, Verbotsliste für Ergebnis-Positionen und Aussagen über andere; B-12 kommt mit V05.6 | V05.2, PRODUCT_SYSTEMS F |
+| S-47 | 27.11.2026 | Rückblick-Legung | roter Faden aus den eigenen Karten der letzten 7 bzw. 30 Reisetage plus eine neue Karte, alle Karten des Zeitraums als Reihe | V05.2 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -77,6 +79,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] Meilenstein-Moment auf „Heute“ (Gestaltung und Zeitpunkt, S-20)
 - [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
 - [ ] **Kartentiefe** (V05.1, S-43): alle 22 Karten in drei Gruppen (0–VII, VIII–XIV, XV–XXI), je 15 Texte in DE und EN (`src/content/modules/cards-deep.de.ts`, `cards-deep.en.ts`); besonders Ton von Schatten und Rollen und die Symbolik gegen die Bilder
+- [ ] **Rahmen der Legungen** (V05.2, S-46, S-47): Namen, Kurzbeschreibungen, Einleitungen und Fragen aller sieben Legungen in DE und EN (`src/content/modules/spreads.de.ts`, `spreads.en.ts`); besonders Zwei Wege und Verbindung (nur die eigene Seite) und der Rückblick
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -180,6 +183,8 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternative:** jetzt mit gemeinsamer Kopfzeile (CSS-Subgrid) beheben; ändert das Raster der Legung, und die Arbeit würde in V05 wahrscheinlich ersetzt.
 
 **Wechsel kostet:** eine CSS-Änderung an der Legung plus Screenshot-Prüfung.
+
+**Nachtrag (V05.2, S-46):** V05.2 hat nur die Engine gebracht, die Legung auf dem Bildschirm wird erst mit der Orakel-Gestaltung V05.6 als Reihe neu gebaut (D-64, Variante A). B-12 wird darum dort gelöst.
 
 ## S-11 · Linse an Ergänzungstagen und Hinweise
 
@@ -549,3 +554,45 @@ Empfehlung an den Eigentümer: dreimal A; beim Orakel lassen sich Reihe (A) und 
 **Alternativen:** Reflexion n mod 3 und Ritual ⌊n/3⌋ mod 2 (ebenfalls sechs Paare, das Ritual wechselt aber erst nach drei Begegnungen); Variante nach Reisetag statt nach Begegnungen (widerspricht A4, dieselbe Karte könnte zweimal dieselben Texte zeigen); `cards-deep` beim Start laden (rund 17 kB gz mehr bei jedem Start).
 
 **Wechsel kostet:** `varietyFor` in `src/domain/oracle.ts` und die Ladestelle in `src/app/store.tsx`. Gespeicherte Tage bleiben, wie sie sind.
+
+## S-46 · Legungs-Engine und gespeicherte Legungen (V05.2)
+
+**Entschieden:** Eine Legung ist eine Anordnung von Rollen (`src/domain/spreads.ts`). Es gibt sieben Legungen:
+
+| Legung | Rollen | Thema |
+|---|---|---|
+| Drei Karten | Kern, Herausforderung, Impuls (R1–R3) | frei |
+| Licht und Schatten | Licht, Schatten, Brücke | frei |
+| Neuanfang | Wurzel, Licht, Möglichkeit, Impuls | frei |
+| Rückblick auf Woche und Monat (S-47) | Wurzel, Impuls | frei |
+| Zwei Wege (Edition) | Kern, Möglichkeit, Möglichkeit, Licht, Impuls | fest „Veränderung & Entscheidungen“ |
+| Verbindung (Edition) | Kern, Brücke, Licht, Schatten, Impuls | fest „Liebe & Beziehungen“ |
+
+Zwei Wege und Verbindung sind gebaut, erscheinen aber nur mit `edition.spreads`. Die Rollen R1–R3 behalten die bisherigen Positions-IDs (`situation`, `challenge`, `impulse`) und lesen die Kerntexte der Karte; R4–R8 lesen `role.<rolle>.<karte>` aus `cards-deep`. Name und Frage jeder Position, Einleitung und Kurzbeschreibung stehen im neuen Modul `spreads` (72 Texte je Sprache). Die Zusammenfassung ist der Thementext der Karte auf der letzten Position, wie bei der klassischen Legung.
+
+Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entwurf und Datensatz aus 0.2 unverändert (kein `spreadId`, keine `roles`). Neue Legungen speichern zusätzlich `spreadId`, `roles` und die Namen der Positionen. Die Speicherprüfung nimmt 2–7 verschiedene Karten an; Positionen und Aufdeck-Liste müssen zur Zahl der Karten passen. Die Module `spreads` und `cards-deep` laden erst beim Start einer neuen Legung. Das Content-Gate `FORBIDDEN_SPREAD` verbietet Ergebnis- und Ausblick-Positionen sowie Aussagen darüber, was eine andere Person denkt, fühlt oder will. Dazu gelten die Listen für Anrede, Semikolon und Zukunft (S-32, S-33, S-44).
+
+**Warum:** PRODUCT_SYSTEMS F und die Roadmap verlangen Rollen statt fester Positionen, einen Matrix-Test über jede Kombination und unverändert angezeigte alte Legungen. Weil R1–R3 die alten IDs behalten, braucht es keine Migration und kein Umdeuten gespeicherter Datensätze (D-09). Die Begegnungen je Rolle (Kartenstufe) zählen alte und neue Legungen gleich. Kosten: Start-JS 142,0 kB (+1,5 kB), Modul `spreads` 1,5 kB gz.
+
+**Alternativen:**
+- R1 als `core` speichern, wie in INFORMATION_ARCHITECTURE skizziert: Alte Datensätze müssten beim Lesen umgedeutet werden, und die Rolle „Kern“ hätte zwei Namen.
+- Eine Zusammenfassung als eigener Text je Legung: rund 40 Texte mehr je Sprache, ohne Bezug zu den gezogenen Karten.
+- Zwei Wege und Verbindung mit frei wählbarem Thema: Die Fragen passen nur zu einer Entscheidung bzw. einer Beziehung.
+- Die Module beim App-Start laden: rund 18 kB gz mehr bei jedem Start.
+
+**Folgen:** B-12 (Kopfzeilen der Legung bei 130 % Schrift) wird nicht in V05.2 behoben, wie S-10 vorsah, sondern mit der Orakel-Gestaltung V05.6. Dort wird die Legung als Reihe neu gebaut (D-64, Variante A). Auswahl und Anzeige der neuen Legungen im Orakel kommen ebenfalls mit V05.6.
+
+**Wechsel kostet:** Rollen und Legungen sind Daten in `spreads.ts` und Texte im Modul. Eine weitere Legung braucht eine Definition und ihre Rahmentexte. Gespeicherte Legungen behalten ihren Text.
+
+## S-47 · Rückblick-Legung aus den eigenen Karten
+
+**Entschieden:** Der Rückblick auf die Woche (ab Reisetag 7) und auf den Monat (ab Reisetag 30) zieht nur eine neue Karte. Er sammelt alle Karten aus Tageskarten und gespeicherten Legungen der letzten 7 bzw. 30 Reisetage in der Reihenfolge der ersten Begegnung. Die häufigste wird zum roten Faden auf der ersten Position („Was nachwirkt“, Rolle Wurzel); bei Gleichstand gilt die zuletzt begegnete. Die zweite Position („Was jetzt dran ist“, Rolle Impuls) ist eine neue Karte, die im Zeitraum nicht vorkam. Kamen alle 22 Karten vor, ist es eine beliebige außer dem roten Faden. Alle Karten des Zeitraums erscheinen als Reihe „Deine Woche in Karten“ mit Titel und Essenz. Angeboten wird der Rückblick erst, wenn es im Zeitraum eigene Karten gibt.
+
+**Warum:** Der Rückblick soll aus den eigenen Karten entstehen. Ein roter Faden plus eine neue Karte hält den Text kurz und vollständig (zwei Rollentexte), die Reihe zeigt trotzdem den ganzen Zeitraum. Reisetage statt Kalendertage, damit eine Pause nichts kostet (keine Verluste bei Pausen).
+
+**Alternativen:**
+- Jede Karte des Zeitraums mit eigenem Rollentext: bis zu 30 Absätze, zu lang für einen Moment.
+- Zeitraum nach Kalendertagen: Nach einer Pause wäre der Rückblick leer, das wirkt wie ein Verlust.
+- Roter Faden nach Kartenstufe statt nach Häufigkeit: bevorzugt lange bekannte Karten statt der Karten des Zeitraums.
+
+**Wechsel kostet:** `reviewCards` und `drawSpread` in `src/domain/spreads.ts`. Gespeicherte Rückblicke behalten Karten und Text.
