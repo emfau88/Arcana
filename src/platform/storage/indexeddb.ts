@@ -93,6 +93,11 @@ function wrapWriteError(err: unknown): StorageError {
  * IndexedDB adapter used in the browser and inside the bundled Android WebView.
  * Writes use strict durability where supported so a completed write survives a process kill.
  */
+/** S-49: the first note with text leaves `notedAt`; later edits and deleting keep it. */
+function firstNoted(existing: { notedAt?: string }, note: string, at: string | undefined): { notedAt?: string } {
+  return at !== undefined && existing.notedAt === undefined && note.trim().length > 0 ? { notedAt: at } : {};
+}
+
 export class IndexedDbRepository implements StorageRepository {
   private db: IDBDatabase | null = null;
   private readonly factory: IDBFactory;
@@ -262,14 +267,14 @@ export class IndexedDbRepository implements StorageRepository {
     }
   }
 
-  async updateDailyNote(dateKey: string, note: string): Promise<DailyRecord> {
+  async updateDailyNote(dateKey: string, note: string, at?: string): Promise<DailyRecord> {
     try {
       const tx = this.tx([DAILY], 'readwrite');
       const store = tx.objectStore(DAILY);
       const existing = await req(store.get(dateKey));
       if (!isDailyRecord(existing)) throw new StorageError('corrupt', `No readable daily record for ${dateKey}`);
       // Only the note changes; the original interpretation stays untouched.
-      const updated: DailyRecord = { ...existing, note };
+      const updated: DailyRecord = { ...existing, note, ...firstNoted(existing, note, at) };
       store.put(updated);
       await done(tx);
       return updated;
@@ -295,13 +300,13 @@ export class IndexedDbRepository implements StorageRepository {
     }
   }
 
-  async updateReadingNote(id: string, note: string): Promise<Reading> {
+  async updateReadingNote(id: string, note: string, at?: string): Promise<Reading> {
     try {
       const tx = this.tx([READINGS], 'readwrite');
       const store = tx.objectStore(READINGS);
       const existing = await req(store.get(id));
       if (!isReading(existing)) throw new StorageError('corrupt', `No readable reading ${id}`);
-      const updated: Reading = { ...existing, note };
+      const updated: Reading = { ...existing, note, ...firstNoted(existing, note, at) };
       store.put(updated);
       await done(tx);
       return updated;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
-import { useApp } from '../../app/store.tsx';
+import { factsOf, useApp } from '../../app/store.tsx';
 import { findCard } from '../../content/index.ts';
 import { dateFromKey } from '../../domain/clock.ts';
 import { lensArchetypeOf } from '../../domain/lens.ts';
@@ -26,7 +26,7 @@ export function Grimoire({ view }: { view: 'collection' | 'history' }) {
   const pct = total ? Math.round((collection.size / total) * 100) : 0;
   const select = (v: 'collection' | 'history') => navigate(v === 'history' ? '/grimoire/history' : '/grimoire', { replace: true });
   const listFrom = view === 'history' ? '/grimoire/history' : '/grimoire';
-  const facts = { dailies: state.dailies, readings: state.readings };
+  const facts = factsOf(state);
   const hasNew = unseenKeys([...availableReviews(facts), ...availableChapters(facts, state.profile, pack.questions)], state.seen).size > 0;
 
   return (

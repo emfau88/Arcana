@@ -5,7 +5,7 @@
  */
 import { useEffect, useState } from 'react';
 import { navigate, originOf, type ParsedRoute } from '../../app/router.ts';
-import { useApp } from '../../app/store.tsx';
+import { factsOf, useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
 import { findCard, getArchetype, getTheme } from '../../content/index.ts';
 import { CHAPTERS, chapterKey, type ChapterId } from '../../content/modules/chapter-keys.ts';
@@ -28,7 +28,7 @@ const REVIEWS_SHOWN = 6;
 
 function useFacts(): Facts {
   const { state } = useApp();
-  return { dailies: state.dailies, readings: state.readings };
+  return factsOf(state);
 }
 
 export function chapterTitle(s: ScreenMessages, entry: Pick<ChapterEntry, 'id' | 'variant'>): string {

@@ -71,12 +71,13 @@ export interface StorageRepository {
    * Safe against double taps and parallel tabs.
    */
   addDailyIfAbsent(record: DailyRecord): Promise<DailyRecord>;
-  updateDailyNote(dateKey: string, note: string): Promise<DailyRecord>;
+  /** `at`: when the note is saved. The first note with text sets `notedAt` (S-49). */
+  updateDailyNote(dateKey: string, note: string, at?: string): Promise<DailyRecord>;
   putDraft(draft: ReadingDraft): Promise<void>;
   deleteDraft(): Promise<void>;
   /** Saves the reading and removes the matching draft in one transaction. Idempotent per id. */
   saveReading(reading: Reading): Promise<Reading>;
-  updateReadingNote(id: string, note: string): Promise<Reading>;
+  updateReadingNote(id: string, note: string, at?: string): Promise<Reading>;
   putPersonal(data: PersonalData): Promise<void>;
   /** Removes the birth date and other sensitive data on its own (IA §5.5). */
   deletePersonal(): Promise<void>;

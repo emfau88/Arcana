@@ -89,7 +89,7 @@ export function cardEncounters(facts: Facts): Map<CardId, CardEncounters> {
     const e = get(d.cardId);
     e.days.add(d.dateKey);
     e.themes.add(d.themeId);
-    if (hasText(d.note)) e.reflections++;
+    if (hasText(d.note) || d.notedAt) e.reflections++;
   }
   for (const r of facts.readings) {
     const day = readingDateKey(r);
@@ -99,7 +99,7 @@ export function cardEncounters(facts: Facts): Map<CardId, CardEncounters> {
       e.days.add(day);
       e.themes.add(r.themeId);
       e.roles.add(r.content.positions[i]?.position ?? POSITIONS[i] ?? 'extra');
-      if (hasText(r.note)) e.reflections++;
+      if (hasText(r.note) || r.notedAt) e.reflections++;
     });
   }
   const part2 = new Set<CardId>();
@@ -113,8 +113,9 @@ export function cardEncounters(facts: Facts): Map<CardId, CardEncounters> {
     const e = out.get(cardId);
     if (e?.studied.part1) e.studied.part2 = true;
   }
+  // A study answer or an own reflection on the card. A deleted entry keeps counting (S-49).
   for (const j of facts.journal ?? []) {
-    if (j.kind === 'study' && j.refs.cardId && hasText(j.text)) get(j.refs.cardId).reflections++;
+    if ((j.kind === 'study' || j.kind === 'reflection') && j.refs.cardId && (hasText(j.text) || j.deletedAt)) get(j.refs.cardId).reflections++;
   }
   return out;
 }

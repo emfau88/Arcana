@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { navigate } from '../../app/router.ts';
-import { useApp } from '../../app/store.tsx';
+import { factsOf, useApp } from '../../app/store.tsx';
 import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
 import { cardKeywords } from '../../content/keywords.ts';
 import { dateFromKey } from '../../domain/clock.ts';
@@ -124,7 +124,7 @@ export function Today() {
   const faceUp = phase === 'flipping' || phase === 'shown';
   const collection = deriveCollection(state.dailies, state.readings);
   // Today counts as a day of the journey as soon as the person is here, once (E6: never decreases).
-  const position = journeyPosition(journeyDayToday({ dailies: state.dailies, readings: state.readings }, state.todayKey));
+  const position = journeyPosition(journeyDayToday(factsOf(state), state.todayKey));
   const pathName = [t.today.pathOuter, t.today.pathInner, t.today.pathHigher][position.path];
   // Full sentence for screen readers; the plaque shows the short form.
   const journeyCaption = [
@@ -145,7 +145,7 @@ export function Today() {
   );
   const keywords = card ? cardKeywords(card)?.[locale] : undefined;
   // A6: the milestone of the day reached today, once, when it opened something in this build.
-  const moment = milestoneMoment({ dailies: state.dailies, readings: state.readings }, today !== null, state.seen);
+  const moment = milestoneMoment(factsOf(state), today !== null, state.seen);
 
   /** "Continue your journey": the next content is the full message of the day. */
   const continueJourney = () => {

@@ -107,6 +107,11 @@ export interface DailyRecord {
   revealedAt: string;
   note: string;
   /**
+   * First time the note held text (V05.4, S-49). Set once and never removed, so a note that is
+   * deleted later still counts as a reflection. Missing in older records and without a note.
+   */
+  notedAt?: string;
+  /**
    * Variant indices fixed when the record was created (V04.3, IA §5.2): lens 0 = main archetype,
    * 1 = complement; reflection 0–2 and ritual 0–1 from the earlier encounters with the card (A4, V05.1),
    * 0 = the core text. Never recomputed. Missing in older records.
@@ -159,6 +164,8 @@ export interface Reading {
   /** Local day at the moment of saving (since 0.3). Missing in older records: derived from createdAt. */
   dateKey?: string;
   note: string;
+  /** First time the note held text (V05.4, S-49), as on DailyRecord. */
+  notedAt?: string;
 }
 
 /** An unsaved, possibly half-revealed reading. Persisted so a resume never re-draws silently. */
@@ -216,6 +223,11 @@ export interface JournalEntry {
   createdAt: string;
   /** Missing = createdAt. */
   updatedAt: string;
+  /**
+   * Deleted by the person (V05.4, S-49): the text is gone, date, kind and refs stay as the fact
+   * of that day. Hidden in the journal. Missing = not deleted.
+   */
+  deletedAt?: string;
 }
 
 export type ActivityType = 'card.studied' | 'ritual.done' | 'review.opened' | 'world.introduced';

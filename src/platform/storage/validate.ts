@@ -81,7 +81,8 @@ export function isDailyRecord(v: unknown): v is DailyRecord {
     isStr(v.content.message) &&
     isStr(v.content.cardTitle) &&
     isStr(v.revealedAt) &&
-    isStr(v.note)
+    isStr(v.note) &&
+    isOptStr(v.notedAt)
   );
 }
 
@@ -100,7 +101,8 @@ export function isReading(v: unknown): v is Reading {
     v.content.positions.length === v.cardIds.length &&
     isStr(v.createdAt) &&
     (v.dateKey === undefined || (isStr(v.dateKey) && isValidDateKey(v.dateKey))) &&
-    isStr(v.note)
+    isStr(v.note) &&
+    isOptStr(v.notedAt)
   );
 }
 
@@ -139,6 +141,7 @@ export function normalizeJournalEntry(v: unknown): JournalEntry | null {
   if (v.text !== undefined && !isStr(v.text)) return null;
   if (v.refs !== undefined && !isObj(v.refs)) return null;
   if (v.updatedAt !== undefined && !isStr(v.updatedAt)) return null;
+  if (!isOptStr(v.deletedAt)) return null;
   return { ...v, text: v.text ?? '', refs: v.refs ?? {}, updatedAt: v.updatedAt ?? v.createdAt } as unknown as JournalEntry;
 }
 

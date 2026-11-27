@@ -13,14 +13,20 @@ import {
   revealAll,
   revealPosition,
 } from '../domain/oracle.ts';
+import { editedEntry, erasedEntry, newJournalEntry, type JournalItem, type WritableKind } from '../domain/journal.ts';
 import { lensKey } from '../domain/lens.ts';
-import { cardEncounters, journeyDayToday } from '../domain/progress.ts';
+import { cardEncounters, journeyDayToday, type Facts } from '../domain/progress.ts';
+import { studyFacts, type StudyPart } from '../domain/study.ts';
 import { CLASSIC_SPREAD, type SpreadId, type SpreadTexts } from '../domain/spreads.ts';
-import { cryptoRng, type Rng } from '../domain/random.ts';
+import { cryptoRng, newId, type Rng } from '../domain/random.ts';
 import type {
+  ActivityEvent,
   Answers,
   ArchetypeId,
+  CardId,
   DailyRecord,
+  JournalEntry,
+  JournalRefs,
   Locale,
   MotionPreference,
   Profile,
@@ -43,6 +49,10 @@ export interface AppState {
   profile: Profile | null;
   dailies: DailyRecord[];
   readings: Reading[];
+  /** Own journal entries, deleted ones included (they keep the fact of their day, S-49). */
+  journal: JournalEntry[];
+  /** Append-only activities such as a finished study part (V05.1). */
+  events: ActivityEvent[];
   draft: ReadingDraft | null;
   /** Gesehen-Markierungen (e.g. a dismissed offer). Facts only, never counters. */
   seen: SeenFlag[];
@@ -67,6 +77,8 @@ type Action =
   | { type: 'daily'; record: DailyRecord }
   | { type: 'draft'; draft: ReadingDraft | null }
   | { type: 'reading'; reading: Reading }
+  | { type: 'journal'; entry: JournalEntry }
+  | { type: 'event'; event: ActivityEvent }
   | { type: 'seen'; flag: SeenFlag }
   | { type: 'today'; key: string }
   | { type: 'pending'; answers: Answers; theme: ThemeId | null }
@@ -101,6 +113,10 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, draft: action.draft };
     case 'reading':
       return { ...state, readings: upsert(state.readings, action.reading, (r) => r.id === action.reading.id) };
+    case 'journal':
+      return { ...state, journal: upsert(state.journal, action.entry, (j) => j.id === action.entry.id) };
+    case 'event':
+      return { ...state, events: upsert(state.events, action.event, (e) => e.id === action.event.id) };
     case 'seen':
       return { ...state, seen: upsert(state.seen, action.flag, (s) => s.key === action.flag.key) };
     case 'today':
@@ -115,6 +131,8 @@ function reducer(state: AppState, action: Action): AppState {
         profile: null,
         dailies: [],
         readings: [],
+        journal: [],
+        events: [],
         draft: null,
         seen: [],
         skippedCorrupt: 0,
@@ -147,6 +165,17 @@ export interface AppActions {
   discardReading(): Promise<void>;
   updateDailyNote(dateKey: string, note: string): Promise<void>;
   updateReadingNote(id: string, note: string): Promise<void>;
+  /** Writes an own entry into the journal (V05.4). Empty text is refused. */
+  writeJournalEntry(kind: WritableKind, text: string, refs?: JournalRefs): Promise<JournalEntry>;
+  /** New text for an entry; empty text deletes it (S-49). */
+  editJournalEntry(id: string, text: string): Promise<void>;
+  /**
+   * Deletes the own words of a journal item (S-49): an entry is erased, the note of a daily card
+   * or a reading is emptied. The card or reading itself stays, as does the day on the journey.
+   */
+  deleteJournalItem(item: Pick<JournalItem, 'source' | 'id'>): Promise<void>;
+  /** A finished study part (V05.1): the event, and with an answer a journal entry of kind 'study'. */
+  studyCard(cardId: CardId, part: StudyPart, answer: string): Promise<void>;
   clearAllData(): Promise<void>;
   /** Records that something was seen or dismissed (idempotent, the first time wins). */
   markSeen(key: string): Promise<void>;
@@ -176,6 +205,11 @@ export interface AppProviderProps {
   entitlements?: EntitlementProvider;
 }
 
+/** Everything the derivations read (journey, card levels, reviews, journal). */
+export function factsOf(s: Pick<AppState, 'dailies' | 'readings' | 'journal' | 'events'>): Facts {
+  return { dailies: s.dailies, readings: s.readings, journal: s.journal, events: s.events };
+}
+
 function defaultSettings(): Settings {
   return { locale: detectLocale(), motion: 'system', onboardingDone: false };
 }
@@ -188,6 +222,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     profile: null,
     dailies: [],
     readings: [],
+    journal: [],
+    events: [],
     draft: null,
     seen: [],
     skippedCorrupt: 0,
@@ -239,6 +275,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             profile: snap.profile,
             dailies: snap.dailies,
             readings: snap.readings,
+            journal: snap.journal,
+            events: snap.events,
             draft: snap.draft,
             seen: snap.seen,
             skippedCorrupt: snap.skippedCorrupt,
@@ -394,7 +432,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
           if (existing) return existing;
           // The deep texts must be in the language of the record (a switch during loading drops them).
           const deep = s.settings.locale === locale ? loaded : undefined;
-          const facts = { dailies: s.dailies, readings: s.readings };
+          const facts = factsOf(s);
           const record = createDailyRecord({
             pack,
             clock,
@@ -433,7 +471,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         try {
           if (spreadId !== CLASSIC_SPREAD) await loadSpreadTexts();
           const s = stateRef.current;
-          const draft = createSpreadDraft(pack, spreadId, themeId, clock, rng, { dailies: s.dailies, readings: s.readings });
+          const draft = createSpreadDraft(pack, spreadId, themeId, clock, rng, factsOf(s));
           await repo.putDraft(draft);
           dispatch({ type: 'draft', draft });
           return draft;
@@ -476,13 +514,52 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
       },
 
       async updateDailyNote(dateKey, note) {
-        const record = await repo.updateDailyNote(dateKey, note);
+        const record = await repo.updateDailyNote(dateKey, note, clock.now().toISOString());
         dispatch({ type: 'daily', record });
       },
 
       async updateReadingNote(id, note) {
-        const reading = await repo.updateReadingNote(id, note);
+        const reading = await repo.updateReadingNote(id, note, clock.now().toISOString());
         dispatch({ type: 'reading', reading });
+      },
+
+      async writeJournalEntry(kind, text, refs = {}) {
+        const entry = newJournalEntry(kind, text, refs, clock.now(), newId(rng));
+        await repo.putJournalEntry(entry);
+        dispatch({ type: 'journal', entry });
+        return entry;
+      },
+
+      async editJournalEntry(id, text) {
+        const existing = stateRef.current.journal.find((j) => j.id === id);
+        if (!existing) throw new Error(`No journal entry ${id}`);
+        const entry = editedEntry(existing, text, clock.now());
+        await repo.putJournalEntry(entry);
+        dispatch({ type: 'journal', entry });
+      },
+
+      async deleteJournalItem(item) {
+        const now = clock.now().toISOString();
+        if (item.source === 'daily') {
+          dispatch({ type: 'daily', record: await repo.updateDailyNote(item.id, '', now) });
+        } else if (item.source === 'reading') {
+          dispatch({ type: 'reading', reading: await repo.updateReadingNote(item.id, '', now) });
+        } else {
+          const existing = stateRef.current.journal.find((j) => j.id === item.id);
+          if (!existing || existing.deletedAt !== undefined) return;
+          const entry = erasedEntry(existing, clock.now());
+          await repo.putJournalEntry(entry);
+          dispatch({ type: 'journal', entry });
+        }
+      },
+
+      async studyCard(cardId, part, answer) {
+        const { event, entry } = studyFacts(cardId, part, answer, clock.now(), () => newId(rng));
+        dispatch({ type: 'event', event: await repo.appendEvent(event) });
+        if (entry) {
+          await repo.putJournalEntry(entry);
+          dispatch({ type: 'journal', entry });
+        }
       },
 
       async clearAllData() {
