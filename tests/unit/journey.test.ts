@@ -4,6 +4,7 @@ import { loadModule } from '../../src/content/modules/registry.ts';
 import { MODULE_RULES, validateModule } from '../../src/content/modules/validate.ts';
 import { journeyStation, journeyTextKeys, milestoneTextKey, readingForRound } from '../../src/domain/journey.ts';
 import { milestoneAt } from '../../src/domain/progress.ts';
+import { reviewTextKeys } from '../../src/domain/review.ts';
 
 const tables = async () => ({ de: await loadModule('journey', 'de'), en: await loadModule('journey', 'en') });
 
@@ -84,9 +85,12 @@ describe('Fool’s journey (V04.4)', () => {
     for (const [day, key] of Object.entries(expected)) expect(milestoneTextKey(Number(day)), `day ${day}`).toBe(key);
   });
 
-  it('the module has exactly the keys the structure needs: 63 stations, 13 path and round texts, 20 milestones', async () => {
-    const keys = journeyTextKeys();
-    expect(keys).toHaveLength(96);
+  it('the module has exactly the keys the structure needs: 63 stations, 13 path and round texts, 20 milestones, 40 review blocks', async () => {
+    const journeyKeys = journeyTextKeys();
+    expect(journeyKeys).toHaveLength(96);
+    // V04.5: the review building blocks live in the same module.
+    const keys = [...journeyKeys, ...reviewTextKeys()];
+    expect(keys).toHaveLength(136);
     expect(keys.filter((k) => k.startsWith('station.'))).toHaveLength(63);
     expect(keys.filter((k) => k.startsWith('path.') || k.startsWith('round.'))).toHaveLength(13);
     expect(keys.filter((k) => k.startsWith('milestone.'))).toHaveLength(20);
