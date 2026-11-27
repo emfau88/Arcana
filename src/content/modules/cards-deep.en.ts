@@ -1,7 +1,7 @@
 /**
  * Module cards-deep, English (V05.1): card depth, fifteen texts per card. An adaptation of the
  * German texts, not a word-for-word translation. Describes this app's painted deck (S-34).
- * Group 1 (S-29): 0–VII, the Fool and the outer path.
+ * Three groups (S-29): 0–VII the Fool and the outer path, VIII–XIV the inner path, XV–XXI the higher path.
  */
 import { deepTable, type DeepCard } from './cards-deep-keys.ts';
 import type { TextTable } from './registry.ts';
@@ -363,6 +363,170 @@ const cards: Record<string, DeepCard> = {
     question: 'Which two sides of me want to work with each other instead of against each other?',
     reflections: ['What could I take a little less of today, and what a little more?', 'What brings me back to my centre?'],
     ritual: 'Do one thing today at half your usual speed, such as getting dressed or washing up, and notice how the pace feels.',
+  },
+  // Group 3 (S-29): XV–XXI, the higher path.
+  'major-15-devil': {
+    light:
+      'The Devil shows what binds, and that is exactly its gift. Whoever recognises a pattern already has one foot in freedom. In its light a chain becomes something that can be opened.',
+    shadow:
+      'Some attachments feel like safety even though they have long since grown tight. Then you stay because leaving seems harder than staying. What are you holding on to that is also holding on to you?',
+    keyword: 'A pattern, for the Devil, is a habit that has taken on a life of its own: you act before you decide. Noticing it gives you the choice back.',
+    symbols:
+      'Two heavy chains end in wide-open cuffs resting on dark ground. Behind them stands a small pedestal, and above it a thin crescent moon in warm haze. The cuffs are open: the image shows not captivity but the moment you realise you could walk away.',
+    roles: {
+      light: 'Your honesty about your own patterns is a key already in your hand.',
+      shadow: 'What feels like comfort may bind you more tightly than you notice.',
+      root: 'An old habit may come from a time when it helped you. Today you may check whether it still does.',
+      possibility: 'Once you see a chain as a chain, it might come loose more easily than you expect.',
+      bridge: 'The Devil links attachment and freedom. Whoever sees what holds them can choose what may stay.',
+    },
+    study: [
+      'The cuffs lie open on the ground and nobody is wearing them. The chains look heavy, but they no longer hold anything. Which chain in your life might already be open without your having noticed?',
+      'Think of something you do again and again even though you would really like to do it differently. Note what happens just before, a feeling, a thought or a situation. What are you actually looking for in that moment?',
+    ],
+    question: 'Which attachment do I want to loosen, and which do I want to keep by choice?',
+    reflections: ['What does an attachment give me that I could also find another way?', 'Where do I feel bound, and who actually holds the key?'],
+    ritual: 'Leave a door or a drawer open on purpose today and think of something you may let go of.',
+  },
+  'major-16-tower': {
+    light:
+      'The Tower brings clarity where something fragile can no longer hold. It reveals what was only a facade and makes room for a more honest foundation. In its light a shock becomes a release.',
+    shadow:
+      'Upheaval can be frightening, and fear likes to cling to the familiar. Then every tremor becomes an enemy, even one that shows something true. What would you have to admit to yourself if a certainty stopped holding?',
+    keyword:
+      'Upheaval, for the Tower, means something changes faster than you would have planned. It clears away what no longer holds so that something new can stand on solid ground.',
+    symbols:
+      'A tall tower stands calmly on a ridge under the night sky, and a fine golden bolt of lightning touches its top. The small golden crown has lifted a little away from the masonry, and two windows glow warmly. The tower does not fall: the image shows the moment when everything suddenly turns bright.',
+    roles: {
+      light: 'Your willingness to accept what is true, even when it is uncomfortable, gives you firm footing.',
+      shadow: 'You may be propping up something that has long stopped holding itself up.',
+      root: 'An earlier upheaval can still be felt. Perhaps it also showed you what in you stands firm.',
+      possibility: 'A sudden insight might open a clearer path than the one you had planned.',
+      bridge: 'The Tower links collapse and new beginnings. What falls clears the view.',
+    },
+    study: [
+      'Lightning touches the top of the tower, and the golden crown lifts a little away from the masonry. The tower itself stands calmly and two windows glow. What would become visible in your life if such a flash of light fell into it?',
+      'Name a change that once took you by surprise and that you would not want to be without today. What did it shake in you back then? What did it give you that would not be there without it?',
+    ],
+    question: 'Which wall in me may fall so that I can breathe more freely?',
+    reflections: ['What in me stays steady when something around me wobbles?', 'Which sudden thought from today deserves a second look?'],
+    ritual: 'Open the window wide, let fresh air in for a minute and take a conscious breath.',
+  },
+  'major-17-star': {
+    light:
+      'The Star shines after the storm, calm and unhurried. It offers a hope that makes no loud promises but quietly renews. In its light trust becomes possible again.',
+    shadow:
+      'Hope can also turn into waiting when it only looks upward. Then the wish stays in the sky and the ground is never watered. What can you do yourself for what you hope for?',
+    keyword: 'Hope, for the Star, is not wishful thinking but a quiet trust that something can renew itself. It waters the ground instead of only waiting for rain.',
+    symbols:
+      'A large eight-pointed star shines brightly in the night sky, surrounded by smaller stars. Below, two jugs pour out water, one into a pool, the other onto the dry land at its edge. A single tree stands on a distant hill: renewal begins with small things.',
+    roles: {
+      light: 'A quiet confidence in you is stronger than it looks.',
+      shadow: 'It may be that you are waiting for a sign where a small step of your own would be enough.',
+      root: 'An earlier experience of renewal is kept safe in you. It reminds you that light is possible again after dark times.',
+      possibility: 'A small beginning might let hope grow again, like water on dry ground.',
+      bridge: 'The Star links sky and earth. Hope only works once it reaches the ground as well.',
+    },
+    study: [
+      'Two jugs pour out water, one into the pool, the other onto the dry land. Both are nourished, the full and the empty. Where in your life would you like to let something flow right now?',
+      'Write down a wish that matters to you, and below it a first small step that fits it. When could you take that step? What would you need for it?',
+    ],
+    question: 'Which hope have I quietly given up that I would like to take up again?',
+    reflections: ['What gives me a small piece of confidence today?', 'Where can I allow myself renewal instead of demanding perfection?'],
+    ritual: 'Write yourself a short, kind sentence for a hard day and put it somewhere you can find it again.',
+  },
+  'major-18-moon': {
+    light:
+      'The Moon opens the world of dreams, images and hunches. It teaches you to walk in half-light, slowly and attentively, without having to understand everything at once. In its light uncertainty becomes an invitation to sense more closely.',
+    shadow:
+      'In twilight, shadows look larger than they are and worries easily outgrow themselves. Then a guess turns into a certainty without ever being checked. Which fear would shrink if you looked at it in daylight?',
+    keyword: 'Dreams, for the Moon, are the language of images in which the unconscious speaks. They do not want to be taken literally but read with care.',
+    symbols:
+      'A large moon shows its full disc, with only one edge glowing gold as a crescent, and drops of light fall below it. A pale path winds between two dark towers and along the still water. The image is dreamlike and calm: the path is there even if you cannot see far.',
+    roles: {
+      light: 'Your feel for subtle shades helps you find a way even in uncertainty.',
+      shadow: 'You might be taking a worry for the whole truth.',
+      root: 'An old dream or an old fear still echoes. Naming it takes away some of its power.',
+      possibility: 'A dream or an image from the night might give you a hint that the mind overlooks.',
+      bridge: 'The Moon links the conscious and the unconscious. A narrow, pale path runs between them.',
+    },
+    study: [
+      'The path in the image leads between two dark towers, and the moonlight only reaches a little way. Whoever walks it never sees the end, only the next stretch. Where in your life are you walking such a path right now?',
+      'Pick a situation in which you cannot see far right now. Write down what you know about the next small stretch, not about the end. How does it feel to look only that far?',
+    ],
+    question: 'Which image from my dreams keeps returning without my understanding it yet?',
+    reflections: ['Which quiet feeling would I like to follow today?', 'What may stay in the half-light for now?'],
+    ritual: 'Turn off all the lights for a few minutes in the evening and let your eyes get used to the dark.',
+  },
+  'major-19-sun': {
+    light:
+      'The Sun brings warmth, clarity and a joy that has nothing to hide. It shows itself openly and lets others share in its light. In its light simple things become beautiful again.',
+    shadow:
+      'Whoever always wants to shine sometimes has no room for tired or sad days. Then joy becomes a duty, and what needs care stays in the shadow. What may be there on bright days too, without your outshining it?',
+    keyword: 'Joy, for the Sun, is not a goal you have to reach but a warmth that grows when it is shared. It often lives in small, simple things.',
+    symbols:
+      'A radiant sun stands above a low garden wall of old bricks, and behind it sunflowers grow up into the clear sky. The light is gold and peach, with a gently rolling landscape beyond. The flowers stand open in the light, without shyness.',
+    roles: {
+      light: 'Your delight in simple things is a source of strength that is often closer than you think.',
+      shadow: 'Good cheer may be covering something that wants to be seen.',
+      root: 'An early memory of carefree joy may still be alive in you. It shows you what lightness feels like.',
+      possibility: 'If you show yourself as you are, something warm might come back to you.',
+      bridge: 'The Sun links clarity and warmth. What comes to light may also be warmed.',
+    },
+    study: [
+      'Sunflowers grow up into the sky behind an old brick wall, and the sun stands above them. The wall gives them shelter, the light gives them direction. What gives you support right now, and what gives you direction?',
+      'Recall a moment in recent weeks when you were completely yourself. Where were you, and who was there? What made that moment feel so light?',
+    ],
+    question: 'What would I show of myself if I had nothing to hide?',
+    reflections: ['Who could I let share in my joy today?', 'What made me smile today?'],
+    ritual: 'Hum or softly sing a song you liked as a child, even if it is only one verse.',
+  },
+  'major-20-judgement': {
+    light:
+      'Judgement calls you to a new chapter. It invites you to look back honestly, make peace with what has been and follow your own calling. In its light looking back becomes setting out.',
+    shadow:
+      'Looking back can turn into settling scores, with others or with yourself. Then the verdict on the past weighs so heavily that no new beginning has room. What would you forgive yourself if you were allowed to begin again today?',
+    keyword: 'Awakening, for Judgement, means suddenly seeing clearly what has long been calling you. It is the moment you get up and answer.',
+    symbols:
+      'A golden trumpet reaches out of morning clouds, and a small pennant with a sun hangs from it. Fine beams of light rise from the still water, with snow-capped mountains in the distance. No verdict falls here: the image shows a wake-up call in the first light.',
+    roles: {
+      light: 'You are supported by an inner voice that knows what really matters to you.',
+      shadow: 'An old verdict about you may be louder than your own calling.',
+      root: 'A phase of life you have completed is still waiting for a kind review.',
+      possibility: 'A calling you have heard for a while might find an answer now.',
+      bridge: 'Judgement links looking back and setting out. Whoever honours what has been can move on more easily.',
+    },
+    study: [
+      'A golden trumpet calls from the clouds, and fine beams rise from the still water. Call and answer seem to happen in the same moment. What in you answers when you think of a new beginning?',
+      'Think of a mistake you still hold against yourself, and write in one sentence what you learned from it. What would change if that sentence had the last word?',
+    ],
+    question: 'Which new chapter do I feel called to?',
+    reflections: ['Which experience can I look at more kindly today than before?', 'What do I want to get up for today?'],
+    ritual: 'Tidy an old folder, a drawer or a notes app and keep only what fits who you are today.',
+  },
+  'major-21-world': {
+    light:
+      'The World celebrates what has come full circle. It joins the many pieces of a path into a whole and lets you arrive before setting off again. In its light completion becomes gratitude.',
+    shadow:
+      'Whoever is always looking at the next thing never quite arrives. Then every goal is immediately replaced by the next, and what has been achieved fades. What would be different if you stopped for a moment and looked back?',
+    keyword:
+      'Completion, for the World, is not perfection but wholeness: a circle closes, and everything you have lived through belongs to it. From this wholeness the next circle begins.',
+    symbols:
+      'A laurel wreath tied with red ribbons encircles a small, glowing blue-green earth in the violet starry sky. Four small golden triangles stand around it. The image shows something whole that is held, not shut in.',
+    roles: {
+      light: 'Knowing you have already come a long way gives you calm.',
+      shadow: 'Perhaps you are already hurrying to the next goal before the last one has fully reached you.',
+      root: 'Everything you have lived through so far belongs to the whole that you are today.',
+      possibility: 'Finishing something might give you the freedom to begin a new circle.',
+      bridge: 'The World joins the pieces of a path into a whole. None of it was in vain.',
+    },
+    study: [
+      'The laurel wreath encircles the small earth without touching it. It holds and adorns, but it does not confine. What in your life feels held and whole like this right now?',
+      'Imagine looking back over the last years of your life from a mountain. Which stations can you make out from up there that seemed small down below? What links them into one path?',
+    ],
+    question: 'What would help me truly arrive before I move on?',
+    reflections: ['What am I grateful for on my path today?', 'Which part of my path feels complete today?'],
+    ritual: 'Walk a small loop around your block or through your home and arrive back at your starting point on purpose.',
   },
 };
 

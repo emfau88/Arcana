@@ -1,7 +1,7 @@
 /**
  * Modul cards-deep, Deutsch (V05.1): Kartentiefe mit fünfzehn Texten je Karte.
  * Beschrieben wird das gemalte Deck dieser App (S-34), nicht das klassische Bild.
- * Gruppe 1 (S-29): 0–VII, der Narr und der äußere Weg.
+ * Drei Gruppen (S-29): 0–VII der Narr und der äußere Weg, VIII–XIV der innere Weg, XV–XXI der höhere Weg.
  */
 import { deepTable, type DeepCard } from './cards-deep-keys.ts';
 import type { TextTable } from './registry.ts';
@@ -364,6 +364,170 @@ const cards: Record<string, DeepCard> = {
     question: 'Welche zwei Seiten in mir möchten miteinander wirken statt gegeneinander?',
     reflections: ['Wovon nehme ich heute ein wenig weniger, und wovon ein wenig mehr?', 'Was bringt mich zurück in meine Mitte?'],
     ritual: 'Mach heute eine Sache bewusst halb so schnell wie sonst, etwa das Anziehen oder den Abwasch, und spüre, wie sich das Tempo anfühlt.',
+  },
+  // Gruppe 3 (S-29): XV–XXI, der höhere Weg.
+  'major-15-devil': {
+    light:
+      'Der Teufel zeigt, was bindet, und gerade darin liegt seine Gabe. Wer ein Muster erkennt, steht schon mit einem Fuß in der Freiheit. In seinem Licht wird eine Kette zu etwas, das man öffnen kann.',
+    shadow:
+      'Manche Bindungen fühlen sich wie Geborgenheit an, obwohl sie längst eng geworden sind. Dann bleibt man, weil Gehen unbequemer wäre als Bleiben. Woran hältst du fest, das auch dich festhält?',
+    keyword: 'Ein Muster ist beim Teufel eine Gewohnheit, die sich verselbständigt hat: Man handelt, bevor man entscheidet. Wer es bemerkt, gewinnt die Wahl zurück.',
+    symbols:
+      'Zwei schwere Ketten enden in weit geöffneten Fesseln, die auf dunklem Boden liegen. Dahinter steht ein kleiner Sockel, darüber eine schmale Mondsichel im warmen Dunst. Die Fesseln sind offen: Das Bild zeigt nicht die Gefangenschaft, sondern den Moment, in dem man merkt, dass man gehen könnte.',
+    roles: {
+      light: 'Deine Ehrlichkeit über eigene Muster ist ein Schlüssel, der schon in deiner Hand liegt.',
+      shadow: 'Was sich wie Bequemlichkeit anfühlt, bindet dich vielleicht stärker, als du merkst.',
+      root: 'Eine alte Gewohnheit stammt vielleicht aus einer Zeit, in der sie dir geholfen hat. Heute darfst du prüfen, ob sie das noch tut.',
+      possibility: 'Wenn du eine Kette als Kette erkennst, könnte sie sich leichter lösen, als du erwartest.',
+      bridge: 'Der Teufel verbindet Bindung und Freiheit. Wer sieht, was festhält, kann wählen, was bleiben darf.',
+    },
+    study: [
+      'Die Fesseln liegen offen auf dem Boden, niemand trägt sie. Die Ketten wirken schwer, aber sie halten nichts mehr. Welche Kette in deinem Leben ist vielleicht schon offen, ohne dass du es bemerkt hast?',
+      'Denk an etwas, das du immer wieder tust, obwohl du es eigentlich anders möchtest. Notiere, was kurz davor geschieht, ein Gefühl, ein Gedanke oder eine Situation. Was suchst du in diesem Moment eigentlich?',
+    ],
+    question: 'Welche Bindung möchte ich lösen, und welche bewusst behalten?',
+    reflections: ['Was gibt mir eine Bindung, das ich auch auf anderem Weg bekommen könnte?', 'Wo fühle ich mich gebunden, und wer hält eigentlich den Schlüssel?'],
+    ritual: 'Lass heute eine Tür oder eine Schublade bewusst offen stehen und denk an etwas, das du loslassen darfst.',
+  },
+  'major-16-tower': {
+    light:
+      'Der Turm bringt Klarheit, wo sich etwas Brüchiges nicht länger halten lässt. Er zeigt, was nur noch Fassade war, und macht Platz für ein ehrlicheres Fundament. In seinem Licht wird ein Schreck zu einer Befreiung.',
+    shadow:
+      'Ein Umbruch kann Angst machen, und Angst hält gern am Bekannten fest. Dann wird jede Erschütterung zum Feind, auch die, die etwas Wahres zeigt. Was müsstest du dir eingestehen, wenn eine Gewissheit nicht mehr trägt?',
+    keyword:
+      'Umbruch heißt beim Turm, dass sich etwas schneller verändert, als man es geplant hätte. Er räumt ab, was nicht mehr trägt, damit Neues auf festem Grund entstehen kann.',
+    symbols:
+      'Ein hoher Turm steht ruhig auf einem Hügel unter dem Nachthimmel, ein feiner goldener Blitz trifft seine Spitze. Die kleine goldene Krone hat sich ein Stück vom Mauerwerk gelöst, zwei Fenster leuchten warm. Der Turm fällt nicht: Das Bild zeigt den Augenblick, in dem plötzlich alles hell wird.',
+    roles: {
+      light: 'Deine Bereitschaft, Wahres anzuerkennen, auch wenn es unbequem ist, gibt dir festen Stand.',
+      shadow: 'Unter Umständen stützt du etwas, das sich längst nicht mehr selbst trägt.',
+      root: 'Eine frühere Erschütterung ist noch spürbar. Vielleicht hat sie dir auch gezeigt, was in dir standhält.',
+      possibility: 'Aus einer plötzlichen Einsicht könnte ein klarerer Weg werden, als du ihn geplant hast.',
+      bridge: 'Der Turm verbindet Zusammenbruch und Neubeginn. Was fällt, gibt den Blick frei.',
+    },
+    study: [
+      'Ein Blitz trifft die Spitze des Turms, und die goldene Krone löst sich ein Stück vom Mauerwerk. Der Turm selbst steht ruhig, zwei Fenster leuchten. Was würde in deinem Leben sichtbar, wenn ein solcher Lichtblitz hineinfiele?',
+      'Nenn eine Veränderung, die dich einmal überrascht hat und die du heute nicht mehr missen möchtest. Was hat sie damals in dir erschüttert? Was hat sie dir gegeben, das ohne sie nicht da wäre?',
+    ],
+    question: 'Welche Mauer in mir darf fallen, damit ich freier atmen kann?',
+    reflections: ['Was in mir steht fest, wenn um mich herum etwas wackelt?', 'Welcher plötzliche Gedanke von heute verdient einen zweiten Blick?'],
+    ritual: 'Öffne das Fenster weit, lass eine Minute lang frische Luft herein und atme bewusst durch.',
+  },
+  'major-17-star': {
+    light:
+      'Der Stern leuchtet nach dem Sturm, ruhig und ohne Eile. Er schenkt eine Hoffnung, die nicht laut verspricht, sondern still erneuert. In seinem Licht wird Vertrauen wieder möglich.',
+    shadow:
+      'Hoffnung kann auch zum Warten werden, wenn sie nur nach oben schaut. Dann bleibt der Wunsch am Himmel, und der Boden wird nie gegossen. Was kannst du selbst tun für das, worauf du hoffst?',
+    keyword: 'Hoffnung ist beim Stern kein Wunschdenken, sondern ein leises Vertrauen, dass sich etwas erneuern kann. Sie gießt den Boden, statt nur auf Regen zu warten.',
+    symbols:
+      'Ein großer, achtstrahliger Stern steht hell am nächtlichen Himmel, umgeben von kleineren Sternen. Darunter gießen zwei Krüge Wasser aus, der eine in einen Teich, der andere auf das trockene Land am Ufer. Auf einem fernen Hügel steht ein einzelner Baum: Erneuerung beginnt im Kleinen.',
+    roles: {
+      light: 'Eine leise Zuversicht in dir ist stärker, als sie aussieht.',
+      shadow: 'Gut möglich, dass du auf ein Zeichen wartest, wo ein kleiner eigener Schritt genügen würde.',
+      root: 'Eine frühere Erfahrung von Erneuerung ist in dir aufbewahrt. Sie erinnert daran, dass nach dunklen Zeiten wieder Licht möglich ist.',
+      possibility: 'Ein kleiner Anfang könnte wieder Hoffnung wachsen lassen, wie Wasser auf trockenem Boden.',
+      bridge: 'Der Stern verbindet Himmel und Erde. Hoffnung wirkt erst, wenn sie auch den Boden erreicht.',
+    },
+    study: [
+      'Zwei Krüge gießen Wasser aus, der eine in den Teich, der andere auf das trockene Land. Beides wird genährt, das Volle und das Leere. Wohin möchtest du in deinem Leben gerade etwas fließen lassen?',
+      'Schreib einen Wunsch auf, der dir wichtig ist, und darunter einen ersten kleinen Schritt, der zu ihm passt. Wann könntest du diesen Schritt gehen? Was bräuchtest du dafür?',
+    ],
+    question: 'Welche Hoffnung habe ich leise aufgegeben, die ich wieder aufnehmen möchte?',
+    reflections: ['Was gibt mir heute ein kleines Stück Zuversicht?', 'Wo darf ich mir Erneuerung erlauben, statt Perfektion zu verlangen?'],
+    ritual: 'Schreib dir selbst einen kurzen, freundlichen Satz für einen schweren Tag und leg ihn an einen Ort, an dem du ihn wiederfindest.',
+  },
+  'major-18-moon': {
+    light:
+      'Der Mond öffnet die Welt der Träume, Bilder und Ahnungen. Er lehrt, im Halbdunkel zu gehen, langsam und aufmerksam, ohne gleich alles verstehen zu müssen. In seinem Licht wird Unsicherheit zu einer Einladung, genauer hinzuspüren.',
+    shadow:
+      'Im Dämmerlicht wirken Schatten größer, als sie sind, und Sorgen wachsen leicht über sich hinaus. Dann wird eine Vermutung zur Gewissheit, ohne je geprüft zu werden. Welche Angst würde kleiner, wenn du sie bei Tageslicht ansiehst?',
+    keyword: 'Traum meint beim Mond die Sprache der Bilder, in der das Unbewusste spricht. Sie will nicht wörtlich genommen, sondern behutsam gelesen werden.',
+    symbols:
+      'Ein großer Mond zeigt seine volle Scheibe, nur ein Rand leuchtet golden als Sichel, darunter fallen Tropfen aus Licht. Ein heller Weg windet sich zwischen zwei dunklen Türmen hindurch und am stillen Wasser entlang. Das Bild ist traumhaft und ruhig: Der Weg ist da, auch wenn man nicht weit sieht.',
+    roles: {
+      light: 'Dein Gespür für Zwischentöne hilft dir, auch im Ungewissen einen Weg zu finden.',
+      shadow: 'Möglicherweise hältst du eine Sorge für die ganze Wahrheit.',
+      root: 'Ein alter Traum oder eine alte Angst klingt noch nach. Sie zu benennen, nimmt ihr etwas von ihrer Macht.',
+      possibility: 'Ein Traum oder ein Bild aus der Nacht könnte dir einen Hinweis geben, den der Verstand übersieht.',
+      bridge: 'Der Mond verbindet Bewusstes und Unbewusstes. Zwischen beiden führt ein schmaler, heller Pfad.',
+    },
+    study: [
+      'Der Weg im Bild führt zwischen zwei dunklen Türmen hindurch, und das Mondlicht reicht nur ein Stück weit. Wer ihn geht, sieht nie das Ende, nur den nächsten Abschnitt. Wo in deinem Leben gehst du gerade einen solchen Weg?',
+      'Wähl eine Situation, in der du gerade nicht weit sehen kannst. Schreib auf, was du über den nächsten kleinen Abschnitt weißt, nicht über das Ende. Wie fühlt es sich an, nur so weit zu schauen?',
+    ],
+    question: 'Welches Bild aus meinen Träumen kommt immer wieder, ohne dass ich es schon verstehe?',
+    reflections: ['Welchem leisen Gefühl möchte ich heute nachgehen?', 'Was darf heute noch im Halbdunkel bleiben?'],
+    ritual: 'Mach abends für ein paar Minuten alle Lichter aus und lass deine Augen sich an das Dunkel gewöhnen.',
+  },
+  'major-19-sun': {
+    light:
+      'Die Sonne bringt Wärme, Klarheit und eine Freude, die nichts verbergen muss. Sie zeigt sich offen und lässt andere an ihrem Licht teilhaben. In ihrem Licht wird das Einfache wieder schön.',
+    shadow:
+      'Wer immer strahlen will, hat manchmal keinen Platz für müde oder traurige Tage. Dann wird Freude zur Pflicht, und was Pflege braucht, bleibt im Schatten. Was darf auch an hellen Tagen da sein, ohne dass du es überstrahlst?',
+    keyword: 'Freude ist bei der Sonne kein Ziel, das man erreichen muss, sondern eine Wärme, die sich im Teilen vermehrt. Sie wohnt oft in kleinen, einfachen Dingen.',
+    symbols:
+      'Eine strahlende Sonne steht über einer niedrigen Gartenmauer aus alten Ziegeln, hinter der Sonnenblumen in den klaren Himmel wachsen. Das Licht ist golden und pfirsichfarben, dahinter liegt eine sanfte Landschaft. Die Blumen stehen offen im Licht, ohne Scheu.',
+    roles: {
+      light: 'Deine Freude an einfachen Dingen ist eine Kraftquelle, die oft näher liegt, als du denkst.',
+      shadow: 'Vielleicht überspielst du mit guter Laune etwas, das gesehen werden möchte.',
+      root: 'Eine frühe Erinnerung an unbeschwerte Freude kann noch in dir lebendig sein. Sie zeigt dir, wie sich Leichtigkeit anfühlt.',
+      possibility: 'Wenn du dich zeigst, wie du bist, könnte etwas Warmes zu dir zurückkommen.',
+      bridge: 'Die Sonne verbindet Klarheit und Wärme. Was ans Licht kommt, darf auch gewärmt werden.',
+    },
+    study: [
+      'Sonnenblumen wachsen hinter einer alten Ziegelmauer in den Himmel, und über ihnen steht die Sonne. Die Mauer gibt ihnen Schutz, das Licht gibt ihnen Richtung. Was gibt dir gerade Halt, und was gibt dir Richtung?',
+      'Ruf dir einen Moment der letzten Wochen ins Gedächtnis, in dem du ganz du selbst warst. Wo warst du, und wer war dabei? Was hat diesen Moment so leicht gemacht?',
+    ],
+    question: 'Was würde ich von mir zeigen, wenn ich nichts verbergen müsste?',
+    reflections: ['Wen könnte ich heute an meiner Freude teilhaben lassen?', 'Was hat mich heute zum Lächeln gebracht?'],
+    ritual: 'Summ oder sing leise ein Lied, das du als Kind mochtest, auch wenn es nur eine Strophe ist.',
+  },
+  'major-20-judgement': {
+    light:
+      'Das Gericht ruft zu einem neuen Kapitel. Es lädt ein, ehrlich zurückzuschauen, Frieden mit dem Gewesenen zu schließen und dem eigenen Ruf zu folgen. In seinem Licht wird Rückschau zu Aufbruch.',
+    shadow:
+      'Rückschau kann zur Abrechnung werden, mit anderen oder mit sich. Dann wiegt das Urteil über die Vergangenheit so schwer, dass kein neuer Anfang Platz hat. Was würdest du dir verzeihen, wenn du heute neu beginnen dürftest?',
+    keyword: 'Erwachen heißt beim Gericht, plötzlich klar zu sehen, was einen schon lange ruft. Es ist der Moment, in dem man aufsteht und antwortet.',
+    symbols:
+      'Eine goldene Posaune ragt aus Morgenwolken, an ihr hängt ein kleiner Wimpel mit einer Sonne. Aus dem stillen Wasser steigen feine Lichtstrahlen auf, in der Ferne liegen verschneite Berge. Kein Urteil fällt hier: Das Bild zeigt einen Weckruf im ersten Licht.',
+    roles: {
+      light: 'Dich stützt eine innere Stimme, die weiß, was dir wirklich wichtig ist.',
+      shadow: 'Es kann sein, dass ein altes Urteil über dich lauter ist als dein eigener Ruf.',
+      root: 'Eine Lebensphase, die du abgeschlossen hast, wartet noch auf eine freundliche Bilanz.',
+      possibility: 'Ein Ruf, den du schon länger hörst, könnte jetzt eine Antwort finden.',
+      bridge: 'Das Gericht verbindet Rückschau und Aufbruch. Wer das Gewesene würdigt, kann leichter weitergehen.',
+    },
+    study: [
+      'Eine goldene Posaune ruft aus den Wolken, und aus dem stillen Wasser steigen feine Strahlen auf. Ruf und Antwort scheinen im selben Augenblick zu geschehen. Was in dir antwortet, wenn du an einen Neubeginn denkst?',
+      'Gibt es einen Fehler, den du dir noch immer vorhältst? Schreib in einem Satz auf, was du daraus gelernt hast. Was würde sich ändern, wenn dieser Satz das letzte Wort hätte?',
+    ],
+    question: 'Zu welchem neuen Kapitel fühle ich mich gerufen?',
+    reflections: ['Welche Erfahrung darf ich heute freundlicher ansehen als früher?', 'Wofür möchte ich heute aufstehen?'],
+    ritual: 'Räum einen alten Ordner, ein Fach oder eine Notiz-App auf und behalte nur, was zu dem passt, wer du heute bist.',
+  },
+  'major-21-world': {
+    light:
+      'Die Welt feiert, was rund geworden ist. Sie fügt die vielen Teile eines Weges zu einem Ganzen und erlaubt, anzukommen, bevor es weitergeht. In ihrem Licht wird Vollendung zu Dankbarkeit.',
+    shadow:
+      'Wer ständig auf das Nächste schaut, kommt nie richtig an. Dann wird jedes Ziel sofort vom nächsten abgelöst, und das Erreichte verblasst. Was wäre anders, wenn du kurz stehen bleiben und zurückschauen würdest?',
+    keyword:
+      'Vollendung meint bei der Welt nicht Perfektion, sondern Ganzheit: Ein Kreis schließt sich, und alles Erlebte gehört dazu. Aus dieser Ganzheit beginnt der nächste Kreis.',
+    symbols:
+      'Ein Kranz aus Lorbeer, mit roten Bändern gebunden, umschließt eine kleine, blaugrün leuchtende Erde im violetten Sternenhimmel. Rundherum stehen vier kleine goldene Dreiecke. Das Bild zeigt etwas Ganzes, das gehalten wird, nicht eingesperrt.',
+    roles: {
+      light: 'Das Wissen, schon einen weiten Weg gegangen zu sein, gibt dir Ruhe.',
+      shadow: 'Vielleicht eilst du schon zum nächsten Ziel, bevor das letzte ganz bei dir angekommen ist.',
+      root: 'Alles, was du bisher erlebt hast, gehört zu dem Ganzen, das du heute bist.',
+      possibility: 'Ein Abschluss könnte dir die Freiheit geben, einen neuen Kreis zu beginnen.',
+      bridge: 'Die Welt fügt die Teile eines Weges zu einem Ganzen. Nichts davon war umsonst.',
+    },
+    study: [
+      'Der Lorbeerkranz umschließt die kleine Erde, ohne sie zu berühren. Er hält und schmückt, aber er engt nicht ein. Was in deinem Leben fühlt sich gerade so gehalten und ganz an?',
+      'Stell dir vor, du blickst von einem Berg auf die letzten Jahre deines Lebens. Welche Stationen erkennst du von dort oben, die dir unten klein vorkamen? Was verbindet sie zu einem Weg?',
+    ],
+    question: 'Was brauche ich, um wirklich anzukommen, bevor ich weitergehe?',
+    reflections: ['Wofür bin ich heute auf meinem Weg dankbar?', 'Welcher Teil meines Weges fühlt sich heute rund an?'],
+    ritual: 'Geh eine kleine Runde um deinen Block oder durch deine Wohnung und komm bewusst wieder an deinem Ausgangspunkt an.',
   },
 };
 
