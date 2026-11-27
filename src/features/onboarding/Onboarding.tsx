@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
 import { useReducedMotion } from '../../app/motion.ts';
+import { muster } from '../../app/muster.ts';
 import { useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
 import { portraitSrc } from '../../content/assets.ts';
@@ -315,6 +316,51 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
     );
   }
 
+  const variant = muster('reveal');
+  if (variant === 'a') {
+    // Sample for design plan point 5, variant A: the reveal is one moment on one screen. Strength,
+    // shadow, "Why?" and sharing live on "Ich", where they already are.
+    return (
+      <div className={`screen archetype reveal reveal--moment${animate ? ' is-animated' : ''}`}>
+        {animate && !done ? (
+          <button type="button" className="btn btn--quiet reveal__skip" onClick={() => setSkipped(true)}>
+            {t.common.skip}
+          </button>
+        ) : null}
+        <div className="reveal__stage reveal-step" style={at(REVEAL_STEPS.portrait)}>
+          <span className="archetype__halo" aria-hidden="true" />
+          <ArchetypePortrait id={archetype.id} size={720} alt={fmt(t.archetype.portraitAlt, { name: archetype.name[locale] })} eager seal className="reveal__portrait" />
+        </div>
+        <div className="reveal-step reveal__head" style={at(REVEAL_STEPS.name)}>
+          <Flank className="screen-head__flank">{t.archetype.eyebrow}</Flank>
+          <h1 className="display h1 archetype__name" tabIndex={-1}>
+            {archetype.name[locale]}
+          </h1>
+        </div>
+        <div className="reveal-step reveal__words" style={at(REVEAL_STEPS.sentence)}>
+          <p className="italic-serif reveal__sentence">{revealText || archetype.essence[locale]}</p>
+        </div>
+        {second ? (
+          <div className="reveal-step reveal__second" style={at(REVEAL_STEPS.second)}>
+            <ArchetypePortrait id={second.id} size={240} alt="" className="reveal__second-portrait" />
+            <div className="reveal__second-text">
+              <p className="eyebrow">{t.archetype.secondVoice}</p>
+              <p className="display h3">{second.name[locale]}</p>
+            </div>
+          </div>
+        ) : null}
+        <div className="reveal-step reveal__moment-actions" style={at(second ? REVEAL_STEPS.rest : REVEAL_STEPS.second)}>
+          {ctaButton}
+          {fromProfile ? null : (
+            <button type="button" className="btn btn--quiet" onClick={() => navigate('/me', { replace: true })}>
+              {locale === 'de' ? 'Mein Profil ansehen' : 'See my profile'}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`screen archetype reveal${animate ? ' is-animated' : ''}`}>
       {animate && !done ? (
@@ -374,7 +420,8 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
           </section>
         </div>
         <p className="small archetype__basis">{manual ? t.archetype.basisManual : fmt(t.archetype.basis, { n: answered })}</p>
-        {explain}
+        {/* Sample, variant B: everything stays, only the second way to the same explanation goes. */}
+        {variant === 'b' ? null : explain}
       </div>
       {/* Direct child of the screen, so it sticks from the first moment it appears (also with a second voice or large text). */}
       <div className="sticky-action reveal-step" style={at(second ? REVEAL_STEPS.rest : REVEAL_STEPS.second)}>

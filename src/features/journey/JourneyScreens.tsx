@@ -22,6 +22,8 @@ import { fmt, formatDate, toRoman } from '../../i18n/index.ts';
 import { OracleCard } from '../../ui/OracleCard.tsx';
 import { Flank, StarGlyph } from '../../ui/Ornaments.tsx';
 import { DetailHeader, NotFound } from '../grimoire/Grimoire.tsx';
+import { muster } from '../../app/muster.ts';
+import { StarMapSample } from './StarMapSample.tsx';
 import './journey-screens.css';
 
 const REVIEWS_SHOWN = 6;
@@ -119,6 +121,7 @@ export function JourneyPage({ parsed }: { parsed: ParsedRoute }) {
   const milestones = milestonesReached(journeyDays(facts)).reverse().slice(0, 5);
   const [allReviews, setAllReviews] = useState(false);
   const cardOf = (n: number) => pack.cards.find((c) => c.order === n);
+  const mapVariant = muster('starmap');
   const stationText = tx('journey', station.textKey);
   const stateLabel = { reached: s.journeyMap.reached, current: s.journeyMap.current, ahead: s.journeyMap.ahead } as const;
 
@@ -136,7 +139,17 @@ export function JourneyPage({ parsed }: { parsed: ParsedRoute }) {
       <p className="journey-page__round eyebrow">
         {fmt(s.journeyMap.round, { n: map.round })} · {fmt(t.today.journeyDayShort, { n: day })}
       </p>
-      <StarMapFigure map={map} label={fmt(s.journeyMap.mapLabel, { n: map.round, k: map.reached })} />
+      {mapVariant ? (
+        <StarMapSample
+          map={map}
+          variant={mapVariant}
+          locale={locale}
+          label={fmt(s.journeyMap.mapLabel, { n: map.round, k: map.reached })}
+          cardTitle={(n) => cardOf(n)?.title[locale] ?? ''}
+        />
+      ) : (
+        <StarMapFigure map={map} label={fmt(s.journeyMap.mapLabel, { n: map.round, k: map.reached })} />
+      )}
 
       <details className="explain journey-page__list">
         <summary>{s.journeyMap.listTitle}</summary>

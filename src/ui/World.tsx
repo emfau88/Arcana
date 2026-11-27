@@ -11,7 +11,7 @@ import './world.css';
  * Everything here is static after a short entrance: a few stars twinkle three times
  * (≈10 s) and then the scene is completely still (E5). Reduced motion: no animation.
  */
-export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap';
+export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap' | 'oracle';
 
 const base = import.meta.env.BASE_URL;
 /** Painted backgrounds by scene; filled when the assets from ASSET_REQUESTS.md arrive. */
@@ -26,6 +26,8 @@ const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; 
   profile: { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
   'profile-calm': { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
   starmap: { src: 'world/bg-starmap.webp', srcSmall: 'world/bg-starmap-720.webp' },
+  // Sample only (design plan point 2): A03 from bulk B3, exported for the samples; the proper export follows in V05.
+  oracle: { src: 'world/bg-oracle.webp', srcSmall: 'world/bg-oracle-720.webp' },
 };
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
 const SMALL_SCREEN = '(max-width: 520px)';

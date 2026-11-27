@@ -3,6 +3,7 @@ import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode 
 import { ArchetypeReveal, Questionnaire, Welcome } from '../features/onboarding/Onboarding.tsx';
 import { CardDetail, DayDetail, Grimoire, ReadingDetail } from '../features/grimoire/Grimoire.tsx';
 import { Oracle } from '../features/oracle/Oracle.tsx';
+import { muster } from './muster.ts';
 import { Today } from '../features/today/Today.tsx';
 import { onHardwareBack } from '../platform/native.ts';
 import { Sigil } from '../ui/Sigil.tsx';
@@ -95,6 +96,9 @@ function sceneOf(route: Route): WorldScene {
     case 'review':
     case 'chapter':
       return 'starmap';
+    case 'oracle':
+      // Sample (design plan point 2): the oracle gets its own painted room.
+      return muster('oracle') ? 'oracle' : 'calm';
     default:
       return 'calm';
   }

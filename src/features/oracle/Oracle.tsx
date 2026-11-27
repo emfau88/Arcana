@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { muster, type MusterVariant } from '../../app/muster.ts';
 import { navigate } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
@@ -21,7 +22,85 @@ export function Oracle() {
   }
   const saved = savedId ? state.readings.find((r) => r.id === savedId) : undefined;
   if (saved) return <SavedReading reading={saved} onNew={() => setSavedId(null)} />;
-  return <OracleEntry />;
+  const variant = muster('oracle');
+  return variant ? <OracleStageEntry variant={variant} /> : <OracleEntry />;
+}
+
+/* ------------------------------------------- Sample: the oracle as a stage */
+
+/**
+ * Sample for design plan point 2 (two variants for the owner's choice): the reading lies in the
+ * middle of the painted observatory (A03) and is there at once; the theme takes one line (A) or a
+ * small grid (B), the main action stays at the bottom.
+ */
+function OracleStageEntry({ variant }: { variant: MusterVariant }) {
+  const { t, pack, state, actions } = useApp();
+  const toast = useToast();
+  const locale = state.settings.locale;
+  const [theme, setTheme] = useState<ThemeId>(resolveTheme(pack, state.profile?.themeId ?? pack.defaultTheme));
+  const [busy, setBusy] = useState(false);
+
+  const draw = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await actions.startReading(theme);
+    } catch {
+      toast(t.errors.writeFailed, 'error');
+    } finally {
+      setBusy(false);
+    }
+  };
+  const positionLabel = (p: (typeof POSITIONS)[number], i: number) => (
+    <span className="stage-spread__pos">
+      <span className="stage-spread__num">{toRoman(i + 1)}</span> {pack.positionLabels[p][locale]}
+    </span>
+  );
+  const themes = (
+    <div className={variant === 'a' ? 'theme-row' : 'theme-grid'} role="radiogroup" aria-label={t.oracle.chooseTheme}>
+      {pack.themes.map((th) => (
+        <button key={th.id} type="button" role="radio" aria-checked={theme === th.id} className="theme-pill" onClick={() => setTheme(th.id)}>
+          {th.label[locale]}
+        </button>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className={`screen oracle oracle-stage oracle-stage--${variant}`}>
+      <div className="oracle-stage__top">
+        <header className="screen-head">
+          <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
+          <h1 className="display h2" tabIndex={-1}>
+            {t.oracle.title}
+          </h1>
+        </header>
+      </div>
+      <ol className={`stage-spread stage-spread--${variant === 'a' ? 'row' : 'fan'}`}>
+        {POSITIONS.map((p, i) => (
+          <li key={p} className="stage-spread__slot">
+            <OracleCard card={null} locale={locale} faceUp={false} size="spread" label={pack.positionLabels[p][locale]} />
+            {variant === 'a' ? positionLabel(p, i) : null}
+          </li>
+        ))}
+      </ol>
+      {variant === 'b' ? (
+        <div className="stage-fan-labels" aria-hidden="true">
+          {POSITIONS.map((p, i) => (
+            <span key={p}>{positionLabel(p, i)}</span>
+          ))}
+        </div>
+      ) : null}
+      {themes}
+      <p className="oracle-stage__theme">{getTheme(pack, theme).description[locale]}</p>
+      <p className="small oracle__ethics">{t.oracle.ethics}</p>
+      <div className="sticky-action">
+        <button type="button" className="btn btn--primary btn--block oracle__draw" onClick={draw} disabled={busy}>
+          <IconSparkle size={18} /> {t.oracle.draw}
+        </button>
+      </div>
+    </div>
+  );
 }
 
 /* -------------------------------------------------------------------- Entry */
@@ -149,15 +228,18 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
     }
   };
 
+  const staged = muster('oracle') !== null;
   return (
-    <div className="screen oracle">
-      <header className="screen-head">
-        <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
-        <h1 className="display h2" tabIndex={-1}>
-          {themeLabel}
-        </h1>
-      </header>
-      {restored ? <p className="notice oracle__resumed">{t.oracle.resumed}</p> : null}
+    <div className={staged ? 'screen oracle oracle-stage oracle-stage--draft' : 'screen oracle'}>
+      <div className={staged ? 'oracle-stage__top' : undefined}>
+        <header className="screen-head">
+          <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
+          <h1 className="display h2" tabIndex={-1}>
+            {themeLabel}
+          </h1>
+        </header>
+        {restored ? <p className="notice oracle__resumed">{t.oracle.resumed}</p> : null}
+      </div>
 
       <Spread
         cardIds={draft.cardIds}
