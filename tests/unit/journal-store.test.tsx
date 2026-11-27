@@ -13,8 +13,11 @@ import { IndexedDbRepository } from '../../src/platform/storage/indexeddb.ts';
 
 const STAR = CONTENT.cards.find((c) => c.order === 17)!.id;
 
+let lastFactory: IDBFactory | null = null;
+
 async function setup() {
-  const repo = new IndexedDbRepository({ factory: new IDBFactory(), name: 'journal' });
+  lastFactory = new IDBFactory();
+  const repo = new IndexedDbRepository({ factory: lastFactory, name: 'journal' });
   await repo.open();
   await repo.putProfile({ answers: {}, themeId: 'self', archetypeId: 'seeker', profileVersion: 1, updatedAt: '2026-11-26T10:00:00.000Z' });
   await repo.putSettings({ locale: 'de', motion: 'system', onboardingDone: true });
@@ -75,6 +78,23 @@ describe('journal in the store (V05.4)', () => {
     await act(() => again.result.current.actions.clearAllData());
     expect(again.result.current.state.journal).toEqual([]);
     expect(again.result.current.state.events).toEqual([]);
+  });
+
+  it('a note from before 0.5 keeps counting when it is deleted in 0.5', async () => {
+    const { mount } = await setup();
+    const first = await mount();
+    await act(async () => void (await first.result.current.actions.revealToday()));
+    const dateKey = first.result.current.state.dailies[0]!.dateKey;
+    first.unmount();
+    // Written like 0.4 did: the note without a time.
+    const repo = new IndexedDbRepository({ factory: lastFactory!, name: 'journal' });
+    await repo.open();
+    expect((await repo.updateDailyNote(dateKey, 'Alte Notiz')).notedAt).toBeUndefined();
+    repo.close();
+    const { result } = await mount();
+    await act(() => result.current.actions.deleteJournalItem({ source: 'daily', id: dateKey }));
+    expect(result.current.state.dailies[0]).toMatchObject({ note: '' });
+    expect(result.current.state.dailies[0]!.notedAt).toBeDefined();
   });
 
   it('an entry without text is refused and nothing is stored', async () => {

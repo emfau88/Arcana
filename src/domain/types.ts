@@ -107,8 +107,9 @@ export interface DailyRecord {
   revealedAt: string;
   note: string;
   /**
-   * First time the note held text (V05.4, S-49). Set once and never removed, so a note that is
-   * deleted later still counts as a reflection. Missing in older records and without a note.
+   * Since when the note held text (V05.4, S-49): set on the first save with text, for a note from
+   * before 0.5 on its first change. Never removed, so a deleted note still counts as a reflection.
+   * Missing in older records and without a note.
    */
   notedAt?: string;
   /**
@@ -164,7 +165,7 @@ export interface Reading {
   /** Local day at the moment of saving (since 0.3). Missing in older records: derived from createdAt. */
   dateKey?: string;
   note: string;
-  /** First time the note held text (V05.4, S-49), as on DailyRecord. */
+  /** Since when the note held text (V05.4, S-49), as on DailyRecord. */
   notedAt?: string;
 }
 

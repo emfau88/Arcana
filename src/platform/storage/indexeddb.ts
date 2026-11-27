@@ -93,9 +93,13 @@ function wrapWriteError(err: unknown): StorageError {
  * IndexedDB adapter used in the browser and inside the bundled Android WebView.
  * Writes use strict durability where supported so a completed write survives a process kill.
  */
-/** S-49: the first note with text leaves `notedAt`; later edits and deleting keep it. */
-function firstNoted(existing: { notedAt?: string }, note: string, at: string | undefined): { notedAt?: string } {
-  return at !== undefined && existing.notedAt === undefined && note.trim().length > 0 ? { notedAt: at } : {};
+/**
+ * S-49: the first save of a note with text leaves `notedAt`; later edits and deleting keep it.
+ * A note with text from before 0.5 gets it on its first change, deleting included.
+ */
+function firstNoted(existing: { note?: unknown; notedAt?: string }, note: string, at: string | undefined): { notedAt?: string } {
+  const hadText = typeof existing.note === 'string' && existing.note.trim().length > 0;
+  return at !== undefined && existing.notedAt === undefined && (hadText || note.trim().length > 0) ? { notedAt: at } : {};
 }
 
 export class IndexedDbRepository implements StorageRepository {
