@@ -15,7 +15,7 @@ import { SCHEMA_VERSION, StorageError, type Snapshot, type StorageRepository, ty
 import {
   isDailyRecord,
   isDraft,
-  isProfile,
+  normalizeProfile,
   isReading,
   isSettings,
   normalizeEntitlements,
@@ -183,7 +183,7 @@ export class IndexedDbRepository implements StorageRepository {
         guard(x) ? x : null;
     return {
       settings: keep(settings, isSettings),
-      profile: keep(profile, isProfile),
+      profile: keepNormalized(profile, normalizeProfile),
       draft: keep(draft, isDraft),
       personal: keepNormalized(personal, normalizePersonal),
       entitlements: keepNormalized(entitlements, normalizeEntitlements),

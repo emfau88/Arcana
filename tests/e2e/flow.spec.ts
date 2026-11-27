@@ -1,27 +1,9 @@
-import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { de, type Messages } from '../../src/i18n/de.ts';
+import { expect, test, type Page } from '@playwright/test';
+import { CONTENT } from '../../src/content/index.ts';
+import { de } from '../../src/i18n/de.ts';
 import { en } from '../../src/i18n/en.ts';
 import { fmt } from '../../src/i18n/index.ts';
-import { CONTENT } from '../../src/content/index.ts';
-
-/** UI strings of the locale the project emulates (the app follows the system language). */
-function ui(info: TestInfo): Messages {
-  return String(info.project.use.locale ?? 'de').startsWith('de') ? de : en;
-}
-
-/** Fails the test on page errors, console errors or any request leaving the local origin. */
-function guard(page: Page) {
-  const problems: string[] = [];
-  page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`));
-  page.on('console', (m) => {
-    if (m.type() === 'error') problems.push(`console: ${m.text()}`);
-  });
-  page.on('request', (r) => {
-    const u = new URL(r.url());
-    if (u.protocol !== 'data:' && u.hostname !== '127.0.0.1') problems.push(`external request: ${r.url()}`);
-  });
-  return problems;
-}
+import { completeOnboarding, guard, ui } from './helpers.ts';
 
 /** Every store of the app's database with its record count (kv: number of keys). */
 async function storeCounts(page: Page): Promise<Record<string, number>> {
@@ -66,22 +48,6 @@ async function seedV2Stores(page: Page): Promise<void> {
     await new Promise<void>((res, rej) => ((tx.oncomplete = () => res()), (tx.onerror = () => rej(tx.error))));
     db.close();
   });
-}
-
-async function completeOnboarding(page: Page, t: Messages) {
-  await page.goto('./');
-  await page.getByRole('button', { name: t.welcome.start }).click();
-  for (let i = 0; i < 4; i++) {
-    // Each answer advances by itself; wait for the next step before answering again.
-    await expect(page.getByText(fmt(t.onboarding.progress, { n: i + 1, total: 5 }), { exact: true })).toBeVisible();
-    await page.getByRole('radio').nth(i % 4).click();
-  }
-  await expect(page.getByText(fmt(t.onboarding.progress, { n: 5, total: 5 }), { exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: t.onboarding.themeTitle })).toBeVisible();
-  await page.getByRole('radio').nth(1).click();
-  await page.getByRole('button', { name: t.onboarding.finish }).click();
-  await expect(page.getByText(t.archetype.eyebrow, { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: t.archetype.toToday }).click();
 }
 
 test('complete flow: onboarding → daily card → reading → grimoire → profile, persisted', async ({ page }, info) => {
@@ -147,7 +113,7 @@ test('answering only one question gives the open profile', async ({ page }, info
   await page.goto('./');
   await page.getByRole('button', { name: t.welcome.start }).click();
   await page.getByRole('radio').first().click();
-  await expect(page.getByText(fmt(t.onboarding.progress, { n: 2, total: 5 }), { exact: true })).toBeVisible();
+  await expect(page.getByText(fmt(t.onboarding.progress, { n: 2, total: 8 }), { exact: true })).toBeVisible();
   await page.getByRole('button', { name: t.onboarding.skipRest }).click();
   await page.getByRole('button', { name: t.onboarding.finish }).click();
   await expect(page.getByText(t.archetype.neutralTitle)).toBeVisible();
@@ -185,8 +151,11 @@ test('language switch and deleting all local data from every store', async ({ pa
   test.skip(info.project.name !== 'mobile-de-412', 'covered once');
   await completeOnboarding(page, de);
   await page.getByRole('link', { name: de.nav.profile }).click();
+  // Language, motion, privacy and deletion live on their own page since V04 (#/me/settings).
+  await page.getByRole('button', { name: de.profile.settings }).click();
+  await expect(page).toHaveURL(/#\/me\/settings$/);
   await page.getByRole('radio', { name: 'English' }).click();
-  await expect(page.getByRole('heading', { name: en.profile.title })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: en.profile.settings })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await seedV2Stores(page);
   const before = await storeCounts(page);
@@ -341,5 +310,95 @@ test('the archetype can be viewed, corrected by hand or left open from the profi
   await page.getByRole('button', { name: t.today.draw }).click();
   await expect(page.getByText(t.today.message, { exact: true })).toBeVisible();
   await expect(page.getByText(t.today.lens, { exact: true })).toHaveCount(0);
+  expect(problems).toEqual([]);
+});
+
+test('questionnaire v2: seven questions fit into 75 s at 8 s reading time per question (V04.1)', async ({ page }, info) => {
+  test.skip(info.project.name !== 'mobile-de-412', 'timing once');
+  const t = ui(info);
+  const problems = guard(page);
+  await page.goto('./');
+  await expect(page.getByRole('button', { name: t.welcome.start })).toBeVisible();
+  // Measured: the app's own time from "Beginnen" to the archetype (transitions, saving, reveal).
+  // Modelled: 8 s reading and choosing per question (MASTER_ROADMAP V04.1).
+  const t0 = Date.now();
+  await page.getByRole('button', { name: t.welcome.start }).click();
+  for (let i = 0; i < 7; i++) {
+    await expect(page.getByText(fmt(t.onboarding.progress, { n: i + 1, total: 8 }), { exact: true })).toBeVisible();
+    await page.getByRole('radio').nth((i + 2) % 4).click();
+  }
+  await expect(page.getByRole('heading', { name: t.onboarding.themeTitle })).toBeVisible();
+  await page.getByRole('radio').nth(2).click();
+  await page.getByRole('button', { name: t.onboarding.finish }).click();
+  await expect(page.getByText(t.archetype.eyebrow, { exact: true })).toBeVisible();
+  const appMs = Date.now() - t0;
+  const totalMs = appMs + 7 * 8000;
+  info.annotations.push({ type: 'questionnaire-time', description: `app ${appMs} ms + 7 × 8 s = ${totalMs} ms (limit 75,000 ms)` });
+  console.log(`questionnaire v2: app ${appMs} ms + 7 × 8 s = ${totalMs} ms (limit 75,000 ms)`);
+  expect(totalMs).toBeLessThanOrEqual(75_000);
+  expect(problems).toEqual([]);
+});
+
+test('existing profile: the new questions are an offer; the profile stays until the end (E9)', async ({ page }, info) => {
+  test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
+  const t = ui(info);
+  const locale = String(info.project.use.locale).startsWith('de') ? 'de' : 'en';
+  const problems = guard(page);
+  await page.goto('./');
+  await expect(page.getByRole('button', { name: t.welcome.start })).toBeVisible();
+  // A profile as 0.1–0.3 wrote it: four answers, no questionnaire version.
+  await page.evaluate(async (loc) => {
+    const db = await new Promise<IDBDatabase>((res, rej) => {
+      const r = indexedDB.open('personal-oracle');
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+    const tx = db.transaction('kv', 'readwrite');
+    const answers = { 'q-calling': 'a-question', 'q-decision': 'a-image', 'q-place': 'a-road', 'q-invite': 'a-direction' };
+    tx.objectStore('kv').put({ answers, themeId: 'self', archetypeId: 'seeker', archetypeSource: 'questions', profileVersion: 1, updatedAt: '2026-11-20T10:00:00.000Z' }, 'profile');
+    tx.objectStore('kv').put({ locale: loc, motion: 'system', onboardingDone: true }, 'settings');
+    await new Promise<void>((res, rej) => ((tx.oncomplete = () => res()), (tx.onerror = () => rej(tx.error))));
+    db.close();
+  }, locale);
+  // Restart with the seeded state first; then the old path #/profile (alias of #/me) opens "Ich".
+  await page.reload();
+  await expect(page.getByRole('link', { name: t.nav.profile })).toBeVisible();
+  await page.goto('./#/profile');
+  const seeker = CONTENT.archetypes.find((a) => a.id === 'seeker')!.name[locale];
+  await expect(page.locator('.profile__archetype .h3')).toHaveText(seeker);
+  await expect(page.getByText(t.profile.offerTitle, { exact: true })).toBeVisible();
+
+  // Opening the offer and going back changes nothing.
+  await page.getByRole('button', { name: t.profile.offerStart }).click();
+  await expect(page.getByText(fmt(t.onboarding.progress, { n: 5, total: 8 }), { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: t.common.back }).click();
+  await expect(page.locator('.profile__archetype .h3')).toHaveText(seeker);
+  await expect(page.getByText(t.profile.offerTitle, { exact: true })).toBeVisible();
+
+  // Answering the three new questions completes questionnaire v2 with all seven answers.
+  await page.getByRole('button', { name: t.profile.offerStart }).click();
+  for (let n = 5; n <= 7; n++) {
+    await expect(page.getByText(fmt(t.onboarding.progress, { n, total: 8 }), { exact: true })).toBeVisible();
+    await page.getByRole('radio').nth(3).click();
+  }
+  await expect(page.getByRole('heading', { name: t.onboarding.themeTitle })).toBeVisible();
+  await page.getByRole('button', { name: t.onboarding.finish }).click();
+  await expect(page.getByText(t.archetype.eyebrow, { exact: true })).toBeVisible();
+  const stored = await page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((res, rej) => {
+      const r = indexedDB.open('personal-oracle');
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+    const get = db.transaction('kv').objectStore('kv').get('profile');
+    const p = await new Promise<{ answers: Record<string, string>; questionnaireVersion?: number }>((res) => (get.onsuccess = () => res(get.result)));
+    db.close();
+    return { answers: Object.keys(p.answers).length, version: p.questionnaireVersion };
+  });
+  expect(stored).toEqual({ answers: 7, version: 2 });
+  await page.getByRole('button', { name: t.archetype.toToday }).click();
+  await page.getByRole('link', { name: t.nav.profile }).click();
+  await expect(page.getByRole('heading', { level: 1, name: t.profile.title })).toBeVisible();
+  await expect(page.getByText(t.profile.offerTitle, { exact: true })).toHaveCount(0);
   expect(problems).toEqual([]);
 });

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { warmImage } from './warm.ts';
 import './world.css';
 
 /**
@@ -10,7 +11,7 @@ import './world.css';
  * Everything here is static after a short entrance: a few stars twinkle three times
  * (≈10 s) and then the scene is completely still (E5). Reduced motion: no animation.
  */
-export type WorldScene = 'today' | 'calm';
+export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap';
 
 const base = import.meta.env.BASE_URL;
 /** Painted backgrounds by scene; filled when the assets from ASSET_REQUESTS.md arrive. */
@@ -20,8 +21,22 @@ const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; 
   // V03.5: the same night world, dimmed, as the neutral backdrop of screens without their own
   // world yet (ASSET_REQUESTS: A01 "neutraler Hintergrund in V03"). Same file: no extra download.
   calm: { src: 'world/bg-today.webp', srcSmall: 'world/bg-today-720.webp' },
+  // B2 (26.11.2026, D-55): A06 welcome and questions, A05 reveal and "Ich", A19 star map.
+  welcome: { src: 'world/bg-welcome.webp', srcSmall: 'world/bg-welcome-720.webp' },
+  profile: { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
+  'profile-calm': { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
+  starmap: { src: 'world/bg-starmap.webp', srcSmall: 'world/bg-starmap-720.webp' },
 };
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
+const SMALL_SCREEN = '(max-width: 520px)';
+
+/** Loads and decodes the painting of `scene` ahead of a screen change (B-13): the same file the <picture> below picks. */
+export function warmWorld(scene: WorldScene): void {
+  const image = WORLD_IMAGES[scene];
+  if (!image) return;
+  const small = typeof window.matchMedia === 'function' && window.matchMedia(SMALL_SCREEN).matches;
+  warmImage(`${base}${small ? image.srcSmall : image.src}`);
+}
 
 interface Star {
   x: number;
@@ -71,7 +86,7 @@ export function World({ scene }: { scene: WorldScene }) {
       <Landscape detailed={scene === 'today'} />
       {image ? (
         <picture className={`world-scene__image ${painted ? 'is-loaded' : ''}`}>
-          <source media="(max-width: 520px)" srcSet={`${base}${image.srcSmall}`} />
+          <source media={SMALL_SCREEN} srcSet={`${base}${image.srcSmall}`} />
           <img src={`${base}${image.src}`} alt="" decoding="async" fetchPriority="low" onLoad={() => setLoaded(image.src)} />
         </picture>
       ) : null}

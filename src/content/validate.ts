@@ -144,7 +144,9 @@ export function validateContent(pack: ContentPack, stage: ContentStage = 'g1'): 
     for (const l of LOCALES) if (!/\?\s*$/.test(a.shadow[l] ?? '')) errors.push(`${w}.shadow.${l}: must be an open question`);
   }
 
-  // ---- questionnaire balance: every archetype is primary twice and secondary twice
+  // ---- questionnaire v2 structure (V04.1): seven questions with four answers each; every archetype
+  // is primary at least 3× and secondary at least 2×. The statistical balance over all 16,384
+  // combinations (main 10–15 %, complement 40–70 %, all 56 pairs) is tested in tests/unit/archetypes.test.ts.
   const primary = Object.fromEntries(ARCHETYPE_ORDER.map((id) => [id, 0])) as Record<string, number>;
   const secondary = { ...primary };
   const qIds = new Set<string>();
@@ -161,10 +163,10 @@ export function validateContent(pack: ContentPack, stage: ContentStage = 'g1'): 
       secondary[a.secondary] = (secondary[a.secondary] ?? 0) + 1;
     }
   }
-  if (pack.questions.length !== 4) errors.push(`questions: ${pack.questions.length} (expected 4)`);
+  if (pack.questions.length !== 7) errors.push(`questions: ${pack.questions.length} (expected 7)`);
   for (const id of ARCHETYPE_ORDER) {
-    if (primary[id] !== 2) errors.push(`balance: ${id} is primary ${primary[id]}× (expected 2)`);
-    if (secondary[id] !== 2) errors.push(`balance: ${id} is secondary ${secondary[id]}× (expected 2)`);
+    if ((primary[id] ?? 0) < 3) errors.push(`balance: ${id} is primary ${primary[id]}× (expected at least 3)`);
+    if ((secondary[id] ?? 0) < 2) errors.push(`balance: ${id} is secondary ${secondary[id]}× (expected at least 2)`);
   }
 
   // ---- P0 scope: reported as errors only when explicitly validating the P0 stage

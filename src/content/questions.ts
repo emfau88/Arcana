@@ -4,9 +4,12 @@ import type { QuestionContent } from './schema.ts';
  * Structure of the questionnaire: ids and weights only. The texts live in the content module
  * `identity` (question.<questionId>.prompt, question.<questionId>.<answerId>), loaded per locale.
  *
- * Four voluntary questions, four answers each. Every archetype is the primary (+2)
- * weight of exactly two answers and the secondary (+1) weight of exactly two answers,
- * so all eight are reachable and none is structurally favoured (tested).
+ * Questionnaire v2 (V04.1, QUESTIONNAIRE_VERSION 2): seven voluntary questions, four answers each.
+ * The first four are unchanged from v1 (same ids, same weights), so answers given in 0.1–0.3 keep
+ * their meaning. The weights of the three new questions were chosen by a search over all
+ * 4^7 = 16,384 answer combinations (tests/unit/archetypes.test.ts checks the result):
+ * every archetype is the main archetype in 10–15 % of the combinations, a complement exists in
+ * 40–70 % of them and all 56 main/complement pairs are reachable.
  */
 export const QUESTIONS: readonly QuestionContent[] = [
   {
@@ -43,6 +46,33 @@ export const QUESTIONS: readonly QuestionContent[] = [
       { id: 'a-direction', primary: 'seeker', secondary: 'creator' },
       { id: 'a-intuition', primary: 'visionary', secondary: 'renewer' },
       { id: 'a-heavy', primary: 'alchemist', secondary: 'guardian' },
+    ],
+  },
+  {
+    id: 'q-evening',
+    answers: [
+      { id: 'a-images', primary: 'visionary', secondary: 'wanderer' },
+      { id: 'a-walk', primary: 'alchemist', secondary: 'wanderer' },
+      { id: 'a-calm', primary: 'guardian', secondary: 'renewer' },
+      { id: 'a-read', primary: 'sage', secondary: 'seeker' },
+    ],
+  },
+  {
+    id: 'q-ease',
+    answers: [
+      { id: 'a-setback', primary: 'alchemist', secondary: 'seeker' },
+      { id: 'a-connect', primary: 'sage', secondary: 'visionary' },
+      { id: 'a-onward', primary: 'wanderer', secondary: 'renewer' },
+      { id: 'a-try', primary: 'creator', secondary: 'seeker' },
+    ],
+  },
+  {
+    id: 'q-change',
+    answers: [
+      { id: 'a-curious', primary: 'seeker', secondary: 'visionary' },
+      { id: 'a-shape', primary: 'creator', secondary: 'renewer' },
+      { id: 'a-hold', primary: 'guardian', secondary: 'visionary' },
+      { id: 'a-release', primary: 'renewer', secondary: 'wanderer' },
     ],
   },
 ];

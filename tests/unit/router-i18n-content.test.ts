@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { backTarget, parsePath } from '../../src/app/router.ts';
+import { backTarget, originOf, parsePath } from '../../src/app/router.ts';
 import { CONTENT } from '../../src/content/index.ts';
 import { validateContent } from '../../src/content/validate.ts';
 import { de } from '../../src/i18n/de.ts';
 import { en } from '../../src/i18n/en.ts';
 import { detectLocale, fmt, toRoman } from '../../src/i18n/index.ts';
+import { screensDe } from '../../src/i18n/screens.de.ts';
+import { screensEn } from '../../src/i18n/screens.en.ts';
 
 describe('router', () => {
   it('parses every route', () => {
@@ -19,6 +21,71 @@ describe('router', () => {
     expect(parsePath('#/grimoire/day/2026-11-26?from=/today').route).toEqual({ name: 'day', dateKey: '2026-11-26' });
     expect(parsePath('#/grimoire/reading/abc').route).toEqual({ name: 'reading', id: 'abc' });
     expect(parsePath('#/nope').route.name).toBe('notfound');
+  });
+
+  it('parses the V04 routes (IA §3: #/me, #/grimoire/archetypes, #/grimoire/journey, #/share/:template)', () => {
+    expect(parsePath('#/me').route).toEqual({ name: 'profile' });
+    expect(parsePath('#/profile').route).toEqual({ name: 'profile' });
+    expect(parsePath('#/me/settings').route).toEqual({ name: 'settings' });
+    expect(parsePath('#/me/other').route.name).toBe('notfound');
+    expect(parsePath('#/archetype/why?from=/me').route).toEqual({ name: 'why' });
+    expect(parsePath('#/reveal').route).toEqual({ name: 'archetype' });
+    expect(parsePath('#/archetype/x').route.name).toBe('notfound');
+    expect(parsePath('#/grimoire/archetypes').route).toEqual({ name: 'archetypes' });
+    expect(parsePath('#/grimoire/archetypes/sage').route).toEqual({ name: 'archetypeDetail', id: 'sage' });
+    expect(parsePath('#/grimoire/journey').route).toEqual({ name: 'journey' });
+    expect(parsePath('#/grimoire/review/week/2').route).toEqual({ name: 'review', kind: 'week', index: 2 });
+    expect(parsePath('#/grimoire/review/month/1').route).toEqual({ name: 'review', kind: 'month', index: 1 });
+    expect(parsePath('#/grimoire/review/week/0').route.name).toBe('notfound');
+    expect(parsePath('#/grimoire/review/year/1').route.name).toBe('notfound');
+    expect(parsePath('#/grimoire/chapter/2').route).toEqual({ name: 'chapter', id: '2' });
+    expect(parsePath('#/share/archetype').route).toEqual({ name: 'share', template: 'archetype', id: '' });
+    expect(parsePath('#/share/archetype/seeker').route).toEqual({ name: 'share', template: 'archetype', id: 'seeker' });
+    expect(parsePath('#/share/day').route.name).toBe('notfound');
+  });
+
+  it('leads back from the V04 screens to where they were opened', () => {
+    const back = (h: string) => backTarget(parsePath(h));
+    expect(back('#/me')).toBe('/today');
+    expect(back('#/me/settings')).toBe('/me');
+    expect(back('#/archetype?from=/me')).toBe('/me');
+    expect(back('#/archetype/why?from=/me')).toBe('/me');
+    expect(back('#/archetype/why?from=/archetype')).toBe('/archetype');
+    expect(back('#/archetype/why')).toBe('/me');
+    expect(back('#/grimoire/archetypes')).toBe('/grimoire');
+    expect(back('#/grimoire/archetypes?from=/me')).toBe('/me');
+    expect(back('#/grimoire/archetypes/sage?from=/grimoire/archetypes')).toBe('/grimoire/archetypes');
+    expect(back('#/grimoire/archetypes/sage?from=/me')).toBe('/me');
+    expect(back('#/grimoire/journey')).toBe('/grimoire');
+    expect(back('#/grimoire/journey?from=/today')).toBe('/today');
+    expect(back('#/grimoire/review/week/1?from=/grimoire/journey')).toBe('/grimoire/journey');
+    expect(back('#/grimoire/chapter/1')).toBe('/grimoire/journey');
+    expect(back('#/share/archetype?from=/me')).toBe('/me');
+    expect(back('#/share/archetype/sage?from=/grimoire/archetypes/sage')).toBe('/grimoire/archetypes/sage');
+    expect(back('#/grimoire/card/x?from=/grimoire/archetypes/sage')).toBe('/grimoire/archetypes/sage');
+    // Only archetype ids, no other paths smuggled in through the pattern.
+    expect(back('#/share/archetype?from=/grimoire/archetypes/sage/../../welcome')).toBe('/me');
+  });
+
+  it('carries the origin of the origin once, so two steps back end where the person started', () => {
+    const back = (h: string) => backTarget(parsePath(h));
+    // "Ich" → the eight archetypes → one of them: back, back → "Ich".
+    const library = parsePath('#/grimoire/archetypes?from=/me');
+    const detail = `#/grimoire/archetypes/sage?from=${originOf(library)}`;
+    expect(back(detail)).toBe('/grimoire/archetypes?from=/me');
+    expect(back(`#${back(detail)}`)).toBe('/me');
+    // Without an origin the plain path is passed on (readable URLs).
+    expect(originOf(parsePath('#/grimoire/journey'))).toBe('/grimoire/journey');
+    // "Heute" → journey → review → day page: back, back, back → "Heute".
+    const journey = parsePath('#/grimoire/journey?from=/today');
+    const review = parsePath(`#/grimoire/review/week/1?from=${originOf(journey)}`);
+    expect(backTarget(review)).toBe('/grimoire/journey?from=/today');
+    expect(back(`#/grimoire/day/2026-11-20?from=${originOf(review)}`)).toBe('/grimoire/review/week/1');
+    // Only one level, only known paths, nothing else in the inner query.
+    expect(back(`#/grimoire/archetypes/sage?from=${encodeURIComponent('/grimoire/archetypes?from=/welcome')}`)).toBe('/grimoire/archetypes');
+    expect(back(`#/grimoire/archetypes/sage?from=${encodeURIComponent('/grimoire/archetypes?from=/me&x=1')}`)).toBe('/grimoire/archetypes');
+    expect(back(`#/grimoire/archetypes/sage?from=${encodeURIComponent('/grimoire/archetypes?from=/grimoire/archetypes?from=/me')}`)).toBe('/grimoire/archetypes');
+    expect(back(`#/grimoire/archetypes/sage?from=${encodeURIComponent('/grimoire/archetypes?from=https://evil.example')}`)).toBe('/grimoire/archetypes');
   });
 
   it('defines back for every route (Android back and in-app back share it)', () => {
@@ -62,6 +129,16 @@ describe('i18n', () => {
   it('has no empty strings and matching placeholders', () => {
     const enMap = new Map(values(en as unknown as Tree));
     for (const [k, v] of values(de as unknown as Tree)) {
+      expect(v.trim(), `de.${k}`).not.toBe('');
+      expect(enMap.get(k)?.trim(), `en.${k}`).not.toBe('');
+      expect(placeholders(enMap.get(k)!), k).toEqual(placeholders(v));
+    }
+  });
+
+  it('has the same keys, no empty strings and matching placeholders in the on-demand screen texts', () => {
+    const enMap = new Map(values(screensEn as unknown as Tree));
+    expect(keys(screensEn as unknown as Tree).sort()).toEqual(keys(screensDe as unknown as Tree).sort());
+    for (const [k, v] of values(screensDe as unknown as Tree)) {
       expect(v.trim(), `de.${k}`).not.toBe('');
       expect(enMap.get(k)?.trim(), `en.${k}`).not.toBe('');
       expect(placeholders(enMap.get(k)!), k).toEqual(placeholders(v));

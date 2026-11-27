@@ -1,39 +1,72 @@
 import { useState } from 'react';
-import { navigate } from '../../app/router.ts';
+import { navigate, type ParsedRoute } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
+import { useModules } from '../../app/useModules.ts';
 import { getArchetype, resolveTheme } from '../../content/index.ts';
 import { ModuleLoadError } from '../../content/modules/registry.ts';
+import { QUESTIONNAIRE_VERSION } from '../../domain/archetypes.ts';
 import { LOCALES, type ArchetypeId, type Locale, type MotionPreference } from '../../domain/types.ts';
+import { useScreenText } from '../../i18n/screens.ts';
 import { fmt } from '../../i18n/index.ts';
 import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
 import { Flank } from '../../ui/Ornaments.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
+import { DetailHeader } from '../grimoire/Grimoire.tsx';
+import { ArchetypePortrait } from '../../ui/Portrait.tsx';
+import { ArchetypeProfile } from '../identity/Identity.tsx';
 
 export const APP_VERSION = '0.3.0';
+/** Gesehen-Markierung: the offer of questionnaire v2 was dismissed (E9, D-47). */
+export const OFFER_V2_KEY = 'offer:questionnaire-v2';
 
-export function Profile() {
-  const { t, pack, state, actions } = useApp();
+function useGuard() {
+  const { t } = useApp();
   const toast = useToast();
-  const locale = state.settings.locale;
-  const profile = state.profile;
-  const archetype = profile?.archetypeId ? getArchetype(pack, profile.archetypeId) : null;
-  const theme = resolveTheme(pack, profile?.themeId ?? pack.defaultTheme);
-  const [confirm, setConfirm] = useState(false);
-  const [choosing, setChoosing] = useState(false);
-  const manual = profile?.archetypeSource === 'manual';
-  const current = profile?.archetypeId ?? null;
-
-  const guard = async (fn: () => Promise<void>) => {
+  return async (fn: () => Promise<void>) => {
     try {
       await fn();
     } catch (e) {
       toast(e instanceof ModuleLoadError ? t.errors.contentLoad : t.errors.writeFailed, 'error');
     }
   };
+}
+
+/**
+ * "Ich" (V04.6, IA §3): the archetype pillar with portrait, second voice and the full profile.
+ * The numbers pillar joins in V06; until then nothing stands in for it (no dummies).
+ * Settings, privacy and version moved to their own page (#/me/settings).
+ */
+export function Profile() {
+  const { t, pack, state, actions, tx } = useApp();
+  const s = useScreenText();
+  const toast = useToast();
+  const guard = useGuard();
+  useModules(['archetypes']);
+  const locale = state.settings.locale;
+  const profile = state.profile;
+  const archetype = profile?.archetypeId ? getArchetype(pack, profile.archetypeId) : null;
+  const second = archetype && profile?.secondaryArchetypeId ? getArchetype(pack, profile.secondaryArchetypeId) : null;
+  const theme = resolveTheme(pack, profile?.themeId ?? pack.defaultTheme);
+  const [choosing, setChoosing] = useState(false);
+  const manual = profile?.archetypeSource === 'manual';
+  const current = profile?.archetypeId ?? null;
+  const answered = profile ? Object.keys(profile.answers).length : 0;
+  // E9: people who answered the shorter questionnaire are offered the new questions once; their
+  // profile stays as it is until they finish. Nothing changes if they dismiss it.
+  const offerV2 = profile !== null && answered > 0 && (profile.questionnaireVersion ?? 1) < QUESTIONNAIRE_VERSION && !state.seen.some((s) => s.key === OFFER_V2_KEY);
+  const complementText = second ? tx('archetypes', `complement.${second.id}`) : '';
 
   const redo = () => {
     actions.setPending(profile?.answers ?? {}, profile?.themeId ?? null);
     navigate('/onboarding/1');
+  };
+
+  /** Starts at the first unanswered question; earlier answers stay filled in. */
+  const answerNew = () => {
+    const answers = profile?.answers ?? {};
+    const first = pack.questions.findIndex((q) => answers[q.id] === undefined);
+    actions.setPending(answers, profile?.themeId ?? null);
+    navigate(`/onboarding/${first === -1 ? 1 : first + 1}`);
   };
 
   const pick = (id: ArchetypeId | null) =>
@@ -43,25 +76,8 @@ export function Profile() {
       toast(t.profile.archetypeSaved);
     });
 
-  const wipe = async () => {
-    setConfirm(false);
-    try {
-      await actions.clearAllData();
-      navigate('/welcome', { replace: true });
-      toast(t.profile.deleted);
-    } catch {
-      toast(t.errors.writeFailed, 'error');
-    }
-  };
-
-  const motions: { id: MotionPreference; label: string }[] = [
-    { id: 'system', label: t.profile.motionSystem },
-    { id: 'reduced', label: t.profile.motionReduced },
-    { id: 'full', label: t.profile.motionFull },
-  ];
-
   return (
-    <div className="screen profile">
+    <div className="screen profile me">
       <header className="screen-head">
         <Flank className="screen-head__flank">{t.profile.eyebrow}</Flank>
         <h1 className="display h1" tabIndex={-1}>
@@ -69,8 +85,12 @@ export function Profile() {
         </h1>
       </header>
 
-      <section className="panel panel--brass profile__archetype" aria-labelledby="prof-arch">
-        <Sigil archetype={profile?.archetypeId ?? null} size={92} />
+      <section className={`panel panel--brass profile__archetype${archetype ? ' me__pillar' : ''}`} aria-labelledby="prof-arch">
+        {archetype ? (
+          <ArchetypePortrait id={archetype.id} size={720} alt={fmt(s.me.portraitAlt, { name: archetype.name[locale] })} eager seal className="me__portrait" />
+        ) : (
+          <Sigil archetype={null} size={92} />
+        )}
         <div className="profile__archetype-text">
           <h2 id="prof-arch" className="panel__label">
             {t.profile.archetype}
@@ -79,31 +99,74 @@ export function Profile() {
           <p className="small">{archetype ? archetype.essence[locale] : t.archetype.neutralEyebrow}</p>
           {manual ? <p className="small profile__manual">{t.profile.manual}</p> : null}
         </div>
+
+        {second ? (
+          <div className="me__second">
+            <ArchetypePortrait id={second.id} size={240} alt="" className="me__second-portrait" />
+            <div className="me__second-text">
+              <p className="eyebrow">{s.me.secondVoice}</p>
+              <p className="display me__second-name">{second.name[locale]}</p>
+              {complementText ? <p className="small">{complementText}</p> : null}
+              <button type="button" className="text-link" onClick={() => navigate(`/grimoire/archetypes/${second.id}?from=/me`)}>
+                {s.me.readProfile} <span aria-hidden="true">›</span>
+              </button>
+            </div>
+          </div>
+        ) : archetype && !manual && profile?.secondaryArchetypeId === null ? (
+          <p className="small me__one-voice">{s.me.oneVoice}</p>
+        ) : null}
+
+        {archetype || answered > 0 ? (
+          <div className="me__links">
+            {answered > 0 ? (
+              <button type="button" className="btn btn--ghost" onClick={() => navigate('/archetype/why?from=/me')}>
+                {s.me.why}
+              </button>
+            ) : null}
+            {archetype ? (
+              <button type="button" className="btn btn--ghost" onClick={() => navigate('/share/archetype?from=/me')}>
+                {s.me.share}
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+
         <div className="profile__actions">
-          <button type="button" className="btn btn--ghost btn--block" onClick={() => navigate('/archetype?from=/profile')}>
+          <button type="button" className="btn btn--quiet btn--block" onClick={() => navigate('/archetype?from=/me')}>
             {t.profile.view}
           </button>
-          <button type="button" className="btn btn--ghost btn--block" onClick={redo}>
+          <button type="button" className="btn btn--quiet btn--block" onClick={redo}>
             {archetype || manual ? t.profile.redo : t.profile.determine}
           </button>
-          <button
-            type="button"
-            className="btn btn--ghost btn--block"
-            aria-expanded={choosing}
-            aria-controls="prof-choose"
-            onClick={() => setChoosing((v) => !v)}
-          >
+          <button type="button" className="btn btn--quiet btn--block" aria-expanded={choosing} aria-controls="prof-choose" onClick={() => setChoosing((v) => !v)}>
             {choosing ? t.profile.chooseClose : t.profile.choose}
           </button>
         </div>
       </section>
+
+      {offerV2 ? (
+        <section className="panel profile__offer" aria-labelledby="prof-offer">
+          <h2 id="prof-offer" className="panel__label">
+            {t.profile.offerTitle}
+          </h2>
+          <p className="small">{t.profile.offerBody}</p>
+          <div className="profile__actions">
+            <button type="button" className="btn btn--ghost btn--block" onClick={answerNew}>
+              {t.profile.offerStart}
+            </button>
+            <button type="button" className="btn btn--quiet btn--block" onClick={() => void guard(() => actions.markSeen(OFFER_V2_KEY))}>
+              {t.profile.offerLater}
+            </button>
+          </div>
+        </section>
+      ) : null}
 
       {choosing ? (
         <section id="prof-choose" className="profile__group" aria-labelledby="prof-choose-title">
           <h2 id="prof-choose-title" className="panel__label">
             {t.profile.chooseTitle}
           </h2>
-          <p className="small">{t.profile.chooseHint}</p>
+          <p className="small profile__hint">{t.profile.chooseHint}</p>
           <div className="choice-list" role="radiogroup" aria-labelledby="prof-choose-title">
             {pack.archetypes.map((a) => (
               <button key={a.id} type="button" role="radio" aria-checked={current === a.id} className="choice choice--sigil" onClick={() => pick(a.id)}>
@@ -125,20 +188,25 @@ export function Profile() {
         </section>
       ) : null}
 
+      {archetype ? (
+        <div className="profile__group">
+          <ArchetypeProfile id={archetype.id} from="/me" />
+        </div>
+      ) : null}
+
+      <div className="profile__group">
+        <button type="button" className="btn btn--ghost btn--block" onClick={() => navigate('/grimoire/archetypes?from=/me')}>
+          {s.me.library}
+        </button>
+      </div>
+
       <section className="profile__group" aria-labelledby="prof-theme">
         <h2 id="prof-theme" className="panel__label">
           {t.profile.theme}
         </h2>
         <div className="choice-list" role="radiogroup" aria-labelledby="prof-theme">
           {pack.themes.map((th) => (
-            <button
-              key={th.id}
-              type="button"
-              role="radio"
-              aria-checked={theme === th.id}
-              className="choice"
-              onClick={() => void guard(() => actions.setTheme(th.id))}
-            >
+            <button key={th.id} type="button" role="radio" aria-checked={theme === th.id} className="choice" onClick={() => void guard(() => actions.setTheme(th.id))}>
               <span className="choice__mark" aria-hidden="true" />
               <span className="choice__text">
                 <span>{th.label[locale]}</span>
@@ -150,10 +218,58 @@ export function Profile() {
         <p className="small">{t.profile.themeNote}</p>
       </section>
 
-      <section className="profile__group" aria-labelledby="prof-settings">
-        <h2 id="prof-settings" className="panel__label">
+      <div className="profile__group">
+        <button type="button" className="row-link" onClick={() => navigate('/me/settings')}>
+          <span className="row-link__text">
+            <span>{t.profile.settings}</span>
+            <span className="small">
+              {t.profile.language} · {t.profile.motion} · {t.profile.privacy}
+            </span>
+          </span>
+          <span aria-hidden="true">›</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------- Settings */
+
+export function Settings({ parsed }: { parsed: ParsedRoute }) {
+  const { t, pack, state, actions } = useApp();
+  const toast = useToast();
+  const guard = useGuard();
+  const locale = state.settings.locale;
+  const [confirm, setConfirm] = useState(false);
+
+  const wipe = async () => {
+    setConfirm(false);
+    try {
+      await actions.clearAllData();
+      navigate('/welcome', { replace: true });
+      toast(t.profile.deleted);
+    } catch {
+      toast(t.errors.writeFailed, 'error');
+    }
+  };
+
+  const motions: { id: MotionPreference; label: string }[] = [
+    { id: 'system', label: t.profile.motionSystem },
+    { id: 'reduced', label: t.profile.motionReduced },
+    { id: 'full', label: t.profile.motionFull },
+  ];
+
+  return (
+    <div className="screen detail profile settings">
+      <DetailHeader parsed={parsed} />
+      <header className="screen-head">
+        <Flank className="screen-head__flank">{t.profile.title}</Flank>
+        <h1 className="display h1" tabIndex={-1}>
           {t.profile.settings}
-        </h2>
+        </h1>
+      </header>
+
+      <section className="profile__group" aria-label={t.profile.settings}>
         <div className="panel profile__settings">
           <div className="setting">
             <span className="setting__label" id="set-lang">

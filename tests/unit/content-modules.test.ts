@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { CONTENT } from '../../src/content/index.ts';
 import { loadModule, loadModules, registeredModules, STARTUP_MODULES, text } from '../../src/content/modules/registry.ts';
 import { MODULE_RULES, validateModule, type ModuleRules } from '../../src/content/modules/validate.ts';
+import { ARCHETYPE_ORDER } from '../../src/domain/types.ts';
 
 describe('content modules', () => {
   it('every registered module passes the gate in both languages', async () => {
@@ -38,7 +39,9 @@ describe('content modules', () => {
     const report = validateModule('identity', MODULE_RULES.identity, CONTENT, { de: {}, en: {} });
     expect(report.errors).toContain('identity/de: missing question.q-calling.prompt');
     expect(report.errors).toContain('identity/en: missing question.q-calling.prompt');
-    expect(report.errors.length).toBe(2 * 20);
+    expect(report.errors).toContain('identity/de: missing lens.seeker.major-00-fool');
+    // Two locales × (prompt + four answers per question + one lens per archetype × card).
+    expect(report.errors.length).toBe(2 * (CONTENT.questions.length * 5 + ARCHETYPE_ORDER.length * CONTENT.cards.length));
   });
 
   it('finds missing translations, unknown keys, empty and forbidden texts', async () => {

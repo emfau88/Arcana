@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 fertig auf `feature/v03-fundament` (Version 0.3.0), Pull Request nach `main` wartet auf Freigabe; B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft gestapelt auf `feature/v04-identitaet`. E9 und E20 entschieden (D-47).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1–V04.5 und V04.7 fertig (B-07 mit Variante B, D-59; B-13 und B-14 behoben, S-30, S-31); V04.6 wartet auf die Durchsicht. V05 beginnt erst nach V04 (D-60). Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -73,23 +73,61 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 - [x] **V03.5 Globales Designsystem** (2/4, zwei Punkte per Eigentümer-Ausnahme verschoben, D-52)
   - [x] V02-Bausteine auf Orakel, Grimoire, Profil, Onboarding, Einstellungen (Flanken-Überschriften, gedämpfte Nachtwelt, D-50); Tageskarte zu 90 % (D-51)
   - [x] Screenshot-Review 360/390/412, DE/EN, 130 % Schrift, keine Überläufe (Desktop kein Kriterium, D-52; Orakel-Positionen bei 130 % behoben, B-10)
-  - [ ] Mindestkontrast ≥ 4,5:1 für jeden Lesetext: alle Screens außer „Heute“ erfüllt; B-07 (Fußzeile über den Lilien) → **V04.3** (D-49, D-52)
+  - [x] Mindestkontrast ≥ 4,5:1 für jeden Lesetext: alle Screens außer „Heute“ erfüllt; B-07 (Fußzeile über den Lilien) → **V04.3** (D-49, D-52), dort mit Variante B behoben (D-59)
   - [ ] Absolute Perf-Grenzen: B-08 unsichtbar verbessert (normiert ≈ 1.168 ms, D-50); Messung gegen die Referenz → **vor QG-V05** (D-52). Android-Kaltstart 1,58 s ≤ 3,0 s
-- [ ] **QG-V03** (2/3, mit den Ausnahmen aus D-52)
+- [x] **QG-V03** (3/3, mit den Ausnahmen aus D-52)
   - [x] `npm run check` (118 Unit-Tests, Build im Budget) und alle E2E grün (20 bestanden)
   - [x] Android-Debug-Build 0.3.0 startet und migriert einen 0.2.0-Datenbestand: 9/9 PASS, jeder Datensatz unverändert (`scripts/android-migration.mjs`)
-  - [ ] Pull Request, Freigabe, Tag `v0.3.0`
+  - [x] Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Freigabe (27.11.2026), Merge `2f1e1de`, Tag `v0.3.0`
 
-### V04 · Identität und Reise (0.4)
+### V04 · Identität und Reise (0.4) · Branch `feature/v04-identitaet`
 
-- [ ] V04.1 Fragebogen v2 (E9)
-- [ ] V04.2 Enthüllung und Profil
-- [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49)
-- [ ] V04.4 Narrenreise und Meilensteine
-- [ ] V04.5 Sternkarte und Rückblicke
-- [ ] V04.6 „Ich“ und Gestaltung
-- [ ] V04.7 Teilen-Kern und Archetypkarte (E20)
-- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`
+- [x] V04.1 Fragebogen v2 (E9) (6/6, D-53)
+  - [x] 7 Fragen, Punktmodell +2/+1, die ersten vier unverändert; Texte DE/EN
+  - [x] Haupt- und Ergänzungsarchetyp: Ergänzung bei höchstens 1 Punkt Abstand ab 4 Antworten statt 60 % (D-53, S-01), `questionnaireVersion`, `scores`
+  - [x] Balance-Test über alle 16.384 Kombinationen: Haupt 11,3–14,2 %, Ergänzung 65,6 % (ohne 34,4 %), alle 56 Paare erreichbar
+  - [x] Ablauf ≤ 75 s: gemessene App-Zeit 2,7 s + 7 × 8 s Lesezeit = 58,7 s (E2E)
+  - [x] Bestehende Profile bleiben gültig, Angebot zum Neubestimmen im Profil, kein Zwang (E9, Unit + E2E)
+  - [x] Prüfskripte (Evidence, Perf, Showcase, Android) beantworten die Fragen bis zur Themenwahl statt fest vier, damit sie gegen die Referenz und gegen V04 laufen
+- [x] V04.2 Enthüllung und Profil (6/6)
+  - [x] „Warum?“ als Rechnung: eigene Antworten mit +2/+1, Summen in der Rangfolge der Regel, Grund für (keine) zweite Stimme; stimmt für alle 16.384 Kombinationen mit dem Ergebnis überein (Unit)
+  - [x] Ausführliche Profile DE/EN im Modul `archetypes`: Beschreibung 120–180 Wörter, 3 Stärken, Schattenfragen, Entwicklung, Reflexionsfragen, Enthüllungssatz, Text als zweite Stimme (Edition-Texte erst mit Billing, S-15)
+  - [x] Resonanz je Archetyp (3 Karten, 3 Symbole) geprüft: jede Karte zugeordnet, nur Tod und Stern doppelt (S-12)
+  - [x] Porträt-Enthüllung (4,3 s, überspringbar, reduziert statisch: Knopf nach ≤ 800 ms, E2E) und „Warum?“-Ansicht (8 Summen, 7 Antworten, E2E) als Vorschlag (D-57, S-17)
+  - [x] Alle acht Archetypen lesbar: Bibliothek im Grimoire und auf „Ich“, eigener Archetyp und zweite Stimme markiert (E2E)
+  - [x] Enthüllung ≥ 50 fps auf dem Referenz-Emulator: nach S-31 56,6–58,8 fps in 7 von 7 Läufen (kalt gestarteter Emulator); vorher 52,4–58,0 fps mit zwei langen Frames beim Wechsel. Ein langer Frame beim Bildschirmwechsel bleibt wie bei jedem Wechsel auf einen bildreichen Screen (B-13, echtes Gerät in V07.5)
+- [x] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49) (5/5)
+  - [x] Linse je Archetyp × Karte: 176 Sätze DE/EN im Modul `identity`, Content-Gate (ein Satz, 12–28 Wörter, abwechslungsreiche Anfänge)
+  - [x] Ergänzungslinse jeden dritten Reisetag, Varianten-Index und Ergänzung im Datensatz; frühere Tageskarten zeigen ihren alten Text (D-09, Unit, S-11)
+  - [x] Hinweis-Logik A6: höchstens ein Hinweis pro Tag, Meilenstein vor Kartenstufe vor Welt, nur für vorhandene Inhalte (Unit, S-11)
+  - [x] B-07 Kontrast der Fußzeile: Varianten A (Lilien dunkler), B (Panel), C (Ecken beim Scrollen ausblenden) als Screenshots bei 100 % und 130 % Schrift; nur B besteht beide (`visual/evidence/v04-b07-varianten.webp`)
+  - [x] B-07: gewählte Variante einbauen: B, Panel unter der Fußzeile (D-59); kein Lesetext unter 4,5:1 (`visual/evidence/v04-b07-panel-de-360.webp`)
+- [x] V04.4 Narrenreise und Meilensteine (5/5, D-54)
+  - [x] 63 Stationen, 9 Wegeinführungen, 4 Rundenabschlüsse, 20 Meilensteintexte DE/EN im Modul `journey`
+  - [x] Tabellen-Test Reisetag 1–400: genau eine Station, richtige Wegeinführung, Rundenabschluss und Meilensteintext
+  - [x] Content-Gate: keine Druckwörter, kein Countdown
+  - [x] Reisetexte: Eigentümer 27.11.2026 „nach eigenem Ermessen“, Feinschliff im Lektorat (S-02)
+  - [x] Meilenstein-Moment auf „Heute“ und „Neu“-Markierungen im Grimoire als Vorschlag (D-57, S-20; E2E: „Neu“ verschwindet nach dem Öffnen)
+- [x] V04.5 Sternkarte und Rückblicke (5/5)
+  - [x] Wochen- und Monatsrückblick aus eigenen Daten über Reisetage; mit 0, 1 und 30 Einträgen ohne Lücken (Unit)
+  - [x] 40 Rückblick-Bausteine DE/EN im Modul `journey`, deterministisch gewählt, Platzhalter geprüft
+  - [x] Archetyp-Kapitel I–IV und Kapitel „Zwei Stimmen“ (8 × 5 je Sprache, 150–250 Wörter) im Modul `chapters` (S-13)
+  - [x] Sternkarte (SVG auf A19) mit Liste als Textalternative; 400 Tage beim Scrollen mit 4× CPU-Drosselung: Median 16,7 ms, p95 16,8 ms, Maximum 16,8 ms Abstand zwischen Frames, also jeder Frame im 60-Hz-Takt (16,7 ms), kein ausgelassener Frame
+  - [x] Rückblick- und Kapitelansicht als Vorschlag (D-57, S-26; E2E: Wochenrückblick zitiert die eigene Notiz, zeigt 7 Karten)
+- [ ] V04.6 „Ich“ und Gestaltung (4/5)
+  - [x] Profil wird „Ich“: Archetyp, zweite Stimme, Wahl von Hand, Profil, Bibliothek, Teilen; Einstellungen auf eigener Unterseite (S-18); Zahlen-Säule erst in V06
+  - [x] Welten A05 (Ich, Enthüllung, abgedunkelt bei „Warum?“ und Teilen), A06 (Willkommen, Fragen, abgedunkelt, S-27), A19 (Reise, Rückblick, Kapitel)
+  - [x] Bildbudget ≤ 600 KB je Screen: schwerster Screen 364 KB
+  - [x] Erste Sitzung bis zur Karte ≤ 90 s (E2E-Pfad, Fragebogen 58,7 s); Kontrast aller Lesetexte ≥ 4,5:1 bei 360/390/412 px DE/EN und 130 % Schrift (B-07 behoben, D-59)
+  - [ ] Screenshot-Review durch den Eigentümer (`SELF_DECISIONS.md`, Nachprüfen)
+- [x] V04.7 Teilen-Kern und Archetypkarte (E20) (6/6)
+  - [x] `ShareModel` ohne private Felder: Typ-Test schlägt fehl, sobald Antworten, Scores, Notizen oder Geburtsdatum hinzukommen; Schlüssel-Whitelist zur Laufzeit (Unit)
+  - [x] Vorlage J2 in Story 1080 × 1920 und Feed 1080 × 1350: alle acht Archetypen DE/EN passen, Branding ≤ 6 %, Text ≥ 4,5:1 auf undurchsichtiger Fläche (Unit)
+  - [x] Canvas-Renderer mit den gebündelten Schriften, System-Teilen: Capacitor Share mit Datei aus dem App-Cache, Web Share mit Datei, Download als Ersatz (S-16)
+  - [x] Einstieg aus Enthüllung und „Ich“ als Vorschlag (D-57); Vorschau als Data-URL bei strenger CSP (S-24); Bildvergleichstest je Sprache (S-28); im Browser Story 75–312 ms, Feed ≈ 50 ms
+  - [x] Teilen-Blatt des Systems öffnet sich offline mit der Bilddatei (Emulator, 8 von 8 Läufen; geschlossen ohne Ziel, nichts geteilt)
+  - [x] Export ≤ 1,5 s auf dem Referenz-Emulator: nach S-30 (PNG-Kodierung im Worker) in 7 von 7 Läufen, Story 0,23–0,64 s, Beitrag 0,09–0,14 s, auch direkt nach dem Fragebogen und offline nach dem Kaltstart; vorher in 4 von 19 Läufen ≈ 13,3 s (B-14)
+- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) offen; Funktion PASS, offen sind die Durchsicht und die Pages-Vorschau (nach Freigabe)
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 
@@ -130,7 +168,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 ### Bilder (Bulks, §5)
 
 - [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
-- [ ] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19 (für V04, kann jetzt angefordert werden)
+- [x] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19: geliefert (11/11), als WebP im Budget, eingebaut in `public/` und im Layout geprüft (Beschnitt, Kontrast, D-58)
 - [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04)
 - [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
 - [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)
@@ -207,7 +245,7 @@ Stand und offene Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentü
 
 | Bulk | Arbeit | Fertig, wenn |
 |---|---|---|
-| V04.1 Fragebogen v2 | 7 Fragen, Punktmodell (+2/+1), Haupt- und Ergänzungsarchetyp (≥ 60 %), `questionnaireVersion` | Balance-Test über alle 16.384 Kombinationen: jeder Archetyp ist Haupt in 10–15 % der Fälle. Ergänzung in 40–70 %. Ablauf ≤ 75 s (E2E mit Zeitmessung bei 8 s pro Frage). Bestehende Profile bleiben gültig (Angebot zum Neubestimmen, kein Zwang, E9) |
+| V04.1 Fragebogen v2 | 7 Fragen, Punktmodell (+2/+1), Haupt- und Ergänzungsarchetyp (Ergänzung bei ≤ 1 Punkt Abstand ab 4 Antworten, D-53; ursprünglich ≥ 60 %), `questionnaireVersion` | Balance-Test über alle 16.384 Kombinationen: jeder Archetyp ist Haupt in 10–15 % der Fälle. Ergänzung in 40–70 %. Ablauf ≤ 75 s (E2E mit Zeitmessung bei 8 s pro Frage). Bestehende Profile bleiben gültig (Angebot zum Neubestimmen, kein Zwang, E9) |
 | V04.2 Enthüllung und Profil | Porträt-Enthüllung (≤ 8 s, überspringbar, reduziert statisch), „Warum?“, ausführliches Profil, alle acht lesbar | Enthüllung ≥ 50 fps auf dem Referenz-Emulator. Reduzierte Bewegung ohne Animation (E2E). „Warum?“ entspricht der Rechnung (Snapshot) |
 | V04.3 Heute erweitert | Linse je Archetyp × Karte, Ergänzungslinse jeden dritten Tag, Varianten-Indizes im Datensatz, Hinweis-Logik (A6) | Gespeicherte Tageskarten früherer Versionen zeigen weiter ihren alten Text (D-09). Höchstens ein Hinweis pro Tag (Unit) |
 | V04.4 Narrenreise und Meilensteine | 63 Stationen, Wege, Meilensteintabelle, Meilenstein-Moment, „Neu“-Markierungen | Für Reisetage 1–400 liefert jeder Tag genau eine Station und die richtigen Meilensteine (Tabellen-Test). Kein Text enthält Druckwörter (Content-Gate) |

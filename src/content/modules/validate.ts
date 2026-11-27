@@ -3,7 +3,11 @@
  * lengths, sentence counts, questions, forbidden phrasing (global + per module), placeholders and
  * varied openings. Pure; used by `npm run validate:content` and the unit tests.
  */
-import { LOCALES, type Locale } from '../../domain/types.ts';
+import { journeyTextKeys } from '../../domain/journey.ts';
+import { REVIEW_BLOCK_VARS, reviewTextKeys } from '../../domain/review.ts';
+import { archetypeKeys } from './archetype-keys.ts';
+import { chapterKeys } from './chapter-keys.ts';
+import { ARCHETYPE_ORDER, LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
 import type { ContentPack } from '../schema.ts';
 import type { ModuleId, TextTable } from './registry.ts';
@@ -19,6 +23,8 @@ export interface KeyRule {
   question?: boolean;
   /** Texts of one group must not share their first three words too often (§2 "Abwechslung"). */
   group?: string;
+  /** Placeholders the text must contain, e.g. ['theme'] for `{theme}` (all others stay errors). */
+  vars?: readonly string[];
 }
 
 export interface ModuleRules {
@@ -58,15 +64,74 @@ export const FORBIDDEN_PRESSURE: readonly RegExp[] = [
   /last chance/i,
   /don[’']t forget/i,
   /only \d+ (more|left)/i,
+  // No countdown to the next station or milestone (PROGRESSION_DESIGN §3.4).
+  /\bnoch \d+\b/i,
+  /\bin \d+ Tagen\b/i,
+  /\bin \d+ days\b/i,
+  /\b\d+ (more )?days? (left|to go)\b/i,
+];
+
+/** Rituals and suggestions name only what everyone has (§2, §7 "Rituale"): no fire, smoke, substances, purchases. */
+export const FORBIDDEN_RITUAL: readonly RegExp[] = [
+  /Kerze/i,
+  /Feuer/i,
+  /Räucher/i,
+  /Salbei/i,
+  /Kristall/i,
+  /\bFasten\b/,
+  /candle/i,
+  /\bfire\b/i,
+  /incense/i,
+  /\bcrystals?\b/i,
+  /\bfasting\b/i,
 ];
 
 export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
   identity: {
-    required: (pack) => pack.questions.flatMap((q) => [`question.${q.id}.prompt`, ...q.answers.map((a) => `question.${q.id}.${a.id}`)]),
+    required: (pack) => [
+      ...pack.questions.flatMap((q) => [`question.${q.id}.prompt`, ...q.answers.map((a) => `question.${q.id}.${a.id}`)]),
+      // V04.3: one lens per archetype × card (PRODUCT_SYSTEMS A3).
+      ...ARCHETYPE_ORDER.flatMap((a) => pack.cards.map((c) => `lens.${a}.${c.id}`)),
+    ],
     rules: [
       { pattern: /^question\.[a-z0-9-]+\.prompt$/, maxLen: 90 },
       { pattern: /^question\.[a-z0-9-]+\.[a-z0-9-]+$/, maxLen: 70 },
+      { pattern: /^lens\.[a-z]+\.major-\d{2}-[a-z-]+$/, maxLen: 190, sentences: [1, 1], words: [12, 28], group: 'lens' },
     ],
+  },
+  archetypes: {
+    required: () => archetypeKeys(),
+    rules: [
+      { pattern: /^description\.[a-z]+$/, maxLen: 1300, words: [120, 180], sentences: [6, 14] },
+      { pattern: /^strength\.[a-z]+\.[1-3]$/, maxLen: 200, sentences: [1, 3], group: 'strength' },
+      { pattern: /^shadow\.[a-z]+\.[2-3]$/, maxLen: 160, question: true },
+      { pattern: /^growth\.[a-z]+\.2$/, maxLen: 160, sentences: [1, 1] },
+      { pattern: /^reflection\.[a-z]+\.[2-5]$/, maxLen: 120, question: true, group: 'reflection' },
+      { pattern: /^reveal\.[a-z]+$/, maxLen: 160, sentences: [1, 2] },
+      { pattern: /^complement\.[a-z]+$/, maxLen: 200, sentences: [1, 2] },
+      { pattern: /^symbol\.[a-z]+$/, maxLen: 30 },
+    ],
+    forbidden: FORBIDDEN_RITUAL,
+  },
+  journey: {
+    required: () => [...journeyTextKeys(), ...reviewTextKeys()],
+    rules: [
+      { pattern: /^station\.(?:[1-9]|1\d|2[01])\.(?:encounter|return|wisdom)$/, maxLen: 220, sentences: [2, 3], group: 'station' },
+      { pattern: /^path\.(?:outer|inner|higher)\.[1-3]$/, maxLen: 220, sentences: [2, 3] },
+      { pattern: /^round\.(?:[1-3]|later)\.close$/, maxLen: 220, sentences: [2, 3] },
+      { pattern: /^milestone\.(?:day\.\d+|week|month|jubilee|year)$/, maxLen: 220, sentences: [1, 3], group: 'milestone' },
+      // V04.5 review building blocks: one group, so openings stay varied across all 40.
+      { pattern: /^review\.theme\.\d$/, maxLen: 120, sentences: [1, 2], vars: REVIEW_BLOCK_VARS.theme, group: 'review' },
+      { pattern: /^review\.recurring\.\d$/, maxLen: 120, sentences: [1, 2], vars: REVIEW_BLOCK_VARS.recurring, group: 'review' },
+      { pattern: /^review\.notes\.\d$/, maxLen: 60, group: 'review' },
+      { pattern: /^review\.(?:open\.(?:week|month)|balance\.(?:light|twilight|shadow|even)|quiet|close)\.\d$/, maxLen: 160, sentences: [1, 2], group: 'review' },
+    ],
+    forbidden: FORBIDDEN_PRESSURE,
+  },
+  chapters: {
+    required: () => chapterKeys(),
+    rules: [{ pattern: /^chapter\.[a-z]+\.(?:[1-4]|second-voice)$/, maxLen: 1900, words: [150, 250], sentences: [7, 22], group: 'chapter' }],
+    forbidden: [...FORBIDDEN_PRESSURE, ...FORBIDDEN_RITUAL],
   },
 };
 
@@ -119,7 +184,11 @@ export function validateModule(id: ModuleId, rules: ModuleRules | undefined, pac
         continue;
       }
       if (v !== v.trim()) warnings.push(`${where}: leading/trailing whitespace`);
-      if (PLACEHOLDER.test(v)) errors.push(`${where}: placeholder text`);
+      // Declared placeholders are filled at runtime; any other {x} stays a placeholder error.
+      const allowed = rule.vars ?? [];
+      const unfilled = allowed.length ? v.replace(/\{(\w+)\}/g, (m, k: string) => (allowed.includes(k) ? '' : m)) : v;
+      if (PLACEHOLDER.test(unfilled)) errors.push(`${where}: placeholder text`);
+      for (const k of allowed) if (!v.includes(`{${k}}`)) errors.push(`${where}: missing {${k}}`);
       for (const f of forbidden) if (f.test(v)) errors.push(`${where}: forbidden phrasing ${f}`);
       if (rule.maxLen && v.length > rule.maxLen) warnings.push(`${where}: ${v.length} > ${rule.maxLen} chars`);
       if (rule.sentences) {

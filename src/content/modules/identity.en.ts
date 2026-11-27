@@ -1,4 +1,5 @@
-/** Module identity, English. Questionnaire (moved from core in V03.3; v2 follows in V04.1). */
+/** Module identity, English. Questionnaire v2 with seven questions (V04.1; the first four moved from core in V03.3). */
+import { lensTexts } from './identity-lens.en.ts';
 import type { TextTable } from './registry.ts';
 
 export const texts: TextTable = {
@@ -22,4 +23,20 @@ export const texts: TextTable = {
   'question.q-invite.a-direction': 'Clarity about my own direction',
   'question.q-invite.a-intuition': 'Courage to follow my intuition',
   'question.q-invite.a-heavy': 'The strength to transform what feels heavy',
+  'question.q-evening.prompt': 'How do you settle at the end of a full day?',
+  'question.q-evening.a-images': 'I let images rise and carry me far away',
+  'question.q-evening.a-walk': 'I walk a while until the heaviness settles',
+  'question.q-evening.a-calm': 'I make myself a quiet space and let the day go',
+  'question.q-evening.a-read': 'I read or follow a question of mine',
+  'question.q-ease.prompt': 'What comes easily to you when you are fully yourself?',
+  'question.q-ease.a-setback': 'Turning a setback into a new question',
+  'question.q-ease.a-connect': 'Seeing connections and thinking them through calmly',
+  'question.q-ease.a-onward': 'Moving on when something has come to an end',
+  'question.q-ease.a-try': 'Trying out a vague idea until it takes shape',
+  'question.q-change.prompt': 'When something in your life changes …',
+  'question.q-change.a-curious': '… I grow curious and watch for the first signs',
+  'question.q-change.a-shape': '… I help shape the new beginning',
+  'question.q-change.a-hold': '… I sense who needs something to hold on to',
+  'question.q-change.a-release': '… I let go of the old and walk on',
+  ...lensTexts,
 };

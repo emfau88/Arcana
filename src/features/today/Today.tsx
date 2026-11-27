@@ -6,7 +6,10 @@ import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
 import { cardKeywords } from '../../content/keywords.ts';
 import { dateFromKey } from '../../domain/clock.ts';
 import { deriveCollection, journeyPosition } from '../../domain/oracle.ts';
+import { lensArchetypeOf } from '../../domain/lens.ts';
 import { journeyDayToday } from '../../domain/progress.ts';
+import { milestoneMoment } from '../../domain/unlocks.ts';
+import { MilestoneMoment } from '../journey/MilestoneMoment.tsx';
 import { fmt, formatLongDate, toRoman } from '../../i18n/index.ts';
 import { useToast } from '../../ui/feedback.tsx';
 import { IconCandle, IconCheck, IconEye, IconQuill, IconSparkle } from '../../ui/Icons.tsx';
@@ -116,6 +119,8 @@ export function Today() {
   const themeId = today?.themeId ?? resolveTheme(pack, state.profile?.themeId ?? pack.defaultTheme);
   const themeLabel = today ? today.content.themeLabel : getTheme(pack, themeId).label[locale];
   const card = today ? findCard(pack, today.cardId) ?? null : null;
+  // V04.3: on complement days the lens (and its sigil) belongs to the second voice.
+  const lensArchetype = today ? lensArchetypeOf(today) : null;
   const faceUp = phase === 'flipping' || phase === 'shown';
   const collection = deriveCollection(state.dailies, state.readings);
   // Today counts as a day of the journey as soon as the person is here, once (E6: never decreases).
@@ -139,6 +144,8 @@ export function Today() {
     />
   );
   const keywords = card ? cardKeywords(card)?.[locale] : undefined;
+  // A6: the milestone of the day reached today, once, when it opened something in this build.
+  const moment = milestoneMoment({ dailies: state.dailies, readings: state.readings }, today !== null, state.seen);
 
   /** "Continue your journey": the next content is the full message of the day. */
   const continueJourney = () => {
@@ -234,6 +241,7 @@ export function Today() {
               {t.today.continueJourney} <span aria-hidden="true">›</span>
             </button>
           </div>
+          {moment ? <MilestoneMoment milestone={moment.milestone} rewards={moment.rewards} /> : null}
           {deepReady ? (
             <>
               <div className="panel-stack today__deep">
@@ -245,11 +253,11 @@ export function Today() {
                     <p className="today__message">{today.content.message}</p>
                   </OrnatePanel>
                 </section>
-                {today.content.lens && today.archetypeId ? (
+                {today.content.lens && lensArchetype ? (
                   <section className="panel today__lens">
-                    <Sigil archetype={today.archetypeId} size={44} />
+                    <Sigil archetype={lensArchetype} size={44} />
                     <div>
-                      <h3 className="panel__label">{t.today.lens}</h3>
+                      <h3 className="panel__label">{lensArchetype === today.archetypeId ? t.today.lens : t.today.lensComplement}</h3>
                       <p>{today.content.lens}</p>
                     </div>
                   </section>
@@ -289,12 +297,14 @@ export function Today() {
                 </button>
               </div>
               <CrescentDivider />
-              <p className="small today__footer">{t.today.journeyNote}</p>
-              <p className="small today__footer">{t.today.comeBack}</p>
-              <p className="small today__footer">{t.common.symbolic}</p>
-              {today.locale !== locale ? (
-                <p className="small today__footer">{fmt(t.today.storedLocale, { lang: t.languages[today.locale] })}</p>
-              ) : null}
+              <div className="today__footer-panel">
+                <p className="small today__footer">{t.today.journeyNote}</p>
+                <p className="small today__footer">{t.today.comeBack}</p>
+                <p className="small today__footer">{t.common.symbolic}</p>
+                {today.locale !== locale ? (
+                  <p className="small today__footer">{fmt(t.today.storedLocale, { lang: t.languages[today.locale] })}</p>
+                ) : null}
+              </div>
             </>
           ) : null}
         </article>

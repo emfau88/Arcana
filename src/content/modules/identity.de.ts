@@ -1,4 +1,5 @@
-/** Modul identity, Deutsch. Fragebogen (V03.3 aus core übernommen; v2 folgt in V04.1). */
+/** Modul identity, Deutsch. Fragebogen v2 mit sieben Fragen (V04.1; die ersten vier seit V03.3 aus core) und Linse je Archetyp × Karte (V04.3). */
+import { lensTexts } from './identity-lens.de.ts';
 import type { TextTable } from './registry.ts';
 
 export const texts: TextTable = {
@@ -22,4 +23,20 @@ export const texts: TextTable = {
   'question.q-invite.a-direction': 'Klarheit über meine eigene Richtung',
   'question.q-invite.a-intuition': 'Mut, meiner Intuition zu folgen',
   'question.q-invite.a-heavy': 'Die Kraft, Schweres zu verwandeln',
+  'question.q-evening.prompt': 'Wie findest du am Ende eines vollen Tages zur Ruhe?',
+  'question.q-evening.a-images': 'Ich lasse Bilder aufsteigen und mich in die Ferne tragen',
+  'question.q-evening.a-walk': 'Ich gehe ein Stück, bis sich das Schwere legt',
+  'question.q-evening.a-calm': 'Ich schaffe mir einen ruhigen Raum und lasse den Tag los',
+  'question.q-evening.a-read': 'Ich lese oder gehe einer Frage nach',
+  'question.q-ease.prompt': 'Was gelingt dir, wenn du ganz bei dir bist?',
+  'question.q-ease.a-setback': 'Aus einem Rückschlag eine neue Frage machen',
+  'question.q-ease.a-connect': 'Zusammenhänge erkennen und in Ruhe durchdenken',
+  'question.q-ease.a-onward': 'Weiterziehen, wenn etwas zu Ende gegangen ist',
+  'question.q-ease.a-try': 'Eine vage Idee ausprobieren, bis sie Form annimmt',
+  'question.q-change.prompt': 'Wenn sich in deinem Leben etwas verändert …',
+  'question.q-change.a-curious': '… werde ich neugierig und achte auf erste Zeichen',
+  'question.q-change.a-shape': '… gestalte ich den neuen Anfang mit',
+  'question.q-change.a-hold': '… spüre ich, wer gerade Halt braucht',
+  'question.q-change.a-release': '… lasse ich Altes los und gehe weiter',
+  ...lensTexts,
 };

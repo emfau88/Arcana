@@ -1,6 +1,7 @@
 import { getArchetype, getCard, getTheme, resolveTheme } from '../content/index.ts';
 import type { ContentPack } from '../content/schema.ts';
 import { localDateKey, type Clock } from './clock.ts';
+import { LENS_VARIANT, lensSourceForDay } from './lens.ts';
 import { drawWithoutReplacement, newId, type Rng } from './random.ts';
 import {
   POSITIONS,
@@ -36,6 +37,8 @@ export function composeDaily(
   themeId: ThemeId,
   archetypeId: ArchetypeId | null,
   locale: Locale,
+  /** Rendered lens (V04.3). Undefined = the archetype's general lens from core (before V04.3). */
+  lens?: string | null,
 ): DailyContent {
   const card = getCard(pack, cardId);
   const theme = resolveTheme(pack, themeId);
@@ -47,7 +50,7 @@ export function composeDaily(
     cardTitle: card.title[locale],
     essence: card.essence[locale],
     message,
-    lens: archetypeId ? getArchetype(pack, archetypeId).lens[locale] : null,
+    lens: lens !== undefined ? lens : archetypeId ? getArchetype(pack, archetypeId).lens[locale] : null,
     reflection: card.reflection[locale],
     ritual: card.ritual[locale],
     themeLabel: getTheme(pack, theme).label[locale],
@@ -62,6 +65,17 @@ export interface DailyInput {
   archetypeId: ArchetypeId | null;
   locale: Locale;
   previousCardId: CardId | null;
+  /**
+   * V04.3 lens per archetype × card. When given, the record also stores the variant and the
+   * complement; without it the record keeps the shape of 0.2/0.3 (general lens from core).
+   */
+  lens?: {
+    /** Journey day the card is drawn on (decides the complement day). */
+    journeyDay: number;
+    complementId: ArchetypeId | null;
+    /** Text of the content module, undefined if the module is not loaded. */
+    text: (archetypeId: ArchetypeId, cardId: CardId) => string | undefined;
+  };
 }
 
 /** Build (not persist) the record for the current local day. Persistence decides uniqueness. */
@@ -69,7 +83,7 @@ export function createDailyRecord(input: DailyInput): DailyRecord {
   const now = input.clock.now();
   const cardId = drawDailyCardId(input.pack, input.previousCardId, input.rng);
   const themeId = resolveTheme(input.pack, input.themeId);
-  return {
+  const base = {
     dateKey: localDateKey(now),
     deckId: input.pack.deckId,
     cardId,
@@ -77,9 +91,21 @@ export function createDailyRecord(input: DailyInput): DailyRecord {
     archetypeId: input.archetypeId,
     locale: input.locale,
     contentVersion: input.pack.version,
-    content: composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale),
     revealedAt: now.toISOString(),
     note: '',
+  };
+  const l = input.lens;
+  if (!l) return { ...base, content: composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale) };
+  const complementId = input.archetypeId ? l.complementId : null;
+  const source = lensSourceForDay(l.journeyDay, complementId);
+  const lensArchetype = source === 'complement' ? complementId : input.archetypeId;
+  // Missing module text: the archetype's general lens, never an empty panel.
+  const lens = lensArchetype ? (l.text(lensArchetype, cardId) ?? getArchetype(input.pack, lensArchetype).lens[input.locale]) : null;
+  return {
+    ...base,
+    content: composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale, lens),
+    variant: { lens: LENS_VARIANT[source], reflection: 0, ritual: 0 },
+    secondaryArchetypeId: complementId,
   };
 }
 

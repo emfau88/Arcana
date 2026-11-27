@@ -31,6 +31,8 @@ export const ARCHETYPE_ORDER: readonly ArchetypeId[] = [
   'renewer',
 ];
 
+export const isArchetypeId = (id: string): id is ArchetypeId => (ARCHETYPE_ORDER as readonly string[]).includes(id);
+
 export type PositionId = 'situation' | 'challenge' | 'impulse';
 export const POSITIONS: readonly PositionId[] = ['situation', 'challenge', 'impulse'];
 
@@ -52,6 +54,12 @@ export interface Profile {
   archetypeId: ArchetypeId | null;
   /** How archetypeId came about. Missing in records written before G2 = 'questions'. */
   archetypeSource?: ArchetypeSource;
+  /** Complement ("second voice", V04.1). Missing = not determined yet (questionnaire v1), null = none. */
+  secondaryArchetypeId?: ArchetypeId | null;
+  /** Scores of the last questionnaire, for "Why?" (V04.2). Missing in profiles before V04. */
+  scores?: Record<ArchetypeId, number>;
+  /** Questionnaire the answers belong to. Missing = 1 (four questions). */
+  questionnaireVersion?: number;
   /** Bumped whenever the questionnaire mapping changes. */
   profileVersion: number;
   updatedAt: string;
@@ -90,6 +98,13 @@ export interface DailyRecord {
   content: DailyContent;
   revealedAt: string;
   note: string;
+  /**
+   * Variant indices fixed when the record was created (V04.3, IA §5.2): lens 0 = main archetype,
+   * 1 = complement; reflection and ritual stay 0 until V05 brings more variants. Missing in older records.
+   */
+  variant?: { lens: number; reflection: number; ritual: number };
+  /** Complement archetype at the moment of drawing (V04.3). Missing in older records. */
+  secondaryArchetypeId?: ArchetypeId | null;
 }
 
 export interface ReadingPositionContent {

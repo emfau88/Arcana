@@ -1,0 +1,185 @@
+/* Journey screens (V04.4/V04.5): star map on A19, station, reviews, chapters, milestone moment. */
+
+.journey-page__intro {
+  max-width: 32ch;
+}
+.journey-page__round {
+  text-align: center;
+  margin-bottom: var(--s-2);
+}
+
+/* ------------------------------------------------------------- Star map */
+.starmap {
+  margin: 0 auto var(--s-4);
+  width: min(100%, 420px);
+  padding: var(--s-2);
+  border-radius: var(--r-l);
+  /* A light veil keeps the stars legible on any part of the painting. */
+  background: radial-gradient(90% 80% at 50% 50%, rgba(6, 8, 18, 0.55), rgba(6, 8, 18, 0.2));
+}
+.starmap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.starmap__line {
+  fill: none;
+  stroke: #e3c27e;
+  stroke-opacity: 0.22;
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+.starmap__line--reached {
+  stroke-opacity: 0.85;
+  stroke-width: 1.4;
+  stroke-dasharray: none;
+}
+.starmap__star--ahead circle {
+  fill: #cfc2ea;
+  fill-opacity: 0.45;
+}
+.starmap__star--current path {
+  filter: drop-shadow(0 0 6px rgba(79, 209, 197, 0.7));
+}
+.starmap__num {
+  font-family: var(--font-body);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-anchor: middle;
+  fill: #d8cfe6;
+}
+.starmap__star--ahead .starmap__num {
+  fill: #a99fbf;
+}
+.starmap__star--current .starmap__num {
+  fill: #9ee7df;
+}
+
+.journey-page__list {
+  margin-bottom: var(--s-5);
+}
+.station-list {
+  display: grid;
+  gap: var(--s-1);
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.station-list__item {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  border-bottom: 1px solid var(--surface-line);
+}
+.station-list__item--current {
+  color: #9ee7df;
+}
+
+.journey-page__station {
+  display: grid;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.journey-page__path {
+  font-size: 1.12rem;
+  line-height: 1.4;
+  color: var(--text-1);
+}
+.journey-page__group {
+  display: grid;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+.constellations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.constellation {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-1);
+  width: 76px;
+  padding: var(--s-2);
+  border-radius: var(--r-m);
+  border: 1px solid var(--brass-line);
+  background: rgba(16, 18, 40, 0.85);
+}
+.constellation svg {
+  width: 100%;
+  height: auto;
+}
+.constellation path {
+  fill: none;
+  stroke: #e3c27e;
+  stroke-width: 5;
+  stroke-opacity: 0.7;
+}
+.constellation circle {
+  fill: #f6e6b8;
+}
+.milestone-list {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.milestone-list__item {
+  display: grid;
+  gap: var(--s-1);
+}
+
+/* --------------------------------------------------------------- Review */
+.review-page__text {
+  display: grid;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+  line-height: 1.7;
+}
+.review-page__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.review-page__notes {
+  display: grid;
+  gap: var(--s-3);
+}
+/* Own words, set apart by a brass line inside the review text. */
+.review-page__note {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  padding-left: var(--s-3);
+  border-left: 2px solid var(--brass-line-strong);
+}
+.review-page__note .italic-serif {
+  font-size: 1.12rem;
+  line-height: 1.45;
+  color: var(--text-1);
+}
+
+/* -------------------------------------------------------------- Chapter */
+.chapter-page__text {
+  display: grid;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+  font-size: 1.04rem;
+  line-height: 1.75;
+}
+
+/* The dates under the cards stand free on the star map: brighter grey plus the design's halo. */
+.review-page__cards .small {
+  color: var(--text-2);
+  text-shadow: 0 1px 8px rgba(6, 8, 18, 0.95);
+}

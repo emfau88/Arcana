@@ -264,7 +264,8 @@ try {
     save: L === "de" ? "Im Grimoire speichern" : "Save to grimoire",
     newReading: L === "de" ? "Neue Legung" : "New reading",
     grimoire: "Grimoire",
-    profile: L === "de" ? "Profil" : "Profile",
+    // "Profil" became "Ich" / "Me" in V04; the migration check still runs the 0.2.0 APK.
+    profile: L === "de" ? /^(Ich|Profil)$/ : /^(Me|Profile)$/,
     today: L === "de" ? "Heute" : "Today",
   };
   note(
@@ -279,9 +280,13 @@ try {
   await tap(T.begin);
   await sleep(700);
   shot("frage-1");
-  for (let i = 0; i < 4; i++) {
+  // Answer until the theme step (its finish button) shows: four questions up to 0.3, seven from
+  // V04.1. The migration check runs this script against the old 0.2.0 APK as well.
+  for (let i = 0; i < 12; i++) {
     await sleep(500);
-    const radios = nodes().filter(
+    const all = nodes();
+    if (all.some((n) => label(n) === T.finish)) break;
+    const radios = all.filter(
       (n) => n.checkable || /RadioButton/.test(n.cls),
     );
     const r = radios[i % Math.max(1, radios.length)];
@@ -293,7 +298,8 @@ try {
   shot("thema");
   await tap(T.finish);
   await waitFor(T.toToday, { timeout: 20000 });
-  await sleep(1400);
+  // The staged portrait reveal (V04.2) is complete after 4.3 s.
+  await sleep(4800);
   shot("archetyp");
   note("Questionnaire → archetype reveal", "PASS");
 

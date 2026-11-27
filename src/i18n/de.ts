@@ -11,13 +11,14 @@ export const de = {
     retry: 'Erneut versuchen',
     reload: 'Neu laden',
     loading: 'Orakel wird geöffnet …',
+    new: 'Neu',
   },
   nav: {
     label: 'Hauptnavigation',
     today: 'Heute',
     oracle: 'Orakel',
     grimoire: 'Grimoire',
-    profile: 'Profil',
+    profile: 'Ich',
   },
   welcome: {
     eyebrow: 'Dein persönliches Orakel',
@@ -45,7 +46,11 @@ export const de = {
     growth: 'Entwicklungsthema',
     reflection: 'Frage an dich',
     toToday: 'Zur Tageskarte',
-    toProfile: 'Zurück zum Profil',
+    toProfile: 'Zurück zu „Ich“',
+    secondVoice: 'Und eine zweite Stimme',
+    why: 'Warum dieser Archetyp?',
+    share: 'Als Bild teilen',
+    portraitAlt: 'Porträt: {name}',
     basisManual: 'Von dir selbst gewählt – eine symbolische Perspektive, kein Urteil über dich.',
     neutralBodyManual: 'Du hast dein Profil bewusst offen gelassen. Dein Orakel spricht allgemein zu dir. Im Profil kannst du jederzeit einen Archetyp wählen oder die Fragen beantworten.',
     neutralEyebrow: 'Offenes Profil',
@@ -73,6 +78,7 @@ export const de = {
     skipAnimation: 'Animation überspringen',
     message: 'Deine Botschaft',
     lens: 'Durch die Linse deines Archetyps',
+    lensComplement: 'Durch die Linse deiner zweiten Stimme',
     reflection: 'Reflexion',
     ritual: 'Mini-Ritual',
     collected: 'Im Grimoire gesammelt',
@@ -128,6 +134,10 @@ export const de = {
     reading: 'Legung',
     firstSeen: 'Entdeckt am {date}',
     appearances: '{n}× erschienen',
+    journeyEntry: 'Deine Reise',
+    journeyEntrySub: 'Sternkarte, Rückblicke und Kapitel',
+    archetypesEntry: 'Die acht Archetypen',
+    archetypesEntrySub: 'Porträts und Profile zum Nachlesen',
   },
   detail: {
     note: 'Deine Notiz',
@@ -142,11 +152,11 @@ export const de = {
   },
   profile: {
     eyebrow: 'Dein Profil',
-    title: 'Profil',
+    title: 'Ich',
     archetype: 'Archetyp',
     redo: 'Fragen neu beantworten',
     determine: 'Archetyp bestimmen',
-    view: 'Archetyp ansehen',
+    view: 'Enthüllung noch einmal ansehen',
     choose: 'Selbst wählen',
     chooseClose: 'Auswahl schließen',
     chooseTitle: 'Welcher Archetyp passt gerade zu dir?',
@@ -173,6 +183,20 @@ export const de = {
     about: 'Über diese Version',
     version: 'Version {v} · Inhalte {c}',
     aboutBody: '22 Karten, sechs Lebensthemen, acht Archetypen. Alles läuft lokal auf diesem Gerät.',
+    offerTitle: 'Drei neue Fragen',
+    offerBody: 'Der Fragebogen hat jetzt sieben Fragen und zeichnet dein Profil genauer. Deine bisherigen Antworten bleiben eingetragen. Dein Profil ändert sich erst, wenn du am Ende bestätigst.',
+    offerStart: 'Neue Fragen beantworten',
+    offerLater: 'Nicht jetzt',
+  },
+  milestone: {
+    eyebrow: 'Meilenstein',
+    opened: 'Neu in deinem Grimoire',
+    chapter: 'Ein Kapitel über deinen Archetyp',
+    reviewWeek: 'Dein Wochenrückblick',
+    reviewMonth: 'Dein Monatsrückblick',
+    constellation: 'Ein vollendetes Sternbild auf deiner Sternkarte',
+    view: 'Ansehen',
+    dismiss: 'Schön',
   },
   errors: {
     storageTitle: 'Der lokale Speicher ist nicht erreichbar',
@@ -188,5 +212,5 @@ export const de = {
   languages: { de: 'Deutsch', en: 'English' },
 } as const;
 
-type Widen<T> = T extends string ? string : { [K in keyof T]: Widen<T[K]> };
+export type Widen<T> = T extends string ? string : { [K in keyof T]: Widen<T[K]> };
 export type Messages = Widen<typeof de>;

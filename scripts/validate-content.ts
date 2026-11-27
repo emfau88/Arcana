@@ -24,7 +24,7 @@ console.log(`  cards              ${s.cards}/${s.targetCards}`);
 console.log(`  themes             ${s.themes}/${s.targetThemes}`);
 console.log(`  card×theme texts   ${themeTexts}/${s.targetCards * s.targetThemes} per language`);
 console.log(`  archetypes         ${s.archetypes}/8`);
-console.log(`  questions          ${s.questions}/4`);
+console.log(`  questions          ${s.questions}/7`);
 
 // Lazy content modules: each one checked on its own, both locales (CONTENT_MASTERPLAN §8).
 console.log('');

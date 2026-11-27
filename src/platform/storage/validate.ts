@@ -33,6 +33,24 @@ export function isSettings(v: unknown): v is Settings {
   return isObj(v) && isLocale(v.locale) && ['system', 'reduced', 'full'].includes(v.motion as string) && typeof v.onboardingDone === 'boolean';
 }
 
+/**
+ * Profile with the optional V04 fields checked one by one: a broken optional field is dropped
+ * (the field is then "not determined"), the profile itself stays. Only a broken base makes it null.
+ */
+export function normalizeProfile(v: unknown): Profile | null {
+  if (!isProfile(v)) return null;
+  const p: Record<string, unknown> = { ...v };
+  if (p.secondaryArchetypeId !== undefined && !isArchetypeOrNull(p.secondaryArchetypeId)) delete p.secondaryArchetypeId;
+  if (
+    p.scores !== undefined &&
+    !(isObj(p.scores) && ARCHETYPE_ORDER.every((id) => Number.isFinite((p.scores as Obj)[id])) && Object.keys(p.scores).length === ARCHETYPE_ORDER.length)
+  ) {
+    delete p.scores;
+  }
+  if (p.questionnaireVersion !== undefined && !(Number.isInteger(p.questionnaireVersion) && (p.questionnaireVersion as number) >= 1)) delete p.questionnaireVersion;
+  return p as unknown as Profile;
+}
+
 export function isProfile(v: unknown): v is Profile {
   return (
     isObj(v) &&

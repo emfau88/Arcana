@@ -6,9 +6,23 @@ export const SECONDARY_WEIGHT = 1;
 /** Fewer answered questions give a neutral profile instead of an invented one. */
 export const MIN_ANSWERS_FOR_ARCHETYPE = 2;
 export const PROFILE_VERSION = 1;
+/** 1 = four questions (0.1–0.3), 2 = seven questions (V04.1). A missing field in a stored profile means 1. */
+export const QUESTIONNAIRE_VERSION = 2;
+/**
+ * A complement archetype is named only when the second-highest score is at most this many points
+ * behind the main score (D-53). Scores are small whole numbers (main mostly 5–8 points), so a
+ * percentage would only be a hidden point gap that jumps unevenly. One point is exactly one
+ * secondary mention. With seven answers this gives a complement in 65.6 % of all combinations
+ * (target 40–70 %); analysis of all rules: scripts/analyze-complement.ts, alternatives: docs/SELF_DECISIONS.md.
+ */
+export const COMPLEMENT_MAX_GAP = 1;
+/** Fewer answers name no complement: with two or three answers almost everything is "close". */
+export const MIN_ANSWERS_FOR_COMPLEMENT = 4;
 
 export interface ScoreResult {
   archetypeId: ArchetypeId | null;
+  /** Second voice: the next archetype by the same ranking, at most COMPLEMENT_MAX_GAP points behind the main score. */
+  complementId: ArchetypeId | null;
   scores: Record<ArchetypeId, number>;
   answeredCount: number;
   /** Why the result was chosen; shown nowhere, used by tests and docs. */
@@ -19,6 +33,49 @@ function emptyScores(): Record<ArchetypeId, number> {
   return Object.fromEntries(ARCHETYPE_ORDER.map((id) => [id, 0])) as Record<ArchetypeId, number>;
 }
 
+interface Tally {
+  scores: Record<ArchetypeId, number>;
+  primaryHits: Record<ArchetypeId, number>;
+  firstPrimaryIndex: Partial<Record<ArchetypeId, number>>;
+  answeredCount: number;
+}
+
+function tally(questions: readonly QuestionContent[], answers: Answers): Tally {
+  const t: Tally = { scores: emptyScores(), primaryHits: emptyScores(), firstPrimaryIndex: {}, answeredCount: 0 };
+  questions.forEach((q, qi) => {
+    const answerId = answers[q.id];
+    if (answerId === undefined) return;
+    const answer = q.answers.find((a) => a.id === answerId);
+    if (!answer) return; // unknown ids (e.g. from an older questionnaire) are ignored, not guessed
+    t.answeredCount++;
+    t.scores[answer.primary] += PRIMARY_WEIGHT;
+    t.scores[answer.secondary] += SECONDARY_WEIGHT;
+    t.primaryHits[answer.primary] += 1;
+    if (t.firstPrimaryIndex[answer.primary] === undefined) t.firstPrimaryIndex[answer.primary] = qi;
+  });
+  return t;
+}
+
+/** Ranking rule: score, primary hits, earliest primary question, canonical order. */
+function outranksBy(t: Tally): (a: ArchetypeId, b: ArchetypeId) => boolean {
+  const idx = (id: ArchetypeId) => t.firstPrimaryIndex[id] ?? Number.POSITIVE_INFINITY;
+  return (a, b) => {
+    if (t.scores[a] !== t.scores[b]) return t.scores[a] > t.scores[b];
+    if (t.primaryHits[a] !== t.primaryHits[b]) return t.primaryHits[a] > t.primaryHits[b];
+    if (idx(a) !== idx(b)) return idx(a) < idx(b);
+    return ARCHETYPE_ORDER.indexOf(a) < ARCHETYPE_ORDER.indexOf(b);
+  };
+}
+
+/**
+ * All eight archetypes in the order of the scoring rule (first = main archetype when there are
+ * enough answers, second = candidate for the complement). Used by "Why?" (V04.2).
+ */
+export function rankArchetypes(questions: readonly QuestionContent[], answers: Answers): ArchetypeId[] {
+  const outranks = outranksBy(tally(questions, answers));
+  return [...ARCHETYPE_ORDER].sort((a, b) => (a === b ? 0 : outranks(a, b) ? -1 : 1));
+}
+
 /**
  * Transparent local scoring.
  * 1. Each chosen answer adds +2 to its primary and +1 to its secondary archetype.
@@ -27,45 +84,49 @@ function emptyScores(): Record<ArchetypeId, number> {
  *    a) more primary hits,
  *    b) primary hit in the earliest answered question (question order = importance),
  *    c) canonical archetype order (ARCHETYPE_ORDER).
+ * 4. Complement: the next archetype in the same order, if it is at most COMPLEMENT_MAX_GAP points
+ *    behind the main score and at least MIN_ANSWERS_FOR_COMPLEMENT questions were answered;
+ *    otherwise none (not everyone has a clear second voice).
  * The result only changes when the answers change.
  */
 export function scoreArchetype(questions: readonly QuestionContent[], answers: Answers): ScoreResult {
-  const scores = emptyScores();
-  const primaryHits = emptyScores();
-  const firstPrimaryIndex: Partial<Record<ArchetypeId, number>> = {};
-  let answeredCount = 0;
-
-  questions.forEach((q, qi) => {
-    const answerId = answers[q.id];
-    if (answerId === undefined) return;
-    const answer = q.answers.find((a) => a.id === answerId);
-    if (!answer) return; // unknown ids (e.g. from an older questionnaire) are ignored, not guessed
-    answeredCount++;
-    scores[answer.primary] += PRIMARY_WEIGHT;
-    scores[answer.secondary] += SECONDARY_WEIGHT;
-    primaryHits[answer.primary] += 1;
-    if (firstPrimaryIndex[answer.primary] === undefined) firstPrimaryIndex[answer.primary] = qi;
-  });
+  const t = tally(questions, answers);
+  const { scores, primaryHits, answeredCount } = t;
 
   if (answeredCount < MIN_ANSWERS_FOR_ARCHETYPE) {
-    return { archetypeId: null, scores, answeredCount, reason: 'neutral-too-few-answers' };
+    return { archetypeId: null, complementId: null, scores, answeredCount, reason: 'neutral-too-few-answers' };
   }
+
+  const idx = (id: ArchetypeId) => t.firstPrimaryIndex[id] ?? Number.POSITIVE_INFINITY;
+  const outranks = outranksBy(t);
+  const complementOf = (main: ArchetypeId | null): ArchetypeId | null => {
+    if (!main || scores[main] <= 0 || answeredCount < MIN_ANSWERS_FOR_COMPLEMENT) return null;
+    let second: ArchetypeId | null = null;
+    for (const id of ARCHETYPE_ORDER) if (id !== main && (second === null || outranks(id, second))) second = id;
+    return second !== null && scores[second] > 0 && scores[main] - scores[second] <= COMPLEMENT_MAX_GAP ? second : null;
+  };
+  const result = (archetypeId: ArchetypeId | null, reason: ScoreResult['reason']): ScoreResult => ({
+    archetypeId,
+    complementId: complementOf(archetypeId),
+    scores,
+    answeredCount,
+    reason,
+  });
 
   const max = Math.max(...ARCHETYPE_ORDER.map((id) => scores[id]));
   let tied = ARCHETYPE_ORDER.filter((id) => scores[id] === max);
-  if (tied.length === 1) return { archetypeId: tied[0] ?? null, scores, answeredCount, reason: 'highest-score' };
+  if (tied.length === 1) return result(tied[0] ?? null, 'highest-score');
 
   const maxHits = Math.max(...tied.map((id) => primaryHits[id]));
   tied = tied.filter((id) => primaryHits[id] === maxHits);
-  if (tied.length === 1) return { archetypeId: tied[0] ?? null, scores, answeredCount, reason: 'tie-primary-hits' };
+  if (tied.length === 1) return result(tied[0] ?? null, 'tie-primary-hits');
 
-  const idx = (id: ArchetypeId) => firstPrimaryIndex[id] ?? Number.POSITIVE_INFINITY;
   const earliest = Math.min(...tied.map(idx));
   const byEarliest = tied.filter((id) => idx(id) === earliest);
   if (byEarliest.length === 1 && Number.isFinite(earliest)) {
-    return { archetypeId: byEarliest[0] ?? null, scores, answeredCount, reason: 'tie-earliest-primary' };
+    return result(byEarliest[0] ?? null, 'tie-earliest-primary');
   }
 
   // Canonical order: `tied` is already filtered from ARCHETYPE_ORDER, so the first is canonical.
-  return { archetypeId: byEarliest[0] ?? tied[0] ?? null, scores, answeredCount, reason: 'tie-canonical-order' };
+  return result(byEarliest[0] ?? tied[0] ?? null, 'tie-canonical-order');
 }

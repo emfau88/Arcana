@@ -1,0 +1,19 @@
+/* B-07 variant C: the lily corners at the bottom fade out while the page is scrolled (CSS scroll
+   timeline, no script). At the top of the page they are fully there. */
+.stage {
+  timeline-scope: --b07-main;
+}
+.stage__main {
+  scroll-timeline: --b07-main block;
+}
+.world-scene__foliage .foliage--bl,
+.world-scene__foliage .foliage--br {
+  animation: b07-fade linear both;
+  animation-timeline: --b07-main;
+  animation-range: 0 320px;
+}
+@keyframes b07-fade {
+  to {
+    opacity: 0.12;
+  }
+}

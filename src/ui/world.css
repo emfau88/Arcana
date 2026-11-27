@@ -180,7 +180,9 @@
   transition: opacity 600ms var(--ease-out);
   pointer-events: none;
 }
-.world-scene--calm .world-scene__dim {
+.world-scene--calm .world-scene__dim,
+.world-scene--profile-calm .world-scene__dim,
+.world-scene--welcome .world-scene__dim {
   opacity: 1;
 }
 
@@ -209,4 +211,11 @@
   background:
     radial-gradient(130% 70% at 50% 42%, transparent 55%, rgba(6, 8, 18, 0.35) 100%),
     linear-gradient(180deg, rgba(6, 8, 18, 0.3) 0%, transparent 16%, transparent 60%, rgba(6, 8, 18, 0.6) 84%, rgba(6, 8, 18, 0.9) 100%);
+}
+/* A05 (reveal, "Ich"): the light column stays, the lit dais and its reflection step back where the
+   name and the essence sit (contrast minimum 4.5:1, MASTER_ROADMAP_V2 §6). */
+.world-scene--profile.is-painted .world-scene__veil {
+  background:
+    radial-gradient(130% 70% at 50% 42%, transparent 55%, rgba(6, 8, 18, 0.35) 100%),
+    linear-gradient(180deg, rgba(6, 8, 18, 0.3) 0%, transparent 16%, transparent 38%, rgba(6, 8, 18, 0.5) 50%, rgba(6, 8, 18, 0.72) 68%, rgba(6, 8, 18, 0.9) 100%);
 }

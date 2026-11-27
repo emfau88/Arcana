@@ -36,7 +36,15 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] Grimoire-Sammlung: Am Anfang sind fast alle Karten verdeckt. Entdeckte Karten hervorheben oder filtern.
 - [ ] Lange Kartentitel (Längenklasse `l`, z. B. „Die Hohepriesterin“) sind in der kleinen Rasteransicht klein.
 - [ ] Menschliches Lektorat aller Texte (Ton, Rhythmus). XIII und XV dabei ruhig halten.
-- [ ] Optional 5. oder 6. Frage im Fragebogen.
+- [x] Optional 5. oder 6. Frage im Fragebogen. Erledigt in V04.1: sieben Fragen, Ergänzungs-Archetyp, Angebot an Bestandsnutzer (D-53).
+
+## Reise und Identität (nach V04)
+
+- [ ] Hundert-Tage- und Jubiläums-Rückblicke, Jahrbuch, Sternbild „Hundert“: eigener Bereich `jubilees`, noch nicht gebaut; danach in `BUILD_FEATURES` eintragen (S-22).
+- [x] B-07: die vom Eigentümer gewählte Variante B eingebaut (Panel unter der Fußzeile, D-59).
+- [ ] Optional: Willkommen als „Buch als Bühne“ neu anordnen, damit A06 unabgedunkelt wirkt (S-27).
+- [ ] V07.5, echtes Gerät: Bildschirmwechsel auf bildreiche Screens (Enthüllung, „Heute“, Grimoire) mit `scripts/android-trace.mjs` messen; auf dem Emulator bleibt ein langer Frame von 100–230 ms (B-13, S-31).
+- [ ] V07.5, echtes Gerät: Das Android-WebView holt `favicon.svg` bei jeder Navigation und liest es als SVG-Dokument (38–54 ms Hauptthread). Auf dem Emulator ohne messbare Wirkung auf die Frames; auf dem Gerät prüfen, ob sich das Entfernen in der App lohnt (S-31).
 
 ## Bekannte Kleinigkeiten
 
