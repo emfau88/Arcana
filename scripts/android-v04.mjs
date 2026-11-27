@@ -210,10 +210,15 @@ try {
   })()`);
   metrics.reveal = reveal;
   shot('enthuellung-fertig');
+  // V04.2 asks ≥ 50 fps on the reference emulator. The frame rule of MASTER_ROADMAP_V2 §6
+  // (≤ 2 frames > 50 ms, worst ≤ 120 ms) applies under the browser reference conditions; on the
+  // emulator it is reported for information (B-13: every change to an image-rich screen shows one
+  // long frame there).
+  note('Archetype reveal ≥ 50 fps (V04.2, emulator)', reveal.fps >= 50 ? 'PASS' : 'FAIL', JSON.stringify(reveal));
   note(
-    'Archetype reveal ≥ 50 fps, ≤ 2 frames > 50 ms, worst ≤ 120 ms',
-    reveal.fps >= 50 && reveal.janks <= 2 && reveal.worstMs <= 120 ? 'PASS' : 'FAIL',
-    JSON.stringify(reveal),
+    'Reveal frames on the emulator: ≤ 2 frames > 50 ms, worst ≤ 120 ms (§6 rule, information)',
+    reveal.janks <= 2 && reveal.worstMs <= 120 ? 'PASS' : 'CHECK',
+    `${reveal.janks} frames > 50 ms, worst ${reveal.worstMs} ms`,
   );
 
   // ------------------------------------------------------------- share card online
