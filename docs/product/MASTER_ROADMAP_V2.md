@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 fertig auf `feature/v03-fundament` (Version 0.3.0), Pull Request [#3](https://github.com/emfau88/Arcana/pull/3) nach `main` wartet auf Freigabe; B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft gestapelt auf `feature/v04-identitaet`: V04.1 fertig, V04.4 Logik und Texte fertig (Oberfläche wartet auf ein Muster für den Eigentümer), B2 als WebP vorbereitet. E9 und E20 entschieden (D-47).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1 fertig, V04.4 Logik und Texte fertig (Oberfläche wartet auf ein Muster für den Eigentümer), B2 als WebP vorbereitet. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -75,27 +75,27 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Screenshot-Review 360/390/412, DE/EN, 130 % Schrift, keine Überläufe (Desktop kein Kriterium, D-52; Orakel-Positionen bei 130 % behoben, B-10)
   - [ ] Mindestkontrast ≥ 4,5:1 für jeden Lesetext: alle Screens außer „Heute“ erfüllt; B-07 (Fußzeile über den Lilien) → **V04.3** (D-49, D-52)
   - [ ] Absolute Perf-Grenzen: B-08 unsichtbar verbessert (normiert ≈ 1.168 ms, D-50); Messung gegen die Referenz → **vor QG-V05** (D-52). Android-Kaltstart 1,58 s ≤ 3,0 s
-- [ ] **QG-V03** (2/3, mit den Ausnahmen aus D-52)
+- [x] **QG-V03** (3/3, mit den Ausnahmen aus D-52)
   - [x] `npm run check` (118 Unit-Tests, Build im Budget) und alle E2E grün (20 bestanden)
   - [x] Android-Debug-Build 0.3.0 startet und migriert einen 0.2.0-Datenbestand: 9/9 PASS, jeder Datensatz unverändert (`scripts/android-migration.mjs`)
-  - [ ] Pull Request, Freigabe, Tag `v0.3.0`
+  - [x] Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Freigabe (27.11.2026), Merge `2f1e1de`, Tag `v0.3.0`
 
 ### V04 · Identität und Reise (0.4) · Branch `feature/v04-identitaet`
 
 - [x] V04.1 Fragebogen v2 (E9) (6/6, D-53)
   - [x] 7 Fragen, Punktmodell +2/+1, die ersten vier unverändert; Texte DE/EN
-  - [x] Haupt- und Ergänzungsarchetyp, Schwelle 75 % statt 60 % (D-53, Bestätigung durch den Eigentümer offen), `questionnaireVersion`, `scores`
-  - [x] Balance-Test über alle 16.384 Kombinationen: Haupt 11,3–14,2 %, Ergänzung 65,8 % (ohne 34,2 %), alle 56 Paare erreichbar
+  - [x] Haupt- und Ergänzungsarchetyp: Ergänzung bei höchstens 1 Punkt Abstand ab 4 Antworten statt 60 % (D-53, S-01), `questionnaireVersion`, `scores`
+  - [x] Balance-Test über alle 16.384 Kombinationen: Haupt 11,3–14,2 %, Ergänzung 65,6 % (ohne 34,4 %), alle 56 Paare erreichbar
   - [x] Ablauf ≤ 75 s: gemessene App-Zeit 2,7 s + 7 × 8 s Lesezeit = 58,7 s (E2E)
   - [x] Bestehende Profile bleiben gültig, Angebot zum Neubestimmen im Profil, kein Zwang (E9, Unit + E2E)
   - [x] Prüfskripte (Evidence, Perf, Showcase, Android) beantworten die Fragen bis zur Themenwahl statt fest vier, damit sie gegen die Referenz und gegen V04 laufen
 - [ ] V04.2 Enthüllung und Profil
 - [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49)
-- [ ] V04.4 Narrenreise und Meilensteine (3/5, D-54)
+- [ ] V04.4 Narrenreise und Meilensteine (4/5, D-54)
   - [x] 63 Stationen, 9 Wegeinführungen, 4 Rundenabschlüsse, 20 Meilensteintexte DE/EN im Modul `journey`
   - [x] Tabellen-Test Reisetag 1–400: genau eine Station, richtige Wegeinführung, Rundenabschluss und Meilensteintext
   - [x] Content-Gate: keine Druckwörter, kein Countdown
-  - [ ] Stilprobe der Reisetexte durch den Eigentümer freigegeben
+  - [x] Reisetexte: Eigentümer 27.11.2026 „nach eigenem Ermessen“, Feinschliff im Lektorat (S-02)
   - [ ] Meilenstein-Moment und „Neu“-Markierungen in der Oberfläche (nach einem Muster für den Eigentümer)
 - [ ] V04.5 Sternkarte und Rückblicke
 - [ ] V04.6 „Ich“ und Gestaltung
@@ -218,7 +218,7 @@ Stand und offene Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentü
 
 | Bulk | Arbeit | Fertig, wenn |
 |---|---|---|
-| V04.1 Fragebogen v2 | 7 Fragen, Punktmodell (+2/+1), Haupt- und Ergänzungsarchetyp (≥ 60 %), `questionnaireVersion` | Balance-Test über alle 16.384 Kombinationen: jeder Archetyp ist Haupt in 10–15 % der Fälle. Ergänzung in 40–70 %. Ablauf ≤ 75 s (E2E mit Zeitmessung bei 8 s pro Frage). Bestehende Profile bleiben gültig (Angebot zum Neubestimmen, kein Zwang, E9) |
+| V04.1 Fragebogen v2 | 7 Fragen, Punktmodell (+2/+1), Haupt- und Ergänzungsarchetyp (Ergänzung bei ≤ 1 Punkt Abstand ab 4 Antworten, D-53; ursprünglich ≥ 60 %), `questionnaireVersion` | Balance-Test über alle 16.384 Kombinationen: jeder Archetyp ist Haupt in 10–15 % der Fälle. Ergänzung in 40–70 %. Ablauf ≤ 75 s (E2E mit Zeitmessung bei 8 s pro Frage). Bestehende Profile bleiben gültig (Angebot zum Neubestimmen, kein Zwang, E9) |
 | V04.2 Enthüllung und Profil | Porträt-Enthüllung (≤ 8 s, überspringbar, reduziert statisch), „Warum?“, ausführliches Profil, alle acht lesbar | Enthüllung ≥ 50 fps auf dem Referenz-Emulator. Reduzierte Bewegung ohne Animation (E2E). „Warum?“ entspricht der Rechnung (Snapshot) |
 | V04.3 Heute erweitert | Linse je Archetyp × Karte, Ergänzungslinse jeden dritten Tag, Varianten-Indizes im Datensatz, Hinweis-Logik (A6) | Gespeicherte Tageskarten früherer Versionen zeigen weiter ihren alten Text (D-09). Höchstens ein Hinweis pro Tag (Unit) |
 | V04.4 Narrenreise und Meilensteine | 63 Stationen, Wege, Meilensteintabelle, Meilenstein-Moment, „Neu“-Markierungen | Für Reisetage 1–400 liefert jeder Tag genau eine Station und die richtigen Meilensteine (Tabellen-Test). Kein Text enthält Druckwörter (Content-Gate) |

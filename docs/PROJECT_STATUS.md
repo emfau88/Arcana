@@ -1,6 +1,6 @@
 # PROJECT_STATUS — Personal Oracle (Arbeitstitel ARCANA)
 
-**Stand:** 27.11.2026 · **Version:** 0.3.0 · **Phase:** G2 abgeschlossen (PASS). V02 (Tagesorakel) abgeschlossen und gemergt, **Tag `v0.2.1`**. **V03 fertig** auf `feature/v03-fundament`: Datenmodell v2 mit Migration und Sicherungsformat, abgeleitete Schicht, Content-Module, Rechte, globales Designsystem (D-43 bis D-51). QG-V03 PASS mit den Eigentümer-Ausnahmen aus D-52 (B-07 → V04.3, Leistungsmessung → vor QG-V05, Desktop kein Kriterium). **Pull Request [#3](https://github.com/emfau88/Arcana/pull/3) nach `main` wartet auf Freigabe**, danach Tag `v0.3.0`. **V04 läuft** gestapelt auf `feature/v04-identitaet`: V04.1 Fragebogen v2 fertig (D-53), V04.4 Narrenreise als Logik und Texte fertig, Oberfläche wartet auf ein Muster für den Eigentümer (D-54), B2-Bilder als WebP vorbereitet (D-55). **Produktvision V2** (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md`. G3 (Härtung) ist Bulk V07.5
+**Stand:** 27.11.2026 · **Version:** 0.3.0 · **Phase:** G2 abgeschlossen (PASS). V02 (Tagesorakel) abgeschlossen und gemergt, **Tag `v0.2.1`**. **V03 freigegeben und gemergt** (27.11.2026, `2f1e1de`, **Tag `v0.3.0`**): Datenmodell v2 mit Migration und Sicherungsformat, abgeleitete Schicht, Content-Module, Rechte, globales Designsystem (D-43 bis D-51). QG-V03 PASS mit den Eigentümer-Ausnahmen aus D-52 (B-07 → V04.3, Leistungsmessung → vor QG-V05, Desktop kein Kriterium). Pull Request [#3](https://github.com/emfau88/Arcana/pull/3) gemergt. **V04 läuft** auf `feature/v04-identitaet` (vom Tag `v0.3.0`): V04.1 Fragebogen v2 fertig (D-53), V04.4 Narrenreise als Logik und Texte fertig, Oberfläche wartet auf ein Muster für den Eigentümer (D-54), B2-Bilder als WebP vorbereitet (D-55). Seit 27.11.2026 entscheidet der Agent offene Punkte selbst und hält die Alternativen in `docs/SELF_DECISIONS.md` fest (D-56). **Produktvision V2** (D-38, D-39): Pakete V03–V07 bis Release 1.0 in `docs/product/MASTER_ROADMAP_V2.md`. G3 (Härtung) ist Bulk V07.5
 
 Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` und `docs/GATE_REPORTS.md`.
 
@@ -9,7 +9,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | Was | Wo |
 |---|---|
 | Projektroot (neu, isoliert) | `%USERPROFILE%\Documents\PersonalOracle-Web` |
-| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.2.1, Tag `v0.2.1`), `feature/v03-fundament` = V03 fertig (0.3.0, PR offen), `feature/v04-identitaet` = V04 in Arbeit (gestapelt auf V03, D-52), `design/visual-overhaul` = V02 (abgeschlossen, bleibt als Referenz). Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
+| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.3.0, Tag `v0.3.0`), `feature/v03-fundament` = V03 (gemergt, bleibt als Referenz), `feature/v04-identitaet` = V04 in Arbeit (vom Tag `v0.3.0`), `design/visual-overhaul` = V02 (abgeschlossen, bleibt als Referenz). Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
 | Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages aus `main`, Workflow `.github/workflows/pages.yml`) |
 | Design-Vorschau | https://emfau88.github.io/Arcana/preview/ (Branch `design/visual-overhaul`, eigene Datenbank, D-29) |
 | Produktplan V2 | `docs/product/` (Vision, Systeme, Progression, Inhalte, Informationsarchitektur, Monetarisierung, Masterplan V02–V07) |
@@ -51,10 +51,11 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 - [x] **Freigabe des Tagesorakel-Screens (V02)** durch den Eigentümer (26.11.2026), B-05/B-06 behoben (D-42).
 - [x] PR-Merge nach `main` (`553c5d9`), Tag `v0.2.1`, Branch `feature/v03-fundament` angelegt.
 - [x] V03 Fundament auf `feature/v03-fundament` (Version 0.3.0), QG-V03 mit Ausnahmen D-52.
-- [ ] **Freigabe und Merge von V03** (Pull Request nach `main`), danach Tag `v0.3.0`.
+- [x] **Freigabe und Merge von V03** durch den Eigentümer (27.11.2026, Merge-Commit `2f1e1de`), Tag `v0.3.0`, `main` in `feature/v04-identitaet` gemergt.
 - [ ] V04 Identität und Reise auf `feature/v04-identitaet` (`MASTER_ROADMAP_V2.md` §0.1): V04.1 [x], V04.4 Logik und Texte [x], V04.2/V04.3/V04.5–V04.7 offen.
-- [ ] **Eigentümer:** Schwelle der Ergänzung 75 % statt 60 % bestätigen (D-53).
-- [ ] **Eigentümer:** Stilprobe der Reisetexte freigeben (D-54; Vorschlag: Stationen 1, 13, 21 je Lesart und Meilenstein Tag 7).
+- [x] Schwelle der Ergänzung: im Auftrag des Eigentümers selbst entschieden, höchstens 1 Punkt Abstand ab 4 Antworten (D-53; Vergleich und Alternativen in `SELF_DECISIONS.md` S-01).
+- [x] Reisetexte: Eigentümer 27.11.2026 „nach eigenem Ermessen, später optimieren“ (D-54, S-02); Feinschliff im Lektorat.
+- [ ] Bei Gelegenheit: selbst entschiedene Punkte durchsehen (`docs/SELF_DECISIONS.md`, D-56).
 - [ ] **Eigentümer:** Angebots-Panel „Drei neue Fragen“ im Profil ansehen (bestehende Bausteine, `visual/evidence/v04-angebot-profil-360.webp`).
 - [ ] **Eigentümer:** erstes Muster für die neuen V04-Screens (Porträt-Enthüllung, „Ich“, Sternkarte, Meilenstein-Moment, Teilen-Karte), bevor sie gebaut werden.
 - [x] **Bild-Bulk B2** geliefert (11/11) und als WebP im Budget exportiert (`art/b2/`, D-55); Einbau mit den V04-Screens.
@@ -82,15 +83,15 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 | B-09 | Bei 360 × 800 lag beim Wagen „Reise fortsetzen“ 4 px unter der Tab-Leiste (Schlagworte zweizeilig, Kernsatz dreizeilig; bestand schon vor V03) | erledigt (D-51): Die Kartenbühne ist 10 % kleiner, alle 22 Karten DE und EN haben die Hauptaktion über der Tab-Leiste | `visual/evidence/v03-d51-karte-90.webp` |
 | B-10 | Orakel bei 360 px und 130 % Schrift (DE): Das lange Wort „Herausforderung“ verbreiterte die mittlere Positionsspalte, „Impuls“ ragte rechts über den Rand; über der gezogenen Legung liefen die drei Positionsnamen ineinander („SITUATIONHERAUSFORDERUNGIMPULS“). Vermutlich seit G2, gefunden mit dem neuen Textprüfer in `scripts/evidence.mjs` und dem Kontaktbogen | erledigt (V03.5): Spalten bleiben gleich breit (`minmax(0, 1fr)`), lange Namen brechen in ihrer Spalte um (`hyphens: auto`, Android trennt „HERAUS-FORDE-RUNG“). Bei normaler Schrift unverändert | `visual/evidence/v03-b10-orakel-130.webp`, `visual/evidence/v03-review-360-de130-412-en.webp` |
 | B-11 | Android-Emulator: In den ersten 1–2 s nach dem Start zeigt der Bildschirm Zwischenzustände beim Zeichnen (Lichtschein als graue Fläche, Rahmen halb gezeichnet). Tritt mit 0.2.0 genauso auf, Endbild nach wenigen Sekunden korrekt | Beobachtung, kein Rückschritt; auf echtem Gerät in V07.5 prüfen | `visual/evidence/v03-android-migration.webp` |
-| B-12 | Nach B-10: Bei 130 % Schrift (DE, 360 px) ist der Name „Herausforderung“ über der gezogenen Legung dreizeilig, die mittlere Karte sitzt dadurch 17 px tiefer als die äußeren (gleich groß, nur nicht auf einer Linie). Bei normaler Schrift auf einer Linie | offen, kosmetisch. Mögliche Lösung: Kopfzeilen der drei Spalten als gemeinsame Zeile (CSS-Subgrid); Rückfrage, weil es das Raster der Legung ändert | `visual/evidence/v03-review-360-de130-412-en.webp` |
+| B-12 | Nach B-10: Bei 130 % Schrift (DE, 360 px) ist der Name „Herausforderung“ über der gezogenen Legung dreizeilig, die mittlere Karte sitzt dadurch 17 px tiefer als die äußeren (gleich groß, nur nicht auf einer Linie). Bei normaler Schrift auf einer Linie | offen, kosmetisch; wird in V05.2 mit der neuen Legung gelöst (S-10). Mögliche Lösung: Kopfzeilen der drei Spalten als gemeinsame Zeile (CSS-Subgrid) | `visual/evidence/v03-review-360-de130-412-en.webp` |
 
 ## Nachweise V04 (Stand 27.11.2026)
 
 | Prüfung | Ergebnis | Beleg |
 |---|---|---|
-| `npm run check` | PASS: 141 Unit-Tests, Content-Gate 0 Fehler (Modul `identity` 35, `journey` 96 Schlüssel je Sprache), Start-JS 133,6 kB (Grenze 160 kB), `journey` als eigenes Modul 5,8/5,3 kB gz | lokaler Lauf |
+| `npm run check` | PASS: 142 Unit-Tests, Content-Gate 0 Fehler (Modul `identity` 35, `journey` 96 Schlüssel je Sprache), Start-JS 133,6 kB (Grenze 160 kB), `journey` als eigenes Modul 5,8/5,3 kB gz | lokaler Lauf |
 | E2E (Produktions-Build) | PASS: 23 bestanden, 33 je Projekt bewusst übersprungen, 0 fehlgeschlagen; neu: sieben Fragen, Zeitmessung, E9-Angebot | `tests/e2e/flow.spec.ts` |
-| Balance Fragebogen v2 | PASS: 16.384 Kombinationen, Haupt 11,3–14,2 %, Ergänzung 65,8 %, 56/56 Paare | `tests/unit/archetypes.test.ts` |
+| Balance Fragebogen v2 | PASS: 16.384 Kombinationen, Haupt 11,3–14,2 %, Ergänzung 65,6 % (≤ 1 Punkt, ab 4 Antworten; bei übersprungenen Fragen stabil 66–70 %), 56/56 Paare | `tests/unit/archetypes.test.ts` |
 | Ablauf Fragebogen | PASS: App-Zeit 2,7 s + 7 × 8 s Lesezeit = 58,7 s (Grenze 75 s) | E2E-Ausgabe |
 | Tabellen-Test Reise Tag 1–400 | PASS | `tests/unit/journey.test.ts` |
 | Layout Fragen 5–7 bei 360 px, 130 % Schrift DE/EN | PASS: kein Text außerhalb, keine Seitwärtsbewegung | `visual/evidence/v04-fragen-5-7-360-130.webp` |
@@ -98,10 +99,12 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 | B2-Export | PASS: 30 Dateien im Budget, 4,2 MB | `art/b2/export-report.json`, `visual/evidence/v04-b2-export.webp` |
 | Android-Emulator mit V04 | NOT RUN (folgt zum QG-V04; die Prüfskripte sind auf sieben Fragen vorbereitet) | – |
 | Leistung gegen die Referenz | NOT RUN (D-52: vor QG-V05) | – |
+| Regelvergleich Ergänzung | 13 Regeln über alle vollständigen und teilweisen Antwortsätze verglichen | `scripts/analyze-complement.ts`, `SELF_DECISIONS.md` S-01 |
+| V03 nach `main` | PASS: Merge-Commit `2f1e1de` ohne Konflikte, Tag `v0.3.0` gepusht | GitHub #3 |
 
 ## Nächstes Arbeitspaket
 
-V04 Identität und Reise (`docs/product/MASTER_ROADMAP_V2.md` §3) auf `feature/v04-identitaet`, gestapelt auf V03 bis zum Merge (D-52). Ohne Eigentümer möglich: V04.3-Linsentexte (176 je Sprache) und die Logik für die Hinweise (A6). Mit Eigentümer: Muster für die neuen Screens (V04.2, V04.4-Oberfläche, V04.5–V04.7), B-07-Lösung in V04.3. Ändert sich V03 nach der Freigabe noch, wird per Merge nachgezogen. Die frühere G3-Liste (S11–S13) steckt in V07.5.
+V04 Identität und Reise (`docs/product/MASTER_ROADMAP_V2.md` §3) auf `feature/v04-identitaet` (vom Tag `v0.3.0`). Ohne Eigentümer möglich: V04.3-Linsentexte (176 je Sprache) und die Logik für die Hinweise (A6). Mit Eigentümer: Muster für die neuen Screens (V04.2, V04.4-Oberfläche, V04.5–V04.7), B-07-Lösung in V04.3. Die frühere G3-Liste (S11–S13) steckt in V07.5.
 
 ## Schnellprüfung
 
