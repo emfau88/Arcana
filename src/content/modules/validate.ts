@@ -6,6 +6,7 @@
 import { journeyTextKeys } from '../../domain/journey.ts';
 import { REVIEW_BLOCK_VARS, reviewTextKeys } from '../../domain/review.ts';
 import { archetypeKeys } from './archetype-keys.ts';
+import { cardsDeepKeys } from './cards-deep-keys.ts';
 import { chapterKeys } from './chapter-keys.ts';
 import { ARCHETYPE_ORDER, LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
@@ -95,6 +96,25 @@ export const FORBIDDEN_ADDRESS: readonly RegExp[] = [/\b[Aa]ls (?:Suchende|Hüte
 /** A lens is one or two plain sentences, not two clauses held together by a semicolon (S-33). */
 export const FORBIDDEN_SEMICOLON: readonly RegExp[] = [/;/];
 
+/**
+ * Card depth and spread roles never promise a future (PRODUCT_SYSTEMS F: no position promises
+ * what will come). "Possibility" speaks of what could open, never of what will.
+ */
+export const FORBIDDEN_FUTURE: readonly RegExp[] = [
+  /\bwirst\b/i,
+  /\bbald\b/i,
+  /\bZukunft\b/i,
+  /\bdemnächst\b/i,
+  /\byou will\b/i,
+  /\byou['’]ll\b/i,
+  /\b(?:it|this|that|something|things) will\b/i,
+  /\bsoon\b/i,
+  /\bfuture\b/i,
+];
+
+const CARD = 'major-\\d{2}-[a-z-]+';
+const deep = (prefix: string) => new RegExp(`^${prefix}\\.${CARD}$`);
+
 export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
   identity: {
     required: (pack) => [
@@ -143,6 +163,24 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
     required: () => chapterKeys(),
     rules: [{ pattern: /^chapter\.[a-z]+\.(?:[1-4]|second-voice)$/, maxLen: 1900, words: [150, 250], sentences: [7, 22], group: 'chapter' }],
     forbidden: [...FORBIDDEN_PRESSURE, ...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS],
+  },
+  // V05.1 card depth (CONTENT_MASTERPLAN §3): lengths and sentence counts from the table there.
+  'cards-deep': {
+    required: () => cardsDeepKeys(),
+    rules: [
+      { pattern: deep('light'), maxLen: 320, sentences: [2, 3], group: 'light' },
+      // Shadow as a question (§2): an observation that ends in a question, never a verdict.
+      { pattern: deep('shadow'), maxLen: 320, sentences: [2, 3], question: true, group: 'shadow' },
+      { pattern: deep('keyword'), maxLen: 260, sentences: [2, 2], group: 'keyword' },
+      { pattern: deep('symbols'), maxLen: 340, sentences: [2, 3], group: 'symbols' },
+      // One group for all 110 role texts, so openings stay varied across roles.
+      { pattern: deep('role\\.(?:light|shadow|root|possibility|bridge)'), maxLen: 200, sentences: [1, 2], group: 'role' },
+      { pattern: deep('study\\.[12]'), maxLen: 320, sentences: [2, 3], question: true, group: 'study' },
+      { pattern: deep('question'), maxLen: 140, sentences: [1, 1], question: true, group: 'question' },
+      { pattern: deep('reflection\\.[23]'), maxLen: 120, sentences: [1, 1], question: true, group: 'reflection' },
+      { pattern: deep('ritual\\.2'), maxLen: 220, sentences: [1, 2], group: 'ritual' },
+    ],
+    forbidden: [...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE],
   },
 };
 
