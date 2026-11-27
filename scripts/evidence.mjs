@@ -54,6 +54,23 @@ async function shot(name, { long = false } = {}) {
   n += 1;
   await page.waitForTimeout(250);
   const file = join(outDir, `${String(n).padStart(2, '0')}-${name}-${tag}.png`);
+  // Layout gate (MASTER_ROADMAP §6): the page does not scroll sideways, and no visible text sticks
+  // out of the viewport (the scroll container clips sideways, so cut text would go unnoticed).
+  // Decoration (aria-hidden, e.g. light rays of the card stage) may overflow on purpose.
+  const over = await page.evaluate(() => {
+    const vw = document.documentElement.clientWidth;
+    const cut = [];
+    for (const el of document.querySelectorAll('body *')) {
+      if (el.closest('[aria-hidden="true"]')) continue;
+      if (![...el.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim())) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) continue;
+      if (r.right > vw + 1 || r.left < -1) cut.push(`${el.tagName.toLowerCase()}.${String(el.className).split(' ')[0]} "${el.textContent.trim().slice(0, 30)}"`);
+    }
+    return { page: document.documentElement.scrollWidth - vw, cut };
+  });
+  if (over.page > 0) errors.push(`${name}: page scrolls sideways by ${over.page}px`);
+  for (const c of over.cut) errors.push(`${name}: text outside the viewport ${c}`);
   if (long) {
     // Grow the viewport to the scroll height of the app's own scroll container, so the
     // real layout (not a CSS override) is captured in one image.
