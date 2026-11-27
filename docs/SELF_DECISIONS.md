@@ -54,6 +54,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-42 | 27.11.2026 | Muster für die Design-Punkte 2, 5 und 6 | eigener Branch, echte Screens, per Schalter zuschaltbar, nicht zum Mergen | D-63 |
 | S-43 | 27.11.2026 | Aufbau des Moduls `cards-deep` | 15 Texte je Karte, Schlüsselwort = erstes der drei Schlagworte, Studium als Impuls mit Frage, Schatten endet als Frage, Gruppen über eine Liste geschriebener Karten | V05.1, CONTENT_MASTERPLAN §3 |
 | S-44 | 27.11.2026 | Keine Zukunftsversprechen in Kartentiefe und Rollen | eigene Verbotsliste (`wirst`, `bald`, `Zukunft`, `you will`, `soon`, `future` …) für das ganze Modul | V05.1, V05.2, PRODUCT_SYSTEMS F |
+| S-45 | 27.11.2026 | Wechselnde Reflexion und Ritual auf „Heute“ (A4) | Reflexion = Begegnungstage mod 3, Ritual = Begegnungstage mod 2, Variante 0 = Kerntext; `cards-deep` lädt beim Ziehen | V05.1, PRODUCT_SYSTEMS A4 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -75,7 +76,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [x] **B-07 wählen:** Eigentümer hat B gewählt (27.11.2026, D-59), eingebaut
 - [ ] Meilenstein-Moment auf „Heute“ (Gestaltung und Zeitpunkt, S-20)
 - [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
-- [ ] **Kartentiefe als Stilprobe** (V05.1, S-43): Gruppe 1, Narr bis Wagen, je 15 Texte in DE und EN (`src/content/modules/cards-deep.de.ts`); besonders Ton von Schatten und Rollen
+- [ ] **Kartentiefe** (V05.1, S-43): alle 22 Karten in drei Gruppen (0–VII, VIII–XIV, XV–XXI), je 15 Texte in DE und EN (`src/content/modules/cards-deep.de.ts`, `cards-deep.en.ts`); besonders Ton von Schatten und Rollen und die Symbolik gegen die Bilder
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -538,3 +539,13 @@ Empfehlung an den Eigentümer: dreimal A; beim Orakel lassen sich Reihe (A) und 
 **Alternativen:** nur Positionsnamen prüfen (Masterplan-Minimum, lässt Vorhersagen im Text durch); ein Verbot von „wird“ (trifft das deutsche Passiv, zu viele falsche Treffer).
 
 **Wechsel kostet:** eine Liste in `src/content/modules/validate.ts`. Nebenwirkung: Auch „as soon as“ und das Passiv mit „wirst“ sind ausgeschlossen; beides ließ sich ohne Verlust umformulieren.
+
+## S-45 · Wechselnde Reflexion und Ritual auf „Heute“ (A4)
+
+**Entschieden:** Die Variante ergibt sich aus der Zahl n der bisherigen Begegnungstage mit der gezogenen Karte (Tageskarte oder gespeicherte Legung, mehrere an einem Tag sind ein Tag, wie bei der Kartenstufe): Reflexion = n mod 3, Ritual = n mod 2. Variante 0 ist der Kerntext, Reflexion 1–2 und Ritual 1 kommen aus `cards-deep`. Beide Zähler laufen gleichzeitig, deshalb kommen alle sechs Paare vor, bevor sich eines wiederholt. Indizes und Texte werden beim Ziehen im `DailyRecord` gespeichert und nie neu berechnet. Der Store lädt `cards-deep` erst beim Ziehen der Tageskarte. Fehlt das Modul (Ladefehler) oder wechselt die Sprache während des Ladens, bleibt es bei Variante 0 mit den Kerntexten.
+
+**Warum:** PRODUCT_SYSTEMS A4 verlangt eine deterministische Variante aus den bisherigen Begegnungen, gespeichert im Datensatz. Die Begegnungstage aus `cardEncounters` sind dieselbe abgeleitete Größe wie bei den Kartenstufen (abgeleitet, nicht gezählt). Laden beim Ziehen hält den Start schlank: Start-JS 140,5 kB (+1,1 kB für die Logik), das Modul selbst (16,8 kB DE gz) lädt nur einmal am Tag.
+
+**Alternativen:** Reflexion n mod 3 und Ritual ⌊n/3⌋ mod 2 (ebenfalls sechs Paare, das Ritual wechselt aber erst nach drei Begegnungen); Variante nach Reisetag statt nach Begegnungen (widerspricht A4, dieselbe Karte könnte zweimal dieselben Texte zeigen); `cards-deep` beim Start laden (rund 17 kB gz mehr bei jedem Start).
+
+**Wechsel kostet:** `varietyFor` in `src/domain/oracle.ts` und die Ladestelle in `src/app/store.tsx`. Gespeicherte Tage bleiben, wie sie sind.

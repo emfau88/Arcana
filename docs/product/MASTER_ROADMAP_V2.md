@@ -131,7 +131,11 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 
-- [ ] V05.1 Kartenseite und Vertiefung
+- [ ] V05.1 Kartenseite und Vertiefung (3/4)
+  - [x] Logik: Stufen 0–4 aus Begegnungen und Studium, Ebenen kumulativ, Studium in zwei Teilen (`src/domain/study.ts`; jede Stufe in ≤ 2 Sitzungen, ungespeicherte Legungen zählen nicht, Unit)
+  - [x] Texte: Modul `cards-deep`, 22 Karten × 15 Texte in DE und EN, in drei Gruppen gegen die Bilder geschrieben; Content-Gate mit Verbotsliste für Zukunftsversprechen (S-43, S-44)
+  - [x] A4 wechselnde Reflexion und Ritual auf „Heute“: Variante aus den Begegnungstagen, im Datensatz gespeichert; 66 simulierte Tage ohne gleiche Kombination in 21 Tagen (Unit, S-45)
+  - [ ] Kartenseite (Screen) mit vier Ebenen, Mondphasen-Symbol und Studium; Studien-Ereignisse und Tagebucheinträge im Store
 - [ ] V05.2 Rollen-Legungen
 - [ ] V05.3 Grimoire als Buch
 - [ ] V05.4 Tagebuch und Suche
