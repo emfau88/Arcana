@@ -101,8 +101,10 @@ describe('what the journey has opened (V04.4/V04.5)', () => {
     expect(milestoneMoment(days(3), false, seen)).toBeNull();
     expect(milestoneMoment(days(3), true, seen)?.rewards.map((r) => r.id)).toEqual(['archetype-chapter:1']);
     expect(milestoneMoment(days(3), true, [{ key: 'milestone:3' }])).toBeNull();
-    // Day 2 only holds the numerology introduction (V06): no moment yet.
-    expect(milestoneMoment(days(2), true, seen)).toBeNull();
+    // Day 2 holds the first card back (V05.5) and the numerology introduction (V06): only the back is named.
+    expect(milestoneMoment(days(2), true, seen)?.rewards.map((r) => r.id)).toEqual(['cardback:crescent']);
+    // Day 4 only holds the angel numbers introduction (V06): no moment yet.
+    expect(milestoneMoment(days(4), true, seen)).toBeNull();
     // Day 1 holds the grimoire cover (V05): no moment yet.
     expect(milestoneMoment(days(1), true, seen)).toBeNull();
     // Day 21: chapter II, week 3 and the first constellation.

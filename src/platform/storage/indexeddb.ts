@@ -17,7 +17,7 @@ import {
   isDraft,
   normalizeProfile,
   isReading,
-  isSettings,
+  normalizeSettings,
   normalizeEntitlements,
   normalizeEvent,
   normalizeFavorite,
@@ -191,7 +191,7 @@ export class IndexedDbRepository implements StorageRepository {
       (x: unknown): T | null =>
         guard(x) ? x : null;
     return {
-      settings: keep(settings, isSettings),
+      settings: keepNormalized(settings, normalizeSettings),
       profile: keepNormalized(profile, normalizeProfile),
       draft: keep(draft, isDraft),
       personal: keepNormalized(personal, normalizePersonal),

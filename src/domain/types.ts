@@ -79,6 +79,8 @@ export interface Settings {
   locale: Locale;
   motion: MotionPreference;
   onboardingDone: boolean;
+  /** Chosen card back (V05.5, D-66). Missing or not open yet = the standard back. */
+  cardBack?: string;
 }
 
 /** Fully rendered, immutable daily content. Stored as-is so history never changes. */

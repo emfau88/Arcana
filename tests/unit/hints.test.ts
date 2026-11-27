@@ -49,9 +49,9 @@ describe('discovery hint of the day (A6)', () => {
     expect(hintForToday({ journeyDay: 100, features: ALL })).toEqual({ kind: 'milestone', id: 'review:hundred' });
   });
 
-  it('ships chapters, weekly/monthly reviews and the star map with V04, nothing else', () => {
+  it('ships chapters, weekly/monthly reviews and the star map with V04 and the card backs with V05.5, nothing else', () => {
     for (const f of BUILD_FEATURES) expect(ALL.has(f)).toBe(true);
-    expect([...BUILD_FEATURES].sort()).toEqual(['archetype-chapters', 'reviews', 'starmap']);
+    expect([...BUILD_FEATURES].sort()).toEqual(['archetype-chapters', 'cardbacks', 'reviews', 'starmap']);
   });
 
   it('keeps the hundred-day and jubilee rewards apart until they are built', () => {

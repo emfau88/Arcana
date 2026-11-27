@@ -13,6 +13,7 @@ import {
   revealAll,
   revealPosition,
 } from '../domain/oracle.ts';
+import type { CardBackId } from '../domain/cardbacks.ts';
 import { editedEntry, erasedEntry, newJournalEntry, type JournalItem, type WritableKind } from '../domain/journal.ts';
 import { lensKey } from '../domain/lens.ts';
 import { cardEncounters, journeyDayToday, type Facts } from '../domain/progress.ts';
@@ -156,6 +157,8 @@ export interface AppActions {
   setArchetype(archetypeId: ArchetypeId | null): Promise<void>;
   setLocale(locale: Locale): Promise<void>;
   setMotion(motion: MotionPreference): Promise<void>;
+  /** Chooses the back of face-down cards (V05.5). Only open backs are offered. */
+  setCardBack(id: CardBackId): Promise<void>;
   revealToday(): Promise<DailyRecord>;
   /** Starts a spread (default: the classic three cards). Other spreads load their texts first. */
   startReading(themeId: ThemeId, spreadId?: SpreadId): Promise<ReadingDraft>;
@@ -408,6 +411,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         dispatch({ type: 'settings', settings: next, modules });
       },
       setMotion: (motion) => persistSettings({ ...stateRef.current.settings, motion }),
+      setCardBack: (cardBack) => persistSettings({ ...stateRef.current.settings, cardBack }),
 
       revealToday() {
         if (inflightDaily.current) return inflightDaily.current;

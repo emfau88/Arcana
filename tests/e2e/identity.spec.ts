@@ -184,3 +184,47 @@ test('V04: with reduced motion the reveal shows everything at once', async ({ pa
   await expect(page.getByRole('button', { name: de.archetype.toToday })).toBeVisible({ timeout: 800 });
   await expect(page.getByRole('button', { name: de.common.skip, exact: true })).toHaveCount(0);
 });
+
+test('V05.5: card backs open on journey days 2, 5 and 10 and change every face-down card', async ({ page }, info) => {
+  test.skip(info.project.name !== 'mobile-de-412', 'covered once');
+  const problems = guard(page);
+  await completeOnboarding(page, de);
+  await page.getByRole('link', { name: de.nav.profile }).click();
+  await page.getByRole('button', { name: de.profile.settings }).click();
+  // Before journey day 2 there is nothing to choose, and nothing locked is shown.
+  await expect(page.getByRole('heading', { level: 1, name: de.profile.settings })).toBeVisible();
+  await expect(page.getByRole('heading', { name: de.profile.cardBack })).toHaveCount(0);
+
+  const profile = await readProfile(page);
+  await putDaily(page, pastDays(profile, 9, {}));
+  await page.reload();
+  const backs = page.getByRole('radiogroup', { name: de.profile.cardBack }).getByRole('radio');
+  await expect(backs).toHaveCount(3);
+  await expect(page.getByText(de.profile.cardBackMore)).toBeVisible();
+  await page.getByRole('radio', { name: de.profile.backs.compass }).click();
+  await expect(page.getByRole('radio', { name: de.profile.backs.compass })).toHaveAttribute('aria-checked', 'true');
+
+  // Today: the face-down card shows the chosen back.
+  await page.getByRole('link', { name: de.nav.today }).click();
+  await expect(page.locator('.ocard__back img').first()).toHaveAttribute('src', /cards\/backs\/cardback-compass\.webp$/);
+
+  // Revealing today makes journey day 10: the moment names the new back and leads to the settings.
+  await page.getByRole('button', { name: de.today.draw }).click();
+  await expect(page.getByText(de.milestone.openedBacks, { exact: true })).toBeVisible();
+  await expect(page.getByText(fmt(de.milestone.cardBack, { name: de.profile.backs['golden-wheel'] }), { exact: true })).toBeVisible();
+  // The day text also names the personal symbol (V06), so it waits until that is built (D-54).
+  await expect(page.locator('.milestone-moment__text')).toHaveCount(0);
+  await page.getByRole('button', { name: de.milestone.view }).click();
+  await expect(backs).toHaveCount(4);
+  await expect(page.getByText(de.profile.cardBackMore)).toHaveCount(0);
+  await page.getByRole('radio', { name: de.profile.backs['golden-wheel'] }).click();
+  await expect(page.getByRole('radio', { name: de.profile.backs['golden-wheel'] })).toHaveAttribute('aria-checked', 'true');
+
+  // The choice survives a reload, and the face-down cards of a reading show it too.
+  await page.reload();
+  await expect(page.getByRole('radio', { name: de.profile.backs['golden-wheel'] })).toHaveAttribute('aria-checked', 'true');
+  await page.getByRole('link', { name: de.nav.oracle }).click();
+  await page.getByRole('button', { name: de.oracle.draw }).click();
+  await expect(page.locator('.spread button.ocard .ocard__back img').first()).toHaveAttribute('src', /cards\/backs\/thumbs\/cardback-golden-wheel\.webp$/);
+  expect(problems).toEqual([]);
+});

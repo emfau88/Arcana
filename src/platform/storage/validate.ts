@@ -35,6 +35,15 @@ export function isSettings(v: unknown): v is Settings {
   return isObj(v) && isLocale(v.locale) && ['system', 'reduced', 'full'].includes(v.motion as string) && typeof v.onboardingDone === 'boolean';
 }
 
+/** Settings with the optional card back checked on its own: a broken choice is dropped (standard back). */
+export function normalizeSettings(v: unknown): Settings | null {
+  if (!isSettings(v)) return null;
+  if (v.cardBack === undefined || isStr(v.cardBack)) return v;
+  const s: Record<string, unknown> = { ...v };
+  delete s.cardBack;
+  return s as unknown as Settings;
+}
+
 /**
  * Profile with the optional V04 fields checked one by one: a broken optional field is dropped
  * (the field is then "not determined"), the profile itself stays. Only a broken base makes it null.

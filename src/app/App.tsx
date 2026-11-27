@@ -1,15 +1,18 @@
 import { World, type WorldScene } from '../ui/World.tsx';
-import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
+import { Component, lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { activeBack } from '../domain/cardbacks.ts';
+import { journeyDays } from '../domain/progress.ts';
 import { ArchetypeReveal, Questionnaire, Welcome } from '../features/onboarding/Onboarding.tsx';
 import { CardDetail, DayDetail, Grimoire, ReadingDetail } from '../features/grimoire/Grimoire.tsx';
 import { Oracle } from '../features/oracle/Oracle.tsx';
 import { Today } from '../features/today/Today.tsx';
 import { onHardwareBack } from '../platform/native.ts';
 import { Sigil } from '../ui/Sigil.tsx';
+import { CardBackContext } from '../ui/OracleCard.tsx';
 import { TabBar } from '../ui/TabBar.tsx';
 import { useMotionClass } from './motion.ts';
 import { goBack, navigate, useRoute, type ParsedRoute, type Route } from './router.ts';
-import { useApp } from './store.tsx';
+import { factsOf, useApp } from './store.tsx';
 
 const FLOW_ROUTES = new Set(['welcome', 'onboarding', 'archetype']);
 
@@ -108,6 +111,11 @@ export function App() {
   const firstRoute = useRef(true);
   const [initialPath] = useState(parsed.path);
   useMotionClass();
+  const { dailies, readings, journal, events } = state;
+  const back = useMemo(
+    () => activeBack(state.settings.cardBack, journeyDays(factsOf({ dailies, readings, journal, events }))),
+    [state.settings.cardBack, dailies, readings, journal, events],
+  );
 
   // The archetype texts (reveal sentence, second voice) come along, so the reveal is complete offline too.
   useEffect(() => prefetchScreens(() => actions.loadModules(['archetypes'])), [actions]);
@@ -261,10 +269,12 @@ export function App() {
         <World scene={scene} />
         <main ref={mainRef} className="stage__main" id="main">
           <ScreenBoundary key={route.name} title={t.errors.contentTitle} body={t.errors.contentBody} action={t.common.reload}>
-            <Suspense fallback={<div className="screen" aria-busy="true" />}>
-              {screen}
-              <FocusHeading enabled={parsed.path !== initialPath} />
-            </Suspense>
+            <CardBackContext.Provider value={back}>
+              <Suspense fallback={<div className="screen" aria-busy="true" />}>
+                {screen}
+                <FocusHeading enabled={parsed.path !== initialPath} />
+              </Suspense>
+            </CardBackContext.Provider>
           </ScreenBoundary>
         </main>
         {showNav ? <TabBar route={route} /> : null}

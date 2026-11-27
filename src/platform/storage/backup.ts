@@ -4,7 +4,7 @@ import {
   isDailyRecord,
   normalizeProfile,
   isReading,
-  isSettings,
+  normalizeSettings,
   normalizeEvent,
   normalizeFavorite,
   normalizeJournalEntry,
@@ -155,7 +155,7 @@ export function parseBackup(text: string): ParsedBackup {
 
   const kv: StoreData['kv'] = {};
   const profile = single<Profile>('profile', normalizeProfile);
-  const settings = single<Settings>('settings', guarded(isSettings));
+  const settings = single<Settings>('settings', normalizeSettings);
   // The birth date is only taken when the file says it was included on purpose.
   const personal = includesPersonal ? single<PersonalData>('personal', normalizePersonal) : undefined;
   if (profile) kv.profile = profile;

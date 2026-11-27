@@ -1,10 +1,19 @@
+import { createContext, useContext } from 'react';
 import type { CardContent } from '../content/schema.ts';
+import type { CardBackId } from '../domain/cardbacks.ts';
 import type { Locale } from '../domain/types.ts';
 import { toRoman } from '../i18n/index.ts';
 import './card.css';
 
 const base = import.meta.env.BASE_URL;
 export const cardSrc = (assetId: string, thumb = false) => `${base}cards/${thumb ? 'thumbs/' : ''}${assetId}.webp`;
+
+/** Image of a card back (V05.5): the standard back sits beside the cards, the others in `cards/backs/`. */
+export const backSrc = (id: CardBackId, thumb = false) =>
+  id === 'standard' ? cardSrc('card-back', thumb) : `${base}cards/backs/${thumb ? 'thumbs/' : ''}cardback-${id}.webp`;
+
+/** The back every face-down card shows; App provides the chosen one, everything else sees the standard back. */
+export const CardBackContext = createContext<CardBackId>('standard');
 
 export type CardSize = 'hero' | 'spread' | 'grid' | 'mini';
 
@@ -50,6 +59,7 @@ export function OracleCard({
   disabled = false,
 }: OracleCardProps) {
   const thumb = size === 'grid' || size === 'mini' || size === 'spread';
+  const back = useContext(CardBackContext);
   const cls = [
     'ocard',
     `ocard--${size}`,
@@ -65,7 +75,7 @@ export function OracleCard({
     <span className="ocard__inner">
       <span className="ocard__face ocard__back">
         <img
-          src={cardSrc('card-back', thumb)}
+          src={backSrc(back, thumb)}
           alt=""
           draggable={false}
           decoding="async"
