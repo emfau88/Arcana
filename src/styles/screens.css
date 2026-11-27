@@ -514,7 +514,8 @@ h1[tabindex='-1']:focus {
 
 .positions {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* minmax(0, …): a long word (e.g. "Herausforderung" at 130 % text) must not widen its column */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--s-3);
   margin: 0;
   padding: 0;
@@ -544,6 +545,9 @@ h1[tabindex='-1']:focus {
 .positions__name {
   font-weight: 700;
   font-size: 0.92rem;
+  max-width: 100%;
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 .oracle__draw {
   margin-top: var(--s-2);
@@ -572,6 +576,10 @@ h1[tabindex='-1']:focus {
   min-width: 0;
 }
 .spread__pos {
+  /* Long labels ("HERAUSFORDERUNG" at 130 % text) wrap inside their column instead of running into the next one */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.14em;

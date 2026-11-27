@@ -9,7 +9,7 @@ import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
 import { Flank } from '../../ui/Ornaments.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 
-export const APP_VERSION = '0.2.1';
+export const APP_VERSION = '0.3.0';
 
 export function Profile() {
   const { t, pack, state, actions } = useApp();
