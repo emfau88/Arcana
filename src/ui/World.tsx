@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { warmImage } from './warm.ts';
 import './world.css';
 
 /**
@@ -27,6 +28,15 @@ const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; 
   starmap: { src: 'world/bg-starmap.webp', srcSmall: 'world/bg-starmap-720.webp' },
 };
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
+const SMALL_SCREEN = '(max-width: 520px)';
+
+/** Loads and decodes the painting of `scene` ahead of a screen change (B-13): the same file the <picture> below picks. */
+export function warmWorld(scene: WorldScene): void {
+  const image = WORLD_IMAGES[scene];
+  if (!image) return;
+  const small = typeof window.matchMedia === 'function' && window.matchMedia(SMALL_SCREEN).matches;
+  warmImage(`${base}${small ? image.srcSmall : image.src}`);
+}
 
 interface Star {
   x: number;
@@ -76,7 +86,7 @@ export function World({ scene }: { scene: WorldScene }) {
       <Landscape detailed={scene === 'today'} />
       {image ? (
         <picture className={`world-scene__image ${painted ? 'is-loaded' : ''}`}>
-          <source media="(max-width: 520px)" srcSet={`${base}${image.srcSmall}`} />
+          <source media={SMALL_SCREEN} srcSet={`${base}${image.srcSmall}`} />
           <img src={`${base}${image.src}`} alt="" decoding="async" fetchPriority="low" onLoad={() => setLoaded(image.src)} />
         </picture>
       ) : null}
