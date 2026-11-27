@@ -52,6 +52,8 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-40 | 27.11.2026 | Absätze in langen Texten | Leerzeile im Inhalt, Regel nach Sinnabschnitten, Schlussfrage abgesetzt | D-63, Punkt 3 |
 | S-41 | 27.11.2026 | Positionsnamen der Legung | engere Laufweite, das Etikett darf in die Lücke neben seiner Karte reichen | D-63, Punkt 4 |
 | S-42 | 27.11.2026 | Muster für die Design-Punkte 2, 5 und 6 | eigener Branch, echte Screens, per Schalter zuschaltbar, nicht zum Mergen | D-63 |
+| S-43 | 27.11.2026 | Aufbau des Moduls `cards-deep` | 15 Texte je Karte, Schlüsselwort = erstes der drei Schlagworte, Studium als Impuls mit Frage, Schatten endet als Frage, Gruppen über eine Liste geschriebener Karten | V05.1, CONTENT_MASTERPLAN §3 |
+| S-44 | 27.11.2026 | Keine Zukunftsversprechen in Kartentiefe und Rollen | eigene Verbotsliste (`wirst`, `bald`, `Zukunft`, `you will`, `soon`, `future` …) für das ganze Modul | V05.1, V05.2, PRODUCT_SYSTEMS F |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -73,6 +75,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [x] **B-07 wählen:** Eigentümer hat B gewählt (27.11.2026, D-59), eingebaut
 - [ ] Meilenstein-Moment auf „Heute“ (Gestaltung und Zeitpunkt, S-20)
 - [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
+- [ ] **Kartentiefe als Stilprobe** (V05.1, S-43): Gruppe 1, Narr bis Wagen, je 15 Texte in DE und EN (`src/content/modules/cards-deep.de.ts`); besonders Ton von Schatten und Rollen
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -508,3 +511,30 @@ Empfehlung an den Eigentümer: dreimal A; beim Orakel lassen sich Reihe (A) und 
 **Wechsel kostet:** nichts; der Branch bleibt als Referenz und kann gelöscht werden.
 
 **Geprüft:** `npm run check` PASS (204 Unit-Tests, Budgets eingehalten). Aufnahmen bei 375 × 812 px, Deutsch, Browser. **NOT RUN:** Android, Englisch, 130 % Schrift, Kontrastmessung, E2E mit zugeschaltetem Muster.
+
+## S-43 · Aufbau des Moduls `cards-deep`
+
+**Entschieden:** Je Karte fünfzehn Texte: Licht, Schatten, Schlüsselwort, Symbolik (Stufe 2 und 3), die Rollen R4–R8 (Licht, Schatten, Wurzel, Möglichkeit, Brücke), Studium Teil 1 und Teil 2, persönliche Frage (Stufe 4), Reflexion 2 und 3 und Ritual 2 (Wechsel auf „Heute“ nach A4, Ritual 2 ist zugleich das zweite Ritual der Stufe 4). Das sind 330 Texte je Sprache, wie im Masterplan. Geschrieben wird je Karte ein Objekt (`DeepCard`), das `deepTable` in flache Schlüssel übersetzt; die Kartenseite liest es mit `deepCard` zurück. Im Einzelnen:
+
+- **Schlüsselwort** erklärt das erste der drei Schlagworte, die auf „Heute“ unter dem Kartennamen stehen (Narr „Aufbruch“, Magier „Wille“ …), in zwei Sätzen.
+- **Schatten** ist eine Beobachtung, die mit einer Frage endet (Content-Gate: muss mit „?“ enden), nie ein Urteil (CONTENT_MASTERPLAN §2).
+- **Studium:** Teil 1 schaut auf das Bild, Teil 2 auf das eigene Leben; beide enden mit einer Frage. Ein Tipp auf „Gelesen“ genügt, eine Antwort mit Text wird ein Tagebucheintrag `study` und zählt als Reflexion (Stufe 4). So ist jede Stufe in höchstens zwei Studien-Sitzungen erreichbar (Unit).
+- **Symbolik** beschreibt das gemalte Deck (S-34), geprüft gegen `docs/assets/card-prompts.md` und die Bilder selbst (Übersicht und einzelne Karten).
+- **Gruppen:** `DEEP_CARD_IDS` nennt die geschriebenen Karten; das Content-Gate verlangt genau diese. So geht jede Gruppe für sich durch das Gate (S-29). Gruppe 1 ist 0–VII (der Narr und der äußere Weg, acht Karten).
+- **Stilprobe:** Der Masterplan (§8) sieht je Modul fünf Texte zur Freigabe vor. Der Eigentümer hat die Texte dem Agenten übertragen (D-62) und für die Reise schon auf die Stilprobe verzichtet (D-54); darum steht Gruppe 1 als Probe in der Liste „Nachprüfen“, die Arbeit wartet aber nicht darauf.
+
+**Warum:** Ein Objekt je Karte hält die fünfzehn Texte einer Karte beisammen; beim Schreiben und Lesen sieht man, ob sie sich wiederholen. Flache Schlüssel bleiben das Format aller Module (Content-Gate, Ladefunktion). Das erste Schlagwort ist das, was Nutzer täglich unter dem Namen lesen.
+
+**Alternativen:** je Facette eine Liste von 22 Texten wie bei den Linsen (gut für Abwechslung über Karten, schlecht für die Stimmigkeit einer Karte); ein eigenes, nicht in den Schlagworten stehendes Schlüsselwort (eine weitere Begriffsliste); alle drei Schlagworte erklären (dreimal so viel Text, wird lang); Studium mit getrennten Feldern für Lesetext und Frage (88 statt 44 Texte, mehr Bildschirm).
+
+**Wechsel kostet:** Texte und ein Feld im Typ; gespeicherte Datensätze enthalten nur Fakten (Ereignis, Tagebuch), keine Texte aus diesem Modul.
+
+## S-44 · Keine Zukunftsversprechen in Kartentiefe und Rollen
+
+**Entschieden:** Das Modul `cards-deep` hat eine eigene Verbotsliste `FORBIDDEN_FUTURE`: DE `wirst`, `bald`, `Zukunft`, `demnächst`; EN `you will`, `you’ll`, `it/this/that/something/things will`, `soon`, `future`. Dazu gelten die Listen für Rituale, Anrede (S-32) und Semikolon (S-33). Die Rolle „Möglichkeit“ spricht von dem, was sich öffnen *könnte*.
+
+**Warum:** PRODUCT_SYSTEMS F verlangt, dass keine Position Zukunft verspricht; das galt bisher nur für Positionsnamen. Die Rollentexte sind die Stelle, an der eine Legung am ehesten wie eine Vorhersage klingt.
+
+**Alternativen:** nur Positionsnamen prüfen (Masterplan-Minimum, lässt Vorhersagen im Text durch); ein Verbot von „wird“ (trifft das deutsche Passiv, zu viele falsche Treffer).
+
+**Wechsel kostet:** eine Liste in `src/content/modules/validate.ts`. Nebenwirkung: Auch „as soon as“ und das Passiv mit „wirst“ sind ausgeschlossen; beides ließ sich ohne Verlust umformulieren.
