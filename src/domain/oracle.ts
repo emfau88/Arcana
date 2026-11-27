@@ -76,6 +76,40 @@ export interface DailyInput {
     /** Text of the content module, undefined if the module is not loaded. */
     text: (archetypeId: ArchetypeId, cardId: CardId) => string | undefined;
   };
+  /**
+   * A4 (V05.1) rotating reflection and ritual. `encounters` counts the earlier days with the card
+   * (daily card or saved reading); `deep` gives reflections 2–3 and ritual 2 of the module
+   * cards-deep, or nothing when it is not loaded. Without it the record keeps variant 0.
+   */
+  variety?: {
+    encounters: (cardId: CardId) => number;
+    deep: (cardId: CardId) => { reflections: readonly [string, string]; ritual: string } | null | undefined;
+  };
+}
+
+/** A4 (V05.1): three reflections (1 from core, 2–3 from cards-deep) and two rituals (1 core, 2 cards-deep). */
+export const REFLECTION_VARIANTS = 3;
+export const RITUAL_VARIANTS = 2;
+
+/**
+ * Variant indices for a card met `encounters` times before (A4). Both counters advance together, so
+ * the six combinations of reflection and ritual all come up before the first one returns.
+ */
+export function varietyFor(encounters: number): { reflection: number; ritual: number } {
+  const n = Number.isFinite(encounters) && encounters > 0 ? Math.floor(encounters) : 0;
+  return { reflection: n % REFLECTION_VARIANTS, ritual: n % RITUAL_VARIANTS };
+}
+
+/** Reflection and ritual of the day: variant 0 is core; higher variants need the deep texts. */
+function pickVariety(input: DailyInput, cardId: CardId, content: DailyContent): { content: DailyContent; reflection: number; ritual: number } {
+  const deep = input.variety?.deep(cardId);
+  // Without the module (not loaded, older content) the core texts stay, stored as variant 0.
+  if (!input.variety || !deep) return { content, reflection: 0, ritual: 0 };
+  const v = varietyFor(input.variety.encounters(cardId));
+  const reflection = v.reflection === 0 ? content.reflection : deep.reflections[v.reflection - 1];
+  const ritual = v.ritual === 0 ? content.ritual : deep.ritual;
+  if (!reflection || !ritual) return { content, reflection: 0, ritual: 0 };
+  return { content: { ...content, reflection, ritual }, reflection: v.reflection, ritual: v.ritual };
 }
 
 /** Build (not persist) the record for the current local day. Persistence decides uniqueness. */
@@ -95,16 +129,22 @@ export function createDailyRecord(input: DailyInput): DailyRecord {
     note: '',
   };
   const l = input.lens;
-  if (!l) return { ...base, content: composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale) };
+  if (!l) {
+    const content = composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale);
+    if (!input.variety) return { ...base, content };
+    const v = pickVariety(input, cardId, content);
+    return { ...base, content: v.content, variant: { lens: LENS_VARIANT.main, reflection: v.reflection, ritual: v.ritual } };
+  }
   const complementId = input.archetypeId ? l.complementId : null;
   const source = lensSourceForDay(l.journeyDay, complementId);
   const lensArchetype = source === 'complement' ? complementId : input.archetypeId;
   // Missing module text: the archetype's general lens, never an empty panel.
   const lens = lensArchetype ? (l.text(lensArchetype, cardId) ?? getArchetype(input.pack, lensArchetype).lens[input.locale]) : null;
+  const v = pickVariety(input, cardId, composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale, lens));
   return {
     ...base,
-    content: composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale, lens),
-    variant: { lens: LENS_VARIANT[source], reflection: 0, ritual: 0 },
+    content: v.content,
+    variant: { lens: LENS_VARIANT[source], reflection: v.reflection, ritual: v.ritual },
     secondaryArchetypeId: complementId,
   };
 }

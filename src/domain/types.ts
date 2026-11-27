@@ -100,7 +100,8 @@ export interface DailyRecord {
   note: string;
   /**
    * Variant indices fixed when the record was created (V04.3, IA §5.2): lens 0 = main archetype,
-   * 1 = complement; reflection and ritual stay 0 until V05 brings more variants. Missing in older records.
+   * 1 = complement; reflection 0–2 and ritual 0–1 from the earlier encounters with the card (A4, V05.1),
+   * 0 = the core text. Never recomputed. Missing in older records.
    */
   variant?: { lens: number; reflection: number; ritual: number };
   /** Complement archetype at the moment of drawing (V04.3). Missing in older records. */

@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, type ReactNode } from 'react';
 import { CONTENT } from '../content/index.ts';
+import { deepCard } from '../content/modules/cards-deep-keys.ts';
 import { loadModules, ModuleLoadError, STARTUP_MODULES, text, type LoadedModules, type ModuleId } from '../content/modules/registry.ts';
 import type { ContentPack } from '../content/schema.ts';
 import { PROFILE_VERSION, QUESTIONNAIRE_VERSION, scoreArchetype } from '../domain/archetypes.ts';
@@ -13,7 +14,7 @@ import {
   revealPosition,
 } from '../domain/oracle.ts';
 import { lensKey } from '../domain/lens.ts';
-import { journeyDayToday } from '../domain/progress.ts';
+import { cardEncounters, journeyDayToday } from '../domain/progress.ts';
 import { cryptoRng, type Rng } from '../domain/random.ts';
 import type {
   Answers,
@@ -361,10 +362,27 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
       revealToday() {
         if (inflightDaily.current) return inflightDaily.current;
         const run = (async () => {
-          const s = stateRef.current;
           const key = localDateKey(clock.now());
+          const known = stateRef.current.dailies.find((d) => d.dateKey === key);
+          if (known) return known;
+          // A4: reflections 2–3 and ritual 2 live in cards-deep. If it cannot load, the core texts stay.
+          const locale = stateRef.current.settings.locale;
+          let loaded = stateRef.current.modules['cards-deep'];
+          if (!loaded) {
+            try {
+              const m = await loadModules(['cards-deep'], locale);
+              loaded = m['cards-deep'];
+              dispatch({ type: 'modules', modules: m, locale });
+            } catch {
+              /* variant 0 */
+            }
+          }
+          const s = stateRef.current;
           const existing = s.dailies.find((d) => d.dateKey === key);
           if (existing) return existing;
+          // The deep texts must be in the language of the record (a switch during loading drops them).
+          const deep = s.settings.locale === locale ? loaded : undefined;
+          const facts = { dailies: s.dailies, readings: s.readings };
           const record = createDailyRecord({
             pack,
             clock,
@@ -374,9 +392,13 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             locale: s.settings.locale,
             previousCardId: previousDailyCard(s.dailies, key),
             lens: {
-              journeyDay: journeyDayToday({ dailies: s.dailies, readings: s.readings }, key),
+              journeyDay: journeyDayToday(facts, key),
               complementId: s.profile?.secondaryArchetypeId ?? null,
               text: (archetypeId, cardId) => s.modules.identity?.[lensKey(archetypeId, cardId)],
+            },
+            variety: {
+              encounters: (cardId) => cardEncounters(facts).get(cardId)?.days.size ?? 0,
+              deep: (cardId) => deepCard(deep, cardId),
             },
           });
           const stored = await repo.addDailyIfAbsent(record);
