@@ -33,7 +33,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [x] Kartenkunst ersetzt durch Deck v2 (D-26, D-27).
 - [ ] Archetyp-Sigillen und App-Icon an das gemalte Deck angleichen (eigener kleiner Auftrag).
 - [ ] Optional nachbessern: XII (Baum kein klares T, Lichtkranz schwach), XVII (sieben kleine Sterne fehlen), Rückseite wirkt flacher als die Vorderseiten.
-- [ ] Grimoire-Sammlung: Am Anfang sind fast alle Karten verdeckt. Entdeckte Karten hervorheben oder filtern.
+- [x] Grimoire-Sammlung: Am Anfang sind fast alle Karten verdeckt. Entdeckte Karten hervorheben oder filtern. Erledigt mit V05.3: Im Kapitel Karten stehen nur die entdeckten, der Rest ist eine Zeile (Design-Plan Punkt 7, S-55).
 - [ ] Lange Kartentitel (Längenklasse `l`, z. B. „Die Hohepriesterin“) sind in der kleinen Rasteransicht klein.
 - [ ] Menschliches Lektorat aller Texte (Ton, Rhythmus). XIII und XV dabei ruhig halten.
 - [x] Optional 5. oder 6. Frage im Fragebogen. Erledigt in V04.1: sieben Fragen, Ergänzungs-Archetyp, Angebot an Bestandsnutzer (D-53).

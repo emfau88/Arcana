@@ -142,12 +142,15 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Texte: Modul `spreads` mit 72 Rahmentexten je Sprache; Content-Gate ohne Ergebnis-Positionen, Zukunftsversprechen und Aussagen über andere (S-46)
   - [x] Matrix-Test: 10.000 gezogene Legungen je Sprache über alle Themen ohne Lücke; alte Legungen werden unverändert angezeigt (Unit, E2E)
   - [ ] Auswahl und Anzeige im Orakel (Screen) mit V05.6, dabei B-12
-- [ ] V05.3 Grimoire als Buch
-- [ ] V05.4 Tagebuch und Suche (3/4)
+- [ ] V05.3 Grimoire als Buch (2/3)
+  - [x] Buch: Einband (A15) in der Bibliothek (A04), Inhalt auf Pergament (A30) mit Vignetten (A23–A29), Kapitel I–V nur soweit gebaut (Karten, Archetypen, Tagebuch, Rituale, Reise), Kapitelanfänge, Leerzustände, „Neu“ für neue Kartenstufen; jeder gespeicherte Eintrag in ≤ 3 Taps (E2E DE und EN, Browser 412/360/320 px, Android-Emulator, S-55)
+  - [x] Design-Plan Punkt 7: im Kapitel Karten nur Entdecktes, der Rest als eine ruhige Zeile (D-63, S-55)
+  - [ ] Sternkarte als drei Ringe im Kapitel Reise (D-64, Punkt 6, Variante A)
+- [x] V05.4 Tagebuch und Suche (4/4)
   - [x] Logik: Tagebuch als Chronik aus Tageskarten, Legungen und eigenen Einträgen; Filter nur für vorhandene Arten, nach Karte und „nur mit eigenen Worten“ (`src/domain/journal.ts`, S-48)
   - [x] Lokale Suche ohne Groß- und Kleinschreibung, Akzente und ß: 1.000 Einträge mit Index-Aufbau rund 9 ms ≤ 50 ms (Unit)
   - [x] Einzelne Einträge löschen: Worte weg, Tag und Kartenstufe bleiben (S-49); Schreiben, Bearbeiten, Löschen und Studium im Store, übersteht einen Neustart (Unit mit IndexedDB)
-  - [ ] Tagebuch-Screen mit Filtern, Suche und Löschdialog im Grimoire-Buch (V05.3), dazu E2E
+  - [x] Tagebuch-Screen im Grimoire-Buch: freier Eintrag, Suche, Filter, „Nur mit eigenen Worten“ und Löschdialog (E2E DE und EN, Android-Emulator, S-55)
 - [x] V05.5 Kartenrücken (E10 entschieden, D-66: Tag 2, 5 und 10; Gestaltung der Auswahl als Vorschlag in der Prüfliste, S-52)
   - [x] Freischaltung aus dem Reisetag abgeleitet, Wahl in `Settings.cardBack`, übersteht Neustart und Sicherung (Unit, E2E)
   - [x] Auswahl in den Einstellungen, nur freigeschaltete Rücken, kein Kaufangebot, nichts Gesperrtes sichtbar

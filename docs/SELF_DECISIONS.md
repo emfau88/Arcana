@@ -64,6 +64,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-52 | 27.11.2026 | Auswahl der Kartenrücken | in den Einstellungen nur freigeschaltete Rücken als Vorschau mit Namen, der Standard heißt „Klassisch“; gilt für jede verdeckte Karte; Meilenstein-Moment nennt den Rücken mit Namen, „Ansehen“ führt zur Auswahl; Tagestext nur, wenn alles von diesem Tag gebaut ist | V05.5, D-66, D-54 |
 | S-53 | 27.11.2026 | Kartenseite, Teil 1 | Stufe als Mondphase mit Namen unter Titel und Essenz, darunter jede offene Ebene in einem eigenen Panel in der Reihenfolge der Stufen; nicht Geöffnetes fehlt einfach; das Profilthema steht oben als Botschaft, die Themenliste zeigt dann die anderen fünf; eigener Lade-Chunk | V05.1, PRODUCT_SYSTEMS D, D3, D4 |
 | S-54 | 27.11.2026 | Kartenstudium (Kartenseite, Teil 2) | eigenes Panel direkt unter der Stufe, öffnet sich an Ort und Stelle; Teil 1 „Hinschauen“, Teil 2 „Dein Leben“; „Gelesen“ genügt, eine Antwort ist freiwillig und wird zum Tagebucheintrag; danach ein ruhiger Satz mit der neuen Stufe und der Weg zu Teil 2; beliebig oft wiederholbar | V05.1, PRODUCT_SYSTEMS D2, PROGRESSION_DESIGN §4 |
+| S-55 | 28.11.2026 | Grimoire als Buch, Teil 1 | Einband (A15) mit den Namen der eigenen Archetypen in der Bibliothek (A04), Inhalt auf Pergament (A30) mit Vignetten; nur gebaute Kapitel, römisch I–V (Karten, Archetypen, Tagebuch, Rituale, Reise); Kapitelanfang als Pergamentseite; Karten: nur Entdecktes, der Rest als eine Zeile (Design-Plan Punkt 7); Tagebuch mit Schreiben, Suche, Filtern und Löschdialog; Rituale mit „Heute gemacht“, leer drei Einstiegsrituale; „Neu“ für eine neue Kartenstufe erst ab dem ersten Öffnen des Buchs | V05.3, V05.4, PRODUCT_SYSTEMS E, D-63 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -91,6 +92,8 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] **Auswahl der Kartenrücken** (V05.5, S-52, Nachweis `docs/visual/evidence/v05-kartenruecken.webp` und `v05-kartenruecken-android.webp`): eigener Abschnitt in den Einstellungen unter Sprache und Bewegung, vier Vorschauen in einer Reihe, der gewählte Rücken wie ein gewähltes Segment gerahmt. Bei 412 px werden „Mondsichel“ und „Sternenkompass“ getrennt. Passt das, oder soll die Auswahl größer (zwei Spalten) oder auch auf „Ich“ sichtbar sein?
 - [ ] **Kartenseite, Teil 1** (V05.1, S-53, Nachweis `docs/visual/evidence/v05-kartenseite.webp` und `v05-kartenseite-android.webp`): Stufe als Mondphase („Stufe 4 · Verinnerlicht“), darunter je Ebene ein Panel mit goldener Überschrift. Stufennamen: Entdeckt, Verstanden, Vertieft, Verinnerlicht. Passt die Länge der Seite bei Stufe 4, oder sollen die Ebenen ab Stufe 3 aufklappbar sein?
 - [ ] **Kartenstudium** (V05.1, S-54, Nachweis `docs/visual/evidence/v05-kartenstudium.webp` und `v05-kartenstudium-android.webp`): Panel „Kartenstudium“ direkt unter der Stufe mit einem Satz und „Studium beginnen“; geöffnet zeigt es den Impuls, ein freiwilliges Antwortfeld und „Gelesen“ bzw. „Antwort festhalten“. Soll das Studium lieber unter den Ebenen stehen oder als eigene Seite öffnen?
+- [ ] **Grimoire als Buch** (V05.3, S-55, Nachweis `docs/visual/evidence/v05-grimoire-buch.webp`, `v05-grimoire-leer.webp` und `v05-grimoire-buch-android.webp`): Buch in der Bibliothek, Inhalt und Kapitelanfänge auf Pergament, Listen auf dunklen Panels. Passen Größe des Buchs (der Inhalt beginnt erst nach dem ersten Bildschirm) und die Zeile „17 weitere Karten warten auf ihren Tag.“ statt der verdeckten Rücken?
+- [ ] **Meilenstein-Moment an Reisetag 1** (S-55): Soll das Buch am ersten Tag mit einem Moment „Dein Grimoire ist aufgeschlagen“ begrüßt werden? Dafür müsste die Freischaltung vom Ex Libris (Tag 50) getrennt werden; bisher ist er aus.
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -752,3 +755,27 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Antwort als Pflicht für Teil 2: D2 sieht nur für Teil 1 ausdrücklich „Gelesen genügt“ vor, die Studien-Logik nimmt beides ohne Text an; eine Pflicht wäre Druck.
 
 **Wechsel kostet:** `src/features/cards/CardStudy.tsx`, die Studien-Texte im Block `card` von `src/i18n/screens.*.ts` und der Test „card study“ in `tests/e2e/identity.spec.ts`.
+
+## S-55 · Grimoire als Buch, Teil 1
+
+**Entschieden:** Der Tab „Grimoire“ ist ein Buch. Oben das Buch (A15) in der Bibliothek (A04, abgedunkelt wie die ruhigen Screens), darunter als Bildunterschrift die Namen des eigenen Archetyps und der zweiten Stimme. Darunter eine Pergamentseite (A30) „Inhalt“ mit je einer Zeile pro Kapitel: Vignette (A23–A29), römische Ziffer, Name, eine Zahl und „Neu“, wenn dort etwas Neues wartet; am Ende die Schlussvignette.
+
+- **Kapitel:** Nur, was gebaut ist, und in der Reihenfolge des Buchs: I Karten, II Archetypen, III Tagebuch, IV Rituale, V Reise. Symbole und Zahlen kommen mit V06 dazu (D-54: nichts ankündigen, was es nicht gibt); die Ziffern verschieben sich dann. Archetypen und Reise behalten ihre Seiten aus V04.
+- **Kapitelanfang:** eine Pergamentseite mit Vignette, „Kapitel n“, Name, Zahl und einem Satz, was hier steht. Die Listen darunter stehen auf den dunklen Panels der App, damit lange Inhalte lesbar bleiben.
+- **I Karten:** Zeile mit den Stufen („5 entdeckt · 1 verstanden …“), dann nur die entdeckten Karten mit Mondphase und Stufenname, Gold-Rahmen ab Stufe 4; darunter eine ruhige Zeile „17 weitere Karten warten auf ihren Tag.“ (Design-Plan Punkt 7, D-63). Ohne Karte: „Deine erste Karte wartet auf dich“ und der Weg zur Tageskarte.
+- **III Tagebuch:** oben „Etwas aufschreiben“ (freier Eintrag), dann Suche, Filter (nur vorhandene Arten, dazu „Nur mit eigenen Worten“) und die Chronik. Tageskarten und Legungen öffnen ihre Seite, ein Eintrag zu einer Karte die Kartenseite; Einträge ohne Karte stehen für sich. Eigene Worte haben „Worte löschen“ mit Bestätigung (S-49).
+- **IV Rituale:** die Mini-Rituale der eigenen Tageskarten, je Karte und Variante einmal, das zuletzt begegnete zuerst, mit „Heute gemacht“ (einmal am Tag, zählt nicht als Reisetag). Leer: drei Einstiegsrituale aus Narr, Stern und Sonne und der Weg zur Tageskarte.
+- **„Neu“ (E2):** an einer Karte, deren Stufe gestiegen ist, bis ihre Seite geöffnet wurde; im Inhalt an „Karten“ und wie bisher an „Reise“. Was vor dem ersten Öffnen des Buchs erreicht war, gilt nicht als neu, damit nach dem Update nicht alles leuchtet.
+- **Wege:** `#/grimoire/cards`, `#/grimoire/journal` (alte Links auf `#/grimoire/history` landen hier), `#/grimoire/rituals`. Jeder gespeicherte Eintrag ist in höchstens drei Taps erreichbar (E2E).
+
+**Warum:** Das Buch ist das Versprechen des Grimoires (PRODUCT_SYSTEMS E). Pergament für Inhalt und Kapitelanfänge macht es zum Buch, ohne lange Listen auf hellen Grund zu setzen. Nur Gebautes zu zeigen hält die Regel aus D-54. Punkt 7 des Design-Plans war als Empfehlung mit V05 vorgesehen: Am ersten Tag sieht man, was man hat, nicht 21 gleiche Rücken.
+
+**Alternativen:**
+- Alle sieben Kapitel mit „bald“: verstößt gegen D-54.
+- Die Tabs „Sammlung“ und „Verlauf“ behalten und das Buch nur als Kopf darüber: weniger Umbau, aber kein Buch und keine Kapitel.
+- Ganze Kapitelseiten auf Pergament: liest sich bei langen Listen und Bildern schlechter, und die Karten verlieren den dunklen Grund.
+- Unentdeckte Karten als kleine gedimmte Reihe (zweite Option aus Punkt 7): zeigt die Lücke weiter, wenn auch leiser.
+- „Neu“ für alle Stufen ab dem Update: hätte bei bestehenden Nutzern jede Karte leuchten lassen.
+- Meilenstein-Moment am Reisetag 1 („grimoire-cover“) jetzt einschalten: Er teilt sich die Freischaltung mit dem Ex Libris (Tag 50), das noch nicht gebaut ist; beides müsste getrennt werden. Bleibt als Frage in der Prüfliste.
+
+**Wechsel kostet:** `src/features/grimoire/Book.tsx` und `book.css`, `src/domain/book.ts`, die Texte im Block `book` von `src/i18n/screens.*.ts`, die Wege in `src/app/router.ts` und `tests/e2e/book.spec.ts`.
