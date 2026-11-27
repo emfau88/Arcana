@@ -27,7 +27,7 @@ export interface ContentReport {
 }
 
 /** Words that would turn a reflection into a promise, a diagnosis or advice. */
-const FORBIDDEN: readonly RegExp[] = [
+export const FORBIDDEN: readonly RegExp[] = [
   /garantiert/i,
   /schicksal/i,
   /vorherbestimmt/i,
@@ -53,9 +53,9 @@ const FORBIDDEN: readonly RegExp[] = [
   /thinks (of|about) you/i,
 ];
 
-const PLACEHOLDER = /\b(TODO|TBD|lorem|ipsum|xxx)\b|\{\w+\}/i;
+export const PLACEHOLDER = /\b(TODO|TBD|lorem|ipsum|xxx)\b|\{\w+\}/i;
 
-function sentences(text: string): number {
+export function sentences(text: string): number {
   return text.split(/[.!?…]+(?:\s|$)/).filter((s) => s.trim().length > 0).length;
 }
 
@@ -152,7 +152,6 @@ export function validateContent(pack: ContentPack, stage: ContentStage = 'g1'): 
   for (const q of pack.questions) {
     if (qIds.has(q.id)) errors.push(`question ${q.id}: duplicate id`);
     qIds.add(q.id);
-    checkText(`question ${q.id}.prompt`, q.prompt, { maxLen: 90 });
     if (q.answers.length !== 4) errors.push(`question ${q.id}: ${q.answers.length} answers (expected 4)`);
     for (const a of q.answers) {
       if (aIds.has(a.id)) errors.push(`answer ${a.id}: duplicate id`);
@@ -160,7 +159,6 @@ export function validateContent(pack: ContentPack, stage: ContentStage = 'g1'): 
       if (a.primary === a.secondary) errors.push(`answer ${a.id}: primary equals secondary`);
       primary[a.primary] = (primary[a.primary] ?? 0) + 1;
       secondary[a.secondary] = (secondary[a.secondary] ?? 0) + 1;
-      checkText(`answer ${a.id}.label`, a.label, { maxLen: 70 });
     }
   }
   if (pack.questions.length !== 4) errors.push(`questions: ${pack.questions.length} (expected 4)`);

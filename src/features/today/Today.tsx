@@ -5,7 +5,8 @@ import { useApp } from '../../app/store.tsx';
 import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
 import { cardKeywords } from '../../content/keywords.ts';
 import { dateFromKey } from '../../domain/clock.ts';
-import { deriveCollection, journeyDays, journeyPosition } from '../../domain/oracle.ts';
+import { deriveCollection, journeyPosition } from '../../domain/oracle.ts';
+import { journeyDayToday } from '../../domain/progress.ts';
 import { fmt, formatLongDate, toRoman } from '../../i18n/index.ts';
 import { useToast } from '../../ui/feedback.tsx';
 import { IconCandle, IconCheck, IconEye, IconQuill, IconSparkle } from '../../ui/Icons.tsx';
@@ -87,12 +88,23 @@ export function Today() {
   useEffect(() => {
     if (phase !== 'hidden' || warm) return;
     const go = () => setWarm(true);
-    if (typeof window.requestIdleCallback === 'function') {
-      const id = window.requestIdleCallback(go, { timeout: 800 });
-      return () => window.cancelIdleCallback(id);
-    }
-    const to = window.setTimeout(go, 200);
-    return () => window.clearTimeout(to);
+    // B-08: warm up after the page has loaded (its fonts no longer delay the first screen),
+    // then at the next idle moment; at the latest 2.5 s after mounting.
+    let idle = 0;
+    let to = 0;
+    const whenIdle = () => {
+      if (typeof window.requestIdleCallback === 'function') idle = window.requestIdleCallback(go, { timeout: 800 });
+      else to = window.setTimeout(go, 200);
+    };
+    const cap = window.setTimeout(go, 2500);
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle, { once: true });
+    return () => {
+      window.removeEventListener('load', whenIdle);
+      if (idle) window.cancelIdleCallback(idle);
+      window.clearTimeout(to);
+      window.clearTimeout(cap);
+    };
   }, [phase, warm]);
 
   const skipAnimation = () => {
@@ -106,8 +118,8 @@ export function Today() {
   const card = today ? findCard(pack, today.cardId) ?? null : null;
   const faceUp = phase === 'flipping' || phase === 'shown';
   const collection = deriveCollection(state.dailies, state.readings);
-  // Today counts as a day of the journey as soon as the person is here (E6: never decreases).
-  const position = journeyPosition(journeyDays(state.dailies, state.readings) + (today ? 0 : 1));
+  // Today counts as a day of the journey as soon as the person is here, once (E6: never decreases).
+  const position = journeyPosition(journeyDayToday({ dailies: state.dailies, readings: state.readings }, state.todayKey));
   const pathName = [t.today.pathOuter, t.today.pathInner, t.today.pathHigher][position.path];
   // Full sentence for screen readers; the plaque shows the short form.
   const journeyCaption = [

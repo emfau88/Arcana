@@ -1,6 +1,30 @@
-import type { DailyRecord, Profile, Reading, ReadingDraft, Settings } from '../../domain/types.ts';
-import { SCHEMA_VERSION, StorageError, type Snapshot, type StorageRepository } from './repository.ts';
-import { isDailyRecord, isDraft, isProfile, isReading, isSettings } from './validate.ts';
+import type {
+  ActivityEvent,
+  DailyRecord,
+  EntitlementCache,
+  Favorite,
+  JournalEntry,
+  PersonalData,
+  Profile,
+  Reading,
+  ReadingDraft,
+  SeenFlag,
+  Settings,
+} from '../../domain/types.ts';
+import { SCHEMA_VERSION, StorageError, type Snapshot, type StorageRepository, type StoreData } from './repository.ts';
+import {
+  isDailyRecord,
+  isDraft,
+  isProfile,
+  isReading,
+  isSettings,
+  normalizeEntitlements,
+  normalizeEvent,
+  normalizeFavorite,
+  normalizeJournalEntry,
+  normalizePersonal,
+  normalizeSeen,
+} from './validate.ts';
 
 // A separate design preview on the same origin (GitHub Pages /preview/) gets its own
 // database so it never reads or migrates the data of the main preview.
@@ -10,7 +34,38 @@ const DB_NAME = import.meta.env.VITE_STORAGE_NAMESPACE
 const KV = 'kv';
 const DAILY = 'daily';
 const READINGS = 'readings';
-type StoreName = typeof KV | typeof DAILY | typeof READINGS;
+const JOURNAL = 'journal';
+const EVENTS = 'events';
+const FAVORITES = 'favorites';
+const SEEN = 'seen';
+type StoreName = typeof KV | typeof DAILY | typeof READINGS | typeof JOURNAL | typeof EVENTS | typeof FAVORITES | typeof SEEN;
+export const ALL_STORES: StoreName[] = [KV, DAILY, READINGS, JOURNAL, EVENTS, FAVORITES, SEEN];
+/** kv keys a restore replaces. 'entitlements' is not among them (purchases come from the store). */
+const RESTORED_KV = ['settings', 'profile', 'personal', 'draft'] as const;
+
+/**
+ * Explicit, additive and idempotent migrations per schema version. Never rewrites or drops
+ * existing data (IA §5.5). Exported for the upgrade tests.
+ */
+export function migrate(db: IDBDatabase, oldVersion: number): void {
+  const ensure = (name: string, keyPath?: string): IDBObjectStore | null =>
+    db.objectStoreNames.contains(name) ? null : db.createObjectStore(name, keyPath ? { keyPath } : undefined);
+  if (oldVersion < 1) {
+    ensure(KV);
+    ensure(DAILY, 'dateKey');
+    ensure(READINGS, 'id')?.createIndex('createdAt', 'createdAt');
+  }
+  if (oldVersion < 2) {
+    const journal = ensure(JOURNAL, 'id');
+    journal?.createIndex('dateKey', 'dateKey');
+    journal?.createIndex('kind', 'kind');
+    const events = ensure(EVENTS, 'id');
+    events?.createIndex('type', 'type');
+    events?.createIndex('dateKey', 'dateKey');
+    ensure(FAVORITES, 'key');
+    ensure(SEEN, 'key');
+  }
+}
 
 function req<T>(r: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -42,6 +97,7 @@ export class IndexedDbRepository implements StorageRepository {
   private db: IDBDatabase | null = null;
   private readonly factory: IDBFactory;
   private readonly name: string;
+  private versionChangeHandler: (() => void) | null = null;
 
   constructor(options: { factory?: IDBFactory; name?: string } = {}) {
     this.factory = options.factory ?? globalThis.indexedDB;
@@ -52,18 +108,7 @@ export class IndexedDbRepository implements StorageRepository {
     if (this.db) return;
     if (!this.factory) throw new StorageError('unavailable', 'IndexedDB is not available');
     const request = this.factory.open(this.name, SCHEMA_VERSION);
-    request.onupgradeneeded = (event) => {
-      const db = request.result;
-      // Explicit, idempotent migrations per schema version. Never drops user data.
-      if (event.oldVersion < 1) {
-        if (!db.objectStoreNames.contains(KV)) db.createObjectStore(KV);
-        if (!db.objectStoreNames.contains(DAILY)) db.createObjectStore(DAILY, { keyPath: 'dateKey' });
-        if (!db.objectStoreNames.contains(READINGS)) {
-          const s = db.createObjectStore(READINGS, { keyPath: 'id' });
-          s.createIndex('createdAt', 'createdAt');
-        }
-      }
-    };
+    request.onupgradeneeded = (event) => migrate(request.result, event.oldVersion);
     try {
       this.db = await new Promise<IDBDatabase>((resolve, reject) => {
         request.onsuccess = () => resolve(request.result);
@@ -73,10 +118,17 @@ export class IndexedDbRepository implements StorageRepository {
     } catch (err) {
       throw new StorageError('unavailable', 'Could not open local database', { cause: err });
     }
+    // Another tab opens a newer schema: step aside so its upgrade is not blocked, then let the
+    // app ask for a reload (writes from here would fail anyway).
     this.db.onversionchange = () => {
       this.db?.close();
       this.db = null;
+      this.versionChangeHandler?.();
     };
+  }
+
+  onVersionChange(handler: () => void): void {
+    this.versionChangeHandler = handler;
   }
 
   private tx(stores: StoreName[], mode: IDBTransactionMode): IDBTransaction {
@@ -87,14 +139,21 @@ export class IndexedDbRepository implements StorageRepository {
   }
 
   async loadAll(): Promise<Snapshot> {
-    const tx = this.tx([KV, DAILY, READINGS], 'readonly');
+    const tx = this.tx(ALL_STORES, 'readonly');
     const kv = tx.objectStore(KV);
-    const [settings, profile, draft, dailies, readings] = await Promise.all([
+    const all = (name: StoreName) => req(tx.objectStore(name).getAll()) as Promise<unknown[]>;
+    const [settings, profile, draft, personal, entitlements, dailies, readings, journal, events, favorites, seen] = await Promise.all([
       req(kv.get('settings')),
       req(kv.get('profile')),
       req(kv.get('draft')),
-      req(tx.objectStore(DAILY).getAll()),
-      req(tx.objectStore(READINGS).getAll()),
+      req(kv.get('personal')),
+      req(kv.get('entitlements')),
+      all(DAILY),
+      all(READINGS),
+      all(JOURNAL),
+      all(EVENTS),
+      all(FAVORITES),
+      all(SEEN),
     ]);
     let skippedCorrupt = 0;
     const keep = <T>(v: unknown, guard: (x: unknown) => x is T): T | null => {
@@ -103,24 +162,50 @@ export class IndexedDbRepository implements StorageRepository {
       skippedCorrupt++;
       return null;
     };
-    const validDailies = (dailies as unknown[]).filter((d): d is DailyRecord => {
-      const ok = isDailyRecord(d);
-      if (!ok) skippedCorrupt++;
-      return ok;
-    });
-    const validReadings = (readings as unknown[]).filter((r): r is Reading => {
-      const ok = isReading(r);
-      if (!ok) skippedCorrupt++;
-      return ok;
-    });
+    const keepNormalized = <T>(v: unknown, normalize: (x: unknown) => T | null): T | null => {
+      if (v === undefined) return null;
+      const n = normalize(v);
+      if (n === null) skippedCorrupt++;
+      return n;
+    };
+    const validList = <T>(list: unknown[], normalize: (x: unknown) => T | null): T[] => {
+      const out: T[] = [];
+      for (const item of list) {
+        const n = normalize(item);
+        if (n === null) skippedCorrupt++;
+        else out.push(n);
+      }
+      return out;
+    };
+    const guarded =
+      <T>(guard: (x: unknown) => x is T) =>
+      (x: unknown): T | null =>
+        guard(x) ? x : null;
     return {
       settings: keep(settings, isSettings),
       profile: keep(profile, isProfile),
       draft: keep(draft, isDraft),
-      dailies: validDailies,
-      readings: validReadings,
+      personal: keepNormalized(personal, normalizePersonal),
+      entitlements: keepNormalized(entitlements, normalizeEntitlements),
+      dailies: validList<DailyRecord>(dailies, guarded(isDailyRecord)),
+      readings: validList<Reading>(readings, guarded(isReading)),
+      journal: validList(journal, normalizeJournalEntry),
+      events: validList(events, normalizeEvent),
+      favorites: validList(favorites, normalizeFavorite),
+      seen: validList(seen, normalizeSeen),
       skippedCorrupt,
     };
+  }
+
+  /** One write transaction; maps IndexedDB failures to StorageError. */
+  private async write(stores: StoreName[], work: (tx: IDBTransaction) => void | Promise<void>): Promise<void> {
+    try {
+      const tx = this.tx(stores, 'readwrite');
+      await work(tx);
+      await done(tx);
+    } catch (err) {
+      throw wrapWriteError(err);
+    }
   }
 
   private async putKv(key: string, value: unknown): Promise<void> {
@@ -225,16 +310,81 @@ export class IndexedDbRepository implements StorageRepository {
     }
   }
 
-  async clearAll(): Promise<void> {
-    try {
-      const tx = this.tx([KV, DAILY, READINGS], 'readwrite');
-      tx.objectStore(KV).clear();
-      tx.objectStore(DAILY).clear();
-      tx.objectStore(READINGS).clear();
-      await done(tx);
-    } catch (err) {
-      throw wrapWriteError(err);
-    }
+  putPersonal(data: PersonalData): Promise<void> {
+    return this.putKv('personal', data);
+  }
+
+  deletePersonal(): Promise<void> {
+    return this.write([KV], (tx) => void tx.objectStore(KV).delete('personal'));
+  }
+
+  putJournalEntry(entry: JournalEntry): Promise<void> {
+    return this.write([JOURNAL], (tx) => void tx.objectStore(JOURNAL).put(entry));
+  }
+
+  deleteJournalEntry(id: string): Promise<void> {
+    return this.write([JOURNAL], (tx) => void tx.objectStore(JOURNAL).delete(id));
+  }
+
+  async appendEvent(event: ActivityEvent): Promise<ActivityEvent> {
+    let result = event;
+    await this.write([EVENTS], async (tx) => {
+      const store = tx.objectStore(EVENTS);
+      const existing = normalizeEvent(await req(store.get(event.id)));
+      if (existing) result = existing;
+      else store.put(event);
+    });
+    return result;
+  }
+
+  putFavorite(favorite: Favorite): Promise<void> {
+    return this.write([FAVORITES], (tx) => void tx.objectStore(FAVORITES).put(favorite));
+  }
+
+  deleteFavorite(key: string): Promise<void> {
+    return this.write([FAVORITES], (tx) => void tx.objectStore(FAVORITES).delete(key));
+  }
+
+  async markSeen(key: string, seenAt: string): Promise<SeenFlag> {
+    let result: SeenFlag = { key, seenAt };
+    await this.write([SEEN], async (tx) => {
+      const store = tx.objectStore(SEEN);
+      const existing = normalizeSeen(await req(store.get(key)));
+      if (existing) result = existing;
+      else store.put(result);
+    });
+    return result;
+  }
+
+  putEntitlements(cache: EntitlementCache): Promise<void> {
+    return this.putKv('entitlements', cache);
+  }
+
+  replaceAll(data: StoreData): Promise<void> {
+    return this.write(ALL_STORES, (tx) => {
+      const kv = tx.objectStore(KV);
+      for (const key of RESTORED_KV) kv.delete(key);
+      if (data.kv.settings) kv.put(data.kv.settings, 'settings');
+      if (data.kv.profile) kv.put(data.kv.profile, 'profile');
+      if (data.kv.personal) kv.put(data.kv.personal, 'personal');
+      const fill = (name: StoreName, items: readonly unknown[]) => {
+        const store = tx.objectStore(name);
+        store.clear();
+        for (const item of items) store.put(item);
+      };
+      fill(DAILY, data.daily);
+      fill(READINGS, data.readings);
+      fill(JOURNAL, data.journal);
+      fill(EVENTS, data.events);
+      fill(FAVORITES, data.favorites);
+      fill(SEEN, data.seen);
+    });
+  }
+
+  clearAll(): Promise<void> {
+    return this.write(ALL_STORES, (tx) => {
+      for (const name of ALL_STORES) tx.objectStore(name).clear();
+    });
   }
 
   close(): void {

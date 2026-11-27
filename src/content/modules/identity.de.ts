@@ -1,0 +1,25 @@
+/** Modul identity, Deutsch. Fragebogen (V03.3 aus core übernommen; v2 folgt in V04.1). */
+import type { TextTable } from './registry.ts';
+
+export const texts: TextTable = {
+  'question.q-calling.prompt': 'Was ruft dich in dieser Zeit am stärksten?',
+  'question.q-calling.a-question': 'Eine Frage, die mich nicht loslässt',
+  'question.q-calling.a-create': 'Etwas, das ich erschaffen möchte',
+  'question.q-calling.a-close': 'Ein Kapitel, das ich abschließen will',
+  'question.q-calling.a-people': 'Menschen, für die ich da sein möchte',
+  'question.q-decision.prompt': 'Vor einer Entscheidung vertraust du zuerst …',
+  'question.q-decision.a-image': '… dem Bild, das sich in mir zeigt',
+  'question.q-decision.a-transform': '… meiner Kraft, aus Schwerem Wertvolles zu machen',
+  'question.q-decision.a-path': '… dem Weg, der sich beim Gehen zeigt',
+  'question.q-decision.a-known': '… dem, was ich weiß und geprüft habe',
+  'question.q-place.prompt': 'Welcher Ort zieht dich an?',
+  'question.q-place.a-road': 'Eine Straße im ersten Morgenlicht',
+  'question.q-place.a-library': 'Eine stille Bibliothek bei Kerzenschein',
+  'question.q-place.a-workshop': 'Eine Werkstatt voller halbfertiger Ideen',
+  'question.q-place.a-garden': 'Ein Garten nach dem ersten Regen',
+  'question.q-invite.prompt': 'Was möchtest du mehr in dein Leben holen?',
+  'question.q-invite.a-shelter': 'Geborgenheit und Verlässlichkeit',
+  'question.q-invite.a-direction': 'Klarheit über meine eigene Richtung',
+  'question.q-invite.a-intuition': 'Mut, meiner Intuition zu folgen',
+  'question.q-invite.a-heavy': 'Die Kraft, Schweres zu verwandeln',
+};

@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { CONTENT, getCard, resolveTheme } from '../../src/content/index.ts';
 import type { Clock } from '../../src/domain/clock.ts';
-import { freeCoreEntitlements, CORE_ENTITLEMENTS } from '../../src/domain/entitlements.ts';
 import {
   buildHistory,
   composeDaily,
@@ -12,12 +11,12 @@ import {
   drawDailyCardId,
   finalizeReading,
   isFullyRevealed,
-  journeyDays,
   journeyPosition,
   previousDailyCard,
   revealAll,
   revealPosition,
 } from '../../src/domain/oracle.ts';
+import { journeyDays } from '../../src/domain/progress.ts';
 import { seededRng } from '../../src/domain/random.ts';
 import type { DailyRecord } from '../../src/domain/types.ts';
 
@@ -164,23 +163,16 @@ describe('collection and history', () => {
   });
 });
 
-describe('entitlements (P0 is free)', () => {
-  it('grants every core right and nothing else', () => {
-    for (const e of CORE_ENTITLEMENTS) expect(freeCoreEntitlements.has(e)).toBe(true);
-    expect(freeCoreEntitlements.has('premium.anything' as never)).toBe(false);
-    expect(freeCoreEntitlements.list()).toEqual(CORE_ENTITLEMENTS);
-  });
-});
 
 describe('journeyDays', () => {
   it('counts distinct days of use and never shrinks after a pause', () => {
     const d1 = daily('2026-11-01', 'fool');
     const d2 = daily('2026-11-02', 'magician');
     const d9 = daily('2026-11-09', 'star');
-    expect(journeyDays([], [])).toBe(0);
-    expect(journeyDays([d1, d2], [])).toBe(2);
+    expect(journeyDays({ dailies: [], readings: [] })).toBe(0);
+    expect(journeyDays({ dailies: [d1, d2], readings: [] })).toBe(2);
     // A week without use: the count stays, the next day adds one.
-    expect(journeyDays([d1, d2, d9], [])).toBe(3);
+    expect(journeyDays({ dailies: [d1, d2, d9], readings: [] })).toBe(3);
   });
 
   it('adds days with only a saved reading, without double counting', () => {
@@ -188,8 +180,8 @@ describe('journeyDays', () => {
     const draft = revealAll(createDraft(CONTENT, 'self', localClock(2026, 11, 1), seededRng(3)));
     const sameDay = finalizeReading(CONTENT, draft, 'de', localClock(2026, 11, 1, 20));
     const otherDay = finalizeReading(CONTENT, draft, 'de', localClock(2026, 11, 4, 20));
-    expect(journeyDays([d1], [sameDay])).toBe(1);
-    expect(journeyDays([d1], [sameDay, otherDay])).toBe(2);
+    expect(journeyDays({ dailies: [d1], readings: [sameDay] })).toBe(1);
+    expect(journeyDays({ dailies: [d1], readings: [sameDay, otherDay] })).toBe(2);
   });
 });
 

@@ -108,3 +108,20 @@ Abwechselnd gemessen, gleiche Bedingungen, Tippen direkt nach dem Laden (der Fal
 | Android-Kaltstart | 1,95 s (unter Last) | ≤ 3,0 s | PASS |
 
 D-41 verändert „Heute sichtbar“ nicht: Der Vorwärm-Block entsteht nur bei verdeckter Karte und erst nach dem Laden (geprüft: beim Laden eines aufgedeckten Tages erscheint er nie). Das V02-Gate (≤ +25 % zu `main`) liegt damit im Messrauschen an der Grenze. Laut Masterplan wird das in V03.5 gegen die absolute Grenze behoben, ohne optische Abstriche.
+
+## V03.5 · Ladeänderungen und schlanker Abschluss (D-50, D-52), 27.11.2026
+
+**Unsichtbare Änderungen für B-08 (D-50):** Wiederkehrende Nutzer warten beim Start nicht mehr auf das Textmodul (es lädt im Hintergrund). Die Pflanzenecken A02 laden erst nach dem `load`-Ereignis, das D-41-Vorwärmen der Schriften startet nach `load` (spätestens nach 2,5 s). Das Endbild ist gleich; die Ecken erscheinen einen Augenblick später.
+
+**Kennzahl „Heute sichtbar“:** Sie endet in `scripts/perf.mjs` faktisch mit dem `load`-Ereignis, weil `page.goto` darauf wartet. Der Bildschirm steht im Browser schon nach ≈ 470–550 ms (≈ 40 ms später als `main`). Die Referenz wurde genauso gemessen; die Kennzahl bleibt deshalb unverändert.
+
+| Kennzahl | Wert | Grenze | Ergebnis |
+|---|---|---|---|
+| „Heute“ sichtbar (eine verschachtelte Runde, V03 1.064 ms gegen `main` 907 ms) | normiert ≈ 1.168 ms; ältere Runden vor der letzten Änderung 1.212–1.315 ms | ≤ 1.250 ms | im Rahmen, **nicht abschließend** (nur eine Runde) |
+| Start-JS | 132,7 kB gzip | ≤ 160 kB | PASS |
+| Android-Kaltstart V03 (Emulator `Pixel_7`, Debug, Median aus 5) | 1,58 s (1,83 / 1,66 / 1,58 / 1,58 / 1,56 s); 0.2.0 im selben Lauf 1,57 s | ≤ 3,0 s | PASS |
+| Android-APK 0.3.0 (Debug) | 8,1 MB | ≤ 25 MB | PASS |
+
+**Entscheidung des Eigentümers (D-52):** Keine weiteren Messrunden in V03. Die Messung gegen die Referenz läuft vor dem geschlossenen Test (QG-V05) und in der Härtung (V07.5), weil V04 neue Bilder bringt und Messungen davor sofort veralten. Für Android zählt der Kaltstart. Reserve, falls die Messung vor QG-V05 knapp wird: Kartenbilder in 560 px Breite per `srcset`/`sizes` ausliefern (Heldenkarte höchstens 272 CSS-px), spart ≈ 60 KB bei der Rückseite.
+
+Die Rohdaten der einen Runde aus der Vorgänger-Sitzung wurden nicht gesichert; die Werte stammen aus deren Übergabe.

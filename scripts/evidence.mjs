@@ -1,10 +1,14 @@
 // Real-browser evidence run: walks the complete app flow and saves screenshots.
 // Usage: node scripts/evidence.mjs <baseUrl> <outDir> [--locale de|en] [--width 412] [--height 915] [--font 100]
-//                                  [--desktop] [--motion reduce]
+//                                  [--desktop] [--motion reduce] [--contrast]
+// --contrast audits every reading text of every screen (whole scroll height, p95, see contrast-audit.mjs)
+//            and writes contrast-<tag>.json; failing texts make the run fail.
 // Only synthetic input is used. Nothing personal is typed or stored.
 import { chromium } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { auditContrast } from './contrast-audit.mjs';
 
 const [, , baseUrl = 'http://127.0.0.1:5180/', outDir = 'docs/evidence/scratch', ...rest] = process.argv;
 const opt = (name, def) => {
@@ -18,6 +22,8 @@ const font = Number(opt('font', '100'));
 const desktop = rest.includes('--desktop');
 const reduce = opt('motion', 'no-preference');
 const only = opt('only', 'all');
+const contrast = rest.includes('--contrast');
+const contrastRows = [];
 
 await mkdir(outDir, { recursive: true });
 const browser = await chromium.launch();
@@ -48,6 +54,23 @@ async function shot(name, { long = false } = {}) {
   n += 1;
   await page.waitForTimeout(250);
   const file = join(outDir, `${String(n).padStart(2, '0')}-${name}-${tag}.png`);
+  // Layout gate (MASTER_ROADMAP §6): the page does not scroll sideways, and no visible text sticks
+  // out of the viewport (the scroll container clips sideways, so cut text would go unnoticed).
+  // Decoration (aria-hidden, e.g. light rays of the card stage) may overflow on purpose.
+  const over = await page.evaluate(() => {
+    const vw = document.documentElement.clientWidth;
+    const cut = [];
+    for (const el of document.querySelectorAll('body *')) {
+      if (el.closest('[aria-hidden="true"]')) continue;
+      if (![...el.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim())) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) continue;
+      if (r.right > vw + 1 || r.left < -1) cut.push(`${el.tagName.toLowerCase()}.${String(el.className).split(' ')[0]} "${el.textContent.trim().slice(0, 30)}"`);
+    }
+    return { page: document.documentElement.scrollWidth - vw, cut };
+  });
+  if (over.page > 0) errors.push(`${name}: page scrolls sideways by ${over.page}px`);
+  for (const c of over.cut) errors.push(`${name}: text outside the viewport ${c}`);
   if (long) {
     // Grow the viewport to the scroll height of the app's own scroll container, so the
     // real layout (not a CSS override) is captured in one image.
@@ -63,6 +86,7 @@ async function shot(name, { long = false } = {}) {
     await page.waitForTimeout(200);
   } else {
     await page.screenshot({ path: file });
+    if (contrast) contrastRows.push(...(await auditContrast(page, name)));
   }
   console.log(file);
 }
@@ -179,6 +203,14 @@ await settle(600);
 const afterReload = await page.locator('#today-card-title').textContent();
 await shot('heute-nach-neuladen');
 
-console.log(JSON.stringify({ tag, firstCardMs, dailyTitle, afterReload, samePersisted: dailyTitle === afterReload, errors, external }, null, 2));
+let contrastFails = [];
+if (contrast) {
+  contrastFails = contrastRows.filter((r) => !r.pass);
+  await writeFile(join(outDir, `contrast-${tag}.json`), JSON.stringify(contrastRows, null, 2));
+  const worst = [...contrastRows].filter((r) => !r.gradient).sort((a, b) => a.p95 / a.min - b.p95 / b.min).slice(0, 8);
+  console.log(`contrast ${tag}: ${contrastRows.length} texts, ${contrastFails.length} below the minimum`);
+  for (const r of contrastFails.length ? contrastFails : worst) console.log(`  ${r.pass ? 'ok  ' : 'FAIL'} ${r.p95.toFixed(2)} (min ${r.min}, median ${r.median}) ${r.screen} ${r.key} "${r.text}"`);
+}
+console.log(JSON.stringify({ tag, firstCardMs, dailyTitle, afterReload, samePersisted: dailyTitle === afterReload, errors, external, contrastFails: contrastFails.length }, null, 2));
 await browser.close();
-if (errors.length || external.length || dailyTitle !== afterReload) process.exitCode = 1;
+if (errors.length || external.length || dailyTitle !== afterReload || contrastFails.length) process.exitCode = 1;

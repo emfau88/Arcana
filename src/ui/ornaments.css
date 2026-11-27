@@ -57,6 +57,10 @@
   color: var(--gold-200);
   filter: drop-shadow(0 0 5px rgba(246, 230, 184, 0.8));
 }
+/* Eyebrow of a screen head as a flanked heading (V03.5: same building block as "Heute"). */
+.flank.screen-head__flank {
+  font-size: var(--fs-eyebrow);
+}
 .flank__text {
   /* Never shrinks below its one-line width while the lines can still give way;
      wraps only when even line-less it would not fit (2 stars + 4 gaps = 52px). */

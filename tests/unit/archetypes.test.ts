@@ -20,12 +20,10 @@ function allCombinations(): Answers[] {
   return out;
 }
 
-const blank = { de: '', en: '' };
 function synthetic(spec: [string, ArchetypeId, ArchetypeId][]): QuestionContent[] {
   return spec.map(([id, primary, secondary]) => ({
     id,
-    prompt: blank,
-    answers: [{ id: `${id}1`, label: blank, primary, secondary }],
+    answers: [{ id: `${id}1`, primary, secondary }],
   }));
 }
 

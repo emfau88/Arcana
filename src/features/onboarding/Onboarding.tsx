@@ -5,6 +5,7 @@ import { getArchetype } from '../../content/index.ts';
 import type { ThemeId } from '../../domain/types.ts';
 import { fmt } from '../../i18n/index.ts';
 import { IconBack, IconInfo, IconMoon } from '../../ui/Icons.tsx';
+import { Flank } from '../../ui/Ornaments.tsx';
 import { cardSrc } from '../../ui/OracleCard.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 import { useToast } from '../../ui/feedback.tsx';
@@ -36,7 +37,7 @@ export function Welcome() {
       <p className="welcome__wordmark rise rise-1" aria-hidden="true">
         {t.common.appName}
       </p>
-      <p className="eyebrow rise rise-1">{t.welcome.eyebrow}</p>
+      <Flank className="screen-head__flank rise rise-1">{t.welcome.eyebrow}</Flank>
       <h1 className="display h1 welcome__title rise rise-2" tabIndex={-1}>
         {t.welcome.title}
       </h1>
@@ -63,7 +64,7 @@ export function Welcome() {
 /* --------------------------------------------------------------- Questions */
 
 export function Questionnaire({ step }: { step: number }) {
-  const { t, pack, state, actions } = useApp();
+  const { t, tx, pack, state, actions } = useApp();
   const toast = useToast();
   const total = pack.questions.length + 1;
   const question = pack.questions[step - 1];
@@ -84,6 +85,14 @@ export function Questionnaire({ step }: { step: number }) {
   useEffect(() => {
     if (step > total) navigate(`/onboarding/${total}`, { replace: true });
   }, [step, total]);
+
+  // Returning people load the questionnaire texts in the background (B-08); if that did not
+  // work (web offline), try again here and say so if it still fails.
+  const hasTexts = Boolean(state.modules.identity);
+  useEffect(() => {
+    if (hasTexts) return;
+    actions.ensureModules().catch(() => toast(t.errors.contentLoad, 'error'));
+  }, [hasTexts, actions, toast, t]);
   if (step > total) return null;
 
   const next = () => navigate(`/onboarding/${step + 1}`);
@@ -144,7 +153,7 @@ export function Questionnaire({ step }: { step: number }) {
       {question ? (
         <div key={question.id} className="onboarding__body fade">
           <h1 className="display h2 onboarding__prompt" id="q-prompt" tabIndex={-1}>
-            {question.prompt[locale]}
+            {tx('identity', `question.${question.id}.prompt`)}
           </h1>
           <div className="choice-list" role="radiogroup" aria-labelledby="q-prompt">
             {question.answers.map((a) => (
@@ -157,7 +166,7 @@ export function Questionnaire({ step }: { step: number }) {
                 onClick={() => choose(a.id)}
               >
                 <span className="choice__mark" aria-hidden="true" />
-                <span className="choice__text">{a.label[locale]}</span>
+                <span className="choice__text">{tx('identity', `question.${question.id}.${a.id}`)}</span>
               </button>
             ))}
           </div>
@@ -221,7 +230,7 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
       </div>
       {archetype ? (
         <>
-          <p className="eyebrow rise rise-1">{t.archetype.eyebrow}</p>
+          <Flank className="screen-head__flank rise rise-1">{t.archetype.eyebrow}</Flank>
           <h1 className="display h1 archetype__name rise rise-2" tabIndex={-1}>
             {archetype.name[locale]}
           </h1>
@@ -248,7 +257,7 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
         </>
       ) : (
         <>
-          <p className="eyebrow rise rise-1">{t.archetype.neutralEyebrow}</p>
+          <Flank className="screen-head__flank rise rise-1">{t.archetype.neutralEyebrow}</Flank>
           <h1 className="display h1 archetype__name rise rise-2" tabIndex={-1}>
             {t.archetype.neutralTitle}
           </h1>

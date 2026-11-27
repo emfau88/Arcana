@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, type ReactNode } from 'react';
 import { CONTENT } from '../content/index.ts';
+import { loadModules, ModuleLoadError, STARTUP_MODULES, text, type LoadedModules, type ModuleId } from '../content/modules/registry.ts';
 import type { ContentPack } from '../content/schema.ts';
 import { PROFILE_VERSION, scoreArchetype } from '../domain/archetypes.ts';
 import { localDateKey, msUntilNextLocalDay, systemClock, type Clock } from '../domain/clock.ts';
@@ -26,17 +27,23 @@ import type {
 } from '../domain/types.ts';
 import { detectLocale, MESSAGES, type Messages } from '../i18n/index.ts';
 import { onResume } from '../platform/native.ts';
+import { CoreOnlyProvider, type EntitlementProvider, type Right } from '../domain/entitlements.ts';
 import { IndexedDbRepository } from '../platform/storage/indexeddb.ts';
 import type { StorageRepository } from '../platform/storage/repository.ts';
 
 export interface AppState {
-  status: 'loading' | 'ready' | 'error';
+  /** 'stale' = a newer version of the app took over the database in another tab. */
+  status: 'loading' | 'ready' | 'error' | 'stale';
   settings: Settings;
   profile: Profile | null;
   dailies: DailyRecord[];
   readings: Reading[];
   draft: ReadingDraft | null;
   skippedCorrupt: number;
+  /** Why the start failed: the local database or the texts of a content module. */
+  errorKind: 'storage' | 'content';
+  /** Lazy content modules of the current locale (startup set, see content/modules). */
+  modules: LoadedModules;
   todayKey: string;
   /** In-memory answers while the questionnaire is open (not persisted until finished). */
   pendingAnswers: Answers;
@@ -45,15 +52,17 @@ export interface AppState {
 
 type Action =
   | { type: 'loaded'; state: Partial<AppState> }
-  | { type: 'error' }
-  | { type: 'settings'; settings: Settings }
+  | { type: 'error'; kind: 'storage' | 'content' }
+  | { type: 'stale' }
+  | { type: 'settings'; settings: Settings; modules?: LoadedModules }
+  | { type: 'modules'; modules: LoadedModules; locale: Locale }
   | { type: 'profile'; profile: Profile }
   | { type: 'daily'; record: DailyRecord }
   | { type: 'draft'; draft: ReadingDraft | null }
   | { type: 'reading'; reading: Reading }
   | { type: 'today'; key: string }
   | { type: 'pending'; answers: Answers; theme: ThemeId | null }
-  | { type: 'cleared'; settings: Settings };
+  | { type: 'cleared'; settings: Settings; modules: LoadedModules };
 
 function upsert<T>(list: T[], item: T, same: (a: T) => boolean): T[] {
   const i = list.findIndex(same);
@@ -68,9 +77,14 @@ function reducer(state: AppState, action: Action): AppState {
     case 'loaded':
       return { ...state, ...action.state, status: 'ready' };
     case 'error':
-      return { ...state, status: 'error' };
+      return { ...state, status: 'error', errorKind: action.kind };
+    case 'stale':
+      return { ...state, status: 'stale' };
     case 'settings':
-      return { ...state, settings: action.settings };
+      return { ...state, settings: action.settings, modules: action.modules ?? state.modules };
+    case 'modules':
+      // A late background load must not overwrite the texts of a language switched to meanwhile.
+      return action.locale === state.settings.locale ? { ...state, modules: { ...state.modules, ...action.modules } } : state;
     case 'profile':
       return { ...state, profile: action.profile };
     case 'daily':
@@ -87,6 +101,7 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         settings: action.settings,
+        modules: action.modules,
         profile: null,
         dailies: [],
         readings: [],
@@ -100,6 +115,8 @@ function reducer(state: AppState, action: Action): AppState {
 
 export interface AppActions {
   retryOpen(): void;
+  /** Loads the startup content modules of the current locale if they are missing (rejects offline). */
+  ensureModules(): Promise<void>;
   setPending(answers: Answers, theme: ThemeId | null): void;
   completeOnboarding(answers: Answers, themeId: ThemeId): Promise<Profile>;
   skipOnboarding(): Promise<void>;
@@ -124,6 +141,10 @@ interface AppContextValue {
   actions: AppActions;
   pack: ContentPack;
   t: Messages;
+  /** Text from a lazy content module of the current locale. */
+  tx: (module: ModuleId, key: string) => string;
+  /** The only way the UI learns about rights (never the purchase state itself, D-48). */
+  has: (right: Right) => boolean;
   today: DailyRecord | null;
 }
 
@@ -135,13 +156,15 @@ export interface AppProviderProps {
   clock?: Clock;
   rng?: Rng;
   pack?: ContentPack;
+  /** Rights source. Default: the free core only (no billing). Tests pass a `TestProvider`. */
+  entitlements?: EntitlementProvider;
 }
 
 function defaultSettings(): Settings {
   return { locale: detectLocale(), motion: 'system', onboardingDone: false };
 }
 
-export function AppProvider({ children, repo: repoProp, clock = systemClock, rng = cryptoRng, pack = CONTENT }: AppProviderProps) {
+export function AppProvider({ children, repo: repoProp, clock = systemClock, rng = cryptoRng, pack = CONTENT, entitlements = CoreOnlyProvider }: AppProviderProps) {
   const repo = useMemo(() => repoProp ?? new IndexedDbRepository(), [repoProp]);
   const [state, dispatch] = useReducer(reducer, undefined, (): AppState => ({
     status: 'loading',
@@ -151,6 +174,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     readings: [],
     draft: null,
     skippedCorrupt: 0,
+    errorKind: 'storage',
+    modules: {},
     todayKey: localDateKey(clock.now()),
     pendingAnswers: {},
     pendingTheme: null,
@@ -166,13 +191,34 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     let cancelled = false;
     (async () => {
       try {
+        repo.onVersionChange(() => dispatch({ type: 'stale' }));
+        // Content modules for the likely locale load in parallel with the database.
+        const guess = defaultSettings().locale;
+        const early = loadModules(STARTUP_MODULES, guess);
+        early.catch(() => undefined);
         await repo.open();
         const snap = await repo.loadAll();
+        const settings = snap.settings ?? defaultSettings();
+        const pending = settings.locale === guess ? early : loadModules(STARTUP_MODULES, settings.locale);
+        // B-08: returning people start on "Heute", which needs no module text. They see it at once
+        // and the texts arrive in the background. A first start (questionnaire) waits for them.
+        let modules: LoadedModules = {};
+        if (snap.profile) {
+          pending.then(
+            (m) => {
+              if (!cancelled) dispatch({ type: 'modules', modules: m, locale: settings.locale });
+            },
+            () => undefined, // loaded again on demand (ensureModules)
+          );
+        } else {
+          modules = await pending;
+        }
         if (cancelled) return;
         dispatch({
           type: 'loaded',
           state: {
-            settings: snap.settings ?? defaultSettings(),
+            modules,
+            settings,
             profile: snap.profile,
             dailies: snap.dailies,
             readings: snap.readings,
@@ -181,8 +227,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             todayKey: localDateKey(clock.now()),
           },
         });
-      } catch {
-        if (!cancelled) dispatch({ type: 'error' });
+      } catch (e) {
+        if (!cancelled) dispatch({ type: 'error', kind: e instanceof ModuleLoadError ? 'content' : 'storage' });
       }
     })();
     return () => {
@@ -215,6 +261,11 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
   const actions = useMemo<AppActions>(
     () => ({
       retryOpen: () => bumpOpen(),
+      async ensureModules() {
+        const locale = stateRef.current.settings.locale;
+        if (STARTUP_MODULES.every((id) => stateRef.current.modules[id])) return;
+        dispatch({ type: 'modules', modules: await loadModules(STARTUP_MODULES, locale), locale });
+      },
       setPending: (answers, theme) => dispatch({ type: 'pending', answers, theme }),
 
       async completeOnboarding(answers, themeId) {
@@ -270,7 +321,13 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         dispatch({ type: 'profile', profile });
       },
 
-      setLocale: (locale) => persistSettings({ ...stateRef.current.settings, locale }),
+      async setLocale(locale) {
+        // Texts of the new language first, so the switch never shows missing texts.
+        const modules = await loadModules(STARTUP_MODULES, locale);
+        const next = { ...stateRef.current.settings, locale };
+        await repo.putSettings(next);
+        dispatch({ type: 'settings', settings: next, modules });
+      },
       setMotion: (motion) => persistSettings({ ...stateRef.current.settings, motion }),
 
       revealToday() {
@@ -360,7 +417,9 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
 
       async clearAllData() {
         await repo.clearAll();
-        dispatch({ type: 'cleared', settings: defaultSettings() });
+        const settings = defaultSettings();
+        const modules = settings.locale === stateRef.current.settings.locale ? stateRef.current.modules : await loadModules(STARTUP_MODULES, settings.locale);
+        dispatch({ type: 'cleared', settings, modules });
       },
     }),
     [repo, clock, rng, pack, persistSettings],
@@ -368,7 +427,9 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
 
   const t = MESSAGES[state.settings.locale];
   const today = state.dailies.find((d) => d.dateKey === state.todayKey) ?? null;
-  const value = useMemo(() => ({ state, actions, pack, t, today }), [state, actions, pack, t, today]);
+  const tx = useCallback((module: ModuleId, key: string) => text(state.modules, module, key), [state.modules]);
+  const has = useCallback((right: Right) => entitlements.has(right), [entitlements]);
+  const value = useMemo(() => ({ state, actions, pack, t, tx, has, today }), [state, actions, pack, t, tx, has, today]);
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

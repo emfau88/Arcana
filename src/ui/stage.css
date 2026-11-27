@@ -1,5 +1,8 @@
 /* Card stage – light around the hero card (ART_DIRECTION.md §4). */
 .cstage {
+  /* D-51: the whole stage (card, gold frame, light) is drawn at 90 %, so the card of the
+     day does not dominate the phone screen. One factor keeps every part in proportion. */
+  --stage-scale: 0.9;
   position: relative;
   display: grid;
   place-items: center;
@@ -11,7 +14,7 @@
    message, journey and main action (--today-chrome, set by the screen), so the
    main action stays visible on normal phones. Card ratio 2:3. */
 .cstage .ocard--hero {
-  width: min(54vw, 236px, max(150px, calc((var(--main-h, 100dvh) - var(--today-chrome, 31.5rem)) / 1.5)));
+  width: calc(var(--stage-scale) * min(54vw, 236px, max(150px, calc((var(--main-h, 100dvh) - var(--today-chrome, 31.5rem)) / 1.5))));
 }
 .cstage__card {
   position: relative;
@@ -22,7 +25,7 @@
 .cstage__rays {
   position: absolute;
   z-index: 0;
-  width: min(140vw, 620px);
+  width: calc(var(--stage-scale) * min(140vw, 620px));
   aspect-ratio: 1;
   border-radius: 50%;
   /* Irregular, soft rays (two layers, blurred) instead of an even geometric fan. */
@@ -64,7 +67,7 @@
 .cstage__aura {
   position: absolute;
   z-index: 1;
-  width: min(118vw, 520px);
+  width: calc(var(--stage-scale) * min(118vw, 520px));
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(
@@ -111,8 +114,8 @@
   position: absolute;
   z-index: 1;
   top: 2%;
-  width: min(70vw, 300px);
-  height: 120px;
+  width: calc(var(--stage-scale) * min(70vw, 300px));
+  height: calc(var(--stage-scale) * 120px);
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(255, 244, 214, 0.55), rgba(236, 208, 143, 0.18) 55%, transparent);
   filter: blur(8px);
@@ -127,7 +130,7 @@
 .cstage__motes {
   position: absolute;
   z-index: 1;
-  inset: 0 max(0px, calc(50% - 190px));
+  inset: 0 max(0px, calc(50% - var(--stage-scale) * 190px));
   pointer-events: none;
 }
 .cstage__motes i {
@@ -156,8 +159,8 @@
   position: absolute;
   z-index: 1;
   bottom: 8px;
-  width: min(80vw, 330px);
-  height: 46px;
+  width: calc(var(--stage-scale) * min(80vw, 330px));
+  height: calc(var(--stage-scale) * 46px);
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(246, 230, 184, 0.42), rgba(194, 84, 154, 0.16) 60%, transparent);
   filter: blur(4px);
@@ -178,12 +181,12 @@
 /* Filigree corners just outside the card edge. */
 .cstage__frame {
   position: absolute;
-  inset: -14px;
+  inset: calc(var(--stage-scale) * -14px);
   pointer-events: none;
 }
 .cstage__frame .corner {
-  width: 46px;
-  height: 46px;
+  width: calc(var(--stage-scale) * 46px);
+  height: calc(var(--stage-scale) * 46px);
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 6px rgba(246, 230, 184, 0.55));
 }
 .cstage__frame .corner--tl {
@@ -235,7 +238,7 @@
   }
   100% {
     opacity: 0;
-    transform: translate(var(--x), var(--y)) scale(1.1);
+    transform: translate(calc(var(--stage-scale) * var(--x)), calc(var(--stage-scale) * var(--y))) scale(1.1);
   }
 }
 

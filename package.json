@@ -1,7 +1,7 @@
 {
   "name": "personal-oracle-web",
   "private": true,
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "ARCANA / Personal Oracle (Arbeitstitel) – Web-first Orakel-App, lokal und offline, Browser + Capacitor Android",
   "type": "module",
   "engines": {
@@ -15,7 +15,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "validate:content": "node --experimental-strip-types --no-warnings scripts/validate-content.ts",
-    "build": "vite build",
+    "build": "vite build && node scripts/bundle-report.mjs",
     "art": "node scripts/render-art.mjs",
     "android:sync": "npm run build && npx cap sync android",
     "check": "npm run typecheck && npm run lint && npm run validate:content && npm run test && npm run build"

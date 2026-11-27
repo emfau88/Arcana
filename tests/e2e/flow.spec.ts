@@ -23,6 +23,51 @@ function guard(page: Page) {
   return problems;
 }
 
+/** Every store of the app's database with its record count (kv: number of keys). */
+async function storeCounts(page: Page): Promise<Record<string, number>> {
+  return page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((res, rej) => {
+      const r = indexedDB.open('personal-oracle');
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+    const names = [...db.objectStoreNames];
+    const tx = db.transaction(names, 'readonly');
+    const counts: Record<string, number> = {};
+    await Promise.all(
+      names.map(
+        (n) =>
+          new Promise<void>((res) => {
+            const c = tx.objectStore(n).count();
+            c.onsuccess = () => ((counts[n] = c.result), res());
+          }),
+      ),
+    );
+    db.close();
+    return counts;
+  });
+}
+
+/** Puts one synthetic record into each schema-2 store, the way later features will. */
+async function seedV2Stores(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((res, rej) => {
+      const r = indexedDB.open('personal-oracle');
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+    const tx = db.transaction(['kv', 'journal', 'events', 'favorites', 'seen'], 'readwrite');
+    const at = '2026-11-26T20:00:00.000Z';
+    tx.objectStore('kv').put({ birthDate: '1990-01-01', savedAt: at }, 'personal');
+    tx.objectStore('journal').put({ id: 'j1', kind: 'free', dateKey: '2026-11-26', text: 'Synthetisch', refs: {}, createdAt: at, updatedAt: at });
+    tx.objectStore('events').put({ id: 'e1', type: 'card.studied', dateKey: '2026-11-26', at, refs: {} });
+    tx.objectStore('favorites').put({ key: 'card:major-00-fool', kind: 'card', id: 'major-00-fool', createdAt: at });
+    tx.objectStore('seen').put({ key: 'milestone:7', seenAt: at });
+    await new Promise<void>((res, rej) => ((tx.oncomplete = () => res()), (tx.onerror = () => rej(tx.error))));
+    db.close();
+  });
+}
+
 async function completeOnboarding(page: Page, t: Messages) {
   await page.goto('./');
   await page.getByRole('button', { name: t.welcome.start }).click();
@@ -136,16 +181,23 @@ test('notes are saved locally and survive a reload; back returns to the origin',
   await expect(page.locator('#today-card-title')).toBeVisible();
 });
 
-test('language switch and deleting all local data', async ({ page }, info) => {
+test('language switch and deleting all local data from every store', async ({ page }, info) => {
   test.skip(info.project.name !== 'mobile-de-412', 'covered once');
   await completeOnboarding(page, de);
   await page.getByRole('link', { name: de.nav.profile }).click();
   await page.getByRole('radio', { name: 'English' }).click();
   await expect(page.getByRole('heading', { name: en.profile.title })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await seedV2Stores(page);
+  const before = await storeCounts(page);
+  for (const n of ['kv', 'journal', 'events', 'favorites', 'seen']) expect(before[n], n).toBeGreaterThan(0);
   await page.getByRole('button', { name: en.profile.delete }).click();
   await page.getByRole('button', { name: en.profile.deleteConfirm }).click();
   await expect(page.getByRole('button', { name: de.welcome.start })).toBeVisible();
+  // Deleting removes the data of every store (schema 2: seven stores).
+  const after = await storeCounts(page);
+  expect(Object.keys(after).sort()).toEqual(['daily', 'events', 'favorites', 'journal', 'kv', 'readings', 'seen']);
+  expect(Object.values(after).every((n) => n === 0)).toBe(true);
   await page.reload();
   await expect(page.getByRole('button', { name: de.welcome.start })).toBeVisible();
 });

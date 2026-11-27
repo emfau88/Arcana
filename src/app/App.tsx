@@ -64,14 +64,32 @@ export function App() {
     );
   }
 
+  if (state.status === 'stale') {
+    return (
+      <div className="stage stage--no-nav">
+        <main className="stage__main">
+          <div className="screen screen--center">
+            <div className="empty">
+              <h1 className="display h2">{t.errors.staleTitle}</h1>
+              <p className="muted">{t.errors.staleBody}</p>
+              <button type="button" className="btn btn--primary" onClick={() => window.location.reload()}>
+                {t.common.reload}
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   if (state.status === 'error') {
     return (
       <div className="stage stage--no-nav">
         <main className="stage__main">
           <div className="screen screen--center">
             <div className="empty">
-              <h1 className="display h2">{t.errors.storageTitle}</h1>
-              <p className="muted">{t.errors.storageBody}</p>
+              <h1 className="display h2">{state.errorKind === 'content' ? t.errors.contentTitle : t.errors.storageTitle}</h1>
+              <p className="muted">{state.errorKind === 'content' ? t.errors.contentBody : t.errors.storageBody}</p>
               <button type="button" className="btn btn--primary" onClick={actions.retryOpen}>
                 {t.common.retry}
               </button>

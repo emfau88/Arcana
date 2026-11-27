@@ -6,6 +6,7 @@ import { dateFromKey } from '../../domain/clock.ts';
 import { buildHistory, deriveCollection } from '../../domain/oracle.ts';
 import { fmt, formatDate, toRoman } from '../../i18n/index.ts';
 import { Divider, useToast } from '../../ui/feedback.tsx';
+import { Flank } from '../../ui/Ornaments.tsx';
 import { IconBack, IconCandle, IconEye, IconQuill, IconSparkle } from '../../ui/Icons.tsx';
 import { OracleCard } from '../../ui/OracleCard.tsx';
 import { Interpretation, Spread } from '../oracle/Oracle.tsx';
@@ -27,7 +28,7 @@ export function Grimoire({ view }: { view: 'collection' | 'history' }) {
   return (
     <div className="screen grimoire">
       <header className="screen-head">
-        <p className="eyebrow">{t.grimoire.eyebrow}</p>
+        <Flank className="screen-head__flank">{t.grimoire.eyebrow}</Flank>
         <h1 className="display h1" tabIndex={-1}>
           {t.grimoire.title}
         </h1>
@@ -228,9 +229,9 @@ export function DayDetail({ dateKey, parsed }: { dateKey: string; parsed: Parsed
     <div className="screen detail">
       <DetailHeader parsed={parsed} />
       <header className="screen-head">
-        <p className="eyebrow">
+        <Flank className="screen-head__flank">
           {t.grimoire.daily} · {formatDate(dateFromKey(record.dateKey), locale)}
-        </p>
+        </Flank>
         <span className="chip">{c.themeLabel}</span>
       </header>
       <div className="card-stage is-revealed">
@@ -291,9 +292,9 @@ export function ReadingDetail({ id, parsed }: { id: string; parsed: ParsedRoute 
     <div className="screen detail">
       <DetailHeader parsed={parsed} />
       <header className="screen-head">
-        <p className="eyebrow">
+        <Flank className="screen-head__flank">
           {t.grimoire.reading} · {formatDate(toDate(reading.createdAt), locale)}
-        </p>
+        </Flank>
         <h1 className="display h2" tabIndex={-1}>
           {reading.content.themeLabel}
         </h1>

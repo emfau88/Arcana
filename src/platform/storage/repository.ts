@@ -1,7 +1,22 @@
-import type { DailyRecord, Profile, Reading, ReadingDraft, Settings } from '../../domain/types.ts';
+import type {
+  ActivityEvent,
+  DailyRecord,
+  EntitlementCache,
+  Favorite,
+  JournalEntry,
+  PersonalData,
+  Profile,
+  Reading,
+  ReadingDraft,
+  SeenFlag,
+  Settings,
+} from '../../domain/types.ts';
 
-/** Storage layout version. Independent from the content version. */
-export const SCHEMA_VERSION = 1;
+/**
+ * Storage layout version. Independent from the content version.
+ * 1 = 0.1–0.2 (kv, daily, readings). 2 = V03 (adds journal, events, favorites, seen; kv personal, entitlements).
+ */
+export const SCHEMA_VERSION = 2;
 
 export class StorageError extends Error {
   readonly kind: 'unavailable' | 'corrupt' | 'write-failed' | 'quota';
@@ -18,8 +33,27 @@ export interface Snapshot {
   dailies: DailyRecord[];
   readings: Reading[];
   draft: ReadingDraft | null;
+  personal: PersonalData | null;
+  entitlements: EntitlementCache | null;
+  journal: JournalEntry[];
+  events: ActivityEvent[];
+  favorites: Favorite[];
+  seen: SeenFlag[];
   /** Records that failed validation are reported, never silently deleted. */
   skippedCorrupt: number;
+}
+
+/**
+ * Everything a backup carries and a restore replaces (IA §5.7). No draft, no purchase rights.
+ */
+export interface StoreData {
+  kv: { profile?: Profile; settings?: Settings; personal?: PersonalData };
+  daily: DailyRecord[];
+  readings: Reading[];
+  journal: JournalEntry[];
+  events: ActivityEvent[];
+  favorites: Favorite[];
+  seen: SeenFlag[];
 }
 
 /**
@@ -43,7 +77,26 @@ export interface StorageRepository {
   /** Saves the reading and removes the matching draft in one transaction. Idempotent per id. */
   saveReading(reading: Reading): Promise<Reading>;
   updateReadingNote(id: string, note: string): Promise<Reading>;
-  /** Removes only this app's own local data. */
+  putPersonal(data: PersonalData): Promise<void>;
+  /** Removes the birth date and other sensitive data on its own (IA §5.5). */
+  deletePersonal(): Promise<void>;
+  putJournalEntry(entry: JournalEntry): Promise<void>;
+  deleteJournalEntry(id: string): Promise<void>;
+  /** Append only. Idempotent per id: an existing event wins. */
+  appendEvent(event: ActivityEvent): Promise<ActivityEvent>;
+  putFavorite(favorite: Favorite): Promise<void>;
+  deleteFavorite(key: string): Promise<void>;
+  /** Idempotent: the first seenAt wins. */
+  markSeen(key: string, seenAt: string): Promise<SeenFlag>;
+  putEntitlements(cache: EntitlementCache): Promise<void>;
+  /**
+   * Restore: replaces all backed-up data in one transaction (no merging). The open draft is
+   * dropped, cached purchase rights stay.
+   */
+  replaceAll(data: StoreData): Promise<void>;
+  /** Removes only this app's own local data, in every store. */
   clearAll(): Promise<void>;
+  /** Called once when a newer version of the app (another tab) needs the database. */
+  onVersionChange(handler: () => void): void;
   close(): void;
 }

@@ -1,0 +1,206 @@
+{
+ "note": "Schema 1 (v0.2.x), written with v0.2.1 domain code. Frozen: never regenerate.",
+ "kv": {
+  "settings": {
+   "locale": "de",
+   "motion": "system",
+   "onboardingDone": true
+  },
+  "profile": {
+   "answers": {
+    "q-calling": "a-question"
+   },
+   "themeId": "love",
+   "archetypeId": "seeker",
+   "archetypeSource": "questions",
+   "profileVersion": 1,
+   "updatedAt": "2026-11-24T08:00:00.000Z"
+  },
+  "draft": {
+   "id": "4e3342e252efd18036da834583167fd2",
+   "deckId": "nocturne",
+   "themeId": "change",
+   "cardIds": [
+    "major-02-high-priestess",
+    "major-00-fool",
+    "major-14-temperance"
+   ],
+   "revealed": [
+    true,
+    false,
+    false
+   ],
+   "createdAt": "2026-11-26T20:00:00.000Z"
+  }
+ },
+ "daily": [
+  {
+   "dateKey": "2026-11-24",
+   "deckId": "nocturne",
+   "cardId": "major-11-justice",
+   "themeId": "love",
+   "archetypeId": "seeker",
+   "locale": "de",
+   "contentVersion": "p0-2026-11-26.1",
+   "content": {
+    "cardId": "major-11-justice",
+    "cardOrder": 11,
+    "cardTitle": "Die Gerechtigkeit",
+    "essence": "Klarheit, Ausgleich und die Verantwortung für das eigene Handeln.",
+    "message": "Gleichgewicht in einer Verbindung entsteht nicht von selbst. Schau, ob Geben und Nehmen sich gerade fair anfühlen. Ein ruhiges, klares Gespräch kann mehr ausgleichen als stilles Aufrechnen.",
+    "lens": "Deine suchende Seite darf heute einer Frage folgen, ohne sie sofort beantworten zu müssen.",
+    "reflection": "Was wäre heute eine faire Entscheidung – auch mir selbst gegenüber?",
+    "ritual": "Zeichne eine Linie in die Mitte eines Blattes und schreib links, was du gibst, und rechts, was du bekommst.",
+    "themeLabel": "Liebe & Beziehungen"
+   },
+   "revealedAt": "2026-11-24T08:00:00.000Z",
+   "note": ""
+  },
+  {
+   "dateKey": "2026-11-25",
+   "deckId": "nocturne",
+   "cardId": "major-06-lovers",
+   "themeId": "love",
+   "archetypeId": "seeker",
+   "locale": "de",
+   "contentVersion": "p0-2026-11-26.1",
+   "content": {
+    "cardId": "major-06-lovers",
+    "cardOrder": 6,
+    "cardTitle": "Die Liebenden",
+    "essence": "Verbindung, Wahl und die Übereinstimmung mit dem eigenen Herzen.",
+    "message": "Nähe lebt von bewussten Entscheidungen. Frag dich, was du in eine Verbindung einbringen möchtest und was du dir wünschst. Ehrliche Worte über beides schaffen Vertrauen.",
+    "lens": "Deine suchende Seite darf heute einer Frage folgen, ohne sie sofort beantworten zu müssen.",
+    "reflection": "Welche Wahl würde sich auch in einem Jahr noch stimmig anfühlen?",
+    "ritual": "Leg eine Hand aufs Herz, atme dreimal ruhig und frag still: Was ist mir heute wirklich wichtig?",
+    "themeLabel": "Liebe & Beziehungen"
+   },
+   "revealedAt": "2026-11-25T08:00:00.000Z",
+   "note": "Synthetische Notiz zum Tag"
+  },
+  {
+   "dateKey": "2026-11-26",
+   "deckId": "nocturne",
+   "cardId": "major-12-hanged-man",
+   "themeId": "love",
+   "archetypeId": "seeker",
+   "locale": "de",
+   "contentVersion": "p0-2026-11-26.1",
+   "content": {
+    "cardId": "major-12-hanged-man",
+    "cardOrder": 12,
+    "cardTitle": "Der Gehängte",
+    "essence": "Innehalten, Perspektivwechsel und die Kraft des Abwartens.",
+    "message": "Versuch heute, eine Situation einmal von der anderen Seite aus zu sehen. Frag nach, statt zu vermuten. Ein Perspektivwechsel kann festgefahrene Gespräche lösen.",
+    "lens": "Deine suchende Seite darf heute einer Frage folgen, ohne sie sofort beantworten zu müssen.",
+    "reflection": "Wie sähe meine Lage aus, wenn ich sie von der anderen Seite betrachte?",
+    "ritual": "Sieh dir einen vertrauten Raum aus einer ungewohnten Position an – im Sitzen auf dem Boden oder von der Tür aus – und notiere, was dir neu auffällt.",
+    "themeLabel": "Liebe & Beziehungen"
+   },
+   "revealedAt": "2026-11-26T08:00:00.000Z",
+   "note": ""
+  }
+ ],
+ "readings": [
+  {
+   "id": "61e40f107a0999fde459659adebdd1ff",
+   "deckId": "nocturne",
+   "themeId": "self",
+   "cardIds": [
+    "major-09-hermit",
+    "major-10-wheel",
+    "major-07-chariot"
+   ],
+   "locale": "de",
+   "contentVersion": "p0-2026-11-26.1",
+   "content": {
+    "themeLabel": "Selbstentdeckung",
+    "intro": "Diese Legung schaut auf dich selbst: wo du stehst, was dich bremst und was dich weiterführt.",
+    "positions": [
+     {
+      "position": "situation",
+      "positionLabel": "Situation",
+      "cardId": "major-09-hermit",
+      "cardOrder": 9,
+      "cardTitle": "Der Eremit",
+      "essence": "Rückzug, innere Einkehr und das Licht, das man nur im Stillen findet.",
+      "text": "Ein Rückzug ist gerade wichtiger als neuer Trubel."
+     },
+     {
+      "position": "challenge",
+      "positionLabel": "Herausforderung",
+      "cardId": "major-10-wheel",
+      "cardOrder": 10,
+      "cardTitle": "Das Glücksrad",
+      "essence": "Zyklen, Wendepunkte und der Moment, in dem sich etwas dreht.",
+      "text": "Festhalten an einem Zustand kann gegen den natürlichen Wandel arbeiten."
+     },
+     {
+      "position": "impulse",
+      "positionLabel": "Impuls",
+      "cardId": "major-07-chariot",
+      "cardOrder": 7,
+      "cardTitle": "Der Wagen",
+      "essence": "Entschlossenheit, Richtung und die Kunst, gegensätzliche Kräfte zu lenken.",
+      "text": "Wähle ein Ziel und halte die Zügel mit ruhiger Hand."
+     }
+    ],
+    "synthesisTitle": "Der Wagen",
+    "synthesis": "Du kommst voran, wenn du weißt, wohin du willst. Unterschiedliche Wünsche in dir dürfen da sein, solange du die Zügel hältst. Ein klares Ziel bündelt deine Kraft.",
+    "reflection": "Wohin will ich in den nächsten Wochen wirklich?"
+   },
+   "createdAt": "2026-11-25T19:00:00.000Z",
+   "note": "Synthetische Notiz zur Legung"
+  },
+  {
+   "id": "348fb1985d549a37e5aa58e17203e224",
+   "deckId": "nocturne",
+   "themeId": "career",
+   "cardIds": [
+    "major-13-death",
+    "major-05-hierophant",
+    "major-06-lovers"
+   ],
+   "locale": "en",
+   "contentVersion": "p0-2026-11-26.1",
+   "content": {
+    "themeLabel": "Career & life path",
+    "intro": "This spread looks at your path: what occupies you now, what holds you up and which step is open to you.",
+    "positions": [
+     {
+      "position": "situation",
+      "positionLabel": "Situation",
+      "cardId": "major-13-death",
+      "cardOrder": 13,
+      "cardTitle": "Death",
+      "essence": "An ending that makes room for something new.",
+      "text": "Something is coming to an end or has already run its course."
+     },
+     {
+      "position": "challenge",
+      "positionLabel": "Challenge",
+      "cardId": "major-05-hierophant",
+      "cardOrder": 5,
+      "cardTitle": "The Hierophant",
+      "essence": "Tradition, values and the knowledge we learn from one another.",
+      "text": "What everyone does need not fit you."
+     },
+     {
+      "position": "impulse",
+      "positionLabel": "Impulse",
+      "cardId": "major-06-lovers",
+      "cardOrder": 6,
+      "cardTitle": "The Lovers",
+      "essence": "Connection, choice and being in tune with your own heart.",
+      "text": "Choose what agrees with both your heart and your mind."
+     }
+    ],
+    "synthesisTitle": "The Lovers",
+    "synthesis": "Work feels lighter when it fits your values. Check where your job and your convictions meet and where they rub against each other. Good collaboration begins with clear agreements.",
+    "reflection": "Which choice would still feel right a year from now?"
+   },
+   "createdAt": "2026-11-26T17:00:00.000Z",
+   "note": ""
+  }
+ ]
+}

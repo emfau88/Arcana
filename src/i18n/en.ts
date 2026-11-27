@@ -11,6 +11,7 @@ export const en: Messages = {
     cancel: 'Cancel',
     close: 'Close',
     retry: 'Try again',
+    reload: 'Reload',
     loading: 'Opening the oracle …',
   },
   nav: {
@@ -180,6 +181,11 @@ export const en: Messages = {
     storageBody: 'Your data could not be opened. Nothing has been deleted.',
     writeFailed: 'Saving did not work. Nothing was changed – please try again.',
     corrupt: '{n} entries are unreadable and hidden. They were not deleted.',
+    staleTitle: 'A newer version is open',
+    contentTitle: 'The texts could not be loaded',
+    contentBody: 'Part of the app is missing right now, often because of an interrupted connection. Nothing has been deleted.',
+    contentLoad: 'The texts for this language could not be loaded right now. Nothing has been changed.',
+    staleBody: 'An updated version of the app is running in another window. Reload to continue. Nothing has been deleted.',
   },
   languages: { de: 'Deutsch', en: 'English' },
 };

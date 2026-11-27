@@ -10,6 +10,7 @@
 import { chromium } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { auditContrast } from './contrast-audit.mjs';
 import { CONTENT } from '../src/content/index.ts';
 import { localDateKey } from '../src/domain/clock.ts';
 import { composeDaily } from '../src/domain/oracle.ts';
@@ -117,55 +118,8 @@ const shots = [];
 const folds = [];
 const contrasts = [];
 
-// Text contrast against the real backdrop: the text is made transparent (shadows and
-// filters off, so the result is conservative), the box behind it is captured and its
-// median and 95th-percentile (brightest) luminance are compared with the text colour.
-const PROBES = ['.today__meta', '.today__heading .flank__text', '.today__hint', '.today__oracle-flank .flank__text', '.today__keywords', '.today__essence', '.journey__plaque-text', '.today__message', '.today__lens p'];
-async function contrast(page, name) {
-  const decoder = await page.context().newPage(); // about:blank: no CSP for data: images
-  await page.evaluate(() => document.styleSheets[0].insertRule('.contrast-probe, .contrast-probe * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; filter: none !important; }'));
-  for (const sel of PROBES) {
-    const info = await page.evaluate((sel) => {
-      const el = document.querySelector(sel);
-      if (!el) return null;
-      const r = el.getBoundingClientRect();
-      if (r.width < 1 || r.top < 0 || r.bottom > innerHeight) return null;
-      const color = getComputedStyle(el).color;
-      el.classList.add('contrast-probe');
-      return { x: r.x, y: r.y, width: r.width, height: r.height, color };
-    }, sel);
-    if (!info) continue;
-    await page.waitForTimeout(50);
-    // 3px inset: leaves out borders of pill-shaped boxes (the plaque's own gold rim).
-    const png = await page.screenshot({ clip: { x: info.x + 3, y: info.y + 3, width: info.width - 6, height: info.height - 6 } });
-    await page.evaluate((sel) => document.querySelector(sel).classList.remove('contrast-probe'), sel);
-    const r = await decoder.evaluate(
-      async ({ b64, color }) => {
-        const lin = (v) => ((v /= 255) <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
-        const L = (r, g, b) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
-        const img = new Image();
-        img.src = `data:image/png;base64,${b64}`;
-        await img.decode();
-        const c = document.createElement('canvas');
-        c.width = img.width;
-        c.height = img.height;
-        const g = c.getContext('2d');
-        g.drawImage(img, 0, 0);
-        const d = g.getImageData(0, 0, c.width, c.height).data;
-        const lum = [];
-        for (let i = 0; i < d.length; i += 4) lum.push(L(d[i], d[i + 1], d[i + 2]));
-        lum.sort((a, b) => a - b);
-        const [tr, tg, tb] = color.match(/[\d.]+/g).map(Number);
-        const t = L(tr, tg, tb);
-        const ratio = (bg) => Math.round(((Math.max(t, bg) + 0.05) / (Math.min(t, bg) + 0.05)) * 10) / 10;
-        return { median: ratio(lum[lum.length >> 1]), brightest: ratio(lum[Math.floor(lum.length * 0.95)]) };
-      },
-      { b64: png.toString('base64'), color: info.color },
-    );
-    contrasts.push({ shot: name, sel, ...r });
-  }
-  await decoder.close();
-}
+// Text contrast of every reading text on the screen, whole scroll height, p95 of the
+// backdrop (scripts/contrast-audit.mjs, MASTER_ROADMAP_V2 §6).
 async function shot(page, name, firstScreen = true) {
   await page.waitForTimeout(1600);
   const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -177,11 +131,27 @@ async function shot(page, name, firstScreen = true) {
     const card = document.querySelector('.cstage .ocard');
     if (!cta || !bar) return null;
     const c = cta.getBoundingClientRect();
-    return { ctaBottom: Math.round(c.bottom), barTop: Math.round(bar.getBoundingClientRect().top), cardWidth: Math.round(card?.getBoundingClientRect().width ?? 0) };
+    // Inscriptions on the face: the name must not be cut off (ellipsis) and the numeral
+    // must stay inside its medallion (~11 % of the card width).
+    const title = document.querySelector('.cstage .ocard__title');
+    const num = document.querySelector('.cstage .ocard__num');
+    const w = card?.getBoundingClientRect().width ?? 0;
+    const px = (el) => (el ? Math.round(parseFloat(getComputedStyle(el).fontSize) * 10) / 10 : null);
+    return {
+      ctaBottom: Math.round(c.bottom),
+      barTop: Math.round(bar.getBoundingClientRect().top),
+      cardWidth: Math.round(w),
+      titlePx: px(title),
+      titleCut: title ? title.scrollWidth > title.clientWidth + 1 : null,
+      numPx: px(num),
+      numShare: num && w ? Math.round((num.getBoundingClientRect().width / w) * 1000) / 1000 : null,
+    };
   });
   if (fold && firstScreen) folds.push({ name, ...fold, ctaAboveFold: fold.ctaBottom <= fold.barTop });
+  if (fold?.titleCut) errors.push(`${name}: card name cut off`);
+  if (fold?.numShare > 0.11) errors.push(`${name}: numeral wider than its medallion (${fold.numShare})`);
   const file = join(outDir, `${name}-${tag}.png`);
-  if (measureContrast) await contrast(page, name);
+  if (measureContrast) contrasts.push(...(await auditContrast(page, name)));
   await page.screenshot({ path: file });
   shots.push(file);
 }
@@ -215,5 +185,8 @@ for (const [i, cardId] of [['hidden', null], ...cards.map((c, i) => [i, c])]) {
 }
 
 await browser.close();
-console.log(JSON.stringify({ shots, folds, contrasts, errors }, null, 2));
+const fails = contrasts.filter((r) => !r.pass);
+const worst = [...contrasts].filter((r) => !r.gradient).sort((a, b) => a.p95 / a.min - b.p95 / b.min).slice(0, 6);
+console.log(JSON.stringify({ shots, folds, errors, contrast: measureContrast ? { texts: contrasts.length, fails, worst } : undefined }, null, 2));
+if (errors.length || fails.length) process.exitCode = 1;
 if (errors.length) process.exitCode = 1;

@@ -236,11 +236,11 @@ interface BackupFile {                // Datei `arcana-sicherung-YYYY-MM-DD.json
 | Datenschutz | Datei ist unverschlüsselt; Hinweis beim Erstellen. Keine Netzwerkanfrage | Netzwerk-Log im E2E |
 | Erinnerung | höchstens ein Hinweis (A6) nach je 30 Reisetagen ohne Sicherung, abschaltbar, ohne Druckwörter | Unit |
 
-Technik: Web über Blob-Download und Datei-Eingabe. Android über System-Teilen bzw. Datei-Auswahl; ob dafür ein offizielles Capacitor-Plugin (Dateisystem) nötig ist, wird in V03.1 geprüft (Entscheidung E19).
+Technik: Web über Blob-Download und Datei-Eingabe. Android über System-Teilen bzw. Datei-Auswahl; das offizielle Capacitor-Dateisystem-Plugin kommt nur dazu, wenn das nicht reicht (E19 entschieden, D-43). Format, Serialisierer und Prüfer: `src/platform/storage/backup.ts` (V03.1, D-44).
 
 ## 6 · Entitlements (Vorbereitung für die Edition)
 
-`src/domain/entitlements.ts` wird erweitert: `core.*` (immer) plus `edition.spreads`, `edition.identity`, `edition.numbers`, `edition.rituals`, `deck.<id>`. Ohne freigegebenes Billing liefert der Provider nur `core.*`, und Edition-Inhalte werden **nicht angezeigt** (keine Attrappen, keine Schlösser). Mit Billing (V07, Freigabe nötig) kommt ein Play-Billing-Provider dazu. Ein Testprovider für E2E schaltet alles frei.
+`src/domain/entitlements.ts` wird erweitert: `core.*` (immer) plus `edition.spreads`, `edition.identity`, `edition.numbers`, `edition.rituals`, `deck.<id>`. Ohne freigegebenes Billing liefert der Provider nur `core.*`, und Edition-Inhalte werden **nicht angezeigt** (keine Attrappen, keine Schlösser). Mit Billing (V07, Freigabe nötig) kommt ein Play-Billing-Provider dazu. Ein Testprovider für E2E schaltet alles frei. **Umgesetzt in V03.4 (D-48):** `CoreOnlyProvider`, `TestProvider`, im UI nur `useApp().has(right)`, durch eine ESLint-Regel abgesichert.
 
 ## 7 · Leistung und Paketgröße
 

@@ -6,6 +6,7 @@ import { composeReading, isFullyRevealed } from '../../domain/oracle.ts';
 import { POSITIONS, type Reading, type ReadingContent, type ReadingDraft, type ThemeId } from '../../domain/types.ts';
 import { fmt, toRoman } from '../../i18n/index.ts';
 import { ConfirmDialog, Divider, useToast } from '../../ui/feedback.tsx';
+import { Flank } from '../../ui/Ornaments.tsx';
 import { IconCheck, IconEye, IconSparkle } from '../../ui/Icons.tsx';
 import { OracleCard } from '../../ui/OracleCard.tsx';
 
@@ -47,7 +48,7 @@ function OracleEntry() {
   return (
     <div className="screen oracle">
       <header className="screen-head">
-        <p className="eyebrow">{t.oracle.eyebrow}</p>
+        <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
         <h1 className="display h1" tabIndex={-1}>
           {t.oracle.title}
         </h1>
@@ -149,7 +150,7 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
   return (
     <div className="screen oracle">
       <header className="screen-head">
-        <p className="eyebrow">{t.oracle.eyebrow}</p>
+        <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
         <h1 className="display h2" tabIndex={-1}>
           {themeLabel}
         </h1>
@@ -211,7 +212,7 @@ function SavedReading({ reading, onNew }: { reading: Reading; onNew(): void }) {
   return (
     <div className="screen oracle">
       <header className="screen-head">
-        <p className="eyebrow">{t.oracle.eyebrow}</p>
+        <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
         <h1 className="display h2" tabIndex={-1}>
           {reading.content.themeLabel}
         </h1>

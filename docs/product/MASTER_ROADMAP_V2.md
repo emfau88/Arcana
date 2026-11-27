@@ -8,7 +8,7 @@
 
 | Paket | Version | Inhalt | Sitzungen | Bilder (Bulk) | Abschluss |
 |---|---|---|---|---|---|
-| **V02** Tagesorakel abschließen | 0.2 | freigegeben 26.11.2026, Merge offen | 1–2 | B1 (fertig) | Freigabe Tagesorakel, Merge nach `main` |
+| **V02** Tagesorakel abschließen | 0.2 | abgeschlossen, Tag `v0.2.1` | 1–2 | B1 (fertig) | Freigabe Tagesorakel, Merge nach `main` |
 | **V03** Fundament und globales Designsystem | 0.3 | Datenmodell v2, Content-Module, Entitlements, Designsystem auf alle Screens | 3–4 | keine | QG-V03 |
 | **V04** Identität und Reise | 0.4 | Fragebogen v2, Enthüllung, „Ich“, Linse je Karte, Narrenreise, Meilensteine, Sternkarte, Rückblicke, **teilbare Archetypkarte** | 7–8 | B2 | QG-V04, Pages-Vorschau |
 | **V05** Karten, Legungen, Grimoire | 0.5 | Kartenvertiefung, Rollen-Legungen, Grimoire als Buch, Tagebuch | 7–8 | B3 | QG-V05, **geschlossener Test** |
@@ -24,7 +24,9 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 freigegeben (26.11.2026), B-05 und B-06 behoben. V03 beginnt nach Merge und Tag `v0.2.1`.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 fertig auf `feature/v03-fundament` (Version 0.3.0), Pull Request nach `main` wartet auf Freigabe; B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft gestapelt auf `feature/v04-identitaet`. E9 und E20 entschieden (D-47).
+
+Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
 ### V02 · Tagesorakel abschließen (0.2) · Branch `design/visual-overhaul`
 
@@ -36,23 +38,53 @@ Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbe
 - [x] Abnahmetests auf dem Endstand: Check, E2E 19/0, Layout, Kontrast ≥ 4,9:1 bei 412/360 px, Perf (offene Grenzfälle B-07, B-08 → V03.5)
 - [x] Pull Request nach `main` ([#2](https://github.com/emfau88/Arcana/pull/2))
 - [x] **Freigabe des Tagesorakel-Screens durch den Eigentümer** (26.11.2026)
-- [ ] Merge nach `main`, Tag `v0.2.1`
+- [x] Merge nach `main` (`553c5d9`), Tag `v0.2.1`, Branch `feature/v03-fundament`
 - [x] B-05 (Abstand bei 360 px) und B-06 (Statusleiste Android) behoben (D-42), Android 13/13 PASS
 
 ### V03 · Fundament und globales Designsystem (0.3) · Branch `feature/v03-fundament`
 
-- [ ] V03.1 Datenmodell v2 mit Sicherungsformat (E19 klären)
-- [ ] V03.2 Abgeleitete Schicht
-- [ ] V03.3 Content-Module
-- [ ] V03.4 Entitlements
-- [ ] V03.5 Globales Designsystem, Mindestkontrast, Leistungsbudgets (inkl. B-07, B-08 aus V02)
-- [ ] QG-V03, Pull Request, Freigabe, Tag `v0.3.0`
+- [x] **V03.1 Datenmodell v2 mit Sicherungsformat** (8/8, D-43, D-44)
+  - [x] Schema 2: `journal`, `events`, `favorites`, `seen`, kv `personal` und `entitlements`
+  - [x] Validatoren mit Standardwerten
+  - [x] Migration 1 → 2 additiv und idempotent (Upgrade-Test leer, voll, teilweise defekt)
+  - [x] Daten aus 0.2 bit-gleich lesbar
+  - [x] Neuere Version in anderem Tab: Verbindung schließen, Hinweis „Neu laden“
+  - [x] Sicherungsformat: Typ, Serialisierer, Prüfer, Roundtrip-Test
+  - [x] Löschen entfernt alle Stores (E2E)
+  - [x] E19 entschieden: Teilen und Datei-Auswahl zuerst
+- [x] **V03.2 Abgeleitete Schicht** (7/7, D-45)
+  - [x] Reisetag aus allen zählenden Handlungen (Tageskarte, Legung, Tagebuch, Kartenstudium)
+  - [x] Kartenbegegnungen und Stufen 0–4, Grimoire-Kopfzahl
+  - [x] Meilensteine fest und im Rhythmus, nächster Meilenstein ohne Countdown
+  - [x] Randfälle: Zeitzone, Mitternacht, doppelte Tage, defekte Datensätze, Uhr zurückgestellt
+  - [x] Monoton über 1.000 Zufallsfolgen, 0.2-Bestand mit 40 Tagen, ≤ 30 ms bei 1.000 Tagen
+  - [x] Keine Zähler gespeichert
+  - [x] Nebenbei behoben: Plakette stand einen Tag zu weit, wenn heute nur eine Legung gespeichert war
+- [x] **V03.3 Content-Module** (5/5, D-46)
+  - [x] Inhalte in Module aufteilen, je Sprache dynamisch laden (erstes Modul `identity` mit dem Fragebogen; `core` bleibt statisch)
+  - [x] Validator je Modul meldet fehlende DE/EN-Texte, unbekannte Schlüssel, Verbotslisten, Abwechslung
+  - [x] Bundle-Report im Build (`scripts/bundle-report.mjs`, bricht bei Überschreitung ab)
+  - [x] Start-JS ≤ 160 KB gzip (132 kB; Modul `identity` 0,6 kB je Sprache, Grenze 40 kB)
+  - [x] Offline: Fragebogen ohne Netz nach dem Start (E2E im Flugmodus); fehlende Sprache meldet sich klar und ändert nichts
+- [x] **V03.4 Entitlements** (3/3, D-48)
+  - [x] `has(right)`, `CoreOnlyProvider`, `TestProvider` (Rechte `core.*`, `edition.*`, `deck.<id>`; im UI nur `useApp().has`)
+  - [x] Unit-Tests (Provider, gespeicherter Cache schaltet nichts frei, Store mit TestProvider)
+  - [x] Kein UI-Element liest den Kaufstatus direkt (ESLint-Regel für `features/` und `ui/`, mit Test belegt)
+- [x] **V03.5 Globales Designsystem** (2/4, zwei Punkte per Eigentümer-Ausnahme verschoben, D-52)
+  - [x] V02-Bausteine auf Orakel, Grimoire, Profil, Onboarding, Einstellungen (Flanken-Überschriften, gedämpfte Nachtwelt, D-50); Tageskarte zu 90 % (D-51)
+  - [x] Screenshot-Review 360/390/412, DE/EN, 130 % Schrift, keine Überläufe (Desktop kein Kriterium, D-52; Orakel-Positionen bei 130 % behoben, B-10)
+  - [ ] Mindestkontrast ≥ 4,5:1 für jeden Lesetext: alle Screens außer „Heute“ erfüllt; B-07 (Fußzeile über den Lilien) → **V04.3** (D-49, D-52)
+  - [ ] Absolute Perf-Grenzen: B-08 unsichtbar verbessert (normiert ≈ 1.168 ms, D-50); Messung gegen die Referenz → **vor QG-V05** (D-52). Android-Kaltstart 1,58 s ≤ 3,0 s
+- [ ] **QG-V03** (2/3, mit den Ausnahmen aus D-52)
+  - [x] `npm run check` (118 Unit-Tests, Build im Budget) und alle E2E grün (20 bestanden)
+  - [x] Android-Debug-Build 0.3.0 startet und migriert einen 0.2.0-Datenbestand: 9/9 PASS, jeder Datensatz unverändert (`scripts/android-migration.mjs`)
+  - [ ] Pull Request, Freigabe, Tag `v0.3.0`
 
 ### V04 · Identität und Reise (0.4)
 
 - [ ] V04.1 Fragebogen v2 (E9)
 - [ ] V04.2 Enthüllung und Profil
-- [ ] V04.3 Heute erweitert
+- [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49)
 - [ ] V04.4 Narrenreise und Meilensteine
 - [ ] V04.5 Sternkarte und Rückblicke
 - [ ] V04.6 „Ich“ und Gestaltung
@@ -268,10 +300,10 @@ Angefordert wird **immer nur der nächste Bulk**. Details, Prompts und Abnahmekr
 |---|---|---|
 | Statische Prüfung, Unit, Content-Validator | grün | `npm run check` |
 | E2E | grün, neue Abläufe mit eigenen Tests | Playwright |
-| Leistung | alle absoluten Obergrenzen der Tabelle „Leistungsbudgets“ unten; Schrittgrenze je Paket begründet | `scripts/perf.mjs`, Build-Report, Emulator |
+| Leistung | alle absoluten Obergrenzen der Tabelle „Leistungsbudgets“ unten; Schrittgrenze je Paket begründet. **Seit D-52:** die Messung gegen die Referenz läuft vor dem geschlossenen Test (QG-V05) und in der Härtung (V07.5); an den übrigen Gates zählen Build-Report (Start-JS, Module) und APK-Größe | `scripts/perf.mjs`, Build-Report, Emulator |
 | Inhalt je Modul und Sprache | ≤ 40 KB gzip | Build-Report |
 | **Mindestkontrast** | **jeder** relevante Lesetext (Botschaft, Fließtext, Listen, Labels, Tab-Beschriftung, Hinweise) ≥ 4,5:1 als Mindestwert: gemessen gegen den hellsten 5-%-Anteil der Hintergrundpixel unter der Schrift (p95), nicht im Mittel. Große Schrift (≥ 24 px, oder ≥ 18,7 px fett), Icons und Ränder von Bedienelementen ≥ 3:1. Der Median wird nur zusätzlich berichtet | Kontrastskript (aus `scripts/today-showcase.mjs --contrast`, auf alle Screens erweitert) |
-| Layout | keine Überläufe bei 360/390/412 und Desktop, große Schrift (130 %) | Showcase-Skripte |
+| Layout | keine Überläufe bei 360/390/412, große Schrift (130 %). Desktop ist seit D-52 kein Prüfkriterium (Android-App) | Showcase-Skripte |
 | Reduzierte Bewegung | keine Bewegung außer Überblenden | E2E |
 | DE/EN | vollständig, keine Kürzungen in der UI | Validator, Screenshot-Review |
 | Android | Debug-Build startet, Kernpfad auf dem Emulator | Emulator |
@@ -350,7 +382,7 @@ Regeln:
 | # | Frage | Empfehlung | gebraucht vor |
 |---|---|---|---|
 | E8 | Fünf Tabs mit „Entdecken“ ab V06 | ja | V06 |
-| E9 | Fragebogen v2 (7 Fragen) für Bestandsnutzer: Angebot zum Neubestimmen statt Zwang | Angebot, Profil bleibt | V04 |
+| E9 | Fragebogen v2 (7 Fragen) für Bestandsnutzer: Angebot zum Neubestimmen statt Zwang | **entschieden 26.11.2026 (D-47):** Angebot, Profil bleibt | V04 |
 | E10 | Kartenrücken als Meilenstein-Belohnung (A20–A22) | ja | V05 |
 | E11 | Finaler App-Name und App-ID (lässt sich nach dem ersten Play-Upload nicht mehr ändern) | vor dem geschlossenen Test festlegen | V05.6 |
 | E12 | Namenszahlen erst ab 1.3 | ja | – |
@@ -360,15 +392,15 @@ Regeln:
 | E16 | Abo erst nach 1.1, nur mit Inhaltsstrom | ja | nach 1.1 |
 | E17 | Geschlossener Test: Kanal, Testergruppe (ggf. Mindestanzahl und Dauer für neue Konten prüfen) | ab 0.5 | V05.6 |
 | E18 | Menschliches Lektorat vor 1.0 (Kosten) oder Prüfung durch den Eigentümer | mindestens Schaufenster-Texte durch Lektorat | V07 |
-| E19 | Sicherung auf Android: Datei über System-Teilen und Datei-Auswahl, oder zusätzlich das offizielle Capacitor-Dateisystem-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst). Visueller PDF-Export später Free oder Edition | Teilen/Auswahl zuerst, Plugin nur wenn nötig; PDF-Export Free | V03.1 |
-| E20 | Teilen auf Android über das offizielle Capacitor-Share-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | ja | V04 |
+| E19 | Sicherung auf Android: Datei über System-Teilen und Datei-Auswahl, oder zusätzlich das offizielle Capacitor-Dateisystem-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst). Visueller PDF-Export später Free oder Edition | **entschieden 26.11.2026 (D-43):** Teilen/Auswahl zuerst, Plugin nur wenn nötig; PDF-Export Free | V03.1 |
+| E20 | Teilen auf Android über das offizielle Capacitor-Share-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | **entschieden 26.11.2026 (D-47):** ja | V04 |
 
 ## 10 · Nächste Schritte
 
 1. **V02 abschließen** (läuft): Perf-Regression behoben (Commit `198130c`), restliche Grenzfälle und Abnahmetests, Pull Request nach `main`, Merge erst nach ausdrücklicher Freigabe, dann Tag `v0.2.1` (D-40).
 2. **Bulk B2 anfordern** (parallel, damit die Bilder zu V04 bereitliegen): A05, A06, A07–A14, A19. Die Porträts werden in V04 auch für die teilbare Archetypkarte gebraucht.
 3. **V03 freigeben und umsetzen** (keine Bilder nötig) auf dem neuen Branch `feature/v03-fundament` vom Tag `v0.2.1`.
-4. Entscheidungen E8, E9 und E20 vor V04 bestätigen, E19 in V03.1 klären.
+4. Entscheidung E8 vor V06 bestätigen. E19 (D-43), E9 und E20 (D-47) sind entschieden.
 
 ## 11 · Ergänzungen nach der Freigabe (26.11.2026)
 
