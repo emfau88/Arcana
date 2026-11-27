@@ -10,7 +10,8 @@ import type { CardId } from './types.ts';
 /** Parts of the app a reward can live in. */
 export type Feature =
   | 'archetype-chapters' // Kapitel I–IV and the second-voice chapter (V04)
-  | 'reviews' // week, month, hundred-day, jubilee and year reviews (V04.5)
+  | 'reviews' // weekly and monthly reviews (V04.5)
+  | 'jubilees' // hundred-day and jubilee reviews, yearbook, constellation "Hundred" (not built yet)
   | 'starmap' // constellations (V04.5)
   | 'review-spread' // V05
   | 'grimoire-book' // cover, Ex Libris (V05)
@@ -21,15 +22,16 @@ export type Feature =
 
 /** Which feature shows a reward. Unknown rewards map to null and are never hinted. */
 export function rewardFeature(rewardId: string): Feature | null {
-  const [kind] = rewardId.split(':');
+  const [kind, sub] = rewardId.split(':');
   switch (kind) {
     case 'archetype-chapter':
       return 'archetype-chapters';
     case 'review':
+      return sub === 'week' || sub === 'month' ? 'reviews' : 'jubilees';
     case 'yearbook':
-      return 'reviews';
+      return 'jubilees';
     case 'constellation':
-      return 'starmap';
+      return sub === 'hundred' ? 'jubilees' : 'starmap';
     case 'review-spread':
       return 'review-spread';
     case 'grimoire-cover':
@@ -51,10 +53,10 @@ export function rewardFeature(rewardId: string): Feature | null {
 }
 
 /**
- * Features this build ships. Each package adds its own entry when the content is really there
- * (V04.5 adds chapters, reviews and the star map), so no hint ever points to an empty page.
+ * Features this build ships. Each package adds its own entry when the content is really there,
+ * so no hint ever points to an empty page. V04: chapters, weekly/monthly reviews, star map.
  */
-export const BUILD_FEATURES: ReadonlySet<Feature> = new Set<Feature>([]);
+export const BUILD_FEATURES: ReadonlySet<Feature> = new Set<Feature>(['archetype-chapters', 'reviews', 'starmap']);
 
 export type HintKind = 'milestone' | 'card-level' | 'world';
 

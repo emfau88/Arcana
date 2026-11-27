@@ -8,6 +8,7 @@ export type Route =
   | { name: 'welcome' }
   | { name: 'onboarding'; step: number }
   | { name: 'archetype' }
+  | { name: 'why' }
   | { name: 'today' }
   | { name: 'oracle' }
   | { name: 'grimoire'; view: 'collection' | 'history' }
@@ -15,6 +16,14 @@ export type Route =
   | { name: 'day'; dateKey: string }
   | { name: 'reading'; id: string }
   | { name: 'profile' }
+  | { name: 'settings' }
+  | { name: 'archetypes' }
+  | { name: 'archetypeDetail'; id: string }
+  | { name: 'journey' }
+  | { name: 'review'; kind: 'week' | 'month'; index: number }
+  | { name: 'chapter'; id: string }
+  /** Archetype card; id '' = the person's own main archetype. */
+  | { name: 'share'; template: 'archetype'; id: string }
   | { name: 'notfound'; path: string };
 
 export interface ParsedRoute {
@@ -39,7 +48,9 @@ export function parsePath(rawPath: string): ParsedRoute {
         return Number.isInteger(step) && step >= 1 ? { name: 'onboarding', step } : { name: 'notfound', path };
       }
       case 'archetype':
-        return { name: 'archetype' };
+      case 'reveal':
+        if (seg[1] === 'why') return { name: 'why' };
+        return seg[1] === undefined ? { name: 'archetype' } : { name: 'notfound', path };
       case 'today':
         return { name: 'today' };
       case 'oracle':
@@ -49,10 +60,22 @@ export function parsePath(rawPath: string): ParsedRoute {
         if (seg[1] === 'day' && seg[2]) return { name: 'day', dateKey: seg[2] };
         if (seg[1] === 'reading' && seg[2]) return { name: 'reading', id: seg[2] };
         if (seg[1] === 'history') return { name: 'grimoire', view: 'history' };
+        if (seg[1] === 'archetypes') return seg[2] ? { name: 'archetypeDetail', id: seg[2] } : { name: 'archetypes' };
+        if (seg[1] === 'journey' && seg[2] === undefined) return { name: 'journey' };
+        if (seg[1] === 'chapter' && seg[2]) return { name: 'chapter', id: seg[2] };
+        if (seg[1] === 'review' && (seg[2] === 'week' || seg[2] === 'month')) {
+          const index = Number(seg[3]);
+          if (Number.isInteger(index) && index >= 1) return { name: 'review', kind: seg[2], index };
+        }
         if (seg[1] === undefined) return { name: 'grimoire', view: 'collection' };
         return { name: 'notfound', path };
-      case 'profile':
-        return { name: 'profile' };
+      case 'me':
+      case 'profile': // V04: "Profil" became "Ich" (#/me); the old path stays valid.
+        if (seg[1] === undefined) return { name: 'profile' };
+        return seg[1] === 'settings' && seg[2] === undefined ? { name: 'settings' } : { name: 'notfound', path };
+      case 'share':
+        if (seg[1] === 'archetype' && seg.length <= 3) return { name: 'share', template: 'archetype', id: seg[2] ?? '' };
+        return { name: 'notfound', path };
       default:
         return { name: 'notfound', path };
     }
@@ -60,7 +83,32 @@ export function parsePath(rawPath: string): ParsedRoute {
   return { route, from, path };
 }
 
-const ALLOWED_FROM = new Set(['/today', '/oracle', '/grimoire', '/grimoire/history', '/profile']);
+const ALLOWED_FROM = new Set(['/today', '/oracle', '/grimoire', '/grimoire/history', '/me', '/profile', '/archetype', '/grimoire/archetypes', '/grimoire/journey']);
+/** Pages with an id that may be the origin of another page (`from` carries the id). */
+const FROM_PATTERN = /^\/grimoire\/(archetypes\/[a-z]+|review\/(week|month)\/\d{1,3})$/;
+
+function isSafePath(path: string): boolean {
+  return ALLOWED_FROM.has(path) || FROM_PATTERN.test(path);
+}
+
+/**
+ * A `from` may carry the origin of that page once more ("Ich" → the eight archetypes → one of
+ * them → back → the eight → back → "Ich"). Deeper chains fall back to the fixed parent.
+ */
+function isSafeFrom(from: string | null): from is string {
+  if (from === null) return false;
+  const [path = '', query, ...rest] = from.split('?');
+  if (rest.length > 0 || !isSafePath(path)) return false;
+  if (query === undefined) return true;
+  const params = [...new URLSearchParams(query)];
+  return params.length === 1 && params[0]![0] === 'from' && isSafePath(params[0]![1]);
+}
+
+/** This page as the `from` of the next one, its own origin carried along (one level). */
+export function originOf(parsed: ParsedRoute): string {
+  if (parsed.from === null || !isSafePath(parsed.from)) return parsed.path;
+  return encodeURIComponent(`${parsed.path}?from=${parsed.from}`);
+}
 
 /**
  * Where "back" leads from a route (Android back gesture and the in-app back link share this).
@@ -68,7 +116,7 @@ const ALLOWED_FROM = new Set(['/today', '/oracle', '/grimoire', '/grimoire/histo
  */
 export function backTarget(parsed: ParsedRoute): string | 'exit' {
   const { route, from } = parsed;
-  const safeFrom = from && ALLOWED_FROM.has(from) ? from : null;
+  const safeFrom = isSafeFrom(from) ? from : null;
   switch (route.name) {
     case 'welcome':
     case 'today':
@@ -77,6 +125,21 @@ export function backTarget(parsed: ParsedRoute): string | 'exit' {
       return route.step > 1 ? `/onboarding/${route.step - 1}` : '/welcome';
     case 'archetype':
       return safeFrom ?? '/today';
+    case 'why':
+      return safeFrom ?? '/me';
+    case 'archetypes':
+      return safeFrom ?? '/grimoire';
+    case 'journey':
+      return safeFrom ?? '/grimoire';
+    case 'settings':
+      return '/me';
+    case 'archetypeDetail':
+      return safeFrom ?? '/grimoire/archetypes';
+    case 'review':
+    case 'chapter':
+      return safeFrom ?? '/grimoire/journey';
+    case 'share':
+      return safeFrom ?? '/me';
     case 'oracle':
     case 'profile':
     case 'notfound':

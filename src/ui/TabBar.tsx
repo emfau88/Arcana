@@ -16,8 +16,16 @@ function activeTab(route: Route): Tab | null {
     case 'card':
     case 'day':
     case 'reading':
+    case 'archetypes':
+    case 'archetypeDetail':
+    case 'journey':
+    case 'review':
+    case 'chapter':
       return 'grimoire';
     case 'profile':
+    case 'settings':
+    case 'why':
+    case 'share':
       return 'profile';
     default:
       return null;
@@ -31,7 +39,7 @@ export function TabBar({ route }: { route: Route }) {
     { id: 'today', label: t.nav.today, Icon: IconToday, path: '/today' },
     { id: 'oracle', label: t.nav.oracle, Icon: IconOracle, path: '/oracle', badge: state.draft !== null },
     { id: 'grimoire', label: t.nav.grimoire, Icon: IconGrimoire, path: '/grimoire' },
-    { id: 'profile', label: t.nav.profile, Icon: IconProfile, path: '/profile' },
+    { id: 'profile', label: t.nav.profile, Icon: IconProfile, path: '/me' },
   ];
   const go = (e: MouseEvent, path: string) => {
     e.preventDefault();

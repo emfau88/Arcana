@@ -145,6 +145,12 @@ export function levelCounts(encounters: Map<CardId, CardEncounters>): Record<1 |
   return out;
 }
 
+/* ----------------------------------------------------------- Review span */
+
+export type ReviewKind = 'week' | 'month';
+/** Journey days a review covers (V04.5): week = 7, month = 30 days of use. */
+export const REVIEW_SPAN: Readonly<Record<ReviewKind, number>> = { week: 7, month: 30 };
+
 /* -------------------------------------------------------------- Milestones */
 
 /** A milestone always opens real content or a lasting design unlock, never an empty badge. */

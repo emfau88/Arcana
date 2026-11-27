@@ -5,6 +5,7 @@ import { milestonesReached } from '../../src/domain/progress.ts';
 const ALL: ReadonlySet<Feature> = new Set<Feature>([
   'archetype-chapters',
   'reviews',
+  'jubilees',
   'starmap',
   'review-spread',
   'grimoire-book',
@@ -46,7 +47,20 @@ describe('discovery hint of the day (A6)', () => {
     expect(hintForToday({ journeyDay: 100, features: ALL })).toEqual({ kind: 'milestone', id: 'review:hundred' });
   });
 
-  it('starts with no shipped feature until the content lands', () => {
+  it('ships chapters, weekly/monthly reviews and the star map with V04, nothing else', () => {
     for (const f of BUILD_FEATURES) expect(ALL.has(f)).toBe(true);
+    expect([...BUILD_FEATURES].sort()).toEqual(['archetype-chapters', 'reviews', 'starmap']);
+  });
+
+  it('keeps the hundred-day and jubilee rewards apart until they are built', () => {
+    expect(rewardFeature('review:week:3')).toBe('reviews');
+    expect(rewardFeature('review:month:2')).toBe('reviews');
+    expect(rewardFeature('review:hundred')).toBe('jubilees');
+    expect(rewardFeature('review:jubilee:150')).toBe('jubilees');
+    expect(rewardFeature('yearbook:1')).toBe('jubilees');
+    expect(rewardFeature('constellation:hundred')).toBe('jubilees');
+    expect(rewardFeature('constellation:2')).toBe('starmap');
+    // With the V04 build, day 100 points to the chapter, not to the hundred-day review.
+    expect(hintForToday({ journeyDay: 100, features: BUILD_FEATURES })).toEqual({ kind: 'milestone', id: 'archetype-chapter:second-voice' });
   });
 });

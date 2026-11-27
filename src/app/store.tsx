@@ -126,6 +126,8 @@ export interface AppActions {
   retryOpen(): void;
   /** Loads the startup content modules of the current locale if they are missing (rejects offline). */
   ensureModules(): Promise<void>;
+  /** Loads further content modules of the current locale on demand (screens that need them). */
+  loadModules(ids: readonly ModuleId[]): Promise<void>;
   setPending(answers: Answers, theme: ThemeId | null): void;
   completeOnboarding(answers: Answers, themeId: ThemeId): Promise<Profile>;
   skipOnboarding(): Promise<void>;
@@ -278,6 +280,12 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         const locale = stateRef.current.settings.locale;
         if (STARTUP_MODULES.every((id) => stateRef.current.modules[id])) return;
         dispatch({ type: 'modules', modules: await loadModules(STARTUP_MODULES, locale), locale });
+      },
+      async loadModules(ids) {
+        const locale = stateRef.current.settings.locale;
+        const missing = ids.filter((id) => !stateRef.current.modules[id]);
+        if (missing.length === 0) return;
+        dispatch({ type: 'modules', modules: await loadModules(missing, locale), locale });
       },
       setPending: (answers, theme) => dispatch({ type: 'pending', answers, theme }),
 

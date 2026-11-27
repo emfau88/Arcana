@@ -1,0 +1,29 @@
+/* Share preview (V04.7). */
+.share-page__formats {
+  margin-bottom: var(--s-4);
+}
+.share-page__preview {
+  display: grid;
+  place-items: center;
+  margin: 0 auto var(--s-4);
+  border-radius: var(--r-m);
+  border: 1px solid var(--brass-line);
+  background: rgba(10, 12, 30, 0.75);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.share-page__preview--story {
+  width: min(100%, 300px, 44dvh);
+}
+.share-page__preview--feed {
+  width: min(100%, 340px);
+}
+.share-page__preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.share-page__privacy {
+  margin-top: var(--s-3);
+  text-align: center;
+}

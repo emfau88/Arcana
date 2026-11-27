@@ -5,6 +5,7 @@ import { findCard } from '../../content/index.ts';
 import { dateFromKey } from '../../domain/clock.ts';
 import { lensArchetypeOf } from '../../domain/lens.ts';
 import { buildHistory, deriveCollection } from '../../domain/oracle.ts';
+import { availableChapters, availableReviews, unseenKeys } from '../../domain/unlocks.ts';
 import { fmt, formatDate, toRoman } from '../../i18n/index.ts';
 import { Divider, useToast } from '../../ui/feedback.tsx';
 import { Flank } from '../../ui/Ornaments.tsx';
@@ -25,6 +26,8 @@ export function Grimoire({ view }: { view: 'collection' | 'history' }) {
   const pct = total ? Math.round((collection.size / total) * 100) : 0;
   const select = (v: 'collection' | 'history') => navigate(v === 'history' ? '/grimoire/history' : '/grimoire', { replace: true });
   const listFrom = view === 'history' ? '/grimoire/history' : '/grimoire';
+  const facts = { dailies: state.dailies, readings: state.readings };
+  const hasNew = unseenKeys([...availableReviews(facts), ...availableChapters(facts, state.profile, pack.questions)], state.seen).size > 0;
 
   return (
     <div className="screen grimoire">
@@ -45,6 +48,29 @@ export function Grimoire({ view }: { view: 'collection' | 'history' }) {
         </p>
         <p className="small">{fmt(t.grimoire.progress, { n: collection.size, total })}</p>
       </section>
+
+      {/* V04: the journey (star map, reviews, chapters) and the eight archetypes; V05 turns this into the book. */}
+      <ul className="row-list grimoire__entries">
+        <li>
+          <button type="button" className="row-link" onClick={() => navigate('/grimoire/journey')}>
+            <span className="row-link__text">
+              <span>{t.grimoire.journeyEntry}</span>
+              <span className="small">{t.grimoire.journeyEntrySub}</span>
+            </span>
+            {hasNew ? <span className="chip chip--new">{t.common.new}</span> : null}
+            <span aria-hidden="true">›</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" className="row-link" onClick={() => navigate('/grimoire/archetypes')}>
+            <span className="row-link__text">
+              <span>{t.grimoire.archetypesEntry}</span>
+              <span className="small">{t.grimoire.archetypesEntrySub}</span>
+            </span>
+            <span aria-hidden="true">›</span>
+          </button>
+        </li>
+      </ul>
 
       {state.skippedCorrupt > 0 ? <p className="notice notice--error">{fmt(t.errors.corrupt, { n: state.skippedCorrupt })}</p> : null}
 
@@ -137,7 +163,7 @@ export function Grimoire({ view }: { view: 'collection' | 'history' }) {
 
 /* ------------------------------------------------------------ Detail shell */
 
-function DetailHeader({ parsed }: { parsed: ParsedRoute }) {
+export function DetailHeader({ parsed }: { parsed: ParsedRoute }) {
   const { t } = useApp();
   return (
     <div className="detail__top">
@@ -148,7 +174,7 @@ function DetailHeader({ parsed }: { parsed: ParsedRoute }) {
   );
 }
 
-function NotFound({ parsed }: { parsed: ParsedRoute }) {
+export function NotFound({ parsed }: { parsed: ParsedRoute }) {
   const { t } = useApp();
   return (
     <div className="screen detail">

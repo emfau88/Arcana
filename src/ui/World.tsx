@@ -10,7 +10,7 @@ import './world.css';
  * Everything here is static after a short entrance: a few stars twinkle three times
  * (≈10 s) and then the scene is completely still (E5). Reduced motion: no animation.
  */
-export type WorldScene = 'today' | 'calm';
+export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap';
 
 const base = import.meta.env.BASE_URL;
 /** Painted backgrounds by scene; filled when the assets from ASSET_REQUESTS.md arrive. */
@@ -20,6 +20,11 @@ const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; 
   // V03.5: the same night world, dimmed, as the neutral backdrop of screens without their own
   // world yet (ASSET_REQUESTS: A01 "neutraler Hintergrund in V03"). Same file: no extra download.
   calm: { src: 'world/bg-today.webp', srcSmall: 'world/bg-today-720.webp' },
+  // B2 (26.11.2026, D-55): A06 welcome and questions, A05 reveal and "Ich", A19 star map.
+  welcome: { src: 'world/bg-welcome.webp', srcSmall: 'world/bg-welcome-720.webp' },
+  profile: { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
+  'profile-calm': { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
+  starmap: { src: 'world/bg-starmap.webp', srcSmall: 'world/bg-starmap-720.webp' },
 };
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
 

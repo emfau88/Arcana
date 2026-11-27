@@ -1,18 +1,104 @@
-import { World } from '../ui/World.tsx';
-import { useEffect, useRef, type ReactNode } from 'react';
+import { World, type WorldScene } from '../ui/World.tsx';
+import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArchetypeReveal, Questionnaire, Welcome } from '../features/onboarding/Onboarding.tsx';
 import { CardDetail, DayDetail, Grimoire, ReadingDetail } from '../features/grimoire/Grimoire.tsx';
 import { Oracle } from '../features/oracle/Oracle.tsx';
-import { Profile } from '../features/profile/Profile.tsx';
 import { Today } from '../features/today/Today.tsx';
 import { onHardwareBack } from '../platform/native.ts';
 import { Sigil } from '../ui/Sigil.tsx';
 import { TabBar } from '../ui/TabBar.tsx';
 import { useMotionClass } from './motion.ts';
-import { goBack, navigate, useRoute, type ParsedRoute } from './router.ts';
+import { goBack, navigate, useRoute, type ParsedRoute, type Route } from './router.ts';
 import { useApp } from './store.tsx';
 
 const FLOW_ROUTES = new Set(['welcome', 'onboarding', 'archetype']);
+
+/*
+ * Screens away from the first path (V04 step limit: start JS ≤ +8 KB per package) load as their
+ * own chunks. They are fetched once the app is idle, so they are ready offline afterwards; inside
+ * the Android app they are local files anyway.
+ */
+const loadIdentity = () => import('../features/identity/Identity.tsx');
+const loadJourney = () => import('../features/journey/JourneyScreens.tsx');
+const loadProfile = () => import('../features/profile/Profile.tsx');
+const loadShare = () => import('../features/share/SharePreview.tsx');
+const WhyScreen = lazy(() => loadIdentity().then((m) => ({ default: m.WhyScreen })));
+const ArchetypeLibrary = lazy(() => loadIdentity().then((m) => ({ default: m.ArchetypeLibrary })));
+const ArchetypeDetail = lazy(() => loadIdentity().then((m) => ({ default: m.ArchetypeDetail })));
+const JourneyPage = lazy(() => loadJourney().then((m) => ({ default: m.JourneyPage })));
+const ReviewDetail = lazy(() => loadJourney().then((m) => ({ default: m.ReviewDetail })));
+const ChapterDetail = lazy(() => loadJourney().then((m) => ({ default: m.ChapterDetail })));
+const Profile = lazy(() => loadProfile().then((m) => ({ default: m.Profile })));
+const Settings = lazy(() => loadProfile().then((m) => ({ default: m.Settings })));
+const SharePreview = lazy(() => loadShare().then((m) => ({ default: m.SharePreview })));
+
+/** `texts` loads content modules the first path needs later (the reveal after the questions). */
+function prefetchScreens(texts: () => Promise<unknown>): () => void {
+  const go = () => void Promise.all([loadIdentity(), loadJourney(), loadProfile(), loadShare(), texts()]).catch(() => undefined);
+  if (typeof window.requestIdleCallback === 'function') {
+    const id = window.requestIdleCallback(go, { timeout: 4000 });
+    return () => window.cancelIdleCallback(id);
+  }
+  const id = window.setTimeout(go, 1500);
+  return () => window.clearTimeout(id);
+}
+
+/** A lazy screen moves focus to its heading once it is there (same rule as App for loaded screens). */
+function FocusHeading({ enabled }: { enabled: boolean }) {
+  useEffect(() => {
+    if (enabled) document.querySelector<HTMLElement>('#main h1[tabindex="-1"]')?.focus({ preventScroll: true });
+  }, [enabled]);
+  return null;
+}
+
+/** A screen chunk that cannot be loaded (offline before the prefetch) shows the content error. */
+class ScreenBoundary extends Component<{ title: string; body: string; action: string; children: ReactNode }, { failed: boolean }> {
+  override state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  override render() {
+    if (!this.state.failed) return this.props.children;
+    return (
+      <div className="screen screen--center">
+        <div className="empty">
+          <h1 className="display h2" tabIndex={-1}>
+            {this.props.title}
+          </h1>
+          <p className="muted">{this.props.body}</p>
+          <button type="button" className="btn btn--primary" onClick={() => window.location.reload()}>
+            {this.props.action}
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
+
+/** Painted world behind each screen (V04.6: A06 welcome, A05 reveal and "Ich", A19 star map). */
+function sceneOf(route: Route): WorldScene {
+  switch (route.name) {
+    case 'today':
+    case 'notfound':
+      return 'today';
+    case 'welcome':
+    case 'onboarding':
+      return 'welcome';
+    case 'archetype':
+    case 'profile':
+      return 'profile';
+    case 'why':
+    case 'share':
+      // Sub-pages of "Ich": the same room, dimmed like the calm screens (long text, lists).
+      return 'profile-calm';
+    case 'journey':
+    case 'review':
+    case 'chapter':
+      return 'starmap';
+    default:
+      return 'calm';
+  }
+}
 
 export function App() {
   const { state, t, actions } = useApp();
@@ -20,7 +106,11 @@ export function App() {
   const mainRef = useRef<HTMLElement>(null);
   const parsedRef = useRef<ParsedRoute>(parsed);
   const firstRoute = useRef(true);
+  const [initialPath] = useState(parsed.path);
   useMotionClass();
+
+  // The archetype texts (reveal sentence, second voice) come along, so the reveal is complete offline too.
+  useEffect(() => prefetchScreens(() => actions.loadModules(['archetypes'])), [actions]);
 
   useEffect(() => {
     parsedRef.current = parsed;
@@ -132,20 +222,50 @@ export function App() {
     case 'reading':
       screen = <ReadingDetail key={route.id} id={route.id} parsed={parsed} />;
       break;
+    case 'why':
+      screen = <WhyScreen parsed={parsed} />;
+      break;
     case 'profile':
       screen = <Profile />;
+      break;
+    case 'settings':
+      screen = <Settings parsed={parsed} />;
+      break;
+    case 'archetypes':
+      screen = <ArchetypeLibrary parsed={parsed} />;
+      break;
+    case 'archetypeDetail':
+      screen = <ArchetypeDetail key={route.id} id={route.id} parsed={parsed} />;
+      break;
+    case 'journey':
+      screen = <JourneyPage parsed={parsed} />;
+      break;
+    case 'review':
+      screen = <ReviewDetail key={`${route.kind}-${route.index}`} kind={route.kind} index={route.index} parsed={parsed} />;
+      break;
+    case 'chapter':
+      screen = <ChapterDetail key={route.id} id={route.id} parsed={parsed} />;
+      break;
+    case 'share':
+      screen = <SharePreview key={route.id} id={route.id} parsed={parsed} />;
       break;
     case 'notfound':
       screen = <Today />;
       break;
   }
 
+  const scene = sceneOf(route);
   return (
     <>
-      <div className={`stage ${showNav ? '' : 'stage--no-nav'}`}>
-        <World scene={route.name === 'today' || route.name === 'notfound' ? 'today' : 'calm'} />
+      <div className={`stage stage--scene-${scene} ${showNav ? '' : 'stage--no-nav'}`}>
+        <World scene={scene} />
         <main ref={mainRef} className="stage__main" id="main">
-          {screen}
+          <ScreenBoundary key={route.name} title={t.errors.contentTitle} body={t.errors.contentBody} action={t.common.reload}>
+            <Suspense fallback={<div className="screen" aria-busy="true" />}>
+              {screen}
+              <FocusHeading enabled={parsed.path !== initialPath} />
+            </Suspense>
+          </ScreenBoundary>
         </main>
         {showNav ? <TabBar route={route} /> : null}
       </div>

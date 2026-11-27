@@ -8,6 +8,8 @@ import { dateFromKey } from '../../domain/clock.ts';
 import { deriveCollection, journeyPosition } from '../../domain/oracle.ts';
 import { lensArchetypeOf } from '../../domain/lens.ts';
 import { journeyDayToday } from '../../domain/progress.ts';
+import { milestoneMoment } from '../../domain/unlocks.ts';
+import { MilestoneMoment } from '../journey/MilestoneMoment.tsx';
 import { fmt, formatLongDate, toRoman } from '../../i18n/index.ts';
 import { useToast } from '../../ui/feedback.tsx';
 import { IconCandle, IconCheck, IconEye, IconQuill, IconSparkle } from '../../ui/Icons.tsx';
@@ -142,6 +144,8 @@ export function Today() {
     />
   );
   const keywords = card ? cardKeywords(card)?.[locale] : undefined;
+  // A6: the milestone of the day reached today, once, when it opened something in this build.
+  const moment = milestoneMoment({ dailies: state.dailies, readings: state.readings }, today !== null, state.seen);
 
   /** "Continue your journey": the next content is the full message of the day. */
   const continueJourney = () => {
@@ -237,6 +241,7 @@ export function Today() {
               {t.today.continueJourney} <span aria-hidden="true">›</span>
             </button>
           </div>
+          {moment ? <MilestoneMoment milestone={moment.milestone} rewards={moment.rewards} /> : null}
           {deepReady ? (
             <>
               <div className="panel-stack today__deep">

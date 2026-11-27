@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
+import { useReducedMotion } from '../../app/motion.ts';
 import { useApp } from '../../app/store.tsx';
+import { useModules } from '../../app/useModules.ts';
 import { getArchetype } from '../../content/index.ts';
 import type { ThemeId } from '../../domain/types.ts';
 import { fmt } from '../../i18n/index.ts';
@@ -9,6 +11,7 @@ import { Flank } from '../../ui/Ornaments.tsx';
 import { cardSrc } from '../../ui/OracleCard.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 import { useToast } from '../../ui/feedback.tsx';
+import { ArchetypePortrait } from '../../ui/Portrait.tsx';
 
 /* ----------------------------------------------------------------- Welcome */
 
@@ -213,72 +216,142 @@ export function Questionnaire({ step }: { step: number }) {
 
 /* ------------------------------------------------------- Archetype reveal */
 
+/**
+ * Moments of the portrait reveal in ms (V04.2): portrait, name, reveal sentence, then the second
+ * voice as its own moment, then the rest. Everything is in place after REVEAL_TOTAL_MS (≤ 8 s);
+ * "Skip" shows it at once, reduced motion shows it statically.
+ */
+export const REVEAL_STEPS = { portrait: 0, name: 900, sentence: 1500, second: 2700, rest: 3500 } as const;
+export const REVEAL_TOTAL_MS = 4300;
+
+const at = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties;
+
 export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
-  const { t, pack, state } = useApp();
+  const { t, pack, state, tx } = useApp();
+  useModules(['archetypes']);
+  const reduced = useReducedMotion();
+  const [skipped, setSkipped] = useState(false);
+  const [done, setDone] = useState(false);
   const locale = state.settings.locale;
   const profile = state.profile;
   const archetype = profile?.archetypeId ? getArchetype(pack, profile.archetypeId) : null;
+  const second = archetype && profile?.secondaryArchetypeId ? getArchetype(pack, profile.secondaryArchetypeId) : null;
   const answered = profile ? Object.keys(profile.answers).length : 0;
   const manual = profile?.archetypeSource === 'manual';
-  const fromProfile = parsed.from === '/profile';
+  const fromProfile = parsed.from === '/me' || parsed.from === '/profile';
+  const animate = Boolean(archetype) && !reduced && !skipped;
+  const revealText = archetype ? tx('archetypes', `reveal.${archetype.id}`) : '';
+  const complementText = second ? tx('archetypes', `complement.${second.id}`) : '';
+
+  useEffect(() => {
+    if (reduced) return;
+    const id = window.setTimeout(() => setDone(true), REVEAL_TOTAL_MS);
+    return () => window.clearTimeout(id);
+  }, [reduced]);
+
+  const cta = fromProfile ? (
+    <button type="button" className="btn btn--primary btn--block archetype__cta" onClick={() => goBack(parsed)}>
+      {t.archetype.toProfile}
+    </button>
+  ) : (
+    <button type="button" className="btn btn--primary btn--block archetype__cta" onClick={() => navigate('/today', { replace: true })}>
+      {t.archetype.toToday}
+    </button>
+  );
+  const explain = (
+    <details className="explain">
+      <summary>
+        <IconInfo size={16} /> {t.archetype.howItWorks.split(':')[0]}
+      </summary>
+      <p className="small">{t.archetype.howItWorks}</p>
+    </details>
+  );
+
+  if (!archetype) {
+    return (
+      <div className="screen archetype">
+        <div className="archetype__emblem" aria-hidden="true">
+          <span className="archetype__halo" />
+          <Sigil archetype={null} size={168} className="archetype__sigil" />
+        </div>
+        <Flank className="screen-head__flank rise rise-1">{t.archetype.neutralEyebrow}</Flank>
+        <h1 className="display h1 archetype__name rise rise-2" tabIndex={-1}>
+          {t.archetype.neutralTitle}
+        </h1>
+        <p className="lead archetype__essence rise rise-3">{manual ? t.archetype.neutralBodyManual : t.archetype.neutralBody}</p>
+        {answered > 0 ? (
+          <button type="button" className="btn btn--ghost rise rise-4" onClick={() => navigate('/archetype/why?from=/archetype')}>
+            {t.archetype.why}
+          </button>
+        ) : null}
+        <div className="rise rise-5 reveal__full">{explain}</div>
+        <div className="rise rise-5 reveal__full">{cta}</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="screen archetype">
-      <div className="archetype__emblem" aria-hidden="true">
-        <span className="archetype__halo" />
-        <Sigil archetype={profile?.archetypeId ?? null} size={168} className="archetype__sigil" />
+    <div className={`screen archetype reveal${animate ? ' is-animated' : ''}`}>
+      {animate && !done ? (
+        <button type="button" className="btn btn--quiet reveal__skip" onClick={() => setSkipped(true)}>
+          {t.common.skip}
+        </button>
+      ) : null}
+      <div className="reveal__stage reveal-step" style={at(REVEAL_STEPS.portrait)}>
+        <span className="archetype__halo" aria-hidden="true" />
+        <ArchetypePortrait id={archetype.id} size={720} alt={fmt(t.archetype.portraitAlt, { name: archetype.name[locale] })} eager seal className="reveal__portrait" />
       </div>
-      {archetype ? (
-        <>
-          <Flank className="screen-head__flank rise rise-1">{t.archetype.eyebrow}</Flank>
-          <h1 className="display h1 archetype__name rise rise-2" tabIndex={-1}>
-            {archetype.name[locale]}
-          </h1>
-          <p className="lead archetype__essence rise rise-3">{archetype.essence[locale]}</p>
-          <div className="panel-stack archetype__panels rise rise-4">
-            <section className="panel panel--brass">
-              <h2 className="panel__label">{t.archetype.strength}</h2>
-              <p>{archetype.strength[locale]}</p>
-            </section>
-            <section className="panel">
-              <h2 className="panel__label">{t.archetype.shadow}</h2>
-              <p className="italic-serif archetype__question">{archetype.shadow[locale]}</p>
-            </section>
-            <section className="panel">
-              <h2 className="panel__label">{t.archetype.growth}</h2>
-              <p>{archetype.growth[locale]}</p>
-            </section>
-            <section className="panel">
-              <h2 className="panel__label">{t.archetype.reflection}</h2>
-              <p className="italic-serif archetype__question">{archetype.reflection[locale]}</p>
-            </section>
+      <div className="reveal-step reveal__head" style={at(REVEAL_STEPS.name)}>
+        <Flank className="screen-head__flank">{t.archetype.eyebrow}</Flank>
+        <h1 className="display h1 archetype__name" tabIndex={-1}>
+          {archetype.name[locale]}
+        </h1>
+      </div>
+      <div className="reveal-step reveal__words" style={at(REVEAL_STEPS.sentence)}>
+        <p className="lead archetype__essence">{archetype.essence[locale]}</p>
+        {revealText ? <p className="italic-serif reveal__sentence">{revealText}</p> : null}
+      </div>
+      {second ? (
+        <div className="reveal-step reveal__second" style={at(REVEAL_STEPS.second)}>
+          <ArchetypePortrait id={second.id} size={240} alt="" className="reveal__second-portrait" />
+          <div className="reveal__second-text">
+            <p className="eyebrow">{t.archetype.secondVoice}</p>
+            <p className="display h3">{second.name[locale]}</p>
+            {complementText ? <p className="small">{complementText}</p> : null}
           </div>
-          <p className="small archetype__basis rise rise-5">{manual ? t.archetype.basisManual : fmt(t.archetype.basis, { n: answered })}</p>
-        </>
-      ) : (
-        <>
-          <Flank className="screen-head__flank rise rise-1">{t.archetype.neutralEyebrow}</Flank>
-          <h1 className="display h1 archetype__name rise rise-2" tabIndex={-1}>
-            {t.archetype.neutralTitle}
-          </h1>
-          <p className="lead archetype__essence rise rise-3">{manual ? t.archetype.neutralBodyManual : t.archetype.neutralBody}</p>
-        </>
-      )}
-      <details className="explain rise rise-5">
-        <summary>
-          <IconInfo size={16} /> {t.archetype.howItWorks.split(':')[0]}
-        </summary>
-        <p className="small">{t.archetype.howItWorks}</p>
-      </details>
-      {fromProfile ? (
-        <button type="button" className="btn btn--primary btn--block archetype__cta rise rise-5" onClick={() => goBack(parsed)}>
-          {t.archetype.toProfile}
-        </button>
-      ) : (
-        <button type="button" className="btn btn--primary btn--block archetype__cta rise rise-5" onClick={() => navigate('/today', { replace: true })}>
-          {t.archetype.toToday}
-        </button>
-      )}
+        </div>
+      ) : null}
+      <div className="reveal-step reveal__rest" style={at(second ? REVEAL_STEPS.rest : REVEAL_STEPS.second)}>
+        <div className="me__links">
+          <button type="button" className="btn btn--ghost" onClick={() => navigate('/archetype/why?from=/archetype')}>
+            {t.archetype.why}
+          </button>
+          <button type="button" className="btn btn--ghost" onClick={() => navigate('/share/archetype?from=/archetype')}>
+            {t.archetype.share}
+          </button>
+        </div>
+        <div className="panel-stack archetype__panels">
+          <section className="panel panel--brass">
+            <h2 className="panel__label">{t.archetype.strength}</h2>
+            <p>{archetype.strength[locale]}</p>
+          </section>
+          <section className="panel">
+            <h2 className="panel__label">{t.archetype.shadow}</h2>
+            <p className="italic-serif archetype__question">{archetype.shadow[locale]}</p>
+          </section>
+          <section className="panel">
+            <h2 className="panel__label">{t.archetype.growth}</h2>
+            <p>{archetype.growth[locale]}</p>
+          </section>
+          <section className="panel">
+            <h2 className="panel__label">{t.archetype.reflection}</h2>
+            <p className="italic-serif archetype__question">{archetype.reflection[locale]}</p>
+          </section>
+        </div>
+        <p className="small archetype__basis">{manual ? t.archetype.basisManual : fmt(t.archetype.basis, { n: answered })}</p>
+        {explain}
+        {cta}
+      </div>
     </div>
   );
 }

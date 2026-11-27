@@ -497,6 +497,8 @@ h1[tabindex='-1']:focus {
 }
 .today__note {
   justify-self: center;
+  /* Free-standing over the misty valley of A01: the design's halo (130 % font: 4.48 → ≥ 4.5:1). */
+  text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95);
 }
 .today__footer {
   text-align: center;
@@ -747,6 +749,7 @@ h1[tabindex='-1']:focus {
   font-family: var(--font-body);
   font-size: 0.78rem;
   font-weight: 600;
+  text-shadow: 0 0 4px rgba(6, 8, 18, 0.9), 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 18px rgba(6, 8, 18, 0.85);
 }
 .collection__num {
   display: block;
@@ -889,6 +892,206 @@ h1[tabindex='-1']:focus {
   gap: var(--s-2);
 }
 
+/* ------------------------------------------- Rows and links (V04) */
+.text-link {
+  justify-self: start;
+  padding: var(--s-1) 0;
+  border: 0;
+  background: none;
+  color: var(--brass-300);
+  font: inherit;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+}
+.text-link:hover {
+  color: var(--brass-200);
+}
+
+.row-link {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-m);
+  border: 1px solid var(--surface-line);
+  background: linear-gradient(180deg, rgba(34, 26, 56, 0.88), rgba(16, 18, 40, 0.9));
+  color: var(--text-1);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.row-link:hover {
+  border-color: var(--brass-line);
+}
+.row-link__text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.row-link > [aria-hidden='true'] {
+  color: var(--brass-400);
+  font-size: 1.3rem;
+}
+.row-list {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chip--new {
+  border-color: rgba(79, 209, 197, 0.5);
+  background: rgba(79, 209, 197, 0.1);
+  color: #9ee7df;
+}
+
+/* --------------------------------------------------------------- Reveal */
+.reveal {
+  position: relative;
+}
+.reveal__skip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+.reveal__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--s-4) var(--s-6) var(--s-5);
+}
+.reveal__stage .archetype__halo {
+  inset: -6%;
+}
+.reveal__portrait {
+  width: min(62vw, 250px, 38dvh);
+}
+.reveal__head,
+.reveal__words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+}
+.reveal__sentence {
+  max-width: 30ch;
+  font-size: 1.28rem;
+  line-height: 1.38;
+  color: var(--text-1);
+}
+.reveal__second {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-m);
+  border: 1px solid var(--brass-line);
+  background: linear-gradient(180deg, rgba(34, 26, 56, 0.9), rgba(16, 18, 40, 0.9));
+}
+.reveal__second-portrait {
+  width: 64px;
+}
+.reveal__second-text {
+  display: grid;
+  gap: 2px;
+}
+.reveal__rest,
+.reveal__full {
+  display: grid;
+  gap: var(--s-3);
+  width: 100%;
+}
+.reveal__rest .archetype__panels {
+  margin-top: var(--s-2);
+}
+.reveal.is-animated .reveal-step {
+  animation: reveal-rise 700ms var(--ease-out) var(--d, 0ms) both;
+}
+.reveal.is-animated .reveal__stage {
+  animation: reveal-portrait 1100ms var(--ease-out) var(--d, 0ms) both;
+}
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes reveal-portrait {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+/* Stacked full width: side by side, "Warum dieser Archetyp?" broke onto two lines at 412 px. */
+.me__links {
+  display: grid;
+  gap: var(--s-2);
+  width: 100%;
+}
+
+.star-list,
+.question-list {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.star-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3);
+  align-items: baseline;
+}
+.star-list__mark {
+  color: var(--brass-400);
+  transform: translateY(1px);
+}
+.question-list li {
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: var(--text-1);
+}
+/* ----------------------------------------------------- Milestone moment */
+.milestone-moment {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  text-align: left;
+}
+/* Passes over the lit waterfall of "Heute" (390 px: eyebrow 4.37:1): denser than other brass panels. */
+.milestone-moment.panel--brass {
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(216, 184, 121, 0.06), transparent 55%),
+    linear-gradient(180deg, rgba(34, 26, 56, 0.95), rgba(16, 18, 40, 0.95));
+}
+.milestone-moment__text {
+  font-size: 1.15rem;
+  line-height: 1.4;
+  color: var(--text-1);
+}
+.milestone-moment__label {
+  margin: var(--s-2) 0 0;
+}
+.milestone-moment__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.milestone-moment__actions .btn {
+  flex: 1 1 120px;
+}
+
 /* ---------------------------------------------- Small screens (320 px) */
 @media (max-width: 359px) {
   .screen {
@@ -907,4 +1110,34 @@ h1[tabindex='-1']:focus {
     gap: var(--s-3);
     padding-inline: var(--s-3);
   }
+}
+
+.grimoire__entries {
+  margin-bottom: var(--s-5);
+}
+
+/* B2 A05 (reveal, "Ich", "Warum?", Teilen): the painted room has a light beam at the top and a lit
+   podium in the middle. Free-standing text on it gets the design's dark halo (D-49), as on "Heute";
+   ghost buttons get a darker fill so their label does not sit on the bare light. */
+:is(.stage--scene-profile, .stage--scene-profile-calm) :is(.flank__text, .screen-head h1, .screen-head p, .archetype__name, .archetype__essence, .reveal__sentence, .why__intro, .panel__label, .me__one-voice, .share-page__privacy) {
+  text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 2px rgba(6, 8, 18, 0.9);
+}
+/* Free-standing small text (not on a panel) in the light column: brighter grey plus the halo. */
+:is(.stage--scene-profile, .stage--scene-profile-calm) :is(p.small, p.muted):not(.panel *) {
+  color: var(--text-2);
+  text-shadow: 0 0 4px rgba(6, 8, 18, 0.9), 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 18px rgba(6, 8, 18, 0.85);
+}
+/* Lighter gold for eyebrows and free-standing labels in the light column, as on the card of "Heute". */
+:is(.stage--scene-profile, .stage--scene-profile-calm, .stage--scene-welcome) :is(.flank__text, .panel__label:not(.panel .panel__label)) {
+  color: var(--gold-200);
+}
+:is(.stage--scene-profile, .stage--scene-profile-calm) .btn--ghost {
+  background: rgba(10, 12, 26, 0.72);
+  text-shadow: 0 1px 6px rgba(6, 8, 18, 0.9);
+}
+
+/* The note before the archetype choice sits over the brightest part of the light column on "Ich"
+   (scrolled to the top of the list). It reads in the body colour instead of grey (S-23). */
+.stage.stage--scene-profile p.small.profile__hint {
+  color: var(--text-1);
 }

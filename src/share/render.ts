@@ -2,14 +2,9 @@
  * Canvas renderer for share cards (V04.7). Local only: the fonts are the app's own bundled files
  * (loaded through document.fonts before drawing), the portrait is a local asset. No network.
  */
-import type { ArchetypeId } from '../domain/types.ts';
+import { portraitSrc } from '../content/assets.ts';
 import { CARD_COLORS, layoutArchetypeCard, type Box, type CardLayout, type TextBlock } from './layout.ts';
 import { SHARE_SIZE, type ArchetypeShareModel, type ShareFormat } from './model.ts';
-
-const base = import.meta.env.BASE_URL;
-/** Large portrait (1024 × 1536 master, never upscaled on the card: S-08). */
-export const portraitSrc = (id: ArchetypeId, size: 240 | 720 | 1024 = 1024) =>
-  `${base}archetypes/archetype-${id}${size === 720 ? '' : `-${size}`}.webp`;
 
 /** Waits for the card fonts; on failure the system fallback is used rather than blocking. */
 export async function loadCardFonts(): Promise<void> {
@@ -112,7 +107,8 @@ export interface RenderResult {
 /** Renders the archetype card to a PNG blob. */
 export async function renderArchetypeCard(model: ArchetypeShareModel, format: ShareFormat, canvas: HTMLCanvasElement = document.createElement('canvas')): Promise<RenderResult> {
   const t0 = performance.now();
-  const [img] = await Promise.all([loadImage(portraitSrc(model.archetypeId)).catch(() => null), loadCardFonts()]);
+  // Large portrait (1024 × 1536 master, never upscaled on the card: S-08).
+  const [img] = await Promise.all([loadImage(portraitSrc(model.archetypeId, 1024)).catch(() => null), loadCardFonts()]);
   const { width, height } = SHARE_SIZE[format];
   canvas.width = width;
   canvas.height = height;

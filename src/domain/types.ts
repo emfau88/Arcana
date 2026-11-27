@@ -31,6 +31,8 @@ export const ARCHETYPE_ORDER: readonly ArchetypeId[] = [
   'renewer',
 ];
 
+export const isArchetypeId = (id: string): id is ArchetypeId => (ARCHETYPE_ORDER as readonly string[]).includes(id);
+
 export type PositionId = 'situation' | 'challenge' | 'impulse';
 export const POSITIONS: readonly PositionId[] = ['situation', 'challenge', 'impulse'];
 

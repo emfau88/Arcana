@@ -1,0 +1,278 @@
+/* Identity screens (V04): portrait frame, "Ich" pillar, reveal, "Why?", library, profile body.
+   Text always sits on panels (≥ 82 % opacity), never directly on the artwork (ART_DIRECTION §2). */
+
+/* --------------------------------------------------------- "Ich" pillar */
+.me__pillar {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+  padding-top: var(--s-5);
+}
+.me__pillar .profile__archetype-text {
+  margin-top: var(--s-4);
+}
+.me__pillar .panel__label {
+  justify-content: center;
+}
+.me__portrait {
+  width: min(52vw, 200px);
+}
+.me__second {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: var(--s-3);
+  border-radius: var(--r-m);
+  border: 1px solid var(--surface-line);
+  background: rgba(10, 12, 30, 0.55);
+}
+.me__second-portrait {
+  width: 64px;
+}
+.me__second-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.me__second-name {
+  font-size: 1.25rem;
+}
+.me__one-voice {
+  max-width: 34ch;
+}
+.me .profile__actions {
+  width: 100%;
+}
+
+/* ------------------------------------------------------------------ Why */
+.why__intro {
+  text-align: center;
+  margin-bottom: var(--s-4);
+}
+.why__manual,
+.why__open {
+  margin-bottom: var(--s-4);
+}
+.why__totals {
+  margin-bottom: var(--s-4);
+}
+.why__bars {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0 0 var(--s-3);
+  padding: 0;
+  list-style: none;
+}
+.why__bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 4px var(--s-3);
+  align-items: center;
+}
+.why__bar svg {
+  grid-row: 1 / span 2;
+}
+.why__bar-name {
+  font-weight: 700;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+}
+.why__bar-points {
+  font-size: var(--fs-small);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.why__bar-track {
+  grid-column: 2 / span 2;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: rgba(196, 185, 208, 0.12);
+  overflow: hidden;
+}
+.why__bar-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--mist-400);
+}
+.why__bar.is-main .why__bar-track span {
+  background: linear-gradient(90deg, var(--brass-600), var(--brass-300));
+}
+.why__bar.is-main .why__bar-name {
+  color: var(--brass-200);
+}
+.why__bar.is-second .why__bar-track span {
+  background: linear-gradient(90deg, #2c7f7a, var(--teal-glow));
+}
+.why__tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9ee7df;
+}
+.why__complement {
+  margin-bottom: var(--s-5);
+}
+.why__answers-group {
+  margin-bottom: var(--s-5);
+}
+.why__answers {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.why__answer {
+  display: grid;
+  gap: var(--s-1);
+}
+.why__choice {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--text-1);
+}
+.why__gives {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--brass-300);
+}
+
+/* -------------------------------------------------------------- Library */
+.library__intro {
+  max-width: 34ch;
+}
+.library__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4) var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.library__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  height: 100%;
+  padding: var(--s-3) var(--s-2) var(--s-4);
+  border-radius: var(--r-m);
+  border: 1px solid var(--surface-line);
+  background: linear-gradient(180deg, rgba(34, 26, 56, 0.88), rgba(16, 18, 40, 0.9));
+  color: var(--text-1);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+.library__item:hover {
+  border-color: var(--brass-line);
+}
+.library__item .portrait--thumb {
+  width: min(30vw, 110px);
+}
+.library__badge {
+  position: absolute;
+  top: var(--s-2);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.68rem;
+  padding: 3px 9px;
+  background: rgba(16, 18, 40, 0.92);
+}
+.library__badge--quiet {
+  border-color: rgba(79, 209, 197, 0.5);
+  color: #9ee7df;
+}
+.library__name {
+  font-size: 1.25rem;
+}
+.library__essence {
+  color: var(--text-2);
+}
+
+/* ------------------------------------------------------- Archetype page */
+.arch-detail__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.arch-detail__portrait {
+  margin-bottom: var(--s-5);
+}
+.arch-detail__essence {
+  max-width: 30ch;
+}
+.arch-detail__reveal {
+  max-width: 34ch;
+  color: var(--text-2);
+}
+.arch-detail__share {
+  margin-top: var(--s-4);
+}
+.arch-detail__symbolic {
+  margin-top: var(--s-4);
+  text-align: center;
+}
+
+/* --------------------------------------------------------- Profile body */
+.arch-profile__description {
+  line-height: 1.7;
+}
+.arch-profile__sub {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--text-2);
+  margin: var(--s-2) 0 var(--s-3);
+}
+.resonance-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+  margin: 0 0 var(--s-2);
+  padding: 0;
+  list-style: none;
+}
+.symbol-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.symbol-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--surface-line);
+  background: rgba(196, 185, 208, 0.06);
+  font-weight: 600;
+  color: var(--text-1);
+}
+.symbol-chip--lead {
+  border-color: var(--brass-line-strong);
+  background: rgba(216, 184, 121, 0.1);
+}
+.symbol-chip__lead {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass-400);
+}

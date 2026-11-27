@@ -8,12 +8,12 @@
  * deterministically from the review index. Same data, same review; nothing is stored.
  */
 import type { ContentPack } from '../content/schema.ts';
-import { journeyDayKeys, readingDateKey, type Facts } from './progress.ts';
+import { journeyDayKeys, readingDateKey, REVIEW_SPAN, type Facts, type ReviewKind } from './progress.ts';
+
+export { REVIEW_SPAN, type ReviewKind };
 import type { CardId, ThemeId } from './types.ts';
 
-export type ReviewKind = 'week' | 'month';
 /** Journey days a review covers (week every 7, month every 30 journey days). */
-export const REVIEW_SPAN: Readonly<Record<ReviewKind, number>> = { week: 7, month: 30 };
 /** Own notes quoted at most (PROGRESSION_DESIGN §7: 1–2, never in a share image). */
 export const REVIEW_NOTES_MAX = 2;
 
