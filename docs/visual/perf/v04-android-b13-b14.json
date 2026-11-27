@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-27",
+  "device": "Android emulator Pixel_7 (2 GB RAM, host GPU NVIDIA RTX 3060 via the emulator GL translator), Android System WebView 147, debug APK, cold-booted before each series",
+  "scripts": ["scripts/android-trace.mjs", "scripts/trace-analyze.mjs", "scripts/android-v04.mjs"],
+  "note": "reveal = frames from the tap on 'finish' of the questionnaire for 4.6 s (fps, frames > 50 ms, worst frame ms). share = export time of the first story card as the app reports it (ms).",
+  "before": {
+    "code": "feature/v04-identitaet @ 2536dfb",
+    "reveal": [
+      { "fps": 53.3, "janks": 2, "worstMs": 233 },
+      { "fps": 55.9, "janks": 2, "worstMs": 117 },
+      { "fps": 52.4, "janks": 2, "worstMs": 167 },
+      { "fps": 58.0, "janks": 2, "worstMs": 117 },
+      { "fps": 56.7, "janks": 2, "worstMs": 150 },
+      { "fps": 56.5, "janks": 2, "worstMs": 133 },
+      { "fps": 56.9, "janks": 2, "worstMs": 133 },
+      { "fps": 56.7, "janks": 2, "worstMs": 150 },
+      { "fps": 55.9, "janks": 2, "worstMs": 183 }
+    ],
+    "shareFirstStoryAfterQuestionnaireMs": [13520, 13215],
+    "tabSwitchWorstFrameMs": { "grimoire": [100, 117, 117], "oracle": [33, 33, 50], "me": [67, 67, 67], "today": [167, 183, 233] }
+  },
+  "diagnosis": {
+    "B-14": "The trace shows the card drawn after ≈ 0.5 s and the main thread idle afterwards (≈ 12 ms busy per second, one frame in 11 s). Chromium encodes canvas PNGs on the main thread only in idle periods; without frames there are none, and toBlob falls back to its fixed timeouts on Android (4 s start + 9 s completion ≈ 13 s).",
+    "B-13": "Main thread mostly idle (one 55 ms task). The GPU thread is busy 982 ms of 1500 ms with raster tasks of 15–21 ms each; 36 dropped frames. At the tap the italic serif, the A05 room and the portrait start loading. Hiding single layers (animations, vector landscape, text halos, painted room, portrait; 2 runs each) did not remove the long frames. Ordinary tab switches to image-rich screens show the same first long frame."
+  },
+  "experiments": {
+    "injectedBeforeTap": {
+      "base": [{ "janks": 2, "worstMs": 117 }, { "janks": 2, "worstMs": 150 }, { "janks": 2, "worstMs": 133 }],
+      "noFavicon": [{ "janks": 16, "worstMs": 533, "outlier": true }, { "janks": 2, "worstMs": 200 }, { "janks": 1, "worstMs": 217 }],
+      "warmFontAndImages": [{ "janks": 1, "worstMs": 167 }, { "janks": 1, "worstMs": 150 }, { "janks": 1, "worstMs": 133 }],
+      "both": [{ "janks": 1, "worstMs": 83 }, { "janks": 1, "worstMs": 133 }, { "janks": 1, "worstMs": 200 }]
+    }
+  },
+  "after": {
+    "code": "worker PNG encoding (src/share/encode.worker.ts) and the warm-up on the theme step (src/ui/warm.ts)",
+    "reveal": [
+      { "fps": 58.2, "janks": 1, "worstMs": 133 },
+      { "fps": 58.8, "janks": 1, "worstMs": 117 },
+      { "fps": 58.0, "janks": 1, "worstMs": 150 },
+      { "fps": 58.2, "janks": 1, "worstMs": 150 },
+      { "fps": 58.0, "janks": 1, "worstMs": 167 },
+      { "fps": 56.6, "janks": 2, "worstMs": 183 },
+      { "fps": 58.6, "janks": 1, "worstMs": 117 }
+    ],
+    "shareFirstStoryAfterQuestionnaireMs": [299, 230, 247],
+    "shareOnline": [{ "storyMs": 288, "feedMs": 135 }, { "storyMs": 293, "feedMs": 106 }, { "storyMs": 311, "feedMs": 112 }, { "storyMs": 306, "feedMs": 94 }],
+    "shareOfflineAfterColdStart": [{ "storyMs": 554, "feedMs": 110 }, { "storyMs": 613, "feedMs": 97 }, { "storyMs": 639, "feedMs": 137 }, { "storyMs": 479, "feedMs": 94 }],
+    "shareSheetOffline": "PASS 4/4"
+  }
+}
