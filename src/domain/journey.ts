@@ -20,7 +20,7 @@ export type StationReading = (typeof STATION_READINGS)[number];
 export const ROUNDS_WITH_OWN_TEXTS = 3;
 
 /** Fixed milestones with their own text (PROGRESSION_DESIGN §3.2, day 30 = first monthly review). */
-export const MILESTONE_TEXT_DAYS: readonly number[] = [1, 2, 3, 4, 6, 7, 10, 14, 21, 30, 42, 50, 63, 75, 100, 365];
+export const MILESTONE_TEXT_DAYS: readonly number[] = [1, 2, 3, 4, 5, 6, 7, 10, 21, 30, 42, 50, 63, 100, 365];
 /** Rhythmic milestones (§3.1) after their first fixed occurrence, most significant first. */
 export const MILESTONE_RHYTHMS = ['year', 'jubilee', 'month', 'week'] as const;
 

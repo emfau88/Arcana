@@ -46,7 +46,7 @@ export const MODULE_VERSIONS: Partial<Record<ModuleId, string>> = {
   identity: 'identity-2026-11-27.3',
   archetypes: 'archetypes-2026-11-27.3',
   chapters: 'chapters-2026-11-27.3',
-  journey: 'journey-2026-11-27.3',
+  journey: 'journey-2026-11-27.4',
   'cards-deep': 'cards-deep-2026-11-27.1',
   spreads: 'spreads-2026-11-27.1',
 };

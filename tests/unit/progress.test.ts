@@ -193,14 +193,26 @@ describe('milestones', () => {
   });
 
   it('derives fixed and rhythmic milestones up to the journey day', () => {
-    expect(milestonesReached(7).map((m) => m.day)).toEqual([1, 2, 3, 4, 6, 7]);
-    expect(milestoneAt(5)).toBeNull();
+    expect(milestonesReached(7).map((m) => m.day)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(milestoneAt(8)).toBeNull();
+    expect(milestoneAt(75)).toBeNull();
     expect(milestoneAt(7)?.rewards.map((r) => r.id)).toEqual(['review-spread', 'review:week:1']);
     expect(milestoneAt(21)?.rewards.map((r) => r.id)).toEqual(['archetype-chapter:2', 'review:week:3', 'constellation:1']);
     expect(milestoneAt(150)?.rewards.map((r) => r.id)).toEqual(['review:month:5', 'review:jubilee:150', 'ribbon']);
     expect(milestoneAt(300)?.rewards.map((r) => r.id)).toEqual(['review:month:10', 'review:jubilee:300']);
-    expect(milestoneAt(365)?.rewards.map((r) => r.id)).toEqual(['cardback:golden-wheel', 'yearbook:1']);
+    expect(milestoneAt(365)?.rewards.map((r) => r.id)).toEqual(['yearbook:1']);
     expect(milestoneAt(21)?.key).toBe('milestone:21');
+  });
+
+  it('opens the three card backs on journey days 2, 5 and 10 (D-66)', () => {
+    const backs = FIXED_MILESTONES.flatMap((m) => m.rewards.filter((r) => r.id.startsWith('cardback:')).map((r) => [m.day, r.id]));
+    expect(backs).toEqual([
+      [2, 'cardback:crescent'],
+      [5, 'cardback:compass'],
+      [10, 'cardback:golden-wheel'],
+    ]);
+    expect(milestoneAt(2)?.rewards.map((r) => r.id)).toEqual(['cardback:crescent', 'world-intro:numerology']);
+    expect(milestoneAt(14)?.rewards.map((r) => r.id)).toEqual(['review:week:2']);
   });
 
   it('names the next milestone without counting down', () => {
@@ -219,7 +231,7 @@ describe('milestones', () => {
     const readings = Array.from({ length: 10 }, (_, i) => legacy({ ...reading({ now: () => new Date(2026, 8, i < 5 ? 1 + i : 50 + i, 20) }, 100 + i), id: `r${i}` }));
     const facts: Facts = { dailies, readings };
     expect(journeyDays(facts)).toBe(45);
-    expect(milestonesReached(journeyDays(facts)).map((m) => m.day)).toEqual([1, 2, 3, 4, 6, 7, 10, 14, 21, 28, 30, 35, 42]);
+    expect(milestonesReached(journeyDays(facts)).map((m) => m.day)).toEqual([1, 2, 3, 4, 5, 6, 7, 10, 14, 21, 28, 30, 35, 42]);
     const counts = levelCounts(cardEncounters(facts));
     expect(counts[1]).toBeGreaterThan(0);
     expect(counts[1]).toBeLessThanOrEqual(22);

@@ -28,8 +28,10 @@ describe('discovery hint of the day (A6)', () => {
 
   it('prefers a card level over a world introduction', () => {
     const levelUps = [{ cardId: 'major-01-magician', level: 2 }];
-    expect(hintForToday({ journeyDay: 2, features: ALL, levelUps })).toEqual({ kind: 'card-level', id: 'level:major-01-magician:2' });
-    expect(hintForToday({ journeyDay: 2, features: ALL })).toEqual({ kind: 'world', id: 'world-intro:numerology' });
+    expect(hintForToday({ journeyDay: 4, features: ALL, levelUps })).toEqual({ kind: 'card-level', id: 'level:major-01-magician:2' });
+    expect(hintForToday({ journeyDay: 4, features: ALL })).toEqual({ kind: 'world', id: 'world-intro:angel-numbers' });
+    // Day 2 holds a card back (D-66) and the numbers introduction: the card back comes first.
+    expect(hintForToday({ journeyDay: 2, features: ALL })).toEqual({ kind: 'milestone', id: 'cardback:crescent' });
   });
 
   it('never points to a feature the build does not contain', () => {
@@ -40,7 +42,7 @@ describe('discovery hint of the day (A6)', () => {
   });
 
   it('is quiet on days without milestone or level', () => {
-    for (const d of [5, 8, 9, 11, 0, -1]) expect(hintForToday({ journeyDay: d, features: ALL })).toBeNull();
+    for (const d of [8, 9, 11, 12, 0, -1]) expect(hintForToday({ journeyDay: d, features: ALL })).toBeNull();
   });
 
   it('keeps the first reward of a day with several (day 100)', () => {
