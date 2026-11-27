@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1, V04.4 und V04.5 fertig; V04.2, V04.6 und V04.7 bis auf die Messungen auf dem Emulator fertig; V04.3 wartet auf die Wahl der B-07-Variante. Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen. V05 läuft auf `feature/v05-karten` (gestapelt auf V04, Reihenfolge S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1, V04.4 und V04.5 fertig; V04.2, V04.6 und V04.7 bis auf die Messungen auf dem Emulator fertig; V04.3 fertig (B-07 mit Variante B, D-59). Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen. V05 läuft auf `feature/v05-karten` (gestapelt auf V04, Reihenfolge S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -73,7 +73,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 - [x] **V03.5 Globales Designsystem** (2/4, zwei Punkte per Eigentümer-Ausnahme verschoben, D-52)
   - [x] V02-Bausteine auf Orakel, Grimoire, Profil, Onboarding, Einstellungen (Flanken-Überschriften, gedämpfte Nachtwelt, D-50); Tageskarte zu 90 % (D-51)
   - [x] Screenshot-Review 360/390/412, DE/EN, 130 % Schrift, keine Überläufe (Desktop kein Kriterium, D-52; Orakel-Positionen bei 130 % behoben, B-10)
-  - [ ] Mindestkontrast ≥ 4,5:1 für jeden Lesetext: alle Screens außer „Heute“ erfüllt; B-07 (Fußzeile über den Lilien) → **V04.3** (D-49, D-52)
+  - [x] Mindestkontrast ≥ 4,5:1 für jeden Lesetext: alle Screens außer „Heute“ erfüllt; B-07 (Fußzeile über den Lilien) → **V04.3** (D-49, D-52), dort mit Variante B behoben (D-59)
   - [ ] Absolute Perf-Grenzen: B-08 unsichtbar verbessert (normiert ≈ 1.168 ms, D-50); Messung gegen die Referenz → **vor QG-V05** (D-52). Android-Kaltstart 1,58 s ≤ 3,0 s
 - [x] **QG-V03** (3/3, mit den Ausnahmen aus D-52)
   - [x] `npm run check` (118 Unit-Tests, Build im Budget) und alle E2E grün (20 bestanden)
@@ -96,12 +96,12 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Porträt-Enthüllung (4,3 s, überspringbar, reduziert statisch: Knopf nach ≤ 800 ms, E2E) und „Warum?“-Ansicht (8 Summen, 7 Antworten, E2E) als Vorschlag (D-57, S-17)
   - [x] Alle acht Archetypen lesbar: Bibliothek im Grimoire und auf „Ich“, eigener Archetyp und zweite Stimme markiert (E2E)
   - [ ] Enthüllung ≥ 50 fps auf dem Referenz-Emulator: 53,2–58,0 fps in 7 von 9 Läufen, 41,5 und 43,7 fps in zwei Läufen mit ausgelagertem Speicher des Emulators (2 GB RAM, 870 MB Swap). Lange Frames nur beim Bildschirmwechsel in den ersten 550 ms nach dem Tippen, schlechtester Frame ≤ 120 ms nur in 3 von 9 Läufen (B-13)
-- [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49) (4/5)
+- [x] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49) (5/5)
   - [x] Linse je Archetyp × Karte: 176 Sätze DE/EN im Modul `identity`, Content-Gate (ein Satz, 12–28 Wörter, abwechslungsreiche Anfänge)
   - [x] Ergänzungslinse jeden dritten Reisetag, Varianten-Index und Ergänzung im Datensatz; frühere Tageskarten zeigen ihren alten Text (D-09, Unit, S-11)
   - [x] Hinweis-Logik A6: höchstens ein Hinweis pro Tag, Meilenstein vor Kartenstufe vor Welt, nur für vorhandene Inhalte (Unit, S-11)
   - [x] B-07 Kontrast der Fußzeile: Varianten A (Lilien dunkler), B (Panel), C (Ecken beim Scrollen ausblenden) als Screenshots bei 100 % und 130 % Schrift; nur B besteht beide (`visual/evidence/v04-b07-varianten.webp`)
-  - [ ] B-07: gewählte Variante einbauen (Eigentümer wählt; Empfehlung B)
+  - [x] B-07: gewählte Variante einbauen: B, Panel unter der Fußzeile (D-59); kein Lesetext unter 4,5:1 (`visual/evidence/v04-b07-panel-de-360.webp`)
 - [x] V04.4 Narrenreise und Meilensteine (5/5, D-54)
   - [x] 63 Stationen, 9 Wegeinführungen, 4 Rundenabschlüsse, 20 Meilensteintexte DE/EN im Modul `journey`
   - [x] Tabellen-Test Reisetag 1–400: genau eine Station, richtige Wegeinführung, Rundenabschluss und Meilensteintext
@@ -118,7 +118,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Profil wird „Ich“: Archetyp, zweite Stimme, Wahl von Hand, Profil, Bibliothek, Teilen; Einstellungen auf eigener Unterseite (S-18); Zahlen-Säule erst in V06
   - [x] Welten A05 (Ich, Enthüllung, abgedunkelt bei „Warum?“ und Teilen), A06 (Willkommen, Fragen, abgedunkelt, S-27), A19 (Reise, Rückblick, Kapitel)
   - [x] Bildbudget ≤ 600 KB je Screen: schwerster Screen 364 KB
-  - [x] Erste Sitzung bis zur Karte ≤ 90 s (E2E-Pfad, Fragebogen 58,7 s); Kontrast aller Lesetexte ≥ 4,5:1 bei 360/390/412 px DE/EN und 130 % Schrift, außer B-07
+  - [x] Erste Sitzung bis zur Karte ≤ 90 s (E2E-Pfad, Fragebogen 58,7 s); Kontrast aller Lesetexte ≥ 4,5:1 bei 360/390/412 px DE/EN und 130 % Schrift (B-07 behoben, D-59)
   - [ ] Screenshot-Review durch den Eigentümer (`SELF_DECISIONS.md`, Nachprüfen)
 - [ ] V04.7 Teilen-Kern und Archetypkarte (E20) (5/6)
   - [x] `ShareModel` ohne private Felder: Typ-Test schlägt fehl, sobald Antworten, Scores, Notizen oder Geburtsdatum hinzukommen; Schlüssel-Whitelist zur Laufzeit (Unit)
@@ -127,7 +127,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Einstieg aus Enthüllung und „Ich“ als Vorschlag (D-57); Vorschau als Data-URL bei strenger CSP (S-24); Bildvergleichstest je Sprache (S-28); im Browser Story 75–312 ms, Feed ≈ 50 ms
   - [x] Teilen-Blatt des Systems öffnet sich offline mit der Bilddatei (Emulator, 8 von 8 Läufen; geschlossen ohne Ziel, nichts geteilt)
   - [ ] Export ≤ 1,5 s auf dem Referenz-Emulator: Story 0,36–1,21 s und Beitrag 0,13–0,25 s in den meisten Läufen; die erste Story nach dem Fragebogen brauchte in 4 von 19 Läufen ≈ 13,3 s; offline direkt nach dem Kaltstart in 3 von 13 Läufen 1,49–1,65 s (B-14)
-- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) offen; Funktion PASS, offen sind B-07 (Wahl), die Durchsicht, B-13/B-14 und die Pages-Vorschau (nach Freigabe)
+- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) offen; Funktion PASS, offen sind die Durchsicht, B-13/B-14 und die Pages-Vorschau (nach Freigabe)
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 

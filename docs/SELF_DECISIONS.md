@@ -54,7 +54,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] Takt der Enthüllung: Porträt, Name nach 0,9 s, Satz nach 1,5 s, zweite Stimme nach 2,7 s, Rest nach 3,5 s (S-17)
 - [ ] Abgedunkelte Bühne A05 bei „Warum?“ und Teilen, Schleier unten bei „Ich“ (S-23)
 - [ ] A06 abgedunkelt hinter Willkommen und Fragen; Alternative „Buch als Bühne“ (S-27)
-- [ ] **B-07 wählen:** Varianten A, B, C in `visual/evidence/v04-b07-varianten.webp`; Empfehlung B (Panel), nur B besteht bei 100 % und 130 % Schrift
+- [x] **B-07 wählen:** Eigentümer hat B gewählt (27.11.2026, D-59), eingebaut
 - [ ] Meilenstein-Moment auf „Heute“ (Gestaltung und Zeitpunkt, S-20)
 - [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
 
