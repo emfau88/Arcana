@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1, V04.4 und V04.5 fertig; V04.2, V04.6 und V04.7 bis auf die Messungen auf dem Emulator fertig; V04.3 wartet auf die Wahl der B-07-Variante. Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1, V04.4 und V04.5 fertig; V04.2, V04.6 und V04.7 bis auf die Messungen auf dem Emulator fertig; V04.3 wartet auf die Wahl der B-07-Variante. Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -127,7 +127,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Einstieg aus Enthüllung und „Ich“ als Vorschlag (D-57); Vorschau als Data-URL bei strenger CSP (S-24); Bildvergleichstest je Sprache (S-28); im Browser Story 75–312 ms, Feed ≈ 50 ms
   - [x] Teilen-Blatt des Systems öffnet sich offline mit der Bilddatei (Emulator, 8 von 8 Läufen; geschlossen ohne Ziel, nichts geteilt)
   - [ ] Export ≤ 1,5 s auf dem Referenz-Emulator: Story 0,36–1,21 s und Beitrag 0,13–0,25 s in den meisten Läufen; die erste Story nach dem Fragebogen brauchte in 4 von 19 Läufen ≈ 13,3 s; offline direkt nach dem Kaltstart in 3 von 13 Läufen 1,49–1,65 s (B-14)
-- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`
+- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) offen; Funktion PASS, offen sind B-07 (Wahl), die Durchsicht, B-13/B-14 und die Pages-Vorschau (nach Freigabe)
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 
