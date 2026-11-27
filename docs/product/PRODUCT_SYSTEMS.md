@@ -46,7 +46,7 @@ Drei **gemeinsame Systeme** tragen alles: **Identität** (Wer bin ich?), **Reise
 |---|---|---|---|
 | A1 | Eine Karte pro lokalem Kalendertag, gespeichert, freiwillig enthüllt (vorhanden). Ziehung bleibt echt zufällig (kryptografisch), keine Wiederholung der Karte des Vortags | vorhanden | Free |
 | A2 | **Tagesbotschaft** Karte × aktives Thema (vorhanden, 132 Texte) | vorhanden | Free |
-| A3 | **Archetyp-Linse je Karte**: statt eines festen Satzes pro Archetyp (heute jeden Tag gleich) ein Satz pro Archetyp × Karte (176). Mit Ergänzungsarchetyp: an jedem dritten Tag dessen Linse | 1.0 | Free |
+| A3 | **Archetyp-Linse je Karte**: statt eines festen Satzes pro Archetyp (heute jeden Tag gleich) ein kurzer Text aus ein bis zwei Sätzen pro Archetyp × Karte (176, S-33). Mit Ergänzungsarchetyp: an jedem dritten Tag dessen Linse | 1.0 | Free |
 | A4 | **Wechselnde Reflexion und Ritual**: pro Karte 3 Reflexionsfragen und 2 Rituale. Die Variante ergibt sich aus der Zahl der bisherigen Begegnungen mit dieser Karte (deterministisch, im Datensatz gespeichert) | 1.0 | Free |
 | A5 | **Tagesenergien-Zeile**: persönliche Tageszahl (G, nur mit Geburtsdatum) und Mondphase (I, ab 1.1). Je eine Zeile mit Symbol, tippbar zur Erklärung. Kein Dashboard: höchstens zwei Einträge | 1.0 / 1.1 | Free |
 | A6 | **Entdeckungshinweis**: höchstens ein Hinweis pro Tag auf neue Inhalte (z. B. „Licht und Schatten der Herrscherin ist jetzt im Grimoire“, „Neu: Wochenrückblick“). Priorität: Meilenstein > Kartenstufe > Weltvorstellung | 1.0 | Free |

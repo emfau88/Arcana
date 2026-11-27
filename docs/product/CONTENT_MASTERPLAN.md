@@ -46,7 +46,7 @@ Bestand G2: 264 Kartentexte, 56 Archetyp-Texte, 18 Thementexte, 20 Fragebogentex
 
 | Modul / Baustein | Anzahl | Länge | Paket | Free/Edition |
 |---|---|---|---|---|
-| **Heute** Linse Archetyp × Karte | 176 | 1 Satz (15–25 Wörter) | V04 | Free |
+| **Heute** Linse Archetyp × Karte | 176 | 1–2 Sätze (12–28 Wörter, S-33) | V04 | Free |
 | Zusatz-Reflexionsfragen (2 je Karte) | 44 | 1 Frage | V05 | Free |
 | Zusatz-Ritual (1 je Karte) | 22 | 1–2 Sätze | V05 | Free |
 | **Karten-Tiefe** Licht, Schatten | 44 | 2–3 Sätze | V05 | Free |

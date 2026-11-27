@@ -1,7 +1,8 @@
 /**
  * Content module `archetypes`, German (V04.2). Detailed profiles, reveal sentences, second-voice
  * texts and symbol labels. Voice: "du", calm, symbolic; shadows as questions; no diagnosis, no
- * prediction. Names without article (D-08). Keys: see archetype-keys.ts.
+ * prediction. Names without article (D-08); the text never
+ * addresses the reader as "als <Name>", which would read as feminine singular (S-32). Keys: see archetype-keys.ts.
  */
 import { archetypeTable } from './archetype-keys.ts';
 import type { TextTable } from './registry.ts';
@@ -10,7 +11,7 @@ export const texts: TextTable = archetypeTable(
   {
     seeker: {
       description:
-        'Als Suchende gehst du der Welt mit Fragen entgegen. Dich zieht an, was noch nicht erklärt ist: ein Gedanke, der nicht aufgeht, ein Ort, den du nicht kennst, ein Gespräch, das tiefer führen könnte. Antworten sind für dich Zwischenstationen, selten Endpunkte. Darin liegt Freiheit, denn du lässt dich nicht leicht auf eine einzige Sicht festlegen. In der Bildsprache dieser App gehören drei Karten zu dir: der Narr, der mit leichtem Gepäck aufbricht, der Eremit, der mit seiner Laterne nach innen leuchtet, und der Stern, der Orientierung schenkt, ohne ein Ziel vorzuschreiben. Die Laterne ist dein Leitsymbol. Sie zeigt nie den ganzen Weg, nur die nächsten Schritte, und das genügt dir oft. Deine Gabe ist die Offenheit, mit der du Neues hereinlässt. Eine Einladung an dich kann sein, dem Gefundenen Zeit zu geben, damit es Wurzeln schlagen darf.',
+        'Du gehst der Welt mit Fragen entgegen. Dich zieht an, was noch nicht erklärt ist: ein Gedanke, der nicht aufgeht, ein Ort, den du nicht kennst, ein Gespräch, das tiefer führen könnte. Antworten sind für dich Zwischenstationen, selten Endpunkte. Darin liegt Freiheit, denn du lässt dich nicht leicht auf eine einzige Sicht festlegen.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: der Narr, der mit leichtem Gepäck aufbricht, der Eremit, der mit seiner Laterne nach innen leuchtet, und der Stern, der Orientierung schenkt, ohne ein Ziel vorzuschreiben. Die Laterne ist dein Leitsymbol. Sie zeigt nie den ganzen Weg, nur die nächsten Schritte, und das genügt dir oft.\n\nDeine Gabe ist die Offenheit, mit der du Neues hereinlässt. Eine Einladung an dich kann sein, dem Gefundenen Zeit zu geben, damit es Wurzeln schlagen darf.',
       strengths: [
         'Du stellst Fragen, die andere übersehen, und öffnest damit Gespräche, die sonst an der Oberfläche blieben.',
         'Neues schreckt dich selten ab. Du kannst eine Weile im Ungewissen bleiben, ohne sofort eine Lösung zu erzwingen.',
@@ -27,12 +28,12 @@ export const texts: TextTable = archetypeTable(
         'Welche Frage stelle ich immer wieder, und was sucht sie eigentlich?',
         'Wer begleitet mich gern auf meinen Umwegen?',
       ],
-      reveal: 'Du folgst dem Licht einer Frage. Nicht jedes Ziel muss feststehen, damit der Weg Sinn ergibt.',
+      reveal: 'Nicht jedes Ziel muss feststehen, damit ein Weg Sinn ergibt. Deine Fragen dürfen dich führen.',
       complement: 'Neugier ist das Geschenk dieser zweiten Stimme. Sie erinnert dich daran, auch Vertrautes noch einmal mit offenen Augen anzusehen.',
     },
     guardian: {
       description:
-        'Als Hütende schaffst du Halt. Menschen spüren in deiner Nähe, dass etwas verlässlich bleibt, auch wenn ringsum vieles in Bewegung ist. Du merkst früh, was ein Raum, eine Gruppe oder eine Beziehung braucht, und kümmerst dich darum, oft ohne viel Aufhebens. Fürsorge ist für dich keine Pflicht, sondern eine Form von Aufmerksamkeit. In der Bildsprache dieser App gehören drei Karten zu dir: der Herrscher, der Ordnung und sichere Grenzen gibt, die Kraft, die mit sanfter Hand statt mit Härte führt, und die Mäßigkeit, die ausgleicht und Maß hält. Die Lilie ist dein Leitsymbol, ein Zeichen für Reinheit und Schutz, die nicht laut sein müssen. Deine Gabe ist Beständigkeit. Eine Einladung an dich kann sein, denselben Schutz, den du anderen schenkst, auch dir selbst zu gönnen und deine eigenen Bedürfnisse nicht erst am Ende des Tages zu bemerken.',
+        'Bei dir finden andere Halt. Menschen spüren in deiner Nähe, dass etwas verlässlich bleibt, auch wenn ringsum vieles in Bewegung ist. Du merkst früh, was ein Raum, eine Gruppe oder eine Beziehung braucht, und kümmerst dich darum, oft ohne viel Aufhebens. Fürsorge ist für dich keine Pflicht, sondern eine Form von Aufmerksamkeit.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: der Herrscher, der Ordnung und sichere Grenzen gibt, die Kraft, die mit sanfter Hand statt mit Härte führt, und die Mäßigkeit, die ausgleicht und Maß hält. Die Lilie ist dein Leitsymbol, ein Zeichen für Reinheit und Schutz, die nicht laut sein müssen.\n\nDeine Gabe ist Beständigkeit. Eine Einladung an dich kann sein, denselben Schutz, den du anderen schenkst, auch dir selbst zu gönnen und deine eigenen Bedürfnisse nicht erst am Ende des Tages zu bemerken.',
       strengths: [
         'Auf dich ist Verlass. Was du zusagst, trägst du durch, und andere können darauf bauen.',
         'Du spürst Grenzen fein, deine eigenen und die der anderen, und gehst achtsam mit ihnen um.',
@@ -49,12 +50,12 @@ export const texts: TextTable = archetypeTable(
         'Wer gibt mir Halt, wenn ich ihn brauche?',
         'Was beschütze ich aus Gewohnheit, und was aus echter Überzeugung?',
       ],
-      reveal: 'Du bist ein sicherer Ort für andere. Deine Stärke zeigt sich leise, in Treue und in Achtsamkeit.',
+      reveal: 'Deine Stärke zeigt sich leise, in Treue und Achtsamkeit. Auch du darfst an einem sicheren Ort ausruhen.',
       complement: 'Diese zweite Stimme gibt dir Bodenhaftung. Sie lädt dich ein, gut für das zu sorgen, was dir wichtig ist, dich selbst eingeschlossen.',
     },
     visionary: {
       description:
-        'Als Sehende nimmst du wahr, was zwischen den Zeilen liegt. Du ahnst Zusammenhänge, bevor du sie benennen kannst, und Bilder, Träume oder ein plötzliches Gefühl sprechen oft deutlicher zu dir als lange Erklärungen. Diese Feinfühligkeit lässt dich die Welt aufmerksam beobachten, und du erkennst Muster, wo andere nur Zufall sehen. In der Bildsprache dieser App gehören drei Karten zu dir: die Hohepriesterin, die das innere Wissen hütet, der Mond, der durch Zwielicht und Ahnungen führt, und das Glücksrad, das von Kreisläufen und Wendepunkten erzählt. Das Auge ist dein Leitsymbol, ein Blick, der nach innen wie nach außen reicht. Deine Gabe ist Weitblick. Eine Einladung an dich kann sein, deine Eingebungen freundlich zu prüfen und ihnen einen ersten kleinen, greifbaren Schritt zu geben, damit sie nicht nur Bilder bleiben.',
+        'Du nimmst wahr, was zwischen den Zeilen liegt. Du ahnst Zusammenhänge, bevor du sie benennen kannst, und Bilder, Träume oder ein plötzliches Gefühl sprechen oft deutlicher zu dir als lange Erklärungen. Diese Feinfühligkeit lässt dich die Welt aufmerksam beobachten, und du erkennst Muster, wo andere nur Zufall sehen.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: die Hohepriesterin, die das innere Wissen hütet, der Mond, der durch Zwielicht und Ahnungen führt, und das Glücksrad, das von Kreisläufen und Wendepunkten erzählt. Das Auge ist dein Leitsymbol, ein Blick, der nach innen wie nach außen reicht.\n\nDeine Gabe ist Weitblick. Eine Einladung an dich kann sein, deine Eingebungen freundlich zu prüfen und ihnen einen ersten kleinen, greifbaren Schritt zu geben, damit sie nicht nur Bilder bleiben.',
       strengths: [
         'Du nimmst Stimmungen und Zwischentöne wahr, die anderen leicht entgehen.',
         'Deine Vorstellungskraft öffnet Möglichkeiten, an die noch niemand gedacht hat.',
@@ -71,12 +72,12 @@ export const texts: TextTable = archetypeTable(
         'Welcher Kreislauf in meinem Leben wiederholt sich gerade?',
         'Wie kann ich eine Idee von heute in einen kleinen Schritt verwandeln?',
       ],
-      reveal: 'Du siehst, was noch im Werden ist. Deine Ahnungen sind eine Sprache, die du lesen lernen darfst.',
+      reveal: 'Deine Ahnungen sind eine Sprache, die du lesen lernen darfst. Sie verlangt keine Eile, nur Aufmerksamkeit.',
       complement: 'Mit dieser zweiten Stimme öffnet sich dein Blick für Zwischentöne. Neben Fakten bekommen auch deine Eingebungen einen Platz.',
     },
     alchemist: {
       description:
-        'Als Verwandelnde gehst du nicht um das Schwierige herum, sondern hindurch. Du hast erfahren, dass in Krisen, Brüchen und unbequemen Gefühlen oft ein Rohstoff steckt, aus dem etwas Neues werden kann. Diese Haltung gibt dir Tiefe und eine besondere Art von Mut. Andere suchen dich vielleicht gerade dann auf, wenn etwas ins Wanken gerät. In der Bildsprache dieser App gehören drei Karten zu dir: der Tod, der von Abschied und Wandel erzählt, der Turm, der festgefahrene Mauern öffnet, und der Teufel, der auf Bindungen hinweist, die sich lösen lassen, sobald man sie erkennt. Der Phönix ist dein Leitsymbol, das Bild eines Wesens, das aus der Asche neu aufsteigt. Deine Gabe ist Ausdauer im Wandel. Eine Einladung an dich kann sein, zwischen dem zu unterscheiden, was verwandelt werden will, und dem, was einfach angenommen werden darf.',
+        'Du gehst nicht um das Schwierige herum, sondern hindurch. Du hast erfahren, dass in Krisen, Brüchen und unbequemen Gefühlen oft ein Rohstoff steckt, aus dem etwas Neues werden kann. Diese Haltung gibt dir Tiefe und eine besondere Art von Mut. Andere suchen dich vielleicht gerade dann auf, wenn etwas ins Wanken gerät.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: der Tod, der von Abschied und Wandel erzählt, der Turm, der festgefahrene Mauern öffnet, und der Teufel, der auf Bindungen hinweist, die sich lösen lassen, sobald man sie erkennt. Der Phönix ist dein Leitsymbol, das Bild eines Wesens, das aus der Asche neu aufsteigt.\n\nDeine Gabe ist Ausdauer im Wandel. Eine Einladung an dich kann sein, zwischen dem zu unterscheiden, was verwandelt werden will, und dem, was einfach angenommen werden darf.',
       strengths: [
         'Du hältst schwierige Gefühle aus, ohne vor ihnen davonzulaufen, und findest darin oft einen Sinn.',
         'Aus Fehlern und Umwegen machst du Erfahrung, die dir und anderen weiterhilft.',
@@ -93,12 +94,12 @@ export const texts: TextTable = archetypeTable(
         'Wo darf ich heute einfach annehmen, statt zu verändern?',
         'Welcher Teil von mir ist gerade im Umbau?',
       ],
-      reveal: 'Du kennst die Kraft der Wandlung. Was du durchlebt hast, wird in dir zu etwas Wertvollem.',
+      reveal: 'Was du durchlebt hast, muss keine Last bleiben. In deinen Händen kann daraus etwas werden, das trägt.',
       complement: 'Hier spricht der Mut zur Tiefe mit. Auch ein schwerer Abschnitt kann so zum Rohstoff für etwas Neues werden.',
     },
     wanderer: {
       description:
-        'Als Wandernde lernst du, indem du gehst. Bewegung klärt deinen Kopf, und neue Orte, Menschen oder Aufgaben zeigen dir Seiten an dir, die im Stillstand verborgen blieben. Du brauchst Weite, im Raum wie im Denken, und vertraust darauf, dass sich der Weg unter deinen Schritten formt. Diese Haltung macht dich anpassungsfähig und offen für Begegnungen. In der Bildsprache dieser App gehören drei Karten zu dir: der Wagen, der mit Willen und Richtung voranfährt, die Liebenden, die an jeder Weggabelung eine Wahl aus dem Herzen verlangen, und die Welt, die das Gefühl beschreibt, angekommen und zugleich frei zu sein. Die Feder ist dein Leitsymbol, leicht genug, um mit dem Wind zu reisen. Deine Gabe ist Vertrauen in den Weg. Eine Einladung an dich kann sein, auch Wurzeln zuzulassen und zu bemerken, welche Orte und Menschen dich wirklich nähren.',
+        'Unterwegs kommst du bei dir an. Bewegung klärt deinen Kopf, und neue Orte, Menschen oder Aufgaben zeigen dir Seiten an dir, die im Stillstand verborgen blieben. Du brauchst Weite, im Raum wie im Denken, und vertraust darauf, dass sich der Weg unter deinen Schritten formt. Diese Haltung macht dich anpassungsfähig und offen für Begegnungen.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: der Wagen, der mit Willen und Richtung voranfährt, die Liebenden, die an jeder Weggabelung eine Wahl aus dem Herzen verlangen, und die Welt, die das Gefühl beschreibt, angekommen und zugleich frei zu sein. Die Feder ist dein Leitsymbol, leicht genug, um mit dem Wind zu reisen.\n\nDeine Gabe ist Vertrauen in den Weg. Eine Einladung an dich kann sein, auch Wurzeln zuzulassen und zu bemerken, welche Orte und Menschen dich wirklich nähren.',
       strengths: [
         'Du findest dich schnell in neuen Situationen zurecht und machst aus Umwegen Entdeckungen.',
         'Du begegnest fremden Menschen und Sichtweisen offen und ohne vorschnelles Urteil.',
@@ -115,12 +116,12 @@ export const texts: TextTable = archetypeTable(
         'Was nehme ich von meinen letzten Wegen mit?',
         'Wer oder was lässt mich gern bleiben?',
       ],
-      reveal: 'Du findest dich, indem du gehst. Jeder Weg schenkt dir ein Stück mehr von dir selbst.',
+      reveal: 'Jeder Weg schenkt dir ein Stück mehr von dir selbst. Und jeder Ort, an den du gern zurückkehrst, auch.',
       complement: 'Bewegung und Weite kommen mit dieser zweiten Stimme in dein Leben. Ab und zu darf ein neuer Weg locken, auch im Kleinen.',
     },
     creator: {
       description:
-        'Als Schaffende bringst du Neues in die Welt. Ideen bleiben bei dir selten nur Gedanken, sie wollen Form annehmen, sei es als Bild, als Text, als Projekt oder als liebevoll gedeckter Tisch. Du hast Freude am Gestalten und steckst andere oft mit deiner Begeisterung an. Schaffen ist für dich eine Art, mit der Welt zu sprechen. In der Bildsprache dieser App gehören drei Karten zu dir: der Magier, der die vorhandenen Mittel zu etwas Neuem verbindet, die Herrscherin, die Wachstum und Fülle nährt, und die Sonne, die Freude und Lebendigkeit ausstrahlt. Der Stab ist dein Leitsymbol, ein Zeichen für Tatkraft und den Funken, der etwas in Gang setzt. Deine Gabe ist Ausdruck. Eine Einladung an dich kann sein, auch Unfertiges zu zeigen und deinen Wert nicht allein an dem zu messen, was am Ende daraus entsteht.',
+        'In dir steckt die Freude am Machen. Ideen bleiben bei dir selten nur Gedanken, sie wollen Form annehmen, sei es als Bild, als Text, als Projekt oder als liebevoll gedeckter Tisch. Du hast Freude am Gestalten und steckst andere oft mit deiner Begeisterung an. Schaffen ist für dich eine Art, mit der Welt zu sprechen.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: der Magier, der die vorhandenen Mittel zu etwas Neuem verbindet, die Herrscherin, die Wachstum und Fülle nährt, und die Sonne, die Freude und Lebendigkeit ausstrahlt. Der Stab ist dein Leitsymbol, ein Zeichen für Tatkraft und den Funken, der etwas in Gang setzt.\n\nDeine Gabe ist Ausdruck. Eine Einladung an dich kann sein, auch Unfertiges zu zeigen und deinen Wert nicht allein an dem zu messen, was am Ende daraus entsteht.',
       strengths: [
         'Du siehst in einfachen Dingen Material für etwas Neues und fängst einfach an.',
         'Deine Begeisterung steckt an und bringt andere dazu, selbst etwas zu wagen.',
@@ -137,12 +138,12 @@ export const texts: TextTable = archetypeTable(
         'Was darf heute unvollkommen bleiben?',
         'Mit wem könnte ich etwas gemeinsam gestalten?',
       ],
-      reveal: 'Du gibst Ideen eine Gestalt. Was durch dich entsteht, trägt deine eigene Handschrift.',
+      reveal: 'Was durch dich entsteht, trägt deine Handschrift. Auch das Unfertige gehört schon dazu.',
       complement: 'Deine Lust am Gestalten wird durch diese zweite Stimme geweckt. Schon ein kleiner Anfang zählt dann als Werk.',
     },
     sage: {
       description:
-        'Als Weise suchst du das Verstehen hinter den Dingen. Du hörst genau zu, wägst ab und nimmst dir Zeit, bevor du urteilst. Wissen ist für dich kein Besitz, sondern eine Lampe, die Klarheit in verworrene Lagen bringt, für dich und für andere. Viele schätzen deinen ruhigen Rat und deine Fähigkeit, das Wesentliche zu benennen. In der Bildsprache dieser App gehören drei Karten zu dir: der Hierophant, der überliefertes Wissen weitergibt, die Gerechtigkeit, die ehrlich abwägt, und der Gehängte, der die Welt aus einem neuen Blickwinkel betrachtet und dadurch Einsicht gewinnt. Die Eule ist dein Leitsymbol, die auch im Dunkeln sieht und gerade in der Stille aufmerksam ist. Deine Gabe ist Klarheit. Eine Einladung an dich kann sein, dein Wissen mit Gefühl zu verbinden und dir Nähe zu erlauben, wo Abstand gerade bequemer wäre.',
+        'Dich interessiert, was die Dinge im Innersten zusammenhält. Du hörst genau zu, wägst ab und nimmst dir Zeit, bevor du urteilst. Wissen ist für dich kein Besitz, sondern eine Lampe, die Klarheit in verworrene Lagen bringt, für dich und für andere. Viele schätzen deinen ruhigen Rat und deine Fähigkeit, das Wesentliche zu benennen.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: der Hierophant, der überliefertes Wissen weitergibt, die Gerechtigkeit, die ehrlich abwägt, und der Gehängte, der die Welt aus einem neuen Blickwinkel betrachtet und dadurch Einsicht gewinnt. Die Eule ist dein Leitsymbol, die auch im Dunkeln sieht und gerade in der Stille aufmerksam ist.\n\nDeine Gabe ist Klarheit. Eine Einladung an dich kann sein, dein Wissen mit Gefühl zu verbinden und dir Nähe zu erlauben, wo Abstand gerade bequemer wäre.',
       strengths: [
         'Du kannst Verwirrendes ordnen und das Wesentliche in wenigen Worten benennen.',
         'Du urteilst nicht vorschnell, sondern hörst erst zu und prüfst, was wirklich gesagt wurde.',
@@ -159,12 +160,12 @@ export const texts: TextTable = archetypeTable(
         'Wo spricht mein Kopf, und wo mein Herz?',
         'Welches Wissen möchte ich weitergeben?',
       ],
-      reveal: 'Du suchst das Verstehen hinter den Dingen. In deiner Ruhe liegt eine Klarheit, die anderen Orientierung gibt.',
+      reveal: 'In deiner Ruhe liegt eine Klarheit, die auch anderen Orientierung gibt. Sie wächst, wenn du nicht alles wissen musst.',
       complement: 'Ein klarer, ruhiger Blick begleitet dich als zweite Stimme. Vor Entscheidungen hilft er dir, kurz innezuhalten und genau hinzusehen.',
     },
     renewer: {
       description:
-        'Als Erneuernde weißt du, dass Enden auch Anfänge sind. Du spürst, wann etwas seine Zeit gehabt hat, und findest den Mut, es loszulassen, damit Raum für Neues entsteht. Diese Fähigkeit ist kostbar, denn Loslassen fällt vielen schwer, während du oft schon den nächsten Keim bemerkst. Neubeginn ist für dich kein Bruch, sondern ein natürlicher Rhythmus, wie bei den Jahreszeiten. In der Bildsprache dieser App gehören drei Karten zu dir: der Tod, der Abschiede würdigt, das Gericht, das zu einem bewussten Neuanfang ruft, und der Stern, der nach stürmischen Zeiten Hoffnung schenkt. Der Lotus ist dein Leitsymbol, eine Blüte, die aus trübem Wasser klar und schön aufsteigt. Deine Gabe ist Erneuerung. Eine Einladung an dich kann sein, Abschiede bewusst zu würdigen, statt sofort nach vorn zu eilen, und Dingen Zeit zu geben, die noch reifen wollen.',
+        'Wo etwas endet, siehst du oft schon, was beginnen könnte. Du spürst, wann etwas seine Zeit gehabt hat, und findest den Mut, es loszulassen, damit Raum für Neues entsteht. Diese Fähigkeit ist kostbar, denn Loslassen fällt vielen schwer, während du oft schon den nächsten Keim bemerkst. Neubeginn ist für dich kein Bruch, sondern ein natürlicher Rhythmus, wie bei den Jahreszeiten.\n\nIn diesem Grimoire stehen dir drei Karten besonders nah: der Tod, der Abschiede würdigt, das Gericht, das zu einem bewussten Neuanfang ruft, und der Stern, der nach stürmischen Zeiten Hoffnung schenkt. Der Lotus ist dein Leitsymbol, eine Blüte, die aus trübem Wasser klar und schön aufsteigt.\n\nDeine Gabe ist Erneuerung. Eine Einladung an dich kann sein, Abschiede bewusst zu würdigen, statt sofort nach vorn zu eilen, und Dingen Zeit zu geben, die noch reifen wollen.',
       strengths: [
         'Du kannst loslassen, was nicht mehr passt, und schaffst damit Raum für Neues.',
         'Nach schweren Zeiten findest du zurück ins Leben und machst anderen Mut, dasselbe zu tun.',
@@ -181,7 +182,7 @@ export const texts: TextTable = archetypeTable(
         'Was darf noch bleiben, obwohl ich es loslassen wollte?',
         'Welche Hoffnung trägt mich in diesen Tagen?',
       ],
-      reveal: 'Du weißt, dass jedes Ende einen Anfang in sich trägt. Loslassen ist bei dir ein Akt des Vertrauens.',
+      reveal: 'Loslassen ist bei dir ein Akt des Vertrauens. Was du verabschiedest, darfst du vorher würdigen.',
       complement: 'Loslassen fällt mit dieser zweiten Stimme etwas leichter. Ein Abschluss darf Platz für Neues schaffen.',
     },
   },

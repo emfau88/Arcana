@@ -4,6 +4,8 @@ Seit 27.11.2026 entscheidet der Agent offene Punkte innerhalb des Auftrags selbs
 
 **Auftrag 27.11.2026 (D-57):** V04 im Alleingang fertigstellen, danach V05. Neue Screens entstehen als Vorschlag; der Eigentümer prüft sie gesammelt zusammen mit der Prüfliste unten.
 
+**Auftrag 27.11.2026 (D-62):** Der Eigentümer hat die Textdurchsicht von V04 dem Agenten übertragen: alle Texte auf Deutsch und Englisch lesen und so korrigieren, wie es für die App am besten ist (S-32 bis S-36); am selben Tag erweitert auf die Kartentexte aus G2 und die Oberflächentexte (S-37, S-38).
+
 Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing, Store, Merge nach `main` und neue Screens mit eigener Gestaltung (zuerst ein Muster). Grundsätzliche Entscheidungen stehen in [DECISIONS.md](DECISIONS.md).
 
 | ID | Datum | Thema | Entschieden | Bezug |
@@ -39,23 +41,34 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-29 | 27.11.2026 | Reihenfolge in V05 | Logik und Texte zuerst (Kartentiefe, Legungen, Suche), danach B3 und die Screens | D-57, V05 |
 | S-30 | 27.11.2026 | PNG-Kodierung der Teilen-Karte (B-14) | in einem kleinen Worker statt `toBlob` auf dem Hauptthread; `toBlob` als Rückfall | V04.7 |
 | S-31 | 27.11.2026 | Bildschirmwechsel zur Enthüllung (B-13) | Schrift, Raum A05 und Porträts schon auf dem Themenschritt laden; Favicon nicht angefasst | V04.2 |
+| S-32 | 27.11.2026 | Anrede in Profilen und Kapiteln | kein „als <Name>“ mehr; die Namen bleiben ohne Artikel | D-08, D-62 |
+| S-33 | 27.11.2026 | Länge einer Linse | ein bis zwei schlichte Sätze, kein Semikolon | D-62, V04.3 |
+| S-34 | 27.11.2026 | Kartenbilder in Kapiteln und Profilen | beschrieben wird, was dieses Deck zeigt; „in diesem Grimoire“ statt „dieser App“ | D-62, D-26 |
+| S-35 | 27.11.2026 | Karten Tod, Teufel, Turm in Sätzen aus eigenen Daten | immer als Karte benannt, Titel in Anführungszeichen | D-62, V04.5 |
+| S-36 | 27.11.2026 | Enthüllungssatz und Anfang der Beschreibung | ergänzen die Essenz, statt sie zu wiederholen | D-62, V04.2 |
+| S-37 | 27.11.2026 | Tagesbotschaften der Karten | behaupten nichts über die Lage der Person; „vielleicht“ statt Feststellung | D-62, L4 |
+| S-38 | 27.11.2026 | Englischer Name der dritten Position | „Next step“ statt „Impulse“ | D-62 |
+| S-39 | 27.11.2026 | Hauptaktion bleibt sichtbar | klebt am unteren Rand der Scrollfläche, Schleier dahinter; auf der Enthüllung als eigenes Element des Screens | D-63, Punkt 1 |
+| S-40 | 27.11.2026 | Absätze in langen Texten | Leerzeile im Inhalt, Regel nach Sinnabschnitten, Schlussfrage abgesetzt | D-63, Punkt 3 |
+| S-41 | 27.11.2026 | Positionsnamen der Legung | engere Laufweite, das Etikett darf in die Lücke neben seiner Karte reichen | D-63, Punkt 4 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
 Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird erst nach der Durchsicht. V04 ist freigegeben und gemergt (D-61); die offenen Punkte bleiben als Liste für Rückmeldungen.
 
 - [ ] Angebot „Drei neue Fragen“ im Profil (`visual/evidence/v04-angebot-profil-360.webp`, S-05)
-- [ ] Ton der Reisetexte, Stichprobe: Stationen 1, 13, 21 in allen drei Lesarten und Meilenstein Tag 7 (`src/content/modules/journey.de.ts`, S-02)
-- [ ] Linsen, Stichprobe von 10: Suchende × Narr, Hütende × Turm, Sehende × Stern, Verwandelnde × Tod, Wandernde × Wagen, Schaffende × Herrscherin, Weise × Eremit, Erneuernde × Gericht, Suchende × Teufel, Hütende × Mond (`src/content/modules/identity-lens.de.ts`, S-11)
+- [x] Ton der Reisetexte, Stichprobe: Stationen 1, 13, 21 in allen drei Lesarten und Meilenstein Tag 7 (`src/content/modules/journey.de.ts`, S-02)
+- [x] Linsen, Stichprobe von 10: Suchende × Narr, Hütende × Turm, Sehende × Stern, Verwandelnde × Tod, Wandernde × Wagen, Schaffende × Herrscherin, Weise × Eremit, Erneuernde × Gericht, Suchende × Teufel, Hütende × Mond (`src/content/modules/identity-lens.de.ts`, S-11)
 - [ ] Überschrift an Ergänzungstagen „Durch die Linse deiner zweiten Stimme“ (S-11)
-- [ ] **Schaufenster-Texte vollständig** (CONTENT_MASTERPLAN §8): acht Archetyp-Beschreibungen und Enthüllungssätze (`src/content/modules/archetypes.de.ts`)
+- [x] **Schaufenster-Texte vollständig** (CONTENT_MASTERPLAN §8): acht Archetyp-Beschreibungen und Enthüllungssätze (`src/content/modules/archetypes.de.ts`)
 - [ ] Neue Kartenzuordnung je Archetyp (Sehende mit Glücksrad, Hütende mit Herrscher, Verwandelnde mit Teufel, Wandernde mit Liebenden, Weise mit Gehängtem; S-12)
-- [ ] Kapitel, Stichprobe: Suchende I, Hütende III, Weise IV, Erneuernde „Zwei Stimmen“ (`src/content/modules/chapters.de.ts`)
-- [ ] Rückblick-Bausteine, besonders der Ton bei vielen Schattenkarten (`review.balance.shadow.*` in `journey.de.ts`, S-14)
+- [x] Kapitel, Stichprobe: Suchende I, Hütende III, Weise IV, Erneuernde „Zwei Stimmen“ (`src/content/modules/chapters.de.ts`)
+- [x] Rückblick-Bausteine, besonders der Ton bei vielen Schattenkarten (`review.balance.shadow.*` in `journey.de.ts`, S-14)
 - [ ] **Neue V04-Screens** als Ganzes (S-17): `visual/evidence/v04-identitaet-de-412.webp` (Enthüllung, „Ich“, „Warum?“, Bibliothek, Profil), `v04-reise-teilen-de-412.webp` (Sternkarte, Rückblick, Kapitel, Teilen) und `v04-screens-en-360.webp`
 - [ ] Takt der Enthüllung: Porträt, Name nach 0,9 s, Satz nach 1,5 s, zweite Stimme nach 2,7 s, Rest nach 3,5 s (S-17)
 - [ ] Abgedunkelte Bühne A05 bei „Warum?“ und Teilen, Schleier unten bei „Ich“ (S-23)
 - [ ] A06 abgedunkelt hinter Willkommen und Fragen; Alternative „Buch als Bühne“ (S-27)
+- [x] Textpunkte dieser Liste (Reisetexte, Linsen, Schaufenster-Texte, Kapitel, Rückblick-Bausteine): vollständig in DE und EN gelesen und korrigiert vom Agenten im Auftrag des Eigentümers (27.11.2026, D-62, S-32 bis S-36). Beim Eigentümer bleibt nur der Geschmack
 - [x] **B-07 wählen:** Eigentümer hat B gewählt (27.11.2026, D-59), eingebaut
 - [ ] Meilenstein-Moment auf „Heute“ (Gestaltung und Zeitpunkt, S-20)
 - [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
@@ -370,3 +383,107 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** Inhalte der Enthüllung erst kurz vor ihrem Moment einhängen (mehr Umbau, Wirkung unklar, weil schon das Ausblenden einzelner Ebenen nichts änderte); sichtbare Abstriche (weniger Ebenen, kein Halo), nur nach Rückfrage; nichts tun und auf dem echten Gerät messen.
 
 **Wechsel kostet:** ein Effekt im Fragebogen.
+
+## S-32 · Anrede in Profilen und Kapiteln
+
+**Entschieden:** Die deutschen Texte sprechen die Person nie als „als Suchende“, „als Hütende“ usw. an. Die Namen selbst bleiben, wie D-08 sie festlegt: Titel ohne Artikel („Suchende“, „Weise“). Wo die Anrede stand, steht jetzt die Du-Form ohne Zusatz („Du gehst der Welt mit Fragen entgegen“, „… ist deine Gabe“). Das Content-Gate lehnt „als <Name>“ in allen vier Modulen ab (`FORBIDDEN_ADDRESS`).
+
+**Warum:** Ohne Artikel liest sich „Suchende“ als Titel oder Mehrzahl, also für alle. In „Als Suchende gehst du …“ steht es aber in der Einzahl, und die ist grammatisch weiblich („als Suchender“ wäre männlich). Das stand 39-mal in Profilen und Kapiteln und widersprach dem Ziel von D-08. Screens zeigen den Namen ohnehin als Überschrift direkt über dem Text.
+
+**Alternativen:** Namen mit Artikel als Figuren („die Suchende“ wie „die Hohepriesterin“): klar als Figur lesbar, aber alle zusammengesetzten Sätze der Oberfläche bräuchten Fälle („hinter der Sehenden“), und die Teilen-Karte bekäme neue Referenzbilder. Weibliche Anrede bewusst behalten (passt zu Porträts und Zielgruppe, schließt aber Männer sprachlich aus). Doppelform „als Suchende oder Suchender“ (korrekt, liest sich wie ein Formular). Genitiv der Mehrzahl („die Gabe der Suchenden“): elegant, aber die persönliche Anrede geht verloren.
+
+**Wechsel kostet:** 39 Sätze in `archetypes.de.ts` und `chapters.de.ts`; Englisch ist nicht betroffen („As the Seeker, you …“ ist neutral).
+
+## S-33 · Länge einer Linse
+
+**Entschieden:** Eine Linse ist ein kurzer Text aus ein bis zwei schlichten Sätzen (12–28 Wörter), ohne Semikolon. Der erste Satz ist eine Beobachtung, der zweite die Einladung für heute. Regel im Gate: `sentences: [1, 2]`, Semikolon verboten (`FORBIDDEN_SEMICOLON`). Angepasst in CONTENT_MASTERPLAN §3 und PRODUCT_SYSTEMS A3.
+
+**Warum:** Die Vorgabe „ein Satz“ wurde in 138 von 176 Linsen je Sprache mit einem Semikolon erfüllt, also formal. In einer App liest sich das gestelzt; zwei Sätze sagen dasselbe natürlicher. Wortzahl und Abwechslung der Anfänge bleiben geprüft.
+
+**Alternativen:** Semikolon lassen (hält die Vorgabe wörtlich, bleibt eine Marotte in jedem Tagestext); Gedankenstrich statt Semikolon (gleiche Marotte, anderes Zeichen); alle Linsen auf wirklich einen Satz kürzen (verliert die Einladung für heute, 276 Texte neu).
+
+**Wechsel kostet:** eine Zeile in `validate.ts`; die Texte lassen sich mechanisch zurückführen.
+
+## S-34 · Kartenbilder in Kapiteln und Profilen
+
+**Entschieden:** Wo ein Text sagt, was eine Karte zeigt, beschreibt er das gemalte Deck dieser App (D-26), nicht das klassische Bild: Sonnenblumen statt des reitenden Kindes (Sonne), die Erde im Kranz statt der tanzenden Gestalt (Welt), zwei offene Fesseln statt zweier Gestalten (Teufel), Posaune über dem Morgenhimmel (Gericht), Waage am Schwert (Gerechtigkeit), Baum am stillen See (Gehängter), weiße Rose am nächtlichen Fluss (Tod), Mond zwischen zwei Säulen (Hohepriesterin), Tisch mit Kelch, Münze, Schwert und Stab (Magier), Blitz im Turm, zwei Krüge (Stern), zwei Kelche (Mäßigkeit). Die Profile sagen „In diesem Grimoire stehen dir drei Karten besonders nah“ statt „In der Bildsprache dieser App gehören drei Karten zu dir“.
+
+**Warum:** Die Kapitel stehen im Grimoire neben den Karten. Ein Text, der ein Kind auf einem Pferd beschreibt, während die Karte Sonnenblumen zeigt, wirkt wie von einer anderen App. CONTENT_MASTERPLAN §6 verlangt dasselbe für Symbole: gemeint ist, was im Bild vorkommt. „Grimoire“ bleibt ehrlich (die Zuordnung ist eine Konvention dieses Buchs, keine Tradition) und bricht die Stimmung nicht.
+
+**Alternativen:** nur Bedeutungen nennen, gar keine Bilder (sicher bei jedem künftigen Deck, aber blasser); klassische Bilder lassen und „traditionell zeigt die Karte …“ davorsetzen (korrekt, aber lehrbuchhaft). Offen für 1.2: Mit einem Zusatzdeck zeigen die Karten andere Bilder; dann brauchen diese 12 Stellen eine deckneutrale Fassung.
+
+**Nicht geändert:** Die Stationstexte der Narrenreise erzählen von Figuren („Die Hohepriesterin sitzt zwischen zwei Säulen und schweigt“). Dort begegnet der Narr den Karten als Gestalten einer Geschichte; das ist keine Bildbeschreibung.
+
+**Wechsel kostet:** 12 Stellen je Sprache in `chapters.*.ts`.
+
+## S-35 · Karten Tod, Teufel und Turm in Sätzen aus eigenen Daten
+
+**Entschieden:** Sätze, die einen Kartentitel einsetzen, nennen ihn als Karte und in Anführungszeichen: „Die Karte „Der Tod“ ist dir 3-mal begegnet.“ Ebenso die Linse Verwandelnde × Tod („Die Karte Tod ist dir vertraut wie eine Werkstatt“). Ein Unit-Test verlangt die Anführungszeichen in allen vier Bausteinen beider Sprachen.
+
+**Warum:** Der eingesetzte Titel ergab „Der Tod ist dir 3-mal begegnet“, englisch „Death came to you 3 times“. Im Wochenrückblick, ohne Karte daneben, liest sich das als Aussage über das Leben der Person. Das Publikum ist oft in Umbruchphasen (MONETIZATION M3), und CONTENT_INVENTORY verlangt, Tod und Teufel ruhig zu halten. Nebenbei behebt die Form zwei Grammatikfehler: „Die Liebenden ist dir … begegnet“ und den großgeschriebenen Artikel mitten im Satz.
+
+**Alternativen:** Titel ohne Artikel einsetzen („Tod ist dir begegnet“, klingt falsch); eigene Sätze je Karte (22 × 4, viel Text für wenig Nutzen); Tod, Teufel und Turm aus der Wiederkehr-Zeile ausnehmen (verschweigt eigene Daten).
+
+**Wechsel kostet:** vier Bausteine je Sprache in `journey.*.ts`.
+
+## S-36 · Enthüllungssatz und Anfang der Beschreibung
+
+**Entschieden:** Der Enthüllungssatz sagt nicht noch einmal, was die Essenz schon sagt, sondern fügt einen zweiten Gedanken hinzu, oft die Einladung des Archetyps („Deine Stärke zeigt sich leise, in Treue und Achtsamkeit. Auch du darfst an einem sicheren Ort ausruhen.“). Der erste Satz der Beschreibung beginnt ebenfalls anders als die Essenz. Acht Enthüllungssätze je Sprache neu, dazu die Beschreibungsanfänge, die die Essenz wiederholten (DE fünf, EN vier).
+
+**Warum:** Auf der Enthüllung stehen Essenz und Enthüllungssatz direkt untereinander, auf der Archetyp-Seite folgt die Beschreibung. Bei Weise stand dreimal hintereinander „Du suchst das Verstehen hinter den Dingen“, bei Erneuernde dreimal „Enden sind Anfänge“, bei Suchende begannen zwei Zeilen mit „Du folgst“. Die neuen Sätze behaupten außerdem weniger über das Wesen der Person („Du bist ein sicherer Ort für andere“ → „Deine Stärke zeigt sich leise …“), passend zu „kein Urteil über dich“.
+
+**Alternativen:** Essenz ändern (steht im Kern und auf der Teilen-Karte, deren Referenzbilder dann neu entstehen müssten); auf der Enthüllung nur einen der beiden Sätze zeigen (Gestaltungsänderung, gehört zum Design-Plan); Enthüllungssatz streichen.
+
+**Wechsel kostet:** je Archetyp eine Zeile in `archetypes.*.ts`.
+
+## S-37 · Tagesbotschaften der Karten
+
+**Entschieden:** Eine Tagesbotschaft stellt nichts über das Leben der Person fest. Wo ein Text das tat, steht jetzt eine Möglichkeit: „Vielleicht ist ein Übergang schon fast geschafft“ statt „Ein Übergang ist fast geschafft“, „Vielleicht ist jetzt ein guter Moment …“ statt „Jetzt ist ein guter Moment …“ (Welt × Beruf, Welt × Veränderung, Wagen × Beruf, Glücksrad × Beruf, Liebende × Veränderung; DE und EN). Beim Teufel heißt es „Gewohnheit oder Bindung“ statt „Gewohnheit oder Abhängigkeit“.
+
+**Warum:** Leitplanke L4 (symbolisch, nie prophetisch). Die übrigen 127 Botschaften je Sprache halten das schon ein („Vielleicht spürst du einen Ruf …“, „Ein Kapitel kann sich schließen …“); die fünf fielen daneben auf. „Abhängigkeit“ klingt nach Diagnose, „Bindung“ ist das Wort der Karte selbst (Essenz, Schlagworte).
+
+**Nicht geändert:** die 66 Positionstexte der Legung („Etwas geht zu Ende oder hat sich bereits überlebt“). Sie sind die Deutung einer Position, und die Legung sagt über sich selbst, dass sie drei Blickwinkel anbietet und nichts entscheidet.
+
+**Alternativen:** alles lassen (klingt bestimmter, aber wie eine Vorhersage); eine Verbotsregel im Gate für Feststellungen (lässt sich nicht verlässlich als Muster fassen); auch die Positionstexte abschwächen (nimmt der Legung ihre Form).
+
+**Wechsel kostet:** fünf Sätze je Sprache in `cards-a/b/c.ts`.
+
+## S-38 · Englischer Name der dritten Position
+
+**Entschieden:** Die dritte Position der Legung heißt englisch „Next step“ statt „Impulse“. Deutsch bleibt „Impuls“.
+
+**Warum:** „Impulse“ bedeutet im Englischen eine plötzliche Regung (acting on impulse), nicht den Anstoß, den „Impuls“ meint. PRODUCT_SYSTEMS beschreibt die Rolle als „Welcher nächste Schritt ist möglich?“. Gespeicherte Legungen behalten ihren alten Namen (D-09).
+
+**Alternativen:** „Prompt“ (richtig, aber technisch), „Guidance“ (verspricht mehr, als die Karte gibt), „Nudge“ (zu salopp).
+
+**Wechsel kostet:** ein Wort in `themes.ts`.
+
+## S-39 · Hauptaktion bleibt sichtbar
+
+**Entschieden:** Die Hauptaktion eines langen Screens steht in einem Element `.sticky-action`, das am unteren Rand der Scrollfläche klebt (über der Tab-Leiste, wo es eine gibt). Dahinter liegt ein dunkler Schleier, damit durchlaufender Text nicht mit dem Knopf kollidiert. Umgesetzt für den Themenschritt, die Enthüllung und den Orakel-Start. Auf der Enthüllung ist das Element ein direktes Kind des Screens und erscheint mit dem letzten Schritt der Choreografie; so klebt es auch mit zweiter Stimme und bei großer Schrift vom ersten Moment an. Der Ethik-Hinweis des Orakels steht jetzt über dem Knopf. Auf Screens ohne Tab-Leiste reicht der Schleier durch den Streifen der Gestenleiste und ist unten deckend: Chromium lässt ein klebendes Element über dem Innenabstand der Scrollfläche enden, im Android-Emulator schien darunter Inhalt durch.
+
+**Warum:** Variante A des Design-Plans (D-63). Eine erste Fassung hatte den Knopf der Enthüllung im letzten Block gelassen; bei 130 % Schrift begann dieser Block unter dem Bildschirm, und der Knopf blieb unsichtbar.
+
+**Alternativen:** kompaktere Listen (Variante B, passt für das Orakel besser, sobald es eine Bühne bekommt); sofort weiterspringen (Variante C, nimmt die Korrekturmöglichkeit); fester Balken außerhalb der Scrollfläche (eigene Ebene, mehr Umbau, verdeckt immer Inhalt).
+
+**Wechsel kostet:** je Screen ein umschließendes Element; die Regel ist eine CSS-Klasse.
+
+## S-40 · Absätze in langen Texten
+
+**Entschieden:** Absätze stehen als Leerzeile im Inhalt (`\n\n`), nicht im Renderer. Beschreibungen haben drei Absätze: Einstieg, die drei Karten mit dem Leitsymbol, Gabe und Einladung. Kapitel brechen vor dem ersten Kartenbezug, vor „Diese Beobachtungen …“, vor „Mit der Zeit …“ bzw. „Im Alltag …“ und, wenn ein Block über 85 Wörter bleibt, an einer natürlichen Wendung nahe der Mitte; jeder Absatz hat mindestens zwei Sätze, keiner mehr als 100 Wörter. Die Schlussfrage steht allein und in der Kursiv-Serife wie die Reflexion auf „Heute“. `Prose.tsx` rendert das für Beschreibung und Kapitel.
+
+**Warum:** Wo ein Absatz hingehört, ist eine redaktionelle Entscheidung und gehört zum Text. Die Regel wurde einmal mit einem Skript auf alle 96 Texte je Sprache angewandt und das Ergebnis durchgesehen; ein Unit-Test hält Anzahl, Länge und Schlussfrage fest.
+
+**Alternativen:** Absätze im Renderer nach Satzzahl (keine redaktionelle Kontrolle); Zwischenüberschriften (zu schwer für 150 bis 250 Wörter); alles wie bisher bis zur „Leseseite“ in V05.
+
+**Wechsel kostet:** Die Leerzeilen lassen sich in den Textdateien verschieben; die volle „Leseseite“ (Serife, Kartenreihe, Pergament) ersetzt später nur die Darstellung.
+
+## S-41 · Positionsnamen der Legung
+
+**Entschieden:** Die Namen über den drei Karten haben eine engere Laufweite (0,06 em statt 0,14 em) und dürfen je 14 px in die Lücke neben ihrer Karte reichen. So steht „HERAUSFORDERUNG“ bei 360 bis 412 px in einer Zeile, mit mindestens 22 px Abstand zu den Nachbarn. Bei 130 % Schrift bricht der Name weiter mit Trennstrich um.
+
+**Warum:** Vom Eigentümer gewählt (enger setzen statt eines kürzeren Wortes). Die Schriftgröße bleibt, denn sie liegt mit 10,9 px schon unter der Untergrenze, die Punkt 8 des Design-Plans vorschlägt.
+
+**Alternativen:** kürzeres Wort („Hürde“; ändert die Deutungssprache und alle Hilfetexte); kleinere Schrift (schlechter lesbar); Umbruch lassen.
+
+**Wechsel kostet:** drei Zeilen CSS. In V05.2 wird die Legung ohnehin neu gebaut (B-12).

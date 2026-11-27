@@ -35,10 +35,10 @@ export const MODULE_LOADERS: Partial<Record<ModuleId, Record<Locale, Loader>>> =
 
 /** Module versions, stored nowhere but reported by the content gate and the build. */
 export const MODULE_VERSIONS: Partial<Record<ModuleId, string>> = {
-  identity: 'identity-2026-11-27.2',
-  archetypes: 'archetypes-2026-11-27.1',
-  chapters: 'chapters-2026-11-27.1',
-  journey: 'journey-2026-11-27.2',
+  identity: 'identity-2026-11-27.3',
+  archetypes: 'archetypes-2026-11-27.3',
+  chapters: 'chapters-2026-11-27.3',
+  journey: 'journey-2026-11-27.3',
 };
 
 /** Modules every start needs (onboarding, today). Loaded in parallel with the database. */

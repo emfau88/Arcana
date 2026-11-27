@@ -63,6 +63,19 @@ describe('content modules', () => {
     expect(report.errors.some((e) => e.includes('a-close: forbidden phrasing'))).toBe(true);
   });
 
+  it('keeps the corrections of the V04 text review (S-32, S-33, S-35)', async () => {
+    // The gate refuses the feminine singular address and a semicolon in a lens.
+    const rules: ModuleRules = { ...MODULE_RULES.identity!, required: () => ['lens.seeker.major-00-fool'] };
+    const bad = { 'lens.seeker.major-00-fool': 'Als Suchende gehst du heute einer Frage nach; mehr braucht dieser Tag vielleicht gar nicht.' };
+    const report = validateModule('identity', rules, CONTENT, { de: bad, en: bad });
+    expect(report.errors.filter((e) => e.startsWith('identity/de') && e.includes('forbidden phrasing'))).toHaveLength(2);
+    // A returning card is named as a quoted title, never bare: "Der Tod ist dir 3-mal begegnet."
+    for (const locale of ['de', 'en'] as const) {
+      const journey = await loadModule('journey', locale);
+      for (const n of [1, 2, 3, 4]) expect(journey[`review.recurring.${n}`], `${locale} ${n}`).toMatch(/[„“]\{card\}[“”]/);
+    }
+  });
+
   it('asks for varied openings within a group of texts', () => {
     const rules: ModuleRules = {
       required: () => Array.from({ length: 20 }, (_, i) => `lens.${i}`),

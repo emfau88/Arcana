@@ -12,7 +12,7 @@ import { ALL_THEME_IDS, type ArchetypeId, type ThemeId } from '../domain/types.t
 export const DECK = [...CARDS_A, ...CARDS, ...CARDS_B, ...CARDS_C].sort((a, b) => a.order - b.order);
 
 export const CONTENT: ContentPack = {
-  version: 'p0-2026-11-26.1',
+  version: 'p0-2026-11-27.1',
   deckId: 'nocturne',
   targetDeckSize: 22,
   availableThemes: ALL_THEME_IDS,

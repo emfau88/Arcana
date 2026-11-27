@@ -24,7 +24,7 @@ export const CARD_KEYWORDS: Readonly<Record<string, Localized>> = {
   'card-temperance': { de: 'Maß · Mischung · Gleichgewicht', en: 'Moderation · Blending · Harmony' },
   'card-devil': { de: 'Muster · Bindung · Freiheit', en: 'Patterns · Attachment · Freedom' },
   'card-tower': { de: 'Umbruch · Wahrheit · Befreiung', en: 'Upheaval · Truth · Release' },
-  'card-star': { de: 'Hoffnung · Erneuerung · Zuversicht', en: 'Hope · Renewal · Faith' },
+  'card-star': { de: 'Hoffnung · Erneuerung · Zuversicht', en: 'Hope · Renewal · Confidence' },
   'card-moon': { de: 'Traum · Ahnung · Unsicherheit', en: 'Dreams · Intuition · Uncertainty' },
   'card-sun': { de: 'Freude · Wärme · Klarheit', en: 'Joy · Warmth · Clarity' },
   'card-judgement': { de: 'Erwachen · Bilanz · Ruf', en: 'Awakening · Reflection · Calling' },

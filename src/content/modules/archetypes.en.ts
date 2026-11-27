@@ -9,7 +9,7 @@ export const texts: TextTable = archetypeTable(
   {
     seeker: {
       description:
-        'As the Seeker, you meet the world with questions. You are drawn to what is not yet explained: a thought that does not quite add up, a place you have never been, a conversation that could go deeper. Answers are waypoints for you, rarely destinations. There is freedom in that, because you are not easily held to a single point of view. In the imagery of this app, three cards belong to you: the Fool, who sets out with light luggage, the Hermit, whose lantern shines inward, and the Star, who offers direction without dictating the goal. The lantern is your guiding symbol. It never shows the whole path, only the next few steps, and that is often enough for you. Your gift is the openness with which you let new things in. One invitation for you may be to give what you have found some time, so it can take root.',
+        'As the Seeker, you meet the world with questions. You are drawn to what is not yet explained: a thought that does not quite add up, a place you have never been, a conversation that could go deeper. Answers are waypoints for you, rarely destinations. There is freedom in that, because you are not easily held to a single point of view.\n\nIn this grimoire, three cards stand especially close to you: the Fool, who sets out with light luggage, the Hermit, whose lantern shines inward, and the Star, which offers direction without dictating the goal. The lantern is your guiding symbol. It never shows the whole path, only the next few steps, and that is often enough for you.\n\nYour gift is the openness with which you let new things in. One invitation for you may be to give what you have found some time, so it can take root.',
       strengths: [
         'You ask the questions others overlook, and so you open conversations that would otherwise stay on the surface.',
         'New things rarely put you off. You can stay with uncertainty for a while without forcing a solution.',
@@ -26,12 +26,12 @@ export const texts: TextTable = archetypeTable(
         'Which question do I keep asking, and what is it really looking for?',
         'Who likes to walk my detours with me?',
       ],
-      reveal: 'You follow the light of a question. Not every destination has to be fixed for the path to make sense.',
+      reveal: 'Not every destination has to be fixed for a path to make sense. Your questions may lead the way.',
       complement: 'Curiosity is the gift of this second voice. It reminds you to look at familiar things again with open eyes.',
     },
     guardian: {
       description:
-        'As the Guardian, you create a place to stand. People sense that something stays reliable around you, even when much else is in motion. You notice early what a room, a group or a relationship needs, and you take care of it, often without fuss. Care is not a duty for you but a form of attention. In the imagery of this app, three cards belong to you: the Emperor, who offers order and safe boundaries, Strength, who leads with a gentle hand rather than force, and Temperance, who balances and keeps measure. The lily is your guiding symbol, a sign of purity and protection that need not be loud. Your gift is steadiness. One invitation for you may be to grant yourself the same protection you give to others, and to notice your own needs before the end of the day.',
+        'As the Guardian, you create a place to stand. People sense that something stays reliable around you, even when much else is in motion. You notice early what a room, a group or a relationship needs, and you take care of it, often without fuss. Care is not a duty for you but a form of attention.\n\nIn this grimoire, three cards stand especially close to you: the Emperor, who offers order and safe boundaries, Strength, which leads with a gentle hand rather than force, and Temperance, which balances and keeps measure. The lily is your guiding symbol, a sign of purity and protection that need not be loud.\n\nYour gift is steadiness. One invitation for you may be to grant yourself the same protection you give to others, and to notice your own needs before the end of the day.',
       strengths: [
         'People can count on you. What you promise, you carry through, and others can build on it.',
         'You sense boundaries finely, your own and other people’s, and treat them with care.',
@@ -48,12 +48,12 @@ export const texts: TextTable = archetypeTable(
         'Who gives me support when I need it?',
         'What do I protect out of habit, and what out of real conviction?',
       ],
-      reveal: 'You are a safe place for others. Your strength shows quietly, in loyalty and attentiveness.',
+      reveal: 'Your strength shows quietly, in loyalty and attentiveness. You, too, may rest in a safe place.',
       complement: 'This second voice keeps you grounded. It invites you to care well for what matters to you, yourself included.',
     },
     visionary: {
       description:
-        'As the Visionary, you perceive what lies between the lines. You sense connections before you can name them, and images, dreams or a sudden feeling often speak more clearly to you than long explanations. This sensitivity lets you watch the world closely, and you recognise patterns where others see only chance. In the imagery of this app, three cards belong to you: the High Priestess, who keeps inner knowledge, the Moon, who guides through twilight and intuition, and the Wheel of Fortune, who tells of cycles and turning points. The eye is your guiding symbol, a gaze that reaches inward as well as outward. Your gift is breadth of vision. One invitation for you may be to test your intuitions kindly and give them a first small, tangible step, so they do not remain only images.',
+        'As the Visionary, you perceive what lies between the lines. You sense connections before you can name them, and images, dreams or a sudden feeling often speak more clearly to you than long explanations. This sensitivity lets you watch the world closely, and you recognise patterns where others see only chance.\n\nIn this grimoire, three cards stand especially close to you: the High Priestess, who keeps inner knowledge, the Moon, which guides through twilight and intuition, and the Wheel of Fortune, which tells of cycles and turning points. The eye is your guiding symbol, a gaze that reaches inward as well as outward.\n\nYour gift is breadth of vision. One invitation for you may be to test your intuitions kindly and give them a first small, tangible step, so they do not remain only images.',
       strengths: [
         'You pick up moods and undertones that others easily miss.',
         'Your imagination opens possibilities no one has thought of yet.',
@@ -70,12 +70,12 @@ export const texts: TextTable = archetypeTable(
         'Which cycle in my life is repeating right now?',
         'How can I turn one idea from today into a small step?',
       ],
-      reveal: 'You see what is still taking shape. Your intuitions are a language you may learn to read.',
+      reveal: 'Your intuitions are a language you may learn to read. It asks for no haste, only attention.',
       complement: 'With this second voice your eye opens to undertones. Alongside the facts, your intuitions get a place too.',
     },
     alchemist: {
       description:
-        'As the Alchemist, you do not go around what is difficult but through it. You have learned that crises, breaks and uncomfortable feelings often hold a raw material from which something new can grow. This stance gives you depth and a particular kind of courage. Others may seek you out just when something starts to sway. In the imagery of this app, three cards belong to you: Death, who speaks of farewell and change, the Tower, who breaks open rigid walls, and the Devil, who points to ties that can be loosened once they are seen. The phoenix is your guiding symbol, a creature that rises anew from the ashes. Your gift is endurance through change. One invitation for you may be to tell apart what wants to be transformed and what may simply be accepted.',
+        'As the Alchemist, you do not go around what is difficult but through it. You have learned that crises, breaks and uncomfortable feelings often hold a raw material from which something new can grow. This stance gives you depth and a particular kind of courage. Others may seek you out just when something starts to sway.\n\nIn this grimoire, three cards stand especially close to you: Death, which speaks of farewell and change, the Tower, which breaks open rigid walls, and the Devil, who points to ties that can be loosened once they are seen. The phoenix is your guiding symbol, a creature that rises anew from the ashes.\n\nYour gift is endurance through change. One invitation for you may be to tell apart what wants to be transformed and what may simply be accepted.',
       strengths: [
         'You can stay with difficult feelings without running from them, and you often find meaning in them.',
         'You turn mistakes and detours into experience that helps you and others.',
@@ -92,12 +92,12 @@ export const texts: TextTable = archetypeTable(
         'Where may I simply accept today instead of changing?',
         'Which part of me is being rebuilt right now?',
       ],
-      reveal: 'You know the power of transformation. What you have lived through becomes something precious in you.',
+      reveal: 'What you have lived through need not stay a burden. In your hands it can become something that holds.',
       complement: 'Here the courage for depth joins in. Even a heavy stretch can become raw material for something new.',
     },
     wanderer: {
       description:
-        'As the Wanderer, you learn by going. Movement clears your head, and new places, people or tasks show you sides of yourself that stay hidden when everything stands still. You need space, in the world and in your thinking, and you trust that the path takes shape beneath your feet. This makes you adaptable and open to encounters. In the imagery of this app, three cards belong to you: the Chariot, who moves forward with will and direction, the Lovers, who ask for a choice from the heart at every crossroads, and the World, who describes the feeling of having arrived while staying free. The feather is your guiding symbol, light enough to travel on the wind. Your gift is trust in the path. One invitation for you may be to allow roots as well, and to notice which places and people truly nourish you.',
+        'As the Wanderer, you come home to yourself on the way. Movement clears your head, and new places, people or tasks show you sides of yourself that stay hidden when everything stands still. You need space, in the world and in your thinking, and you trust that the path takes shape beneath your feet. This makes you adaptable and open to encounters.\n\nIn this grimoire, three cards stand especially close to you: the Chariot, which moves forward with will and direction, the Lovers, who ask for a choice from the heart at every crossroads, and the World, which describes the feeling of having arrived while staying free. The feather is your guiding symbol, light enough to travel on the wind.\n\nYour gift is trust in the path. One invitation for you may be to allow roots as well, and to notice which places and people truly nourish you.',
       strengths: [
         'You find your way quickly in new situations and turn detours into discoveries.',
         'You meet unfamiliar people and views openly and without quick judgement.',
@@ -114,12 +114,12 @@ export const texts: TextTable = archetypeTable(
         'What do I take with me from my recent paths?',
         'Who or what makes me glad to stay?',
       ],
-      reveal: 'You find yourself by going. Every path gives you a little more of who you are.',
+      reveal: 'Every path gives you a little more of who you are. So does every place you are glad to return to.',
       complement: 'Movement and space come into your life with this second voice. Now and then a new path may call, even in small ways.',
     },
     creator: {
       description:
-        'As the Creator, you bring new things into the world. Ideas rarely stay mere thoughts with you; they want to take form, as a picture, a text, a project or a lovingly laid table. You enjoy shaping things and often carry others along with your enthusiasm. Creating is a way for you to speak with the world. In the imagery of this app, three cards belong to you: the Magician, who combines the means at hand into something new, the Empress, who nourishes growth and abundance, and the Sun, who radiates joy and liveliness. The staff is your guiding symbol, a sign of drive and the spark that sets something in motion. Your gift is expression. One invitation for you may be to show unfinished work too, and not to measure your worth only by what comes of it in the end.',
+        'As the Creator, you carry a joy in making things. Ideas rarely stay mere thoughts with you; they want to take form, as a picture, a text, a project or a lovingly laid table. You enjoy shaping things and often carry others along with your enthusiasm. Creating is a way for you to speak with the world.\n\nIn this grimoire, three cards stand especially close to you: the Magician, who combines the means at hand into something new, the Empress, who nourishes growth and abundance, and the Sun, which radiates joy and liveliness. The staff is your guiding symbol, a sign of drive and the spark that sets something in motion.\n\nYour gift is expression. One invitation for you may be to show unfinished work too, and not to measure your worth only by what comes of it in the end.',
       strengths: [
         'You see material for something new in simple things, and you just begin.',
         'Your enthusiasm is contagious and encourages others to dare something themselves.',
@@ -136,12 +136,12 @@ export const texts: TextTable = archetypeTable(
         'What may stay imperfect today?',
         'Who could I shape something together with?',
       ],
-      reveal: 'You give ideas a shape. What comes into being through you carries your own signature.',
+      reveal: 'What comes into being through you carries your signature. Even the unfinished already belongs to it.',
       complement: 'This second voice wakes your delight in making things. Then even a small beginning counts as a work.',
     },
     sage: {
       description:
-        'As the Sage, you seek the understanding behind things. You listen closely, weigh things up and take your time before you judge. Knowledge is not a possession for you but a lamp that brings clarity to tangled situations, for you and for others. Many value your calm advice and your ability to name what matters. In the imagery of this app, three cards belong to you: the Hierophant, who passes on what has been handed down, Justice, who weighs honestly, and the Hanged Man, who sees the world from a new angle and gains insight from it. The owl is your guiding symbol; it sees in the dark and is most attentive in the quiet. Your gift is clarity. One invitation for you may be to join your knowledge with feeling, and to allow closeness where distance would be more comfortable.',
+        'As the Sage, you want to know what holds things together at their core. You listen closely, weigh things up and take your time before you judge. Knowledge is not a possession for you but a lamp that brings clarity to tangled situations, for you and for others. Many value your calm advice and your ability to name what matters.\n\nIn this grimoire, three cards stand especially close to you: the Hierophant, who passes on what has been handed down, Justice, which weighs honestly, and the Hanged Man, who sees the world from a new angle and gains insight from it. The owl is your guiding symbol; it sees in the dark and is most attentive in the quiet.\n\nYour gift is clarity. One invitation for you may be to join your knowledge with feeling, and to allow closeness where distance would be more comfortable.',
       strengths: [
         'You can bring order to confusion and name the essentials in a few words.',
         'You do not judge hastily; you listen first and check what was really said.',
@@ -158,12 +158,12 @@ export const texts: TextTable = archetypeTable(
         'Where is my head speaking, and where my heart?',
         'Which knowledge would I like to pass on?',
       ],
-      reveal: 'You seek the understanding behind things. In your calm lies a clarity that gives others direction.',
+      reveal: 'In your calm lies a clarity that gives others direction too. It grows when you do not have to know everything.',
       complement: 'A clear, calm eye walks with you as your second voice. Before decisions it helps you pause and look closely.',
     },
     renewer: {
       description:
-        'As the Renewer, you know that endings are also beginnings. You sense when something has had its time, and you find the courage to let it go so that there is room for something new. That is a precious ability, because letting go is hard for many, while you often already notice the next seed. A fresh start is not a rupture for you but a natural rhythm, like the seasons. In the imagery of this app, three cards belong to you: Death, who honours farewells, Judgement, who calls to a conscious new beginning, and the Star, who brings hope after stormy times. The lotus is your guiding symbol, a flower that rises clear and beautiful from murky water. Your gift is renewal. One invitation for you may be to honour farewells consciously instead of rushing ahead at once, and to give time to what still wants to ripen.',
+        'As the Renewer, you often see what could begin where something ends. You sense when something has had its time, and you find the courage to let it go so that there is room for something new. That is a precious ability, because letting go is hard for many, while you often already notice the next seed. A fresh start is not a rupture for you but a natural rhythm, like the seasons.\n\nIn this grimoire, three cards stand especially close to you: Death, which honours farewells, Judgement, which calls to a conscious new beginning, and the Star, which brings hope after stormy times. The lotus is your guiding symbol, a flower that rises clear and beautiful from murky water.\n\nYour gift is renewal. One invitation for you may be to honour farewells consciously instead of rushing ahead at once, and to give time to what still wants to ripen.',
       strengths: [
         'You can let go of what no longer fits, and so you make room for something new.',
         'After hard times you find your way back into life and encourage others to do the same.',
@@ -180,7 +180,7 @@ export const texts: TextTable = archetypeTable(
         'What may still stay, even though I wanted to let it go?',
         'Which hope carries me these days?',
       ],
-      reveal: 'You know that every ending holds a beginning. For you, letting go is an act of trust.',
+      reveal: 'For you, letting go is an act of trust. What you part with, you may honour first.',
       complement: 'Letting go comes a little easier with this second voice. An ending may make room for something new.',
     },
   },

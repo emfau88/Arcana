@@ -689,3 +689,17 @@ a {
   transition-duration: 1ms !important;
   scroll-behavior: auto !important;
 }
+
+/* Long reading text (Prose.tsx): paragraphs with air between them, the closing question apart. */
+.prose {
+  display: grid;
+  gap: 0.9em;
+}
+.prose p {
+  margin: 0;
+}
+.prose__question {
+  font-size: 1.22rem;
+  line-height: 1.35;
+  padding-top: 0.2em;
+}
