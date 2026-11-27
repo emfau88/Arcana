@@ -47,6 +47,9 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-36 | 27.11.2026 | Enthüllungssatz und Anfang der Beschreibung | ergänzen die Essenz, statt sie zu wiederholen | D-62, V04.2 |
 | S-37 | 27.11.2026 | Tagesbotschaften der Karten | behaupten nichts über die Lage der Person; „vielleicht“ statt Feststellung | D-62, L4 |
 | S-38 | 27.11.2026 | Englischer Name der dritten Position | „Next step“ statt „Impulse“ | D-62 |
+| S-39 | 27.11.2026 | Hauptaktion bleibt sichtbar | klebt am unteren Rand der Scrollfläche, Schleier dahinter; auf der Enthüllung als eigenes Element des Screens | D-63, Punkt 1 |
+| S-40 | 27.11.2026 | Absätze in langen Texten | Leerzeile im Inhalt, Regel nach Sinnabschnitten, Schlussfrage abgesetzt | D-63, Punkt 3 |
+| S-41 | 27.11.2026 | Positionsnamen der Legung | engere Laufweite, das Etikett darf in die Lücke neben seiner Karte reichen | D-63, Punkt 4 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -443,3 +446,33 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** „Prompt“ (richtig, aber technisch), „Guidance“ (verspricht mehr, als die Karte gibt), „Nudge“ (zu salopp).
 
 **Wechsel kostet:** ein Wort in `themes.ts`.
+
+## S-39 · Hauptaktion bleibt sichtbar
+
+**Entschieden:** Die Hauptaktion eines langen Screens steht in einem Element `.sticky-action`, das am unteren Rand der Scrollfläche klebt (über der Tab-Leiste, wo es eine gibt). Dahinter liegt ein dunkler Schleier, damit durchlaufender Text nicht mit dem Knopf kollidiert. Umgesetzt für den Themenschritt, die Enthüllung und den Orakel-Start. Auf der Enthüllung ist das Element ein direktes Kind des Screens und erscheint mit dem letzten Schritt der Choreografie; so klebt es auch mit zweiter Stimme und bei großer Schrift vom ersten Moment an. Der Ethik-Hinweis des Orakels steht jetzt über dem Knopf. Auf Screens ohne Tab-Leiste reicht der Schleier durch den Streifen der Gestenleiste und ist unten deckend: Chromium lässt ein klebendes Element über dem Innenabstand der Scrollfläche enden, im Android-Emulator schien darunter Inhalt durch.
+
+**Warum:** Variante A des Design-Plans (D-63). Eine erste Fassung hatte den Knopf der Enthüllung im letzten Block gelassen; bei 130 % Schrift begann dieser Block unter dem Bildschirm, und der Knopf blieb unsichtbar.
+
+**Alternativen:** kompaktere Listen (Variante B, passt für das Orakel besser, sobald es eine Bühne bekommt); sofort weiterspringen (Variante C, nimmt die Korrekturmöglichkeit); fester Balken außerhalb der Scrollfläche (eigene Ebene, mehr Umbau, verdeckt immer Inhalt).
+
+**Wechsel kostet:** je Screen ein umschließendes Element; die Regel ist eine CSS-Klasse.
+
+## S-40 · Absätze in langen Texten
+
+**Entschieden:** Absätze stehen als Leerzeile im Inhalt (`\n\n`), nicht im Renderer. Beschreibungen haben drei Absätze: Einstieg, die drei Karten mit dem Leitsymbol, Gabe und Einladung. Kapitel brechen vor dem ersten Kartenbezug, vor „Diese Beobachtungen …“, vor „Mit der Zeit …“ bzw. „Im Alltag …“ und, wenn ein Block über 85 Wörter bleibt, an einer natürlichen Wendung nahe der Mitte; jeder Absatz hat mindestens zwei Sätze, keiner mehr als 100 Wörter. Die Schlussfrage steht allein und in der Kursiv-Serife wie die Reflexion auf „Heute“. `Prose.tsx` rendert das für Beschreibung und Kapitel.
+
+**Warum:** Wo ein Absatz hingehört, ist eine redaktionelle Entscheidung und gehört zum Text. Die Regel wurde einmal mit einem Skript auf alle 96 Texte je Sprache angewandt und das Ergebnis durchgesehen; ein Unit-Test hält Anzahl, Länge und Schlussfrage fest.
+
+**Alternativen:** Absätze im Renderer nach Satzzahl (keine redaktionelle Kontrolle); Zwischenüberschriften (zu schwer für 150 bis 250 Wörter); alles wie bisher bis zur „Leseseite“ in V05.
+
+**Wechsel kostet:** Die Leerzeilen lassen sich in den Textdateien verschieben; die volle „Leseseite“ (Serife, Kartenreihe, Pergament) ersetzt später nur die Darstellung.
+
+## S-41 · Positionsnamen der Legung
+
+**Entschieden:** Die Namen über den drei Karten haben eine engere Laufweite (0,06 em statt 0,14 em) und dürfen je 14 px in die Lücke neben ihrer Karte reichen. So steht „HERAUSFORDERUNG“ bei 360 bis 412 px in einer Zeile, mit mindestens 22 px Abstand zu den Nachbarn. Bei 130 % Schrift bricht der Name weiter mit Trennstrich um.
+
+**Warum:** Vom Eigentümer gewählt (enger setzen statt eines kürzeren Wortes). Die Schriftgröße bleibt, denn sie liegt mit 10,9 px schon unter der Untergrenze, die Punkt 8 des Design-Plans vorschlägt.
+
+**Alternativen:** kürzeres Wort („Hürde“; ändert die Deutungssprache und alle Hilfetexte); kleinere Schrift (schlechter lesbar); Umbruch lassen.
+
+**Wechsel kostet:** drei Zeilen CSS. In V05.2 wird die Legung ohnehin neu gebaut (B-12).

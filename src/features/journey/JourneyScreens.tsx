@@ -9,6 +9,7 @@ import { useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
 import { findCard, getArchetype, getTheme } from '../../content/index.ts';
 import { CHAPTERS, chapterKey, type ChapterId } from '../../content/modules/chapter-keys.ts';
+import { Prose } from '../../ui/Prose.tsx';
 import { dateFromKey } from '../../domain/clock.ts';
 import { journeyStation, milestoneTextKey } from '../../domain/journey.ts';
 import { journeyDayToday, milestonesReached, journeyDays, type Facts } from '../../domain/progress.ts';
@@ -391,10 +392,8 @@ export function ChapterDetail({ id, parsed }: { id: string; parsed: ParsedRoute 
           {s.me.loading}
         </p>
       ) : (
-        <article className="panel chapter-page__text">
-          {text.split(/\n\n+/).map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
+        <article className="panel">
+          <Prose className="chapter-page__text" text={text} />
         </article>
       )}
       <p className="small">{t.common.symbolic}</p>

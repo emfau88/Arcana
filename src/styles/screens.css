@@ -107,7 +107,31 @@ h1[tabindex='-1']:focus {
 .welcome__privacy {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  margin: 0;
+}
+/* Design plan point 4: on short phones the card fan gives way a little, so the main button,
+   the privacy line and "skip" all stand on the first screen. */
+@media (max-height: 880px) {
+  .welcome {
+    gap: var(--s-2);
+    padding-top: var(--s-4);
+  }
+  .welcome__fan {
+    width: 190px;
+    height: 164px;
+    margin-bottom: var(--s-2);
+  }
+  .welcome__ring {
+    width: 212px;
+  }
+  .welcome__card {
+    width: 88px;
+  }
+  .welcome__card--c {
+    width: 100px;
+  }
 }
 
 /* ---------------------------------------------------------- Onboarding */
@@ -164,6 +188,31 @@ h1[tabindex='-1']:focus {
 }
 .onboarding__finish {
   margin-top: var(--s-2);
+}
+/* Design plan point 1 (D-63): the main action of a long screen stays in view. It sticks to the
+   bottom of the scrolling area; the veil keeps what scrolls underneath from running into it. */
+.sticky-action {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  align-self: stretch;
+  width: calc(100% + 2 * var(--s-4));
+  margin: var(--s-2) calc(-1 * var(--s-4)) calc(-1 * var(--s-7));
+  padding: var(--s-6) var(--s-4) var(--s-5);
+  background: linear-gradient(180deg, rgba(6, 8, 18, 0) 0, rgba(6, 8, 18, 0.9) 2.1rem, rgb(6, 8, 18) 4.4rem);
+  pointer-events: none;
+}
+.sticky-action > * {
+  pointer-events: auto;
+  margin-top: 0;
+}
+/* Screens without the tab bar pad the scrolling area by the gesture-bar inset, and a sticky element
+   stops above that padding (found on the Android emulator: content showed in the strip beneath the
+   button). Here the veil reaches through the inset, at rest and while it sticks. */
+.stage--no-nav .sticky-action {
+  bottom: calc(-1 * var(--safe-bottom));
+  margin-bottom: calc(-1 * (var(--s-7) + var(--safe-bottom)));
+  padding-bottom: calc(var(--s-5) + var(--safe-bottom));
 }
 
 /* ----------------------------------------------------------- Archetype */
@@ -592,13 +641,16 @@ h1[tabindex='-1']:focus {
   min-width: 0;
 }
 .spread__pos {
-  /* Long labels ("HERAUSFORDERUNG" at 130 % text) wrap inside their column instead of running into the next one */
-  max-width: 100%;
+  /* Long labels ("HERAUSFORDERUNG" at 130 % text) wrap instead of running into the next one */
   overflow-wrap: anywhere;
   hyphens: auto;
   font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  /* Design plan point 4: "HERAUSFORDERUNG" fits on one line at normal text size. The label may
+     reach a little into the gaps beside its card; the two outer labels are short. */
+  letter-spacing: 0.06em;
+  margin-inline: -14px;
+  max-width: calc(100% + 28px);
   text-transform: uppercase;
   color: var(--brass-400);
   text-align: center;
@@ -721,6 +773,8 @@ h1[tabindex='-1']:focus {
 .grimoire__count .display {
   font-size: 2.4rem;
   line-height: 1;
+  /* Design plan point 4: lining figures, so "1 / 22" does not read as a Roman "I". */
+  font-variant-numeric: lining-nums;
 }
 
 .grimoire__tabs {
