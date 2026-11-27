@@ -43,6 +43,8 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] Hundert-Tage- und Jubiläums-Rückblicke, Jahrbuch, Sternbild „Hundert“: eigener Bereich `jubilees`, noch nicht gebaut; danach in `BUILD_FEATURES` eintragen (S-22).
 - [x] B-07: die vom Eigentümer gewählte Variante B eingebaut (Panel unter der Fußzeile, D-59).
 - [ ] Optional: Willkommen als „Buch als Bühne“ neu anordnen, damit A06 unabgedunkelt wirkt (S-27).
+- [ ] V07.5, echtes Gerät: Bildschirmwechsel auf bildreiche Screens (Enthüllung, „Heute“, Grimoire) mit `scripts/android-trace.mjs` messen; auf dem Emulator bleibt ein langer Frame von 100–230 ms (B-13, S-31).
+- [ ] V07.5, echtes Gerät: Das Android-WebView holt `favicon.svg` bei jeder Navigation und liest es als SVG-Dokument (38–54 ms Hauptthread). Auf dem Emulator ohne messbare Wirkung auf die Frames; auf dem Gerät prüfen, ob sich das Entfernen in der App lohnt (S-31).
 
 ## Bekannte Kleinigkeiten
 

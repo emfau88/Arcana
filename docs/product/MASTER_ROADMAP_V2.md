@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1, V04.4 und V04.5 fertig; V04.2, V04.6 und V04.7 bis auf die Messungen auf dem Emulator fertig; V04.3 fertig (B-07 mit Variante B, D-59). Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen. V05 läuft auf `feature/v05-karten` (gestapelt auf V04, Reihenfolge S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1–V04.5 und V04.7 fertig (B-07 mit Variante B, D-59; B-13 und B-14 behoben, S-30, S-31); V04.6 wartet auf die Durchsicht. V05 beginnt erst nach V04 (D-60); der Plan liegt auf `feature/v05-karten` (S-29). Alle neuen Screens stehen als Vorschlag aus vorhandenen Bausteinen auf den B2-Bildern (D-57, D-58) und warten auf die gesammelte Durchsicht. Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) nach `main` ist offen. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -89,13 +89,13 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Ablauf ≤ 75 s: gemessene App-Zeit 2,7 s + 7 × 8 s Lesezeit = 58,7 s (E2E)
   - [x] Bestehende Profile bleiben gültig, Angebot zum Neubestimmen im Profil, kein Zwang (E9, Unit + E2E)
   - [x] Prüfskripte (Evidence, Perf, Showcase, Android) beantworten die Fragen bis zur Themenwahl statt fest vier, damit sie gegen die Referenz und gegen V04 laufen
-- [ ] V04.2 Enthüllung und Profil (5/6)
+- [x] V04.2 Enthüllung und Profil (6/6)
   - [x] „Warum?“ als Rechnung: eigene Antworten mit +2/+1, Summen in der Rangfolge der Regel, Grund für (keine) zweite Stimme; stimmt für alle 16.384 Kombinationen mit dem Ergebnis überein (Unit)
   - [x] Ausführliche Profile DE/EN im Modul `archetypes`: Beschreibung 120–180 Wörter, 3 Stärken, Schattenfragen, Entwicklung, Reflexionsfragen, Enthüllungssatz, Text als zweite Stimme (Edition-Texte erst mit Billing, S-15)
   - [x] Resonanz je Archetyp (3 Karten, 3 Symbole) geprüft: jede Karte zugeordnet, nur Tod und Stern doppelt (S-12)
   - [x] Porträt-Enthüllung (4,3 s, überspringbar, reduziert statisch: Knopf nach ≤ 800 ms, E2E) und „Warum?“-Ansicht (8 Summen, 7 Antworten, E2E) als Vorschlag (D-57, S-17)
   - [x] Alle acht Archetypen lesbar: Bibliothek im Grimoire und auf „Ich“, eigener Archetyp und zweite Stimme markiert (E2E)
-  - [ ] Enthüllung ≥ 50 fps auf dem Referenz-Emulator: 53,2–58,0 fps in 7 von 9 Läufen, 41,5 und 43,7 fps in zwei Läufen mit ausgelagertem Speicher des Emulators (2 GB RAM, 870 MB Swap). Lange Frames nur beim Bildschirmwechsel in den ersten 550 ms nach dem Tippen, schlechtester Frame ≤ 120 ms nur in 3 von 9 Läufen (B-13)
+  - [x] Enthüllung ≥ 50 fps auf dem Referenz-Emulator: nach S-31 56,6–58,8 fps in 7 von 7 Läufen (kalt gestarteter Emulator); vorher 52,4–58,0 fps mit zwei langen Frames beim Wechsel. Ein langer Frame beim Bildschirmwechsel bleibt wie bei jedem Wechsel auf einen bildreichen Screen (B-13, echtes Gerät in V07.5)
 - [x] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49) (5/5)
   - [x] Linse je Archetyp × Karte: 176 Sätze DE/EN im Modul `identity`, Content-Gate (ein Satz, 12–28 Wörter, abwechslungsreiche Anfänge)
   - [x] Ergänzungslinse jeden dritten Reisetag, Varianten-Index und Ergänzung im Datensatz; frühere Tageskarten zeigen ihren alten Text (D-09, Unit, S-11)
@@ -120,14 +120,14 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Bildbudget ≤ 600 KB je Screen: schwerster Screen 364 KB
   - [x] Erste Sitzung bis zur Karte ≤ 90 s (E2E-Pfad, Fragebogen 58,7 s); Kontrast aller Lesetexte ≥ 4,5:1 bei 360/390/412 px DE/EN und 130 % Schrift (B-07 behoben, D-59)
   - [ ] Screenshot-Review durch den Eigentümer (`SELF_DECISIONS.md`, Nachprüfen)
-- [ ] V04.7 Teilen-Kern und Archetypkarte (E20) (5/6)
+- [x] V04.7 Teilen-Kern und Archetypkarte (E20) (6/6)
   - [x] `ShareModel` ohne private Felder: Typ-Test schlägt fehl, sobald Antworten, Scores, Notizen oder Geburtsdatum hinzukommen; Schlüssel-Whitelist zur Laufzeit (Unit)
   - [x] Vorlage J2 in Story 1080 × 1920 und Feed 1080 × 1350: alle acht Archetypen DE/EN passen, Branding ≤ 6 %, Text ≥ 4,5:1 auf undurchsichtiger Fläche (Unit)
   - [x] Canvas-Renderer mit den gebündelten Schriften, System-Teilen: Capacitor Share mit Datei aus dem App-Cache, Web Share mit Datei, Download als Ersatz (S-16)
   - [x] Einstieg aus Enthüllung und „Ich“ als Vorschlag (D-57); Vorschau als Data-URL bei strenger CSP (S-24); Bildvergleichstest je Sprache (S-28); im Browser Story 75–312 ms, Feed ≈ 50 ms
   - [x] Teilen-Blatt des Systems öffnet sich offline mit der Bilddatei (Emulator, 8 von 8 Läufen; geschlossen ohne Ziel, nichts geteilt)
-  - [ ] Export ≤ 1,5 s auf dem Referenz-Emulator: Story 0,36–1,21 s und Beitrag 0,13–0,25 s in den meisten Läufen; die erste Story nach dem Fragebogen brauchte in 4 von 19 Läufen ≈ 13,3 s; offline direkt nach dem Kaltstart in 3 von 13 Läufen 1,49–1,65 s (B-14)
-- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) offen; Funktion PASS, offen sind die Durchsicht, B-13/B-14 und die Pages-Vorschau (nach Freigabe)
+  - [x] Export ≤ 1,5 s auf dem Referenz-Emulator: nach S-30 (PNG-Kodierung im Worker) in 7 von 7 Läufen, Story 0,23–0,64 s, Beitrag 0,09–0,14 s, auch direkt nach dem Fragebogen und offline nach dem Kaltstart; vorher in 4 von 19 Läufen ≈ 13,3 s (B-14)
+- [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`: Pull Request [#4](https://github.com/emfau88/Arcana/pull/4) offen; Funktion PASS, offen sind die Durchsicht und die Pages-Vorschau (nach Freigabe)
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 

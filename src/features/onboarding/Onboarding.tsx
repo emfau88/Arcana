@@ -3,7 +3,9 @@ import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
 import { useReducedMotion } from '../../app/motion.ts';
 import { useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
+import { portraitSrc } from '../../content/assets.ts';
 import { getArchetype } from '../../content/index.ts';
+import { scoreArchetype } from '../../domain/archetypes.ts';
 import type { ThemeId } from '../../domain/types.ts';
 import { fmt } from '../../i18n/index.ts';
 import { IconBack, IconInfo, IconMoon } from '../../ui/Icons.tsx';
@@ -12,6 +14,8 @@ import { cardSrc } from '../../ui/OracleCard.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 import { useToast } from '../../ui/feedback.tsx';
 import { ArchetypePortrait } from '../../ui/Portrait.tsx';
+import { warmFont, warmImage, whenIdle } from '../../ui/warm.ts';
+import { warmWorld } from '../../ui/World.tsx';
 
 /* ----------------------------------------------------------------- Welcome */
 
@@ -96,6 +100,23 @@ export function Questionnaire({ step }: { step: number }) {
     if (hasTexts) return;
     actions.ensureModules().catch(() => toast(t.errors.contentLoad, 'error'));
   }, [hasTexts, actions, toast, t]);
+
+  // B-13: the reveal follows the theme step. Its italic serif, the room A05 and the portraits load
+  // now, so the screen change does not wait for them (reference emulator: the second long frame of
+  // the change is gone). Nothing changes on screen.
+  const onThemeStep = !question && step === total;
+  const expected = onThemeStep ? scoreArchetype(pack.questions, answers) : null;
+  const warmMain = expected?.archetypeId ?? null;
+  const warmSecond = expected?.complementId ?? null;
+  useEffect(() => {
+    if (!onThemeStep) return;
+    return whenIdle(() => {
+      warmFont('italic 500 1em "Cormorant Garamond Variable"');
+      warmWorld('profile');
+      if (warmMain) warmImage(portraitSrc(warmMain, 720));
+      if (warmSecond) warmImage(portraitSrc(warmSecond, 240));
+    });
+  }, [onThemeStep, warmMain, warmSecond]);
   if (step > total) return null;
 
   const next = () => navigate(`/onboarding/${step + 1}`);
