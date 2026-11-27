@@ -171,9 +171,6 @@
 
 /* -------------------------------------------------------------- Chapter */
 .chapter-page__text {
-  display: grid;
-  gap: var(--s-3);
-  margin-bottom: var(--s-4);
   font-size: 1.04rem;
   line-height: 1.75;
 }

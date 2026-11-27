@@ -57,13 +57,13 @@ export function Welcome() {
         <button type="button" className="btn btn--primary btn--block" onClick={() => navigate('/onboarding/1')}>
           {t.welcome.start}
         </button>
+        <p className="small welcome__privacy">
+          <IconMoon size={14} /> {t.welcome.privacy}
+        </p>
         <button type="button" className="btn btn--quiet" onClick={skip} disabled={busy}>
           {t.welcome.skipAll}
         </button>
       </div>
-      <p className="small welcome__privacy rise rise-5">
-        <IconMoon size={14} /> {t.welcome.privacy}
-      </p>
     </div>
   );
 }
@@ -226,9 +226,11 @@ export function Questionnaire({ step }: { step: number }) {
             ))}
           </div>
           <p className="small onboarding__voluntary">{t.onboarding.themeHint}</p>
-          <button type="button" className="btn btn--primary btn--block onboarding__finish" onClick={finish} disabled={busy}>
-            {t.onboarding.finish}
-          </button>
+          <div className="sticky-action">
+            <button type="button" className="btn btn--primary btn--block onboarding__finish" onClick={finish} disabled={busy}>
+              {t.onboarding.finish}
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -270,7 +272,7 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
     return () => window.clearTimeout(id);
   }, [reduced]);
 
-  const cta = fromProfile ? (
+  const ctaButton = fromProfile ? (
     <button type="button" className="btn btn--primary btn--block archetype__cta" onClick={() => goBack(parsed)}>
       {t.archetype.toProfile}
     </button>
@@ -279,6 +281,8 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
       {t.archetype.toToday}
     </button>
   );
+  // Design plan point 1: the way on stays in view while the profile scrolls underneath.
+  const cta = <div className="sticky-action">{ctaButton}</div>;
   const explain = (
     <details className="explain">
       <summary>
@@ -371,7 +375,10 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
         </div>
         <p className="small archetype__basis">{manual ? t.archetype.basisManual : fmt(t.archetype.basis, { n: answered })}</p>
         {explain}
-        {cta}
+      </div>
+      {/* Direct child of the screen, so it sticks from the first moment it appears (also with a second voice or large text). */}
+      <div className="sticky-action reveal-step" style={at(second ? REVEAL_STEPS.rest : REVEAL_STEPS.second)}>
+        {ctaButton}
       </div>
     </div>
   );

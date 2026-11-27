@@ -89,10 +89,12 @@ function OracleEntry() {
         </ol>
       </section>
 
-      <button type="button" className="btn btn--primary btn--block oracle__draw" onClick={draw} disabled={busy}>
-        <IconSparkle size={18} /> {t.oracle.draw}
-      </button>
       <p className="small oracle__ethics">{t.oracle.ethics}</p>
+      <div className="sticky-action">
+        <button type="button" className="btn btn--primary btn--block oracle__draw" onClick={draw} disabled={busy}>
+          <IconSparkle size={18} /> {t.oracle.draw}
+        </button>
+      </div>
     </div>
   );
 }

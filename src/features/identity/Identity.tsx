@@ -5,6 +5,7 @@
  * core texts are shown, so nothing is ever empty.
  */
 import { navigate, originOf, type ParsedRoute } from '../../app/router.ts';
+import { Prose } from '../../ui/Prose.tsx';
 import { useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
 import { findCard, getArchetype } from '../../content/index.ts';
@@ -60,7 +61,7 @@ export function ArchetypeProfile({ id, from }: { id: ArchetypeId; from: string }
           <h2 id={`${uid}-desc`} className="panel__label">
             {s.me.description}
           </h2>
-          <p className="arch-profile__description">{m(`description.${id}`)}</p>
+          <Prose className="arch-profile__description" text={m(`description.${id}`)} />
         </section>
       ) : null}
       <section className="panel" aria-labelledby={`${uid}-str`}>
