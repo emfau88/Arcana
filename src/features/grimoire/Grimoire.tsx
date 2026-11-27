@@ -3,6 +3,7 @@ import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { findCard } from '../../content/index.ts';
 import { dateFromKey } from '../../domain/clock.ts';
+import { lensArchetypeOf } from '../../domain/lens.ts';
 import { buildHistory, deriveCollection } from '../../domain/oracle.ts';
 import { fmt, formatDate, toRoman } from '../../i18n/index.ts';
 import { Divider, useToast } from '../../ui/feedback.tsx';
@@ -255,7 +256,7 @@ export function DayDetail({ dateKey, parsed }: { dateKey: string; parsed: Parsed
         </section>
         {c.lens ? (
           <section className="panel">
-            <h2 className="panel__label">{t.today.lens}</h2>
+            <h2 className="panel__label">{lensArchetypeOf(record) === record.archetypeId ? t.today.lens : t.today.lensComplement}</h2>
             <p>{c.lens}</p>
           </section>
         ) : null}

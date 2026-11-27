@@ -4,7 +4,7 @@
  * varied openings. Pure; used by `npm run validate:content` and the unit tests.
  */
 import { journeyTextKeys } from '../../domain/journey.ts';
-import { LOCALES, type Locale } from '../../domain/types.ts';
+import { ARCHETYPE_ORDER, LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
 import type { ContentPack } from '../schema.ts';
 import type { ModuleId, TextTable } from './registry.ts';
@@ -68,10 +68,15 @@ export const FORBIDDEN_PRESSURE: readonly RegExp[] = [
 
 export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
   identity: {
-    required: (pack) => pack.questions.flatMap((q) => [`question.${q.id}.prompt`, ...q.answers.map((a) => `question.${q.id}.${a.id}`)]),
+    required: (pack) => [
+      ...pack.questions.flatMap((q) => [`question.${q.id}.prompt`, ...q.answers.map((a) => `question.${q.id}.${a.id}`)]),
+      // V04.3: one lens per archetype × card (PRODUCT_SYSTEMS A3).
+      ...ARCHETYPE_ORDER.flatMap((a) => pack.cards.map((c) => `lens.${a}.${c.id}`)),
+    ],
     rules: [
       { pattern: /^question\.[a-z0-9-]+\.prompt$/, maxLen: 90 },
       { pattern: /^question\.[a-z0-9-]+\.[a-z0-9-]+$/, maxLen: 70 },
+      { pattern: /^lens\.[a-z]+\.major-\d{2}-[a-z-]+$/, maxLen: 190, sentences: [1, 1], words: [12, 28], group: 'lens' },
     ],
   },
   journey: {

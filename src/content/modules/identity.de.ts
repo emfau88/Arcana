@@ -1,4 +1,5 @@
-/** Modul identity, Deutsch. Fragebogen v2 mit sieben Fragen (V04.1; die ersten vier seit V03.3 aus core). */
+/** Modul identity, Deutsch. Fragebogen v2 mit sieben Fragen (V04.1; die ersten vier seit V03.3 aus core) und Linse je Archetyp × Karte (V04.3). */
+import { lensTexts } from './identity-lens.de.ts';
 import type { TextTable } from './registry.ts';
 
 export const texts: TextTable = {
@@ -37,4 +38,5 @@ export const texts: TextTable = {
   'question.q-change.a-shape': '… gestalte ich den neuen Anfang mit',
   'question.q-change.a-hold': '… spüre ich, wer gerade Halt braucht',
   'question.q-change.a-release': '… lasse ich Altes los und gehe weiter',
+  ...lensTexts,
 };

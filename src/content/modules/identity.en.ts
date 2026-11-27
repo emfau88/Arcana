@@ -1,4 +1,5 @@
 /** Module identity, English. Questionnaire v2 with seven questions (V04.1; the first four moved from core in V03.3). */
+import { lensTexts } from './identity-lens.en.ts';
 import type { TextTable } from './registry.ts';
 
 export const texts: TextTable = {
@@ -37,4 +38,5 @@ export const texts: TextTable = {
   'question.q-change.a-shape': '… I help shape the new beginning',
   'question.q-change.a-hold': '… I sense who needs something to hold on to',
   'question.q-change.a-release': '… I let go of the old and walk on',
+  ...lensTexts,
 };

@@ -12,6 +12,8 @@ import {
   revealAll,
   revealPosition,
 } from '../domain/oracle.ts';
+import { lensKey } from '../domain/lens.ts';
+import { journeyDayToday } from '../domain/progress.ts';
 import { cryptoRng, type Rng } from '../domain/random.ts';
 import type {
   Answers,
@@ -363,6 +365,11 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             archetypeId: s.profile?.archetypeId ?? null,
             locale: s.settings.locale,
             previousCardId: previousDailyCard(s.dailies, key),
+            lens: {
+              journeyDay: journeyDayToday({ dailies: s.dailies, readings: s.readings }, key),
+              complementId: s.profile?.secondaryArchetypeId ?? null,
+              text: (archetypeId, cardId) => s.modules.identity?.[lensKey(archetypeId, cardId)],
+            },
           });
           const stored = await repo.addDailyIfAbsent(record);
           dispatch({ type: 'daily', record: stored });

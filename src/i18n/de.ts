@@ -73,6 +73,7 @@ export const de = {
     skipAnimation: 'Animation überspringen',
     message: 'Deine Botschaft',
     lens: 'Durch die Linse deines Archetyps',
+    lensComplement: 'Durch die Linse deiner zweiten Stimme',
     reflection: 'Reflexion',
     ritual: 'Mini-Ritual',
     collected: 'Im Grimoire gesammelt',

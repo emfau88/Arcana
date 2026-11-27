@@ -75,6 +75,7 @@ export const en: Messages = {
     skipAnimation: 'Skip animation',
     message: 'Your message',
     lens: 'Through the lens of your archetype',
+    lensComplement: 'Through the lens of your second voice',
     reflection: 'Reflection',
     ritual: 'Mini ritual',
     collected: 'Added to your grimoire',

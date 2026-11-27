@@ -96,6 +96,13 @@ export interface DailyRecord {
   content: DailyContent;
   revealedAt: string;
   note: string;
+  /**
+   * Variant indices fixed when the record was created (V04.3, IA §5.2): lens 0 = main archetype,
+   * 1 = complement; reflection and ritual stay 0 until V05 brings more variants. Missing in older records.
+   */
+  variant?: { lens: number; reflection: number; ritual: number };
+  /** Complement archetype at the moment of drawing (V04.3). Missing in older records. */
+  secondaryArchetypeId?: ArchetypeId | null;
 }
 
 export interface ReadingPositionContent {
