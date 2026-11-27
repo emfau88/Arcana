@@ -16,7 +16,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 
 - [ ] Release-Modus-Testbuild mit zulässiger Testsignatur, SHA-256, Größe, Startup, Reveal und Scroll. Kaltstart auf ruhigem Rechner nachmessen (zuletzt 3,8 s unter Last).
 - [ ] TalkBack manuell auf dem Emulator (bisher nur ein uiautomator-Labelcheck).
-- [ ] Upgrade-Pfad der IndexedDB (Schema-Version 2) testen, Datenbestand aus 0.1.0 → 0.2.0.
+- [x] Upgrade-Pfad der IndexedDB (Schema-Version 2) testen: Unit-Tests mit drei Fixtures (V03.1) und Android 0.2.0 → 0.3.0 mit echtem Datenbestand, 9/9 PASS (QG-V03, `scripts/android-migration.mjs`).
 - [ ] Zeitzonenwechsel bei laufender App und Tageswechsel im Hintergrund (Android) gezielt testen.
 - [ ] Optionaler PWA-Cache (Service Worker) prüfen: Offline auch im Browser.
 - [ ] Vollständige Q01–Q16-Matrix, Lizenzliste der Abhängigkeiten.

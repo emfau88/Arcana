@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 läuft auf `feature/v03-fundament`: V03.1 bis V03.4 fertig, V03.5 in Arbeit (pausiert, Zwischenstand gepusht). E9 und E20 entschieden (D-47).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 fertig auf `feature/v03-fundament` (Version 0.3.0), Pull Request nach `main` wartet auf Freigabe; B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft gestapelt auf `feature/v04-identitaet`. E9 und E20 entschieden (D-47).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -70,21 +70,21 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] `has(right)`, `CoreOnlyProvider`, `TestProvider` (Rechte `core.*`, `edition.*`, `deck.<id>`; im UI nur `useApp().has`)
   - [x] Unit-Tests (Provider, gespeicherter Cache schaltet nichts frei, Store mit TestProvider)
   - [x] Kein UI-Element liest den Kaufstatus direkt (ESLint-Regel für `features/` und `ui/`, mit Test belegt)
-- [ ] **V03.5 Globales Designsystem** (0/4)
-  - [ ] V02-Bausteine auf Orakel, Grimoire, Profil, Onboarding, Einstellungen
-  - [ ] Screenshot-Review 360/390/412 und Desktop, keine Überläufe
-  - [ ] Mindestkontrast ≥ 4,5:1 für jeden Lesetext (inkl. B-07)
-  - [ ] Absolute Perf-Grenzen eingehalten (inkl. B-08)
-- [ ] **QG-V03** (0/3)
-  - [ ] `npm run check` und alle E2E grün
-  - [ ] Android-Debug-Build startet und migriert einen 0.2-Datenbestand
+- [x] **V03.5 Globales Designsystem** (2/4, zwei Punkte per Eigentümer-Ausnahme verschoben, D-52)
+  - [x] V02-Bausteine auf Orakel, Grimoire, Profil, Onboarding, Einstellungen (Flanken-Überschriften, gedämpfte Nachtwelt, D-50); Tageskarte zu 90 % (D-51)
+  - [x] Screenshot-Review 360/390/412, DE/EN, 130 % Schrift, keine Überläufe (Desktop kein Kriterium, D-52; Orakel-Positionen bei 130 % behoben, B-10)
+  - [ ] Mindestkontrast ≥ 4,5:1 für jeden Lesetext: alle Screens außer „Heute“ erfüllt; B-07 (Fußzeile über den Lilien) → **V04.3** (D-49, D-52)
+  - [ ] Absolute Perf-Grenzen: B-08 unsichtbar verbessert (normiert ≈ 1.168 ms, D-50); Messung gegen die Referenz → **vor QG-V05** (D-52). Android-Kaltstart 1,58 s ≤ 3,0 s
+- [ ] **QG-V03** (2/3, mit den Ausnahmen aus D-52)
+  - [x] `npm run check` (118 Unit-Tests, Build im Budget) und alle E2E grün (20 bestanden)
+  - [x] Android-Debug-Build 0.3.0 startet und migriert einen 0.2.0-Datenbestand: 9/9 PASS, jeder Datensatz unverändert (`scripts/android-migration.mjs`)
   - [ ] Pull Request, Freigabe, Tag `v0.3.0`
 
 ### V04 · Identität und Reise (0.4)
 
 - [ ] V04.1 Fragebogen v2 (E9)
 - [ ] V04.2 Enthüllung und Profil
-- [ ] V04.3 Heute erweitert
+- [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49)
 - [ ] V04.4 Narrenreise und Meilensteine
 - [ ] V04.5 Sternkarte und Rückblicke
 - [ ] V04.6 „Ich“ und Gestaltung
@@ -300,10 +300,10 @@ Angefordert wird **immer nur der nächste Bulk**. Details, Prompts und Abnahmekr
 |---|---|---|
 | Statische Prüfung, Unit, Content-Validator | grün | `npm run check` |
 | E2E | grün, neue Abläufe mit eigenen Tests | Playwright |
-| Leistung | alle absoluten Obergrenzen der Tabelle „Leistungsbudgets“ unten; Schrittgrenze je Paket begründet | `scripts/perf.mjs`, Build-Report, Emulator |
+| Leistung | alle absoluten Obergrenzen der Tabelle „Leistungsbudgets“ unten; Schrittgrenze je Paket begründet. **Seit D-52:** die Messung gegen die Referenz läuft vor dem geschlossenen Test (QG-V05) und in der Härtung (V07.5); an den übrigen Gates zählen Build-Report (Start-JS, Module) und APK-Größe | `scripts/perf.mjs`, Build-Report, Emulator |
 | Inhalt je Modul und Sprache | ≤ 40 KB gzip | Build-Report |
 | **Mindestkontrast** | **jeder** relevante Lesetext (Botschaft, Fließtext, Listen, Labels, Tab-Beschriftung, Hinweise) ≥ 4,5:1 als Mindestwert: gemessen gegen den hellsten 5-%-Anteil der Hintergrundpixel unter der Schrift (p95), nicht im Mittel. Große Schrift (≥ 24 px, oder ≥ 18,7 px fett), Icons und Ränder von Bedienelementen ≥ 3:1. Der Median wird nur zusätzlich berichtet | Kontrastskript (aus `scripts/today-showcase.mjs --contrast`, auf alle Screens erweitert) |
-| Layout | keine Überläufe bei 360/390/412 und Desktop, große Schrift (130 %) | Showcase-Skripte |
+| Layout | keine Überläufe bei 360/390/412, große Schrift (130 %). Desktop ist seit D-52 kein Prüfkriterium (Android-App) | Showcase-Skripte |
 | Reduzierte Bewegung | keine Bewegung außer Überblenden | E2E |
 | DE/EN | vollständig, keine Kürzungen in der UI | Validator, Screenshot-Review |
 | Android | Debug-Build startet, Kernpfad auf dem Emulator | Emulator |
