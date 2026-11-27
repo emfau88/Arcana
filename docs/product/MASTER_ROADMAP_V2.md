@@ -113,7 +113,12 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [ ] Sternkarte (SVG auf A19) mit Liste als Textalternative, ≤ 16 ms pro Frame bei 400 Tagen
   - [ ] Rückblick- und Kapitelansicht als Vorschlag (D-57)
 - [ ] V04.6 „Ich“ und Gestaltung
-- [ ] V04.7 Teilen-Kern und Archetypkarte (E20)
+- [ ] V04.7 Teilen-Kern und Archetypkarte (E20) (3/5)
+  - [x] `ShareModel` ohne private Felder: Typ-Test schlägt fehl, sobald Antworten, Scores, Notizen oder Geburtsdatum hinzukommen; Schlüssel-Whitelist zur Laufzeit (Unit)
+  - [x] Vorlage J2 in Story 1080 × 1920 und Feed 1080 × 1350: alle acht Archetypen DE/EN passen, Branding ≤ 6 %, Text ≥ 4,5:1 auf undurchsichtiger Fläche (Unit)
+  - [x] Canvas-Renderer mit den gebündelten Schriften, System-Teilen: Capacitor Share mit Datei aus dem App-Cache, Web Share mit Datei, Download als Ersatz (S-16)
+  - [ ] Einstieg aus Enthüllung und „Ich“ als Vorschlag (D-57)
+  - [ ] Export ≤ 1,5 s auf dem Referenz-Emulator, Bildvergleichstest, offline geprüft
 - [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`
 
 ### V05 · Karten, Legungen, Grimoire (0.5)

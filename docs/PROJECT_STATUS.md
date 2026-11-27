@@ -30,7 +30,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | G1 | PASS, Stil vorläufig freigegeben (D-22) | `docs/GATE_REPORTS.md` |
 | G2 | PASS | `docs/GATE_REPORTS.md`, `docs/TEST_EVIDENCE.md`, `docs/G2_PLAN.md` |
 | QG-V03 | PASS mit Ausnahmen (D-52) | Check 118/118, E2E 20 bestanden, Android-Migration 9/9, Kaltstart 1,58 s, APK 8,1 MB, Screenshots 360/390/412 DE/EN 130 % (`visual/evidence/v03-*`) |
-| V04 (laufend) | V04.1 PASS; V04.2, V04.4, V04.5 Logik/Texte PASS; V04.3 Linsen/Hinweise PASS (B-07 offen); Oberflächen, V04.6, V04.7 offen | siehe „Nachweise V04“ unten |
+| V04 (laufend) | V04.1 PASS; V04.2, V04.4, V04.5 Logik/Texte PASS; V04.3 Linsen/Hinweise PASS (B-07 offen); V04.7 Teilen-Kern PASS; Oberflächen und V04.6 offen | siehe „Nachweise V04“ unten |
 | G3–G5 | NOT RUN | G3 ist Bulk V07.5 |
 
 ## Was funktioniert (Browser und Android-Emulator)
@@ -52,7 +52,7 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 - [x] PR-Merge nach `main` (`553c5d9`), Tag `v0.2.1`, Branch `feature/v03-fundament` angelegt.
 - [x] V03 Fundament auf `feature/v03-fundament` (Version 0.3.0), QG-V03 mit Ausnahmen D-52.
 - [x] **Freigabe und Merge von V03** durch den Eigentümer (27.11.2026, Merge-Commit `2f1e1de`), Tag `v0.3.0`, `main` in `feature/v04-identitaet` gemergt.
-- [ ] V04 Identität und Reise auf `feature/v04-identitaet` (`MASTER_ROADMAP_V2.md` §0.1): V04.1 [x]; V04.2, V04.3, V04.4, V04.5 Logik und Texte [x]; Oberflächen (Enthüllung, „Ich“, Sternkarte, Rückblicke, Meilenstein-Moment), B-07, V04.6 und V04.7 offen.
+- [ ] V04 Identität und Reise auf `feature/v04-identitaet` (`MASTER_ROADMAP_V2.md` §0.1): V04.1 [x]; V04.2, V04.3, V04.4, V04.5 Logik und Texte [x]; V04.7 Teilen-Kern [x]; Oberflächen (Enthüllung, „Ich“, Sternkarte, Rückblicke, Meilenstein-Moment, Teilen-Vorschau), B-07 und V04.6 offen.
 - [x] Schwelle der Ergänzung: im Auftrag des Eigentümers selbst entschieden, höchstens 1 Punkt Abstand ab 4 Antworten (D-53; Vergleich und Alternativen in `SELF_DECISIONS.md` S-01).
 - [x] Reisetexte: Eigentümer 27.11.2026 „nach eigenem Ermessen, später optimieren“ (D-54, S-02); Feinschliff im Lektorat.
 - [ ] Bei Gelegenheit: selbst entschiedene Punkte durchsehen (`docs/SELF_DECISIONS.md`, D-56).
@@ -89,7 +89,7 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 
 | Prüfung | Ergebnis | Beleg |
 |---|---|---|
-| `npm run check` | PASS: 179 Unit-Tests, Content-Gate 0 Fehler, 0 Warnungen (Module `identity` 211, `archetypes` 125, `chapters` 40, `journey` 136 Schlüssel je Sprache), Start-JS 134,3 kB (Grenze 160 kB), größtes Modul `chapters.de` 13,7 kB gz (Grenze 40 kB) | lokaler Lauf |
+| `npm run check` | PASS: 186 Unit-Tests, Content-Gate 0 Fehler, 0 Warnungen (Module `identity` 211, `archetypes` 125, `chapters` 40, `journey` 136 Schlüssel je Sprache), Start-JS 134,3 kB (Grenze 160 kB), größtes Modul `chapters.de` 13,7 kB gz (Grenze 40 kB) | lokaler Lauf |
 | E2E (Produktions-Build) | PASS: 23 bestanden, 33 je Projekt bewusst übersprungen, 0 fehlgeschlagen; neu: sieben Fragen, Zeitmessung, E9-Angebot | `tests/e2e/flow.spec.ts` |
 | Balance Fragebogen v2 | PASS: 16.384 Kombinationen, Haupt 11,3–14,2 %, Ergänzung 65,6 % (≤ 1 Punkt, ab 4 Antworten; bei übersprungenen Fragen stabil 66–70 %), 56/56 Paare | `tests/unit/archetypes.test.ts` |
 | Ablauf Fragebogen | PASS: App-Zeit 2,7 s + 7 × 8 s Lesezeit = 58,7 s (Grenze 75 s) | E2E-Ausgabe |
@@ -99,6 +99,7 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 | „Warum?“ V04.2 | PASS: festes Beispiel exakt, Gründe für keine zweite Stimme, offenes Profil, Übereinstimmung mit der Rechnung für alle 16.384 Kombinationen | `tests/unit/why.test.ts` |
 | Profile und Resonanz V04.2 | PASS: jede Karte zugeordnet (nur Tod und Stern doppelt), alle Symbole genutzt, jede Beschreibung nennt ihre drei Karten und das Leitsymbol, Schlüssel DE/EN vollständig | `tests/unit/archetype-profiles.test.ts` |
 | Rückblicke V04.5 | PASS: 0, 1 und 30 Einträge ohne Lücken (DE/EN gerendert), Pausen ohne Lücke, Thema bei Gleichstand nach letzter Nutzung, deterministisch, Kapiteltage 3/21/42/63/100 | `tests/unit/review.test.ts` |
+| Teilen-Kern V04.7 | PASS: Typ-Test ohne private Felder, Schlüssel-Whitelist, alle acht Archetypen DE/EN in Story und Feed passend, Branding ≤ 6 %, Text ≥ 4,5:1; Export-Zeit und Bildvergleich folgen mit der Oberfläche | `tests/unit/share.test.ts` |
 | Layout Fragen 5–7 bei 360 px, 130 % Schrift DE/EN | PASS: kein Text außerhalb, keine Seitwärtsbewegung | `visual/evidence/v04-fragen-5-7-360-130.webp` |
 | Evidence-Durchlauf 360 DE 130 % und 412 EN | PASS: keine Layout- oder Kontrastfehler, keine externen Anfragen | lokaler Lauf |
 | B2-Export | PASS: 30 Dateien im Budget, 4,2 MB | `art/b2/export-report.json`, `visual/evidence/v04-b2-export.webp` |

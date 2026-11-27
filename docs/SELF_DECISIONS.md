@@ -23,6 +23,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-13 | 27.11.2026 | Wo Profile und Kapitel liegen | zwei eigene Module, bei Bedarf geladen | V04.2, V04.5 |
 | S-14 | 27.11.2026 | Aufbau der Rückblicke | über Reisetage, ruhiger Satz bei weniger als zwei Karten, keine Rückblick-Legung vor V05 | V04.5 |
 | S-15 | 27.11.2026 | Edition-Texte (Spannungen, Beziehungsmuster, Ritualreihe) | noch nicht geschrieben | V04.2, AGENTS.md |
+| S-16 | 27.11.2026 | Teilen in der Android-App | Bild in den App-Cache schreiben, dann Capacitor Share | V04.7 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -185,3 +186,14 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternative:** jetzt schreiben und versteckt mitliefern (fertig, wenn Billing kommt, aber Lektorat und Gate für unsichtbaren Text).
 
 **Wechsel kostet:** etwa 40 Texte je Sprache, sobald V07 (Billing) freigegeben ist.
+
+## S-16 · Teilen in der Android-App
+
+**Entschieden:** Die App schreibt das fertige Bild mit `@capacitor/filesystem` in ihren Cache und übergibt die Datei an `@capacitor/share` (System-Teilen-Blatt). Im Browser wird Web Share mit Datei genutzt, sonst ein Download. Beide Plugins sind offizielle Capacitor-Pakete (MIT), ohne Laufzeitdienst, ohne Konto und ohne Kosten; nichts verlässt das Gerät, solange die Person kein Ziel wählt.
+
+**Warum:** Die Android-WebView kennt kein Web Share, und Capacitor Share nimmt Dateien nur als Pfad an, nicht als Data-URL. Ein Download in der WebView landet nicht verlässlich in der Galerie.
+
+**Alternativen:** nur Download (in der App unzuverlässig, kein Teilen-Blatt); Bild als Data-URL an Share (vom Plugin nicht unterstützt); eigenes natives Plugin (mehr Code, gleiche Wirkung); Teilen nur im Browser (die App ist der Hauptweg).
+
+**Wechsel kostet:** eine Funktion in `src/share/share.ts`; die Plugins lassen sich ohne Datenmigration entfernen.
+
