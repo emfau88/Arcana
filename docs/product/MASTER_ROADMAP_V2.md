@@ -142,7 +142,11 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Matrix-Test: 10.000 gezogene Legungen je Sprache über alle Themen ohne Lücke; alte Legungen werden unverändert angezeigt (Unit, E2E)
   - [ ] Auswahl und Anzeige im Orakel (Screen) mit V05.6, dabei B-12
 - [ ] V05.3 Grimoire als Buch
-- [ ] V05.4 Tagebuch und Suche
+- [ ] V05.4 Tagebuch und Suche (3/4)
+  - [x] Logik: Tagebuch als Chronik aus Tageskarten, Legungen und eigenen Einträgen; Filter nur für vorhandene Arten, nach Karte und „nur mit eigenen Worten“ (`src/domain/journal.ts`, S-48)
+  - [x] Lokale Suche ohne Groß- und Kleinschreibung, Akzente und ß: 1.000 Einträge mit Index-Aufbau rund 9 ms ≤ 50 ms (Unit)
+  - [x] Einzelne Einträge löschen: Worte weg, Tag und Kartenstufe bleiben (S-49); Schreiben, Bearbeiten, Löschen und Studium im Store, übersteht einen Neustart (Unit mit IndexedDB)
+  - [ ] Tagebuch-Screen mit Filtern, Suche und Löschdialog im Grimoire-Buch (V05.3), dazu E2E
 - [ ] V05.5 Kartenrücken (E10)
 - [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17)
 - [ ] QG-V05, geschlossener Test, Tag `v0.5.0`

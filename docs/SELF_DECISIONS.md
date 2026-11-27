@@ -57,6 +57,8 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-45 | 27.11.2026 | Wechselnde Reflexion und Ritual auf „Heute“ (A4) | Reflexion = Begegnungstage mod 3, Ritual = Begegnungstage mod 2, Variante 0 = Kerntext; `cards-deep` lädt beim Ziehen | V05.1, PRODUCT_SYSTEMS A4 |
 | S-46 | 27.11.2026 | Legungs-Engine und gespeicherte Legungen | Rollen R1–R8, sieben Legungen, R1–R3 behalten die alten Positions-IDs, klassische Legung unverändert, Modul `spreads`, Verbotsliste für Ergebnis-Positionen und Aussagen über andere; B-12 kommt mit V05.6 | V05.2, PRODUCT_SYSTEMS F |
 | S-47 | 27.11.2026 | Rückblick-Legung | roter Faden aus den eigenen Karten der letzten 7 bzw. 30 Reisetage plus eine neue Karte, alle Karten des Zeitraums als Reihe | V05.2 |
+| S-48 | 27.11.2026 | Tagebuch als Chronik | alle Tageskarten, Legungen und eigenen Einträge, neueste zuerst; Filter nur für vorhandene Arten, nach Karte und „nur mit eigenen Worten“; lokale Suche über eigene Worte, Kartentitel, Thema und Legungsname | V05.4, PRODUCT_SYSTEMS E3 |
+| S-49 | 27.11.2026 | Löschen im Tagebuch | nimmt die eigenen Worte, nicht den Tag: Eintrag geleert mit `deletedAt`, Notiz geleert, `notedAt` hält die Reflexion; Reisetag und Kartenstufe sinken nicht | V05.4, IA §5.5, PROGRESSION_DESIGN |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -80,6 +82,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
 - [ ] **Kartentiefe** (V05.1, S-43): alle 22 Karten in drei Gruppen (0–VII, VIII–XIV, XV–XXI), je 15 Texte in DE und EN (`src/content/modules/cards-deep.de.ts`, `cards-deep.en.ts`); besonders Ton von Schatten und Rollen und die Symbolik gegen die Bilder
 - [ ] **Rahmen der Legungen** (V05.2, S-46, S-47): Namen, Kurzbeschreibungen, Einleitungen und Fragen aller sieben Legungen in DE und EN (`src/content/modules/spreads.de.ts`, `spreads.en.ts`); besonders Zwei Wege und Verbindung (nur die eigene Seite) und der Rückblick
+- [ ] **Löschen im Tagebuch** (V05.4, S-49): Worte weg, Tag bleibt. Passt das zu deiner Erwartung, oder sollen auch ganze Tageskarten und Legungen einzeln löschbar sein?
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -596,3 +599,43 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Roter Faden nach Kartenstufe statt nach Häufigkeit: bevorzugt lange bekannte Karten statt der Karten des Zeitraums.
 
 **Wechsel kostet:** `reviewCards` und `drawSpread` in `src/domain/spreads.ts`. Gespeicherte Rückblicke behalten Karten und Text.
+
+## S-48 · Tagebuch als Chronik
+
+**Entschieden:** Das Tagebuch (Grimoire-Kapitel IV) ist eine abgeleitete Chronik aller Tageskarten, gespeicherten Legungen und eigenen Einträge, neueste zuerst (`src/domain/journal.ts`). Notizen bleiben an ihrer Tageskarte oder Legung (IA §5.3), nichts wird kopiert.
+
+- **Filter:** Tageskarten, Legungen, Reflexionen (freies Schreiben, Reflexion, Studium), Zahlen, Mond. Angeboten werden nur Filter mit Einträgen, also bis V06 kein Zahlen- und bis 1.1 kein Mondfilter. Dazu nach Karte und „nur mit eigenen Worten“.
+- **Suche:** lokal über die eigenen Worte, die Kartentitel und das Thema in der Sprache der App und den gespeicherten Namen einer Legung. Groß- und Kleinschreibung, Akzente und ß spielen keine Rolle („Mäßigkeit“ findet „massigkeit“), jedes Wort muss vorkommen, Teilwörter genügen.
+- **Bezüge:** Ein Eintrag über eine Legung zeigt deren Karten. Eine Reflexion mit Bezug auf eine Karte zählt für Kartenstufe 4 wie eine Notiz (PROGRESSION_DESIGN: „eigene Notiz zur Karte“).
+- **Schreiben:** In V05.4 entstehen Einträge der Arten „frei“ und „Reflexion“, höchstens 2.000 Zeichen wie Notizen. Studienantworten entstehen auf der Kartenseite; die Store-Aktion `studyCard` dafür steht schon (V05.1).
+- **Store:** Tagebuch und Ereignisse liegen jetzt im Store und fließen über `factsOf` in jede Ableitung (Reisetag, Kartenstufen, Rückblicke, Legungen).
+
+**Warum:** PRODUCT_SYSTEMS E nennt für Kapitel IV Tageskarten, Legungen, Reflexionen, Zahlen- und Mondeinträge, und jeder gespeicherte Eintrag soll in ≤ 3 Taps auffindbar sein. Das Buch hat keinen eigenen Verlauf, darum wird das Tagebuch die Chronik. Ein Index je Datenstand macht jede Suche zu einem einfachen Textvergleich: 1.000 Einträge mit Aufbau des Index und zwei Suchen brauchen rund 9 ms (Grenze 50 ms). Start-JS 142,6 kB (+0,6 kB).
+
+**Alternativen:**
+- Nur Einträge mit eigenen Worten: ruhiger, aber eine Legung ohne Notiz wäre im Buch nur über die Reise auffindbar. Als Filter „nur mit eigenen Worten“ trotzdem da.
+- Notizen in den Store `journal` verschieben: widerspricht IA §5.3 (keine Datenverschiebung) und bräuchte eine Migration.
+- Auch in den gespeicherten Deutungstexten suchen: Fast jedes Wort stünde in jeder Legung, die eigenen Worte gingen unter.
+- Volltext-Index mit Wortstämmen: bei 1.000 Einträgen nicht nötig.
+
+**Wechsel kostet:** `src/domain/journal.ts`; gespeicherte Daten ändern sich nicht.
+
+## S-49 · Löschen nimmt die Worte, nicht den Tag
+
+**Entschieden:** Löschen im Tagebuch entfernt die eigenen Worte:
+
+- **Eigener Eintrag:** Der Text wird geleert, der Eintrag bekommt `deletedAt` und erscheint weder im Tagebuch noch in der Suche. Datum, Art und Bezug bleiben als Tatsache dieses Tages. Leerer Text beim Bearbeiten gilt als Löschen.
+- **Tageskarte oder Legung:** Die Notiz wird geleert, die Karte oder Legung selbst bleibt.
+- **Reflexion bleibt gezählt:** Die erste Notiz mit Text setzt einmalig `notedAt` (neues optionales Feld an Tageskarte und Legung, wird nie entfernt). Eine Notiz mit Text aus der Zeit vor 0.5 bekommt es bei ihrer ersten Änderung, auch beim Löschen.
+- Tageskarten und Legungen lassen sich nicht einzeln löschen; alles zusammen weiter über „Alle Daten löschen“.
+
+**Warum:** IA §5.5 verlangt, einzelne Tagebucheinträge zu löschen. PROGRESSION_DESIGN sagt zugleich, dass Reisetag und Kartenstufen nie sinken, weil Tatsachen nur mit „Alle Daten löschen“ verschwinden. Ohne die Tatsache könnte ein gelöschter Eintrag den einzigen Reisetag eines Tages wegnehmen (Station und schon gesehene Meilensteine stimmten dann nicht mehr) oder die Stufe 4 einer Karte. Die Worte selbst sind weg; es bleiben ein Datum, eine Art und eine Karte. Eine Tageskarte einzeln zu löschen hieße, die Karte des Tages neu ziehen zu können.
+
+**Alternativen:**
+- Eintrag wirklich entfernen: einfacher, aber Reisetag und Kartenstufe könnten sinken.
+- Neues Ereignis „Eintrag gelöscht“ im Store `events`: gleiche Wirkung, aber ein zweiter Ort für dieselbe Tatsache und ein neuer Ereignistyp.
+- Tageskarten und Legungen einzeln löschbar: widerspricht „eine Karte pro Tag“ und dem Grundsatz, dass die Reise nicht sinkt.
+
+**Folgen:** Eine Notiz, die schon vor 0.5 geleert wurde, hat kein `notedAt` und zählt nicht (wie bisher). Der Löschdialog im Screen (V05.3) soll sagen, dass die Worte gelöscht werden und der Tag Teil der Reise bleibt.
+
+**Wechsel kostet:** `erasedEntry` in `src/domain/journal.ts`, `firstNoted` in `src/platform/storage/indexeddb.ts` und die Zählung in `cardEncounters`. Die Felder sind optional und additiv, das Schema bleibt bei Version 2.
