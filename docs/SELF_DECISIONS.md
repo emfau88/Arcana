@@ -61,6 +61,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-49 | 27.11.2026 | Löschen im Tagebuch | nimmt die eigenen Worte, nicht den Tag: Eintrag geleert mit `deletedAt`, Notiz geleert, `notedAt` hält die Reflexion; Reisetag und Kartenstufe sinken nicht | V05.4, IA §5.5, PROGRESSION_DESIGN |
 | S-50 | 27.11.2026 | Export von B3 | wie B2 (D-55) nach `art/b3/`, außerhalb von `public/`; Vignetten in einem gemeinsamen Maßstab ausgeschnitten, auch die Schlussvignette quadratisch; Rücken-Vorschau 240 × 360 ≤ 30 KB | V05, ASSET_REQUESTS |
 | S-51 | 27.11.2026 | Kartenrücken an Tag 2, 5 und 10 | Mondsichel an Tag 2, Sternenkompass an Tag 5, Goldenes Rad (A22, aus B5 vorgezogen) an Tag 10; die Meilensteine 14 und 75 entfallen, Tag 365 behält das Jahresbuch | D-66, V05.5, PROGRESSION_DESIGN §3.2 |
+| S-52 | 27.11.2026 | Auswahl der Kartenrücken | in den Einstellungen nur freigeschaltete Rücken als Vorschau mit Namen, der Standard heißt „Klassisch“; gilt für jede verdeckte Karte; Meilenstein-Moment nennt den Rücken mit Namen, „Ansehen“ führt zur Auswahl; Tagestext nur, wenn alles von diesem Tag gebaut ist | V05.5, D-66, D-54 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -85,6 +86,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] **Kartentiefe** (V05.1, S-43): alle 22 Karten in drei Gruppen (0–VII, VIII–XIV, XV–XXI), je 15 Texte in DE und EN (`src/content/modules/cards-deep.de.ts`, `cards-deep.en.ts`); besonders Ton von Schatten und Rollen und die Symbolik gegen die Bilder
 - [ ] **Rahmen der Legungen** (V05.2, S-46, S-47): Namen, Kurzbeschreibungen, Einleitungen und Fragen aller sieben Legungen in DE und EN (`src/content/modules/spreads.de.ts`, `spreads.en.ts`); besonders Zwei Wege und Verbindung (nur die eigene Seite) und der Rückblick
 - [ ] **Löschen im Tagebuch** (V05.4, S-49): Worte weg, Tag bleibt. Passt das zu deiner Erwartung, oder sollen auch ganze Tageskarten und Legungen einzeln löschbar sein?
+- [ ] **Auswahl der Kartenrücken** (V05.5, S-52, Nachweis `docs/visual/evidence/v05-kartenruecken.webp` und `v05-kartenruecken-android.webp`): eigener Abschnitt in den Einstellungen unter Sprache und Bewegung, vier Vorschauen in einer Reihe, der gewählte Rücken wie ein gewähltes Segment gerahmt. Bei 412 px werden „Mondsichel“ und „Sternenkompass“ getrennt. Passt das, oder soll die Auswahl größer (zwei Spalten) oder auch auf „Ich“ sichtbar sein?
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -682,3 +684,27 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 **Folgen:** Bis V05.5 gebaut ist, steht der Text zum Rücken schon in der Liste der erreichten Meilensteine auf der Reise-Seite, auch wenn es die Auswahl noch nicht gibt. So war es vorher für Tag 14 auch. Der Meilenstein-Moment auf „Heute“ und der Hinweis erscheinen erst, wenn `cardbacks` gebaut ist (D-54). Bis zu QG-V05 schließt V05.5 diese Lücke.
 
 **Wechsel kostet:** `FIXED_MILESTONES` in `src/domain/progress.ts`, `MILESTONE_TEXT_DAYS` in `src/domain/journey.ts` und die Texte im Modul `journey`.
+
+## S-52 · Auswahl der Kartenrücken
+
+**Entschieden:** Mit V05.5 werden die drei Rücken wählbar.
+
+- **Ort:** ein eigener Abschnitt „Kartenrücken“ in den Einstellungen (`#/me/settings`, unter Sprache und Bewegung), wie IA §5.2 (`Settings.cardBack`) und die Roadmap („Auswahl in Einstellungen“) es vorsehen. Er erscheint erst, wenn neben dem Standard ein zweiter Rücken offen ist (ab Reisetag 2).
+- **Nur Offenes:** Gezeigt werden nur freigeschaltete Rücken, als Vorschau 240 × 360 mit Namen, als Radiogruppe. Solange nicht alle offen sind, steht darunter ein ruhiger Satz: „Weitere Rücken kommen auf deiner Reise dazu.“ Es gibt kein Schloss, keine Vorschau auf Gesperrtes, keinen Tag und keinen Zähler.
+- **Namen:** Der Standard-Rücken heißt „Klassisch“ / „Classic“. „Mondphasen“ läge nahe am Bild, klänge aber neben „Mondsichel“ zu ähnlich, und der Standard zeigt ebenfalls einen Stern wie der Sternenkompass.
+- **Wirkung:** Der gewählte Rücken gilt für jede verdeckte Karte über einen gemeinsamen Kontext in `OracleCard`: Tageskarte auf „Heute“, Legung im Orakel und unentdeckte Karten in der Sammlung. Nur die Willkommensseite behält den Standard, denn vor dem ersten Tag ist kein anderer offen.
+- **Ableitung:** Welche Rücken offen sind, folgt aus dem Reisetag und der Meilenstein-Tabelle (`src/domain/cardbacks.ts`); gespeichert wird nur die Wahl. Eine Wahl, die (noch) nicht offen ist, etwa aus einer Sicherung oder ein unbekannter Name, zeigt den Standard. Eine kaputte Wahl wird beim Laden und Wiederherstellen verworfen, die übrigen Einstellungen bleiben (`normalizeSettings`).
+- **Meilenstein-Moment:** Der Rücken wird mit Namen genannt („Neuer Kartenrücken: Goldenes Rad“), Überschrift „Neu für deine Karten“, und „Ansehen“ führt zur Auswahl. Der Tagestext erscheint nur, wenn alles von diesem Tag gebaut ist. Die Texte zu Tag 2 und 10 nennen auch die Zahlenwelt und das persönliche Symbol aus V06; nach D-54 wird nichts angekündigt, bevor es da ist. Die Folge: Tag 7 zeigt seinen Text erst wieder, wenn die Rückblick-Legung im Orakel gebaut ist (V05.6).
+- **Bilder:** Die Rücken liegen jetzt unter `public/cards/backs/`, mit Vorschauen unter `public/cards/backs/thumbs/` (aus `art/b3/` und `art/b5/` per `git mv`). Die APK wächst um rund 430 KB.
+
+**Warum:** Wo die Auswahl liegt und wie sie heißt, geben IA und Roadmap vor. Weil nur Offenes gezeigt wird, gibt es nichts, was wie ein Kaufangebot oder wie Druck aussehen kann (L-Leitplanken, V05.5 „Fertig, wenn“). Der gemeinsame Kontext hält jede verdeckte Karte gleich, ohne dass jeder Screen eine Eigenschaft weiterreichen muss.
+
+**Alternativen:**
+- Alle vier Rücken zeigen, die gesperrten abgedunkelt mit „ab Tag 5“: macht Gesperrtes sichtbar und zählt Tage, beides ausgeschlossen.
+- Auswahl auf „Ich“ statt in den Einstellungen: dort stehen Archetyp und Zahlen; die Rücken sind eine Einstellung.
+- Nur Heute und Orakel umstellen, die Sammlung im Grimoire mit Standard: zwei Rückseiten in einer App wirken wie ein Fehler.
+- Tagestext immer zeigen: würde an Tag 2 und 10 Inhalte aus V06 ankündigen.
+
+**Folgen:** Auf der Reise-Seite stehen in der Liste der erreichten Meilensteine weiter die Tagestexte von Tag 2, 4, 6 und 10, die auch die Welten aus V06 nennen. So ist es schon seit V04, und mit V06 erledigt es sich.
+
+**Wechsel kostet:** `src/domain/cardbacks.ts`, der Abschnitt in `src/features/profile/Profile.tsx`, `CardBackContext` in `src/ui/OracleCard.tsx` und `MilestoneMoment.tsx`.

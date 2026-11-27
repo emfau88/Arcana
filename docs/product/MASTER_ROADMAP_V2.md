@@ -147,7 +147,10 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Lokale Suche ohne Groß- und Kleinschreibung, Akzente und ß: 1.000 Einträge mit Index-Aufbau rund 9 ms ≤ 50 ms (Unit)
   - [x] Einzelne Einträge löschen: Worte weg, Tag und Kartenstufe bleiben (S-49); Schreiben, Bearbeiten, Löschen und Studium im Store, übersteht einen Neustart (Unit mit IndexedDB)
   - [ ] Tagebuch-Screen mit Filtern, Suche und Löschdialog im Grimoire-Buch (V05.3), dazu E2E
-- [ ] V05.5 Kartenrücken (E10 entschieden, D-66: Tag 2, 5 und 10)
+- [x] V05.5 Kartenrücken (E10 entschieden, D-66: Tag 2, 5 und 10; Gestaltung der Auswahl als Vorschlag in der Prüfliste, S-52)
+  - [x] Freischaltung aus dem Reisetag abgeleitet, Wahl in `Settings.cardBack`, übersteht Neustart und Sicherung (Unit, E2E)
+  - [x] Auswahl in den Einstellungen, nur freigeschaltete Rücken, kein Kaufangebot, nichts Gesperrtes sichtbar
+  - [x] Rücken wechselt auf „Heute“, im Orakel und in der Sammlung; Meilenstein-Moment nennt den Rücken (Browser 412/360 px, Android-Emulator)
 - [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17)
 - [ ] QG-V05, geschlossener Test, Tag `v0.5.0`
 
@@ -181,7 +184,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 - [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
 - [x] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19: geliefert (11/11), als WebP im Budget, eingebaut in `public/` und im Layout geprüft (Beschnitt, Kontrast, D-58)
-- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04): geprüft und als WebP exportiert (`art/b3/`, S-50), Einbau mit den V05-Screens
+- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04): geprüft und als WebP exportiert (`art/b3/`, S-50); Kartenrücken eingebaut (V05.5), der Rest mit den V05-Screens
 - [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
 - [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)
 - [ ] B6 · Mondwelt (nach 1.0)

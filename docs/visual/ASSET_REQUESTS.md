@@ -23,14 +23,14 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 | A03 | `bg-oracle.png` | B3 / V05 | Orakel, Legungen | einzeln | exportiert (`art/b3/`, S-50), Einbau mit dem V05-Screen |
 | A04 | `bg-grimoire.png` | B3 / V05 | Grimoire (Buch, Kapitel) | einzeln | exportiert (`art/b3/`, S-50), Einbau mit dem V05-Screen |
 | A15 | `grimoire-book.png` | B3 / V05 | Buch-Einband im Grimoire | einzeln, transparent | exportiert (`art/b3/`, S-50), Einbau mit dem V05-Screen |
-| A20 | `cardback-crescent.png` | B3 / V05 | Kartenrücken „Mondsichel“ (Reisetag 2, D-66) | einzeln | exportiert (`art/b3/`, S-50), Einbau mit dem V05-Screen |
-| A21 | `cardback-compass.png` | B3 / V05 | Kartenrücken „Sternenkompass“ (Reisetag 5, D-66) | einzeln | exportiert (`art/b3/`, S-50), Einbau mit dem V05-Screen |
+| A20 | `cardback-crescent.png` | B3 / V05 | Kartenrücken „Mondsichel“ (Reisetag 2, D-66) | einzeln | eingebaut (`public/cards/backs/`, V05.5, S-52) |
+| A21 | `cardback-compass.png` | B3 / V05 | Kartenrücken „Sternenkompass“ (Reisetag 5, D-66) | einzeln | eingebaut (`public/cards/backs/`, V05.5, S-52) |
 | A23–A29 | `grimoire-vignettes.png` | B3 / V05 | 7 Kapitel-Vignetten plus Schlussvignette | ein Sheet, transparent | exportiert (`art/b3/`, S-50), Einbau mit dem V05-Screen |
 | A30 | `parchment-tile.png` | B3 / V05 | Pergament der Buchseiten | einzeln, kachelbar | exportiert (`art/b3/`, S-50), Einbau mit dem V05-Screen |
 | A32 | `bg-discover.png` | B4 / V06 | Entdecken (Zahlen, Engelszahlen, Symbole) | einzeln | geliefert (Lieferordner), Einbau in V06 |
 | A33 | `symbols-sheet-1.png`, `symbols-sheet-2.png` | B4 / V06 | 24 Symbole des Lexikons | 2 Sheets, transparent | geliefert (Lieferordner), Einbau in V06 nach finaler Symbolliste |
 | A18 | `store-feature.png` | B5 / V07 | Store-Grafik 1024 × 500 | einzeln | geliefert (Lieferordner), Einbau in V07 nach E11 (Name) |
-| A22 | `cardback-golden-wheel.png` | B5 / V05 | Kartenrücken „Goldenes Rad“ (Reisetag 10, D-66) | einzeln | exportiert (`art/b5/`, S-51), Einbau mit dem V05-Screen |
+| A22 | `cardback-golden-wheel.png` | B5 / V05 | Kartenrücken „Goldenes Rad“ (Reisetag 10, D-66) | einzeln | eingebaut (`public/cards/backs/`, V05.5, S-52) |
 | A31 | `cardback-edition.png` | B5 / V07 | Kartenrücken der Edition | einzeln | geliefert (Lieferordner), Einbau nur mit Billing-Freigabe (E14) |
 | A34 | `bg-moon.png` | B6 / 1.1 | Mondwelt | einzeln | geliefert (Lieferordner), Einbau in 1.1 |
 | – | Zusatzdeck (23 Bilder) | B7 / 1.2 | erstes Kartendeck als Einzelkauf | Serie | geliefert (Lieferordner, 23 Dateien „Sternenwerkstatt“), Einbau erst nach Entscheidung |
