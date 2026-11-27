@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { CONTENT } from '../../src/content/index.ts';
 import type { QuestionContent } from '../../src/content/schema.ts';
-import { COMPLEMENT_THRESHOLD, MIN_ANSWERS_FOR_ARCHETYPE, QUESTIONNAIRE_VERSION, scoreArchetype } from '../../src/domain/archetypes.ts';
+import {
+  COMPLEMENT_MAX_GAP,
+  MIN_ANSWERS_FOR_ARCHETYPE,
+  MIN_ANSWERS_FOR_COMPLEMENT,
+  QUESTIONNAIRE_VERSION,
+  scoreArchetype,
+} from '../../src/domain/archetypes.ts';
 import { ARCHETYPE_ORDER, type Answers, type ArchetypeId } from '../../src/domain/types.ts';
 
 const Q = CONTENT.questions;
@@ -65,7 +71,8 @@ describe('questionnaire v2 (V04.1)', () => {
   });
 
   it('a complement exists in 40–70 % of the combinations (none in 20–40 %), never equal to the main', () => {
-    expect(COMPLEMENT_THRESHOLD).toBe(0.75);
+    expect(COMPLEMENT_MAX_GAP).toBe(1);
+    expect(MIN_ANSWERS_FOR_COMPLEMENT).toBe(4);
     const withComplement = results.filter((r) => r.complementId !== null);
     const share = withComplement.length / combos.length;
     expect(share).toBeGreaterThanOrEqual(0.4);
@@ -74,7 +81,7 @@ describe('questionnaire v2 (V04.1)', () => {
     expect(1 - share).toBeLessThanOrEqual(0.4);
     for (const r of withComplement) {
       expect(r.complementId).not.toBe(r.archetypeId);
-      expect(r.scores[r.complementId!]).toBeGreaterThanOrEqual(COMPLEMENT_THRESHOLD * r.scores[r.archetypeId!]);
+      expect(r.scores[r.archetypeId!] - r.scores[r.complementId!]).toBeLessThanOrEqual(COMPLEMENT_MAX_GAP);
     }
   });
 
@@ -84,30 +91,47 @@ describe('questionnaire v2 (V04.1)', () => {
     expect(pairs.size).toBe(56);
   });
 
-  it('the complement is the next archetype by score, and only from the threshold on', () => {
-    // creator 2+2 = 4, renewer 2+1 = 3 (75 %): complement. With a third answer creator rises to 6, renewer 3 (50 %): none.
+  it('the complement is the next archetype by score, at most one point behind', () => {
     const qs = synthetic([
       ['x', 'creator', 'renewer'],
       ['y', 'creator', 'seeker'],
       ['z', 'renewer', 'sage'],
-      ['w', 'creator', 'guardian'],
+      ['v', 'sage', 'guardian'],
+      ['u', 'sage', 'creator'],
     ]);
-    const two = scoreArchetype(qs, { x: 'x1', y: 'y1', z: 'z1' });
-    expect(two.archetypeId).toBe('creator');
-    expect(two.scores.renewer).toBe(3);
-    expect(two.complementId).toBe('renewer');
-    const three = scoreArchetype(qs, { x: 'x1', y: 'y1', z: 'z1', w: 'w1' });
-    expect(three.scores.creator).toBe(6);
-    expect(three.complementId).toBeNull();
+    // creator 4, renewer 3, sage 3: one point behind; renewer wins the tie by the earlier primary hit.
+    const near = scoreArchetype(qs, { x: 'x1', y: 'y1', z: 'z1', v: 'v1' });
+    expect(near.archetypeId).toBe('creator');
+    expect([near.scores.creator, near.scores.renewer, near.scores.sage]).toEqual([4, 3, 3]);
+    expect(near.complementId).toBe('renewer');
+    // creator 5, renewer 3, sage 3: two points behind, no complement.
+    const far = scoreArchetype(qs, { x: 'x1', y: 'y1', z: 'z1', u: 'u1' });
+    expect(far.scores.creator - far.scores.renewer).toBe(2);
+    expect(far.complementId).toBeNull();
+  });
+
+  it('fewer than four answers name no complement, even when the second is close', () => {
+    const qs = synthetic([
+      ['x', 'creator', 'renewer'],
+      ['y', 'creator', 'seeker'],
+      ['z', 'renewer', 'sage'],
+    ]);
+    const r = scoreArchetype(qs, { x: 'x1', y: 'y1', z: 'z1' });
+    expect(r.archetypeId).toBe('creator');
+    expect(r.scores.creator - r.scores.renewer).toBe(1);
+    expect(r.answeredCount).toBe(3);
+    expect(r.complementId).toBeNull();
   });
 
   it('a tie for first place makes the runner-up the complement (same tie rules)', () => {
     const qs = synthetic([
       ['x', 'sage', 'seeker'],
       ['y', 'seeker', 'sage'],
+      ['z', 'guardian', 'wanderer'],
+      ['v', 'wanderer', 'guardian'],
     ]);
-    const r = scoreArchetype(qs, { x: 'x1', y: 'y1' });
-    expect(r.archetypeId).toBe('sage'); // earliest primary
+    const r = scoreArchetype(qs, { x: 'x1', y: 'y1', z: 'z1', v: 'v1' });
+    expect(r.archetypeId).toBe('sage'); // all at 3 points, one primary hit each: earliest primary
     expect(r.complementId).toBe('seeker');
   });
 

@@ -9,15 +9,19 @@ export const PROFILE_VERSION = 1;
 /** 1 = four questions (0.1–0.3), 2 = seven questions (V04.1). A missing field in a stored profile means 1. */
 export const QUESTIONNAIRE_VERSION = 2;
 /**
- * A complement archetype is named only when the second-highest score reaches this share of the
- * main score (D-53: 75 % instead of the 60 % first sketched in PRODUCT_SYSTEMS C2, because only 75 %
- * meets both acceptance ranges, complement in 40–70 % and none in 20–40 % of all combinations).
+ * A complement archetype is named only when the second-highest score is at most this many points
+ * behind the main score (D-53). Scores are small whole numbers (main mostly 5–8 points), so a
+ * percentage would only be a hidden point gap that jumps unevenly. One point is exactly one
+ * secondary mention. With seven answers this gives a complement in 65.6 % of all combinations
+ * (target 40–70 %); analysis of all rules: scripts/analyze-complement.ts, alternatives: docs/SELF_DECISIONS.md.
  */
-export const COMPLEMENT_THRESHOLD = 0.75;
+export const COMPLEMENT_MAX_GAP = 1;
+/** Fewer answers name no complement: with two or three answers almost everything is "close". */
+export const MIN_ANSWERS_FOR_COMPLEMENT = 4;
 
 export interface ScoreResult {
   archetypeId: ArchetypeId | null;
-  /** Second voice: the next archetype by the same ranking, only at >= COMPLEMENT_THRESHOLD of the main score. */
+  /** Second voice: the next archetype by the same ranking, at most COMPLEMENT_MAX_GAP points behind the main score. */
   complementId: ArchetypeId | null;
   scores: Record<ArchetypeId, number>;
   answeredCount: number;
@@ -37,8 +41,9 @@ function emptyScores(): Record<ArchetypeId, number> {
  *    a) more primary hits,
  *    b) primary hit in the earliest answered question (question order = importance),
  *    c) canonical archetype order (ARCHETYPE_ORDER).
- * 4. Complement: the next archetype in the same order, if its score reaches COMPLEMENT_THRESHOLD
- *    of the main score; otherwise none (not everyone has a clear second voice).
+ * 4. Complement: the next archetype in the same order, if it is at most COMPLEMENT_MAX_GAP points
+ *    behind the main score and at least MIN_ANSWERS_FOR_COMPLEMENT questions were answered;
+ *    otherwise none (not everyone has a clear second voice).
  * The result only changes when the answers change.
  */
 export function scoreArchetype(questions: readonly QuestionContent[], answers: Answers): ScoreResult {
@@ -72,10 +77,10 @@ export function scoreArchetype(questions: readonly QuestionContent[], answers: A
     return ARCHETYPE_ORDER.indexOf(a) < ARCHETYPE_ORDER.indexOf(b);
   };
   const complementOf = (main: ArchetypeId | null): ArchetypeId | null => {
-    if (!main || scores[main] <= 0) return null;
+    if (!main || scores[main] <= 0 || answeredCount < MIN_ANSWERS_FOR_COMPLEMENT) return null;
     let second: ArchetypeId | null = null;
     for (const id of ARCHETYPE_ORDER) if (id !== main && (second === null || outranks(id, second))) second = id;
-    return second !== null && scores[second] > 0 && scores[second] >= COMPLEMENT_THRESHOLD * scores[main] ? second : null;
+    return second !== null && scores[second] > 0 && scores[main] - scores[second] <= COMPLEMENT_MAX_GAP ? second : null;
   };
   const result = (archetypeId: ArchetypeId | null, reason: ScoreResult['reason']): ScoreResult => ({
     archetypeId,

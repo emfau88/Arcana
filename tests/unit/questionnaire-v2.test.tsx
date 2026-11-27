@@ -51,7 +51,7 @@ describe('questionnaire v2 in the store (V04.1)', () => {
     const { repo, wrapper } = setup();
     const { result } = renderHook(() => useApp(), { wrapper });
     await waitFor(() => expect(result.current.state.status).toBe('ready'));
-    // visionary 1 + 2 + 2 = 5, creator 2 + 2 = 4 (80 % of the main score): creator is the complement.
+    // visionary 1 + 2 + 2 = 5, creator 2 + 2 = 4 (one point behind, four answers): creator is the complement.
     const answers = { 'q-calling': 'a-create', 'q-decision': 'a-image', 'q-place': 'a-workshop', 'q-invite': 'a-intuition' };
     let saved: ProfileRecord | null = null;
     await act(async () => {
