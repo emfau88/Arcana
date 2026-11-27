@@ -5,6 +5,7 @@
  */
 import { journeyTextKeys } from '../../domain/journey.ts';
 import { REVIEW_BLOCK_VARS, reviewTextKeys } from '../../domain/review.ts';
+import { spreadTextKeys } from '../../domain/spreads.ts';
 import { archetypeKeys } from './archetype-keys.ts';
 import { cardsDeepKeys } from './cards-deep-keys.ts';
 import { chapterKeys } from './chapter-keys.ts';
@@ -112,6 +113,19 @@ export const FORBIDDEN_FUTURE: readonly RegExp[] = [
   /\bfuture\b/i,
 ];
 
+/**
+ * Spread frames (PRODUCT_SYSTEMS F): no position promises an outcome, and none claims to know
+ * what another person thinks, feels or wants (the connection spread looks at one side only).
+ */
+export const FORBIDDEN_SPREAD: readonly RegExp[] = [
+  /\b(?:Ergebnis|Ausgang|Ausblick)\b/,
+  /\b(?:outcome|result)s?\b/i,
+  /\b(?:er|sie) (?:denkt|fühlt|empfindet|will|wünscht)\b/i,
+  /\b(?:denkt|fühlt|empfindet) (?:er|sie|die andere Person)\b/i,
+  /\b(?:he|she|they|the other person) (?:thinks?|feels?|wants?)\b/i,
+  /\bwhat (?:he|she|they) (?:thinks?|feels?|wants?)\b/i,
+];
+
 const CARD = 'major-\\d{2}-[a-z-]+';
 const deep = (prefix: string) => new RegExp(`^${prefix}\\.${CARD}$`);
 
@@ -181,6 +195,20 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
       { pattern: deep('ritual\\.2'), maxLen: 220, sentences: [1, 2], group: 'ritual' },
     ],
     forbidden: [...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE],
+  },
+  // V05.2 spread frames: names, intros, a label and a question per position (CONTENT_MASTERPLAN §1, §3).
+  spreads: {
+    required: () => spreadTextKeys(),
+    rules: [
+      { pattern: /^role\.(?:situation|challenge|impulse|light|shadow|root|possibility|bridge)\.label$/, maxLen: 24 },
+      { pattern: /^spread\.[a-z0-9-]+\.name$/, maxLen: 32 },
+      { pattern: /^spread\.[a-z0-9-]+\.tagline$/, maxLen: 120, sentences: [1, 1] },
+      { pattern: /^spread\.[a-z0-9-]+\.intro$/, maxLen: 260, sentences: [2, 3] },
+      { pattern: /^pos\.[a-z0-9-]+\.[1-7]\.label$/, maxLen: 28 },
+      { pattern: /^pos\.[a-z0-9-]+\.[1-7]\.question$/, maxLen: 80, sentences: [1, 1], question: true, group: 'question' },
+      { pattern: /^review\.(?:week|month)\.past$/, maxLen: 32 },
+    ],
+    forbidden: [...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE, ...FORBIDDEN_SPREAD],
   },
 };
 

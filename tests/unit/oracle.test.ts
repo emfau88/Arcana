@@ -18,7 +18,7 @@ import {
 } from '../../src/domain/oracle.ts';
 import { journeyDays } from '../../src/domain/progress.ts';
 import { seededRng } from '../../src/domain/random.ts';
-import type { DailyRecord } from '../../src/domain/types.ts';
+import type { DailyRecord, PositionId } from '../../src/domain/types.ts';
 
 const at = (iso: string): Clock => ({ now: () => new Date(iso) });
 const localClock = (y: number, m: number, d: number, h = 9): Clock => ({ now: () => new Date(y, m - 1, d, h, 0, 0) });
@@ -124,7 +124,7 @@ describe('three-card reading', () => {
     c.positions.forEach((p, i) => {
       const card = getCard(CONTENT, ids[i]!);
       expect(p.cardTitle).toBe(card.title.de);
-      expect(p.text).toBe(card.positions[p.position].de);
+      expect(p.text).toBe(card.positions[p.position as PositionId].de);
     });
     const impulse = getCard(CONTENT, ids[2]);
     expect(c.synthesis).toBe(impulse.themes.love?.de);

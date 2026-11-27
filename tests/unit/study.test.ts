@@ -72,9 +72,9 @@ describe('card study (V05.1)', () => {
   it('unsaved readings do not count, several readings on one day are one day', () => {
     const draft = revealAll(createDraft(CONTENT, 'love', at(6), seededRng(6)));
     const unsaved: Facts = { dailies: [], readings: [] };
-    expect(cardEncounters(unsaved).get(draft.cardIds[0])).toBeUndefined();
+    expect(cardEncounters(unsaved).get(draft.cardIds[0]!)).toBeUndefined();
     const saved = [1, 2, 3].map(() => finalizeReading(CONTENT, draft, 'de', at(6)));
-    const e = cardEncounters({ dailies: [], readings: saved }).get(draft.cardIds[0]);
+    const e = cardEncounters({ dailies: [], readings: saved }).get(draft.cardIds[0]!);
     expect(e?.days.size).toBe(1);
     expect(cardLevel(e)).toBe(1);
   });

@@ -36,6 +36,14 @@ export const isArchetypeId = (id: string): id is ArchetypeId => (ARCHETYPE_ORDER
 export type PositionId = 'situation' | 'challenge' | 'impulse';
 export const POSITIONS: readonly PositionId[] = ['situation', 'challenge', 'impulse'];
 
+/**
+ * Roles of a spread (V05.2, PRODUCT_SYSTEMS F): R1–R3 keep the ids of the classic positions
+ * ('situation' is R1 "core"), so stored readings already name their roles. R4–R8 are new.
+ */
+export const DEEP_ROLE_IDS = ['light', 'shadow', 'root', 'possibility', 'bridge'] as const;
+export type RoleId = PositionId | (typeof DEEP_ROLE_IDS)[number];
+export const ROLES: readonly RoleId[] = [...POSITIONS, ...DEEP_ROLE_IDS];
+
 export type CardId = string;
 export type QuestionId = string;
 export type AnswerId = string;
@@ -109,8 +117,11 @@ export interface DailyRecord {
 }
 
 export interface ReadingPositionContent {
-  position: PositionId;
+  /** The role of the position (classic readings: 'situation', 'challenge', 'impulse'). */
+  position: RoleId;
   positionLabel: string;
+  /** The question of the position (spreads since V05.2; classic readings have none). */
+  question?: string;
   cardId: CardId;
   cardOrder: number;
   cardTitle: string;
@@ -125,14 +136,22 @@ export interface ReadingContent {
   synthesisTitle: string;
   synthesis: string;
   reflection: string;
+  /** Name of the spread (since V05.2; missing = the classic three cards). */
+  spreadName?: string;
+  /** Review spreads: heading and the own cards of the period, oldest first (V05.2). */
+  past?: { title: string; cards: Array<{ cardId: CardId; cardOrder: number; cardTitle: string; essence: string }> };
 }
 
 export interface Reading {
   id: string;
   deckId: string;
   themeId: ThemeId;
-  /** Three distinct cards in the fixed order situation, challenge, impulse. */
-  cardIds: [CardId, CardId, CardId];
+  /** Distinct cards, one per position (classic: situation, challenge, impulse). */
+  cardIds: CardId[];
+  /** Spread of the reading (V05.2). Missing = 'classic-3'. */
+  spreadId?: string;
+  /** Role per position (V05.2). Missing = the classic positions. */
+  roles?: RoleId[];
   locale: Locale;
   contentVersion: string;
   content: ReadingContent;
@@ -147,9 +166,13 @@ export interface ReadingDraft {
   id: string;
   deckId: string;
   themeId: ThemeId;
-  cardIds: [CardId, CardId, CardId];
-  revealed: [boolean, boolean, boolean];
+  cardIds: CardId[];
+  revealed: boolean[];
   createdAt: string;
+  /** Spread being laid (V05.2). Missing = 'classic-3'. */
+  spreadId?: string;
+  /** Review spreads: the own cards of the period, fixed when the draft is created. */
+  past?: CardId[];
 }
 
 export interface CollectionEntry {

@@ -27,7 +27,9 @@ const isStr = (v: unknown): v is string => typeof v === 'string';
 const isTheme = (v: unknown) => isStr(v) && (ALL_THEME_IDS as readonly string[]).includes(v);
 const isLocale = (v: unknown) => isStr(v) && (LOCALES as readonly string[]).includes(v);
 const isArchetypeOrNull = (v: unknown) => v === null || (isStr(v) && (ARCHETYPE_ORDER as readonly string[]).includes(v));
-const isTriple = (v: unknown) => Array.isArray(v) && v.length === 3 && v.every(isStr) && new Set(v).size === 3;
+/** Distinct cards of a reading: three in the classic spread, two to seven in the spreads of V05.2. */
+const isCardList = (v: unknown): v is string[] => Array.isArray(v) && v.length >= 2 && v.length <= 7 && v.every(isStr) && new Set(v).size === v.length;
+const isOptStr = (v: unknown) => v === undefined || isStr(v);
 
 export function isSettings(v: unknown): v is Settings {
   return isObj(v) && isLocale(v.locale) && ['system', 'reduced', 'full'].includes(v.motion as string) && typeof v.onboardingDone === 'boolean';
@@ -89,12 +91,13 @@ export function isReading(v: unknown): v is Reading {
     isStr(v.id) &&
     isStr(v.deckId) &&
     isTheme(v.themeId) &&
-    isTriple(v.cardIds) &&
+    isCardList(v.cardIds) &&
+    isOptStr(v.spreadId) &&
     isLocale(v.locale) &&
     isStr(v.contentVersion) &&
     isObj(v.content) &&
     Array.isArray(v.content.positions) &&
-    v.content.positions.length === 3 &&
+    v.content.positions.length === v.cardIds.length &&
     isStr(v.createdAt) &&
     (v.dateKey === undefined || (isStr(v.dateKey) && isValidDateKey(v.dateKey))) &&
     isStr(v.note)
@@ -107,9 +110,10 @@ export function isDraft(v: unknown): v is ReadingDraft {
     isStr(v.id) &&
     isStr(v.deckId) &&
     isTheme(v.themeId) &&
-    isTriple(v.cardIds) &&
+    isCardList(v.cardIds) &&
+    isOptStr(v.spreadId) &&
     Array.isArray(v.revealed) &&
-    v.revealed.length === 3 &&
+    v.revealed.length === v.cardIds.length &&
     v.revealed.every((b) => typeof b === 'boolean') &&
     isStr(v.createdAt)
   );

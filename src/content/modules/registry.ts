@@ -35,6 +35,10 @@ export const MODULE_LOADERS: Partial<Record<ModuleId, Record<Locale, Loader>>> =
     de: () => import('./cards-deep.de.ts'),
     en: () => import('./cards-deep.en.ts'),
   },
+  spreads: {
+    de: () => import('./spreads.de.ts'),
+    en: () => import('./spreads.en.ts'),
+  },
 };
 
 /** Module versions, stored nowhere but reported by the content gate and the build. */
@@ -44,6 +48,7 @@ export const MODULE_VERSIONS: Partial<Record<ModuleId, string>> = {
   chapters: 'chapters-2026-11-27.3',
   journey: 'journey-2026-11-27.3',
   'cards-deep': 'cards-deep-2026-11-27.1',
+  spreads: 'spreads-2026-11-27.1',
 };
 
 /** Modules every start needs (onboarding, today). Loaded in parallel with the database. */

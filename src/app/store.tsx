@@ -7,7 +7,7 @@ import { PROFILE_VERSION, QUESTIONNAIRE_VERSION, scoreArchetype } from '../domai
 import { localDateKey, msUntilNextLocalDay, systemClock, type Clock } from '../domain/clock.ts';
 import {
   createDailyRecord,
-  createDraft,
+  createSpreadDraft,
   finalizeReading,
   previousDailyCard,
   revealAll,
@@ -15,6 +15,7 @@ import {
 } from '../domain/oracle.ts';
 import { lensKey } from '../domain/lens.ts';
 import { cardEncounters, journeyDayToday } from '../domain/progress.ts';
+import { CLASSIC_SPREAD, type SpreadId, type SpreadTexts } from '../domain/spreads.ts';
 import { cryptoRng, type Rng } from '../domain/random.ts';
 import type {
   Answers,
@@ -138,8 +139,9 @@ export interface AppActions {
   setLocale(locale: Locale): Promise<void>;
   setMotion(motion: MotionPreference): Promise<void>;
   revealToday(): Promise<DailyRecord>;
-  startReading(themeId: ThemeId): Promise<ReadingDraft>;
-  revealReadingCard(index: 0 | 1 | 2): Promise<void>;
+  /** Starts a spread (default: the classic three cards). Other spreads load their texts first. */
+  startReading(themeId: ThemeId, spreadId?: SpreadId): Promise<ReadingDraft>;
+  revealReadingCard(index: number): Promise<void>;
   revealAllReading(): Promise<void>;
   saveReading(): Promise<Reading>;
   discardReading(): Promise<void>;
@@ -273,6 +275,16 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     },
     [repo],
   );
+
+  /** Texts of a spread in the current locale (V05.2): modules spreads and cards-deep, loaded on first use. */
+  const loadSpreadTexts = useCallback(async (): Promise<SpreadTexts> => {
+    const locale = stateRef.current.settings.locale;
+    const have = stateRef.current.modules;
+    const missing = (['spreads', 'cards-deep'] as const).filter((id) => !have[id]);
+    const loaded: LoadedModules = missing.length > 0 ? await loadModules(missing, locale) : {};
+    if (missing.length > 0) dispatch({ type: 'modules', modules: loaded, locale });
+    return { spreads: loaded.spreads ?? have.spreads, deep: loaded['cards-deep'] ?? have['cards-deep'] };
+  }, []);
 
   const actions = useMemo<AppActions>(
     () => ({
@@ -413,13 +425,15 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         return run;
       },
 
-      async startReading(themeId) {
+      async startReading(themeId, spreadId = CLASSIC_SPREAD) {
         const existing = stateRef.current.draft;
         if (existing) return existing; // never silently replace an unfinished reading
         if (busy.current) throw new Error('busy');
         busy.current = true;
         try {
-          const draft = createDraft(pack, themeId, clock, rng);
+          if (spreadId !== CLASSIC_SPREAD) await loadSpreadTexts();
+          const s = stateRef.current;
+          const draft = createSpreadDraft(pack, spreadId, themeId, clock, rng, { dailies: s.dailies, readings: s.readings });
           await repo.putDraft(draft);
           dispatch({ type: 'draft', draft });
           return draft;
@@ -448,7 +462,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
       async saveReading() {
         const d = stateRef.current.draft;
         if (!d) throw new Error('No reading to save');
-        const reading = finalizeReading(pack, d, stateRef.current.settings.locale, clock);
+        const texts = d.spreadId && d.spreadId !== CLASSIC_SPREAD ? await loadSpreadTexts() : {};
+        const reading = finalizeReading(pack, d, stateRef.current.settings.locale, clock, texts);
         const stored = await repo.saveReading(reading);
         dispatch({ type: 'reading', reading: stored });
         dispatch({ type: 'draft', draft: null });
@@ -482,7 +497,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         dispatch({ type: 'seen', flag });
       },
     }),
-    [repo, clock, rng, pack, persistSettings],
+    [repo, clock, rng, pack, persistSettings, loadSpreadTexts],
   );
 
   const t = MESSAGES[state.settings.locale];

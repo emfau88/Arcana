@@ -11,7 +11,7 @@ import { Divider, useToast } from '../../ui/feedback.tsx';
 import { Flank } from '../../ui/Ornaments.tsx';
 import { IconBack, IconCandle, IconEye, IconQuill, IconSparkle } from '../../ui/Icons.tsx';
 import { OracleCard } from '../../ui/OracleCard.tsx';
-import { Interpretation, Spread } from '../oracle/Oracle.tsx';
+import { Interpretation, savedSpread, Spread } from '../oracle/Oracle.tsx';
 
 const toDate = (iso: string) => new Date(iso);
 
@@ -326,7 +326,7 @@ export function ReadingDetail({ id, parsed }: { id: string; parsed: ParsedRoute 
           {reading.content.themeLabel}
         </h1>
       </header>
-      <Spread cardIds={reading.cardIds} revealed={[true, true, true]} />
+      <Spread {...savedSpread(reading)} />
       <Interpretation content={reading.content} />
       <p className="small detail__original">
         {fmt(t.detail.original, { date: formatDate(toDate(reading.createdAt), locale) })}

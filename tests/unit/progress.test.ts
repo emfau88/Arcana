@@ -168,7 +168,7 @@ describe('card depth', () => {
   it('counts several readings on one day as one day, and records themes and roles', () => {
     const r1 = reading(local(5, 10), 7, 'love');
     const r2 = { ...reading(local(5, 20), 7, 'career'), id: 'other' };
-    const e = cardEncounters({ dailies: [], readings: [r1, r2] }).get(r1.cardIds[0])!;
+    const e = cardEncounters({ dailies: [], readings: [r1, r2] }).get(r1.cardIds[0]!)!;
     expect([...e.days]).toEqual([key(5)]);
     expect([...e.themes].sort()).toEqual(['career', 'love']);
     expect([...e.roles]).toEqual(['situation']);

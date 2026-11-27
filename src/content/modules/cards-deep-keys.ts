@@ -7,11 +7,12 @@
  * `role.<role>.<cardId>` (R4–R8), `study.<1|2>.<cardId>`, `question.<cardId>`,
  * `reflection.<2|3>.<cardId>` (reflection 1 lives in core), `ritual.2.<cardId>` (ritual 1 in core).
  */
+import { DEEP_ROLE_IDS } from '../../domain/types.ts';
 import { LENS_CARD_IDS } from './lens-keys.ts';
 import type { TextTable } from './registry.ts';
 
 /** The spread roles that are new in V05 (PRODUCT_SYSTEMS F: R4 light … R8 bridge). R1–R3 live in core. */
-export const DEEP_ROLES = ['light', 'shadow', 'root', 'possibility', 'bridge'] as const;
+export const DEEP_ROLES = DEEP_ROLE_IDS;
 export type DeepRole = (typeof DEEP_ROLES)[number];
 
 export interface DeepCard {

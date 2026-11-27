@@ -2,7 +2,9 @@ import { getArchetype, getCard, getTheme, resolveTheme } from '../content/index.
 import type { ContentPack } from '../content/schema.ts';
 import { localDateKey, type Clock } from './clock.ts';
 import { LENS_VARIANT, lensSourceForDay } from './lens.ts';
+import type { Facts } from './progress.ts';
 import { drawWithoutReplacement, newId, type Rng } from './random.ts';
+import { CLASSIC_SPREAD, composeSpread, drawSpread, getSpread, spreadTheme, type SpreadId, type SpreadTexts } from './spreads.ts';
 import {
   POSITIONS,
   type ArchetypeId,
@@ -169,19 +171,38 @@ export function createDraft(pack: ContentPack, themeId: ThemeId, clock: Clock, r
   };
 }
 
-export function revealPosition(draft: ReadingDraft, index: 0 | 1 | 2): ReadingDraft {
-  if (draft.revealed[index]) return draft;
-  const revealed: [boolean, boolean, boolean] = [...draft.revealed];
-  revealed[index] = true;
+/**
+ * A draft for any spread (V05.2). The classic spread gives exactly the draft of `createDraft`;
+ * review spreads need the facts for the own cards of the period.
+ */
+export function createSpreadDraft(pack: ContentPack, spreadId: SpreadId, themeId: ThemeId, clock: Clock, rng: Rng, facts?: Facts): ReadingDraft {
+  const spread = getSpread(spreadId);
+  if (spread.id === CLASSIC_SPREAD) return createDraft(pack, themeId, clock, rng);
+  const drawn = drawSpread(pack, spread, rng, facts);
+  return {
+    id: newId(rng),
+    deckId: pack.deckId,
+    themeId: spreadTheme(pack, spread, themeId),
+    cardIds: drawn.cardIds,
+    revealed: drawn.revealed,
+    createdAt: clock.now().toISOString(),
+    spreadId: spread.id,
+    ...(drawn.past ? { past: drawn.past } : {}),
+  };
+}
+
+export function revealPosition(draft: ReadingDraft, index: number): ReadingDraft {
+  if (index < 0 || index >= draft.cardIds.length || draft.revealed[index]) return draft;
+  const revealed = draft.cardIds.map((_, i) => i === index || draft.revealed[i] === true);
   return { ...draft, revealed };
 }
 
 export function revealAll(draft: ReadingDraft): ReadingDraft {
-  return draft.revealed.every(Boolean) ? draft : { ...draft, revealed: [true, true, true] };
+  return isFullyRevealed(draft) ? draft : { ...draft, revealed: draft.cardIds.map(() => true) };
 }
 
 export function isFullyRevealed(draft: ReadingDraft): boolean {
-  return draft.revealed.every(Boolean);
+  return draft.cardIds.every((_, i) => draft.revealed[i] === true);
 }
 
 /**
@@ -192,7 +213,7 @@ export function isFullyRevealed(draft: ReadingDraft): boolean {
  */
 export function composeReading(
   pack: ContentPack,
-  cardIds: readonly [CardId, CardId, CardId],
+  cardIds: readonly CardId[],
   themeId: ThemeId,
   locale: Locale,
 ): ReadingContent {
@@ -209,7 +230,7 @@ export function composeReading(
       text: card.positions[position][locale],
     };
   });
-  const impulseCard = getCard(pack, cardIds[2]);
+  const impulseCard = getCard(pack, cardIds[2] as CardId);
   const synthesis = impulseCard.themes[theme.id]?.[locale];
   if (!synthesis) throw new Error(`Missing ${theme.id} text for ${impulseCard.id}`);
   return {
@@ -222,8 +243,33 @@ export function composeReading(
   };
 }
 
-export function finalizeReading(pack: ContentPack, draft: ReadingDraft, locale: Locale, clock: Clock): Reading {
+/** Content of a draft in any spread. Spreads other than the classic one need the module tables. */
+export function composeDraft(pack: ContentPack, draft: Pick<ReadingDraft, 'spreadId' | 'cardIds' | 'themeId' | 'past'>, locale: Locale, texts: SpreadTexts = {}): ReadingContent {
+  const spread = getSpread(draft.spreadId);
+  if (spread.id === CLASSIC_SPREAD) return composeReading(pack, draft.cardIds, draft.themeId, locale);
+  return composeSpread(pack, spread, draft, locale, texts);
+}
+
+export function finalizeReading(pack: ContentPack, draft: ReadingDraft, locale: Locale, clock: Clock, texts: SpreadTexts = {}): Reading {
   if (!isFullyRevealed(draft)) throw new Error('Reveal all cards before saving');
+  const spread = getSpread(draft.spreadId);
+  if (spread.id !== CLASSIC_SPREAD) {
+    return {
+      id: draft.id,
+      deckId: draft.deckId,
+      themeId: draft.themeId,
+      cardIds: [...draft.cardIds],
+      spreadId: spread.id,
+      roles: [...spread.roles],
+      locale,
+      contentVersion: pack.version,
+      content: composeSpread(pack, spread, draft, locale, texts),
+      createdAt: clock.now().toISOString(),
+      dateKey: localDateKey(clock.now()),
+      note: '',
+    };
+  }
+  // The classic spread keeps the record shape of 0.2 (no spreadId, no roles).
   return {
     id: draft.id,
     deckId: draft.deckId,

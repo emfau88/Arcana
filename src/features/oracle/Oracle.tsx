@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { navigate } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
-import { composeReading, isFullyRevealed } from '../../domain/oracle.ts';
+import { composeDraft, isFullyRevealed } from '../../domain/oracle.ts';
+import { CLASSIC_SPREAD } from '../../domain/spreads.ts';
 import { POSITIONS, type Reading, type ReadingContent, type ReadingDraft, type ThemeId } from '../../domain/types.ts';
 import { fmt, toRoman } from '../../i18n/index.ts';
 import { ConfirmDialog, Divider, useToast } from '../../ui/feedback.tsx';
@@ -109,10 +110,13 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
   const [saving, setSaving] = useState(false);
   const [justRevealed, setJustRevealed] = useState<Set<number>>(new Set());
   const allUp = isFullyRevealed(draft);
-  const content = allUp ? composeReading(pack, draft.cardIds, draft.themeId, locale) : null;
+  const content = allUp ? composeDraft(pack, draft, locale, { spreads: state.modules.spreads, deep: state.modules['cards-deep'] }) : null;
+  // Position names of spreads other than the classic one come from the module (V05.2).
+  const labels =
+    draft.spreadId && draft.spreadId !== CLASSIC_SPREAD ? draft.cardIds.map((_, i) => state.modules.spreads?.[`pos.${draft.spreadId}.${i + 1}.label`] ?? '') : undefined;
   const themeLabel = getTheme(pack, draft.themeId).label[locale];
 
-  const flip = async (i: 0 | 1 | 2) => {
+  const flip = async (i: number) => {
     if (draft.revealed[i]) return;
     setJustRevealed((s) => new Set(s).add(i));
     try {
@@ -162,6 +166,7 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
       <Spread
         cardIds={draft.cardIds}
         revealed={draft.revealed}
+        labels={labels}
         animated={justRevealed}
         onFlip={allUp ? undefined : flip}
       />
@@ -219,7 +224,7 @@ function SavedReading({ reading, onNew }: { reading: Reading; onNew(): void }) {
           {reading.content.themeLabel}
         </h1>
       </header>
-      <Spread cardIds={reading.cardIds} revealed={[true, true, true]} />
+      <Spread {...savedSpread(reading)} />
       <div className="notice oracle__saved" role="status">
         <IconCheck size={18} />
         <span>{t.oracle.saved}</span>
@@ -239,29 +244,40 @@ function SavedReading({ reading, onNew }: { reading: Reading; onNew(): void }) {
 
 /* --------------------------------------------------------------- Shared UI */
 
+/** Props of a saved reading's spread: all cards face up, stored position names for V05.2 spreads. */
+export function savedSpread(reading: Reading): { cardIds: readonly string[]; revealed: readonly boolean[]; labels?: readonly string[] } {
+  return {
+    cardIds: reading.cardIds,
+    revealed: reading.cardIds.map(() => true),
+    labels: reading.spreadId ? reading.content.positions.map((p) => p.positionLabel) : undefined,
+  };
+}
+
 export function Spread({
   cardIds,
   revealed,
+  labels,
   animated,
   onFlip,
 }: {
-  cardIds: readonly [string, string, string];
-  revealed: readonly [boolean, boolean, boolean];
+  cardIds: readonly string[];
+  revealed: readonly boolean[];
+  /** Position names; missing = the classic positions in the current language. */
+  labels?: readonly string[];
   animated?: Set<number>;
-  onFlip?: (i: 0 | 1 | 2) => void;
+  onFlip?: (i: number) => void;
 }) {
   const { t, pack, state } = useApp();
   const locale = state.settings.locale;
   return (
     <ol className="spread">
-      {POSITIONS.map((p, i) => {
-        const idx = i as 0 | 1 | 2;
-        const card = findCard(pack, cardIds[idx]) ?? null;
-        const up = revealed[idx];
-        const posLabel = pack.positionLabels[p][locale];
+      {cardIds.map((cardId, idx) => {
+        const card = findCard(pack, cardId) ?? null;
+        const up = revealed[idx] === true;
+        const posLabel = labels?.[idx] ?? pack.positionLabels[POSITIONS[idx] ?? 'situation'][locale];
         const title = card ? card.title[locale] : '';
         return (
-          <li key={p} className="spread__slot">
+          <li key={idx} className="spread__slot">
             <span className="spread__pos">{posLabel}</span>
             <OracleCard
               card={card}
