@@ -499,6 +499,8 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 
 Empfehlung an den Eigentümer: dreimal A; beim Orakel lassen sich Reihe (A) und Themen-Raster (B) mischen.
 
+**Entscheidung des Eigentümers (27.11.2026, D-64):** Punkt 2 **A**, Punkt 5 **B**, Punkt 6 **A**. Zu Punkt 5 gegen die Empfehlung: Bei einem einzigen Moment würden Nutzer nicht verstehen, dass im Profil mehr steht.
+
 **Warum:** Entschieden wird am echten Screen mit echten Bildern und Texten, nicht an einer Zeichnung (AGENTS.md: kein Mockup als Beleg). Der Schalter hält `main` und die Vorschau unberührt, bis der Eigentümer gewählt hat.
 
 **Alternativen:** Zeichnungen oder Bildmontagen (schneller, aber ohne Aussage über Layout und Schrift); Varianten direkt in V05 bauen und eine wieder entfernen (mehr Aufwand, Risiko halber Reste); Varianten in der Pages-Vorschau umschaltbar machen (sichtbar für alle, braucht eine Oberfläche dafür).

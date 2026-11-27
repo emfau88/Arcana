@@ -186,4 +186,4 @@ Pull Requests [#5](https://github.com/emfau88/Arcana/pull/5) (D-62) und [#6](htt
 
 ## Nächstes Gate
 
-QG-V05 (Karten, Legungen, Grimoire) mit geschlossenem Test. V05 beginnt erst auf Zuruf des Eigentümers (D-60); vorher werden die Punkte 2, 5 und 6 des Design-Plans an Mustern entschieden (D-63).
+QG-V05 (Karten, Legungen, Grimoire) mit geschlossenem Test. V05 beginnt erst auf Zuruf des Eigentümers (D-60); die Punkte 2, 5 und 6 des Design-Plans sind an Mustern entschieden (D-64) und werden in V05 eingebaut.

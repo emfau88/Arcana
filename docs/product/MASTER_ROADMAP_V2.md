@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. V05 beginnt erst auf Zuruf des Eigentümers (D-60); der Plan liegt auf `feature/v05-karten` (S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 werden vor den V05-Screens an Mustern entschieden.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. V05 beginnt erst auf Zuruf des Eigentümers (D-60); der Plan liegt auf `feature/v05-karten` (S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden in V05 eingebaut.
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -258,7 +258,7 @@ Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentümer den Tagesorak
 ### V05 · Karten, Legungen, Grimoire (0.5 → geschlossener Test)
 
 **Ziel:** Tiefe. Jede Handlung hinterlässt eine Spur im Buch.
-**Abhängigkeiten:** V04 (Reise, Kapitel I–IV). **Vor den Screens:** die Punkte 2 (Bühnen für Orakel und Legung), 5 (Enthüllung als Moment) und 6 (Sternkarte) des Design-Plans an Mustern entscheiden (D-63); Punkt 7 (Bibliothek) kommt mit V05.3. **Bilder:** Bulk B3 (A03, A04, A15, A20, A21, A23–A29, A30), liegt vollständig im Lieferordner. **Inhalte:** ≈ 390 Texte (Kartentiefe 330, Legungen ≈ 40, Kapitel- und Systemtexte).
+**Abhängigkeiten:** V04 (Reise, Kapitel I–IV). **Design-Plan (D-64, entschieden 27.11.2026):** Punkt 2 Variante A (Orakel als Bühne, Karten in einer Reihe) mit V05.6 und der Legung aus V05.2; Punkt 6 Variante A (Sternkarte als drei Ringe) mit V05.3; Punkt 5 Variante B (Enthüllung behält alles, nur der doppelte Aufklapper entfällt) als kleine Korrektur. Vorlage: Branch `muster/design-plan` (S-42), nicht mergen. Punkt 7 (Bibliothek) kommt mit V05.3. **Bilder:** Bulk B3 (A03, A04, A15, A20, A21, A23–A29, A30), liegt vollständig im Lieferordner. **Inhalte:** ≈ 390 Texte (Kartentiefe 330, Legungen ≈ 40, Kapitel- und Systemtexte).
 
 | Bulk | Arbeit | Fertig, wenn |
 |---|---|---|
@@ -437,7 +437,7 @@ Regeln:
 
 Stand 27.11.2026, nach 0.4.1. V02, V03 und V04 sind abgeschlossen.
 
-1. **Muster für den Design-Plan** (D-63): Punkt 2 (Bühnen für Orakel und Legung), Punkt 5 (Enthüllung als Moment) und Punkt 6 (Sternkarte) als echte Screens in je zwei Varianten; der Eigentümer wählt. Die Muster liegen vor (Branch `muster/design-plan`, S-42).
+1. **Design-Plan einbauen** (D-64): Die Muster sind entschieden (Punkt 2 A, Punkt 5 B, Punkt 6 A); eingebaut wird in V05 nach der Vorlage `muster/design-plan` (S-42), mit Texten in `i18n`, Tests, Android und Kontrastmessung.
 2. **V05 freigeben und umsetzen** auf `feature/v05-karten` (D-60), Reihenfolge nach S-29: V05.1 Logik und Texte, V05.2 Legungs-Engine, V05.4 Tagebuch und Suche, dann B3 exportieren und die Screens (V05.1, V05.3, V05.5, V05.6).
 3. **Vor QG-V05:** Leistungsmessung gegen die Referenz (D-52, B-08).
 4. **Eigentümer:** E10 Kartenrücken, E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor V05.6); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) sind entschieden.
