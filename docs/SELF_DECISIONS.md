@@ -4,7 +4,7 @@ Seit 27.11.2026 entscheidet der Agent offene Punkte innerhalb des Auftrags selbs
 
 **Auftrag 27.11.2026 (D-57):** V04 im Alleingang fertigstellen, danach V05. Neue Screens entstehen als Vorschlag; der Eigentümer prüft sie gesammelt zusammen mit der Prüfliste unten.
 
-**Auftrag 27.11.2026 (D-62):** Der Eigentümer hat die Textdurchsicht von V04 dem Agenten übertragen: alle Texte auf Deutsch und Englisch lesen und so korrigieren, wie es für die App am besten ist (S-32 bis S-36).
+**Auftrag 27.11.2026 (D-62):** Der Eigentümer hat die Textdurchsicht von V04 dem Agenten übertragen: alle Texte auf Deutsch und Englisch lesen und so korrigieren, wie es für die App am besten ist (S-32 bis S-36); am selben Tag erweitert auf die Kartentexte aus G2 und die Oberflächentexte (S-37, S-38).
 
 Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing, Store, Merge nach `main` und neue Screens mit eigener Gestaltung (zuerst ein Muster). Grundsätzliche Entscheidungen stehen in [DECISIONS.md](DECISIONS.md).
 
@@ -45,6 +45,8 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-34 | 27.11.2026 | Kartenbilder in Kapiteln und Profilen | beschrieben wird, was dieses Deck zeigt; „in diesem Grimoire“ statt „dieser App“ | D-62, D-26 |
 | S-35 | 27.11.2026 | Karten Tod, Teufel, Turm in Sätzen aus eigenen Daten | immer als Karte benannt, Titel in Anführungszeichen | D-62, V04.5 |
 | S-36 | 27.11.2026 | Enthüllungssatz und Anfang der Beschreibung | ergänzen die Essenz, statt sie zu wiederholen | D-62, V04.2 |
+| S-37 | 27.11.2026 | Tagesbotschaften der Karten | behaupten nichts über die Lage der Person; „vielleicht“ statt Feststellung | D-62, L4 |
+| S-38 | 27.11.2026 | Englischer Name der dritten Position | „Next step“ statt „Impulse“ | D-62 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -419,3 +421,25 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** Essenz ändern (steht im Kern und auf der Teilen-Karte, deren Referenzbilder dann neu entstehen müssten); auf der Enthüllung nur einen der beiden Sätze zeigen (Gestaltungsänderung, gehört zum Design-Plan); Enthüllungssatz streichen.
 
 **Wechsel kostet:** je Archetyp eine Zeile in `archetypes.*.ts`.
+
+## S-37 · Tagesbotschaften der Karten
+
+**Entschieden:** Eine Tagesbotschaft stellt nichts über das Leben der Person fest. Wo ein Text das tat, steht jetzt eine Möglichkeit: „Vielleicht ist ein Übergang schon fast geschafft“ statt „Ein Übergang ist fast geschafft“, „Vielleicht ist jetzt ein guter Moment …“ statt „Jetzt ist ein guter Moment …“ (Welt × Beruf, Welt × Veränderung, Wagen × Beruf, Glücksrad × Beruf, Liebende × Veränderung; DE und EN). Beim Teufel heißt es „Gewohnheit oder Bindung“ statt „Gewohnheit oder Abhängigkeit“.
+
+**Warum:** Leitplanke L4 (symbolisch, nie prophetisch). Die übrigen 127 Botschaften je Sprache halten das schon ein („Vielleicht spürst du einen Ruf …“, „Ein Kapitel kann sich schließen …“); die fünf fielen daneben auf. „Abhängigkeit“ klingt nach Diagnose, „Bindung“ ist das Wort der Karte selbst (Essenz, Schlagworte).
+
+**Nicht geändert:** die 66 Positionstexte der Legung („Etwas geht zu Ende oder hat sich bereits überlebt“). Sie sind die Deutung einer Position, und die Legung sagt über sich selbst, dass sie drei Blickwinkel anbietet und nichts entscheidet.
+
+**Alternativen:** alles lassen (klingt bestimmter, aber wie eine Vorhersage); eine Verbotsregel im Gate für Feststellungen (lässt sich nicht verlässlich als Muster fassen); auch die Positionstexte abschwächen (nimmt der Legung ihre Form).
+
+**Wechsel kostet:** fünf Sätze je Sprache in `cards-a/b/c.ts`.
+
+## S-38 · Englischer Name der dritten Position
+
+**Entschieden:** Die dritte Position der Legung heißt englisch „Next step“ statt „Impulse“. Deutsch bleibt „Impuls“.
+
+**Warum:** „Impulse“ bedeutet im Englischen eine plötzliche Regung (acting on impulse), nicht den Anstoß, den „Impuls“ meint. PRODUCT_SYSTEMS beschreibt die Rolle als „Welcher nächste Schritt ist möglich?“. Gespeicherte Legungen behalten ihren alten Namen (D-09).
+
+**Alternativen:** „Prompt“ (richtig, aber technisch), „Guidance“ (verspricht mehr, als die Karte gibt), „Nudge“ (zu salopp).
+
+**Wechsel kostet:** ein Wort in `themes.ts`.

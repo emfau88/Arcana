@@ -50,4 +50,5 @@ Texte außerhalb des Kerns liegen als Module in `src/content/modules/` und werde
 ## Hinweise für die spätere Redaktion
 
 - XIII (Tod) und XV (Teufel) sind bewusst ruhig und nicht beängstigend formuliert. Bei einer Überarbeitung so lassen.
-- Die Texte sind eigene Arbeit und automatisch geprüft. Ein menschlicher Lektoratsdurchgang (Ton, Rhythmus) ist vor dem Release sinnvoll und steht im Backlog.
+- Die Texte sind eigene Arbeit und automatisch geprüft. Am 27.11.2026 hat der Agent alle Texte in DE und EN vollständig gelesen und korrigiert (D-62, `PROJECT_STATUS.md` „Textdurchsicht V04“). Ein menschlicher Lektoratsdurchgang (Ton, Rhythmus) ist vor dem Release weiter sinnvoll (E18).
+- Tagesbotschaften behaupten nichts über die Lage der Person; was sein könnte, steht mit „vielleicht“ (S-37).

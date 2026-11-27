@@ -105,7 +105,17 @@ Der Eigentümer hat die Textprüfung von V04 dem Agenten übertragen. Gelesen: a
 | T-08 | Verrenkte Satzanfänge durch die Abwechslungsregel („Gestalten möchte in dir auch eine schaffende Seite“), zwei unklare Bezüge (Station XV und XX, Wiederkehr) | natürliche Wortstellung | – |
 | T-09 | EN: Germanismen („On the way it shows who …“, „Like a red thread“), „who“ für Karten ohne Person (Stern, Mond, Rad …), sechs Schlussfragen mit nachgestelltem „soon“ | idiomatisches Englisch | – |
 
-Prüfungen auf dem Branch (27.11.2026): `npm run check` PASS (200 Unit-Tests, Content-Gate 0 Fehler und 0 Warnungen, Start-JS 139,4 kB, größtes Modul `chapters.de` 13,6 kB gz); E2E auf dem Produktions-Build PASS (27 bestanden, 41 bewusst übersprungen, 0 fehlgeschlagen; der Bildvergleich der Teilen-Karte ist unverändert, sie zeigt Name, Essenz und Stärken). Android-Emulator und Leistung gegen die Referenz: NOT RUN (reine Textänderung, kein neuer Code im Startpfad). Nicht Teil dieser Durchsicht: die 264 Kartentexte aus G2 und die Oberflächentexte in `src/i18n/` (Lektorat E18 bleibt offen). Die Stationstexte der Narrenreise erzählen weiter von Figuren („Die Hohepriesterin sitzt zwischen zwei Säulen“); das ist dort Erzählung, keine Bildbeschreibung, und bleibt.
+Prüfungen auf dem Branch (27.11.2026): `npm run check` PASS (200 Unit-Tests, Content-Gate 0 Fehler und 0 Warnungen, Start-JS 139,4 kB, größtes Modul `chapters.de` 13,6 kB gz); E2E auf dem Produktions-Build PASS, nach beiden Durchgängen je 27 bestanden, 41 bewusst übersprungen, 0 fehlgeschlagen ( der Bildvergleich der Teilen-Karte ist unverändert, sie zeigt Name, Essenz und Stärken). Android-Emulator und Leistung gegen die Referenz: NOT RUN (reine Textänderung, kein neuer Code im Startpfad). **Zweiter Durchgang (Eigentümer 27.11.2026: auch die übrigen Texte):** alle Kartentexte aus G2 (22 Karten: Essenz, 132 Tagesbotschaften, 66 Positionstexte, Reflexion, Ritual), Schlagworte, Themen, Fragebogen und sämtliche Oberflächentexte in `src/i18n/`, je DE und EN. Die Kartentexte sind gut und brauchten wenig:
+
+| # | Befund | Korrektur | Entscheidung |
+|---|---|---|---|
+| T-10 | Fünf Tagesbotschaften behaupteten etwas über die Lage der Person („Ein Übergang ist fast geschafft“, „Jetzt ist ein guter Moment …“, „Vor dir liegt eine Wahl …“) | mit „vielleicht“ als Möglichkeit formuliert, wie der Rest des Decks | S-37 |
+| T-11 | Teufel, Position Situation: „Gewohnheit oder Abhängigkeit“ klingt nach Diagnose | „Gewohnheit oder Bindung“ (wie Essenz und Schlagworte) | S-37 |
+| T-12 | Oberfläche verwies dreimal auf „im Profil“, der Tab heißt seit V04 „Ich“ | „unter „Ich““ / “under “Me”” | – |
+| T-13 | „So entstand Sehende“ und „Suchende liegt nur einen Punkt hinter Sehende“ lasen sich ohne Artikel holprig | Namen in Anführungszeichen: „So entstand „Sehende““ | S-32 |
+| T-14 | EN: Positionsname „Impulse“ (falscher Freund), „Choose myself“, „Area of life“, „Faith“, einzelne Germanismen | „Next step“, „Choose it myself“, „Life theme“, „Confidence“ | S-38 |
+
+Inhaltsversion des Kerns jetzt `p0-2026-11-27.1`. Gespeicherte Legungen behalten ihren alten Positionsnamen (D-09). Offen bleibt E18: ein menschliches Lektorat vor 1.0. Die Stationstexte der Narrenreise erzählen weiter von Figuren („Die Hohepriesterin sitzt zwischen zwei Säulen“); das ist dort Erzählung, keine Bildbeschreibung, und bleibt.
 
 ## Nachweise V04 (Stand 27.11.2026)
 
