@@ -36,7 +36,7 @@ Texte außerhalb des Kerns liegen als Module in `src/content/modules/` und werde
 
 | Modul | Version | Schlüssel je Sprache | Inhalt | Sichtbar in der App |
 |---|---|---|---|---|
-| `identity` | `identity-2026-11-27.1` | 35 | 7 Fragen und 28 Antworten des Fragebogens | ja (Fragebogen) |
+| `identity` | `identity-2026-11-27.2` | 211 | 7 Fragen und 28 Antworten des Fragebogens; 176 Linsen (8 Archetypen × 22 Karten, je ein Satz, V04.3) | ja (Fragebogen, Linse auf „Heute“ und im Grimoire) |
 | `journey` | `journey-2026-11-27.1` | 96 | 63 Stationstexte (21 Stationen × 3 Lesarten Begegnung, Wiederkehr, Weisheit), 9 Pfadtexte, 4 Rundentexte, 20 Meilensteintexte (D-54). Keine Countdown- oder Druckformulierungen (Validator) | nein, noch keine Oberfläche (V04.4 Logik und Texte) |
 
 ## Was automatisch geprüft wird

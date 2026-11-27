@@ -2,6 +2,8 @@
 
 Seit 27.11.2026 entscheidet der Agent offene Punkte innerhalb des Auftrags selbst (D-56). Hier steht je Punkt, was entschieden wurde, warum, welche Alternativen es gab und was ein späterer Wechsel kostet. So lässt sich rückblickend gezielt prüfen und ändern.
 
+**Auftrag 27.11.2026 (D-57):** V04 im Alleingang fertigstellen, danach V05. Neue Screens entstehen als Vorschlag; der Eigentümer prüft sie gesammelt zusammen mit der Prüfliste unten.
+
 Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing, Store, Merge nach `main` und neue Screens mit eigener Gestaltung (zuerst ein Muster). Grundsätzliche Entscheidungen stehen in [DECISIONS.md](DECISIONS.md).
 
 | ID | Datum | Thema | Entschieden | Bezug |
@@ -16,6 +18,16 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-08 | 27.11.2026 | B2-Bilder vorbereiten | außerhalb von `public/`, Mastergröße, nicht hochskaliert | D-55 |
 | S-09 | 27.11.2026 | Pull Requests zusammenführen | Merge-Commit statt Squash | D-56 |
 | S-10 | 27.11.2026 | B-12 Kopfzeilen der Legung bei 130 % Schrift | in V05.2 mit der neuen Legung lösen | PROJECT_STATUS |
+| S-11 | 27.11.2026 | Linse an Ergänzungstagen und Hinweise | jeder dritte Reisetag, beim Ziehen festgelegt; Hinweise nur für vorhandene Inhalte | V04.3 |
+
+## Nachprüfen (Prüfliste für den Eigentümer)
+
+Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird erst nach der Durchsicht.
+
+- [ ] Angebot „Drei neue Fragen“ im Profil (`visual/evidence/v04-angebot-profil-360.webp`, S-05)
+- [ ] Ton der Reisetexte, Stichprobe: Stationen 1, 13, 21 in allen drei Lesarten und Meilenstein Tag 7 (`src/content/modules/journey.de.ts`, S-02)
+- [ ] Linsen, Stichprobe von 10: Suchende × Narr, Hütende × Turm, Sehende × Stern, Verwandelnde × Tod, Wandernde × Wagen, Schaffende × Herrscherin, Weise × Eremit, Erneuernde × Gericht, Suchende × Teufel, Hütende × Mond (`src/content/modules/identity-lens.de.ts`, S-11)
+- [ ] Überschrift an Ergänzungstagen „Durch die Linse deiner zweiten Stimme“ (S-11)
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -119,3 +131,11 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternative:** jetzt mit gemeinsamer Kopfzeile (CSS-Subgrid) beheben; ändert das Raster der Legung, und die Arbeit würde in V05 wahrscheinlich ersetzt.
 
 **Wechsel kostet:** eine CSS-Änderung an der Legung plus Screenshot-Prüfung.
+
+## S-11 · Linse an Ergänzungstagen und Hinweise
+
+**Entschieden:** Mit Ergänzungs-Archetyp spricht an jedem dritten Reisetag (3, 6, 9 …) die Ergänzung (`COMPLEMENT_LENS_EVERY` in `src/domain/lens.ts`). Die Wahl fällt beim Aufdecken und wird mit der Tageskarte gespeichert (Varianten-Index, Ergänzung), damit eine spätere Profiländerung frühere Tage nicht umschreibt (D-09). Die Überschrift lautet dann „Durch die Linse deiner zweiten Stimme“, das Siegel zeigt die Ergänzung. Fehlt der Modultext, erscheint die allgemeine Linse des Archetyps statt eines leeren Felds. Hinweise (A6) zeigen nur auf Bereiche, die der Build wirklich enthält (`BUILD_FEATURES` in `src/domain/hints.ts`, wächst mit jedem Paket).
+
+**Alternativen:** Ergänzung nach Kalendertag statt Reisetag (springt bei Pausen, wirkt zufällig); jeden zweiten Tag (die Hauptstimme träte zu oft zurück); beide Linsen jeden Tag untereinander (mehr Text auf „Heute“, sichtbare Änderung). Hinweise für alles aus der Tabelle (würde auf noch leere Seiten zeigen).
+
+**Wechsel kostet:** eine Konstante; gespeicherte Tage behalten ihre Linse. Die Überschrift ist ein Text in `src/i18n/`.

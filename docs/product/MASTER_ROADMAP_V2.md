@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1 fertig, V04.4 Logik und Texte fertig (Oberfläche wartet auf ein Muster für den Eigentümer), B2 als WebP vorbereitet. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 läuft auf `feature/v04-identitaet` vom Tag `v0.3.0`: V04.1 fertig, V04.3 Linsen und Hinweis-Logik fertig (B-07 offen), V04.4 Logik und Texte fertig, B2 als WebP vorbereitet. Seit D-57 stellt der Agent V04 im Alleingang fertig; neue Screens entstehen als Vorschlag zur gesammelten Durchsicht. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56).
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -90,7 +90,11 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Bestehende Profile bleiben gültig, Angebot zum Neubestimmen im Profil, kein Zwang (E9, Unit + E2E)
   - [x] Prüfskripte (Evidence, Perf, Showcase, Android) beantworten die Fragen bis zur Themenwahl statt fest vier, damit sie gegen die Referenz und gegen V04 laufen
 - [ ] V04.2 Enthüllung und Profil
-- [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49)
+- [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49) (3/4)
+  - [x] Linse je Archetyp × Karte: 176 Sätze DE/EN im Modul `identity`, Content-Gate (ein Satz, 12–28 Wörter, abwechslungsreiche Anfänge)
+  - [x] Ergänzungslinse jeden dritten Reisetag, Varianten-Index und Ergänzung im Datensatz; frühere Tageskarten zeigen ihren alten Text (D-09, Unit, S-11)
+  - [x] Hinweis-Logik A6: höchstens ein Hinweis pro Tag, Meilenstein vor Kartenstufe vor Welt, nur für vorhandene Inhalte (Unit, S-11)
+  - [ ] B-07 Kontrast der Fußzeile: Varianten als Screenshots für den Eigentümer (D-57)
 - [ ] V04.4 Narrenreise und Meilensteine (4/5, D-54)
   - [x] 63 Stationen, 9 Wegeinführungen, 4 Rundenabschlüsse, 20 Meilensteintexte DE/EN im Modul `journey`
   - [x] Tabellen-Test Reisetag 1–400: genau eine Station, richtige Wegeinführung, Rundenabschluss und Meilensteintext
