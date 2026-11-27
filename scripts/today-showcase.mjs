@@ -3,12 +3,14 @@
 //          [--cards major-03-empress,major-19-sun,major-15-devil] [--day 12]
 //          [--locale de|en] [--width 412] [--height 915] [--font 100] [--motion reduce]
 //          [--contrast]  (measures text contrast against what lies behind the text)
+//          [--css scripts/b07/a-lilien-dunkler.css --label a]  (injects a design variant, e.g. B-07)
+//          [--footer]  (one more screenshot per card, scrolled to the footer)
 //
 // The flow is real (onboarding through the UI). Only the daily records are seeded
 // synthetically, built with the app's own domain code (composeDaily), so a specific
 // card and a later journey day can be shown. Nothing personal is typed or stored.
 import { chromium } from '@playwright/test';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { auditContrast } from './contrast-audit.mjs';
 import { CONTENT } from '../src/content/index.ts';
@@ -30,11 +32,15 @@ const reduce = opt('motion', 'no-preference') === 'reduce';
 const dbName = opt('db', 'personal-oracle');
 const desktop = width >= 1024;
 const measureContrast = rest.includes('--contrast');
+const footerShot = rest.includes('--footer');
+const cssFile = opt('css', '');
+const variantCss = cssFile ? await readFile(cssFile, 'utf8') : '';
+const label = opt('label', '');
 const L = locale === 'de';
 
 await mkdir(outDir, { recursive: true });
 const browser = await chromium.launch();
-const tag = `${locale}-${width}${font !== 100 ? `-font${font}` : ''}${reduce ? '-reduce' : ''}`;
+const tag = `${locale}-${width}${font !== 100 ? `-font${font}` : ''}${reduce ? '-reduce' : ''}${label ? `-${label}` : ''}`;
 
 function record(cardId, dateKey, profile) {
   return {
@@ -110,7 +116,7 @@ async function context() {
     hasTouch: !desktop,
     locale: L ? 'de-DE' : 'en-US',
     reducedMotion: reduce ? 'reduce' : 'no-preference',
-    bypassCSP: font !== 100,
+    bypassCSP: font !== 100 || Boolean(variantCss),
   });
 }
 
@@ -170,9 +176,24 @@ for (const [i, cardId] of [['hidden', null], ...cards.map((c, i) => [i, c])]) {
   await seed(page, [...past, ...today]);
   await page.reload();
   if (font !== 100) await page.addStyleTag({ content: `html{font-size:${font}%!important}` });
+  if (variantCss) await page.addStyleTag({ content: variantCss });
   await page.waitForSelector(cardId ? '#today-card-title' : '.today__cta');
   const slug = cardId ? cardId.replace(/^major-\d+-/, '') : 'verdeckt';
   await shot(page, `heute-${String(i === 'hidden' ? 0 : i + 1).padStart(2, '0')}-${slug}`);
+  if (footerShot && cardId) {
+    await page.evaluate(() => {
+      const m = document.querySelector('.stage__main');
+      if (m) m.scrollTop = m.scrollHeight;
+    });
+    await page.waitForTimeout(500);
+    const file = join(outDir, `heute-${String(i + 1).padStart(2, '0')}-${slug}-fuss-${tag}.png`);
+    await page.screenshot({ path: file });
+    shots.push(file);
+    await page.evaluate(() => {
+      const m = document.querySelector('.stage__main');
+      if (m) m.scrollTop = 0;
+    });
+  }
   const next = page.getByRole('button', { name: L ? 'Reise fortsetzen' : 'Continue your journey' });
   if (cardId && i === 0 && (await next.count())) {
     // "Continue your journey" leads to the full message (absent in builds before V02).

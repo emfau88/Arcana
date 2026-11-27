@@ -264,7 +264,8 @@ try {
     save: L === "de" ? "Im Grimoire speichern" : "Save to grimoire",
     newReading: L === "de" ? "Neue Legung" : "New reading",
     grimoire: "Grimoire",
-    profile: L === "de" ? "Profil" : "Profile",
+    // "Profil" became "Ich" / "Me" in V04; the migration check still runs the 0.2.0 APK.
+    profile: L === "de" ? /^(Ich|Profil)$/ : /^(Me|Profile)$/,
     today: L === "de" ? "Heute" : "Today",
   };
   note(
@@ -297,7 +298,8 @@ try {
   shot("thema");
   await tap(T.finish);
   await waitFor(T.toToday, { timeout: 20000 });
-  await sleep(1400);
+  // The staged portrait reveal (V04.2) is complete after 4.3 s.
+  await sleep(4800);
   shot("archetyp");
   note("Questionnaire → archetype reveal", "PASS");
 

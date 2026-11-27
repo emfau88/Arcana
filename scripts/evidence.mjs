@@ -126,7 +126,8 @@ await shot('thema');
 await page.getByRole('radio').nth(1).click();
 await page.getByRole('button', { name: L ? 'Archetyp enthüllen' : 'Reveal my archetype' }).click();
 await page.waitForSelector('.archetype__name');
-await settle(1500);
+// The staged reveal (V04) takes 4.3 s; reduced motion shows it at once.
+await settle(4800);
 await shot('archetyp');
 if (only === 'all') await shot('archetyp-lang', { long: true });
 await page.getByRole('button', { name: L ? 'Zur Tageskarte' : 'Go to today’s card' }).click();
@@ -179,19 +180,28 @@ await shot('grimoire-verlauf');
 await page.locator('.history__row').first().click();
 await settle(700);
 await shot('legung-detail');
-await page.getByRole('link', { name: L ? 'Profil' : 'Profile' }).click();
-await settle(600);
+// V04: "Profil" became "Ich" / "Me" (#/me); language, motion and privacy moved to #/me/settings.
+await page.getByRole('link', { name: L ? 'Ich' : 'Me' }).click();
+await page.waitForSelector('.me__pillar, .profile__archetype');
+await settle(900);
 await shot('profil');
 if (only === 'all') await shot('profil-lang', { long: true });
+await page.getByRole('button', { name: L ? 'Einstellungen' : 'Settings' }).click();
+await page.waitForSelector('h1');
+await settle(600);
+await shot('einstellungen', { long: only === 'all' });
+await page.getByRole('button', { name: L ? 'Zurück' : 'Back' }).click();
+await settle(600);
 // Manual archetype correction (all eight archetypes + open profile).
 await page.getByRole('button', { name: L ? 'Selbst wählen' : 'Choose myself' }).click();
 await settle(500);
 await page.locator('#prof-choose').scrollIntoViewIfNeeded();
 await settle(300);
 await shot('profil-archetyp-waehlen');
-await page.getByRole('button', { name: L ? 'Archetyp ansehen' : 'View archetype' }).click();
+await page.getByRole('button', { name: L ? 'Enthüllung noch einmal ansehen' : 'See the reveal again' }).click();
 await page.waitForSelector('.archetype__name');
-await settle(1200);
+// The staged reveal (V04) takes 4.3 s; reduced motion shows it at once.
+await settle(4800);
 await shot('archetyp-aus-profil');
 
 // Persistence: reload and confirm the same daily card is shown.

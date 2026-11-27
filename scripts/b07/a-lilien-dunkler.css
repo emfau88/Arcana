@@ -1,0 +1,5 @@
+/* B-07 variant A: the lily corners at the bottom are darkened (the top corners stay as they are). */
+.foliage--bl,
+.foliage--br {
+  filter: brightness(0.42) saturate(0.85) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+}

@@ -1,0 +1,19 @@
+/* B-07 variant B: one quiet panel behind the footer lines (same surface as the panels of "Heute"). */
+.today__footer {
+  max-width: 36ch;
+  margin: 0 auto;
+  padding: 4px var(--s-4);
+  background: rgba(16, 14, 36, 0.82);
+  border-inline: 1px solid var(--surface-line);
+}
+:not(.today__footer) + .today__footer {
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--surface-line);
+  border-radius: var(--r-m) var(--r-m) 0 0;
+}
+.today__footer:not(:has(+ .today__footer)) {
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-3);
+  border-bottom: 1px solid var(--surface-line);
+  border-radius: 0 0 var(--r-m) var(--r-m);
+}

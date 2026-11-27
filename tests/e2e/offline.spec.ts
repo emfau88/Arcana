@@ -20,6 +20,8 @@ test('content modules: onboarding works offline after start; a missing language 
 
   await page.goto('./');
   await expect(page.getByRole('button', { name: de.welcome.start })).toBeVisible();
+  // "After start" includes the idle prefetch (screens and the archetype texts of the reveal).
+  await page.waitForLoadState('networkidle');
   await context.setOffline(true);
 
   await page.getByRole('button', { name: de.welcome.start }).click();
@@ -38,13 +40,14 @@ test('content modules: onboarding works offline after start; a missing language 
   // English texts were never loaded: the switch says so and keeps German.
   await page.getByRole('button', { name: de.archetype.toToday }).click();
   await page.getByRole('link', { name: de.nav.profile }).click();
+  await page.getByRole('button', { name: de.profile.settings }).click();
   await page.getByRole('radio', { name: 'English' }).click();
   await expect(page.getByText(de.errors.contentLoad)).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
-  await expect(page.getByRole('heading', { name: de.profile.title })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: de.profile.settings })).toBeVisible();
 
   await context.setOffline(false);
   await page.getByRole('radio', { name: 'English' }).click();
-  await expect(page.getByRole('heading', { name: en.profile.title })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: en.profile.settings })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 });
