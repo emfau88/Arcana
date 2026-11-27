@@ -85,20 +85,20 @@ Bestand G2: 264 Kartentexte, 56 Archetyp-Texte, 18 Thementexte, 20 Fragebogentex
 
 **Bewertung:** Die Inhaltsmenge ist der eigentliche Engpass, nicht die Technik. Zwei Hebel halten sie beherrschbar: (1) Rollen statt Legungs-Texten, (2) Rückblicke aus eigenen Daten statt neuer Texte. Ohne diese beiden Hebel wären es über 3.000 Texte je Sprache.
 
-## 4 · Archetyp-Zuordnungen (Vorschlag, Prüfung im Paket V04)
+## 4 · Archetyp-Zuordnungen (geprüft in V04.2, S-12)
 
 | Archetyp | Karten (3) | Leitsymbol | weitere Symbole | Resonanzzahlen |
 |---|---|---|---|---|
 | Suchende | Narr, Eremit, Stern | Laterne | Stern, Schlüssel | 5, 7 |
-| Hütende | Herrscherin, Kraft, Mäßigkeit | Lilie | Säulen, Rose | 2, 6 |
-| Sehende | Hohepriesterin, Mond, Stern | Auge | Mond, Feder | 2, 11 |
-| Verwandelnde | Magier, Tod, Turm | Phönix | Schlange, Kelch | 1, 8 |
-| Wandernde | Narr, Wagen, Welt | Feder | Rad, Ähre | 3, 5 |
+| Hütende | Herrscher, Kraft, Mäßigkeit | Lilie | Säulen, Rose | 2, 6 |
+| Sehende | Hohepriesterin, Mond, Glücksrad | Auge | Mond, Feder | 2, 11 |
+| Verwandelnde | Tod, Turm, Teufel | Phönix | Schlange, Kelch | 1, 8 |
+| Wandernde | Wagen, Liebende, Welt | Feder | Rad, Ähre | 3, 5 |
 | Schaffende | Magier, Herrscherin, Sonne | Stab | Sonne, Lotus | 3, 1 |
-| Weise | Hierophant, Eremit, Gerechtigkeit | Eule | Schlüssel, Waage | 4, 9 |
+| Weise | Hierophant, Gerechtigkeit, Gehängter | Eule | Schlüssel, Waage | 4, 9 |
 | Erneuernde | Tod, Gericht, Stern | Lotus | Schmetterling, Lemniskate | 9, 22 |
 
-Die Zuordnungen sind Deutungskonventionen der App, keine Tradition. Sie werden im Profil als „deine Resonanz“ formuliert.
+Die Zuordnungen sind Deutungskonventionen der App, keine Tradition. Sie werden im Profil als „deine Resonanz“ formuliert. Geprüft in V04.2: Jede der 22 Karten gehört zu einem Archetyp, nur Tod und Stern zu zweien (vorher: Stern dreimal, Herrscher, Liebende, Glücksrad, Gehängter und Teufel nie). So bleibt der spätere „Sanfte Spiegel“ (C9) ausgewogen. Struktur in `src/content/resonance.ts`, Begründung in `docs/SELF_DECISIONS.md` S-12. Resonanzzahlen kommen mit V06.
 
 ## 5 · Numerologie: verbindliches Rechenverfahren
 

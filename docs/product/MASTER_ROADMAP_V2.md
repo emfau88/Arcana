@@ -89,7 +89,12 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Ablauf ≤ 75 s: gemessene App-Zeit 2,7 s + 7 × 8 s Lesezeit = 58,7 s (E2E)
   - [x] Bestehende Profile bleiben gültig, Angebot zum Neubestimmen im Profil, kein Zwang (E9, Unit + E2E)
   - [x] Prüfskripte (Evidence, Perf, Showcase, Android) beantworten die Fragen bis zur Themenwahl statt fest vier, damit sie gegen die Referenz und gegen V04 laufen
-- [ ] V04.2 Enthüllung und Profil
+- [ ] V04.2 Enthüllung und Profil (3/5)
+  - [x] „Warum?“ als Rechnung: eigene Antworten mit +2/+1, Summen in der Rangfolge der Regel, Grund für (keine) zweite Stimme; stimmt für alle 16.384 Kombinationen mit dem Ergebnis überein (Unit)
+  - [x] Ausführliche Profile DE/EN im Modul `archetypes`: Beschreibung 120–180 Wörter, 3 Stärken, Schattenfragen, Entwicklung, Reflexionsfragen, Enthüllungssatz, Text als zweite Stimme (Edition-Texte erst mit Billing, S-15)
+  - [x] Resonanz je Archetyp (3 Karten, 3 Symbole) geprüft: jede Karte zugeordnet, nur Tod und Stern doppelt (S-12)
+  - [ ] Porträt-Enthüllung (≤ 8 s, überspringbar, reduziert statisch) und „Warum?“-Ansicht als Vorschlag (D-57)
+  - [ ] Alle acht Archetypen lesbar im Grimoire
 - [ ] V04.3 Heute erweitert (inkl. B-07 Kontrast der Fußzeile, nach Wahl einer sichtbaren Lösung, D-49) (3/4)
   - [x] Linse je Archetyp × Karte: 176 Sätze DE/EN im Modul `identity`, Content-Gate (ein Satz, 12–28 Wörter, abwechslungsreiche Anfänge)
   - [x] Ergänzungslinse jeden dritten Reisetag, Varianten-Index und Ergänzung im Datensatz; frühere Tageskarten zeigen ihren alten Text (D-09, Unit, S-11)
@@ -101,7 +106,12 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Content-Gate: keine Druckwörter, kein Countdown
   - [x] Reisetexte: Eigentümer 27.11.2026 „nach eigenem Ermessen“, Feinschliff im Lektorat (S-02)
   - [ ] Meilenstein-Moment und „Neu“-Markierungen in der Oberfläche (nach einem Muster für den Eigentümer)
-- [ ] V04.5 Sternkarte und Rückblicke
+- [ ] V04.5 Sternkarte und Rückblicke (3/5)
+  - [x] Wochen- und Monatsrückblick aus eigenen Daten über Reisetage; mit 0, 1 und 30 Einträgen ohne Lücken (Unit)
+  - [x] 40 Rückblick-Bausteine DE/EN im Modul `journey`, deterministisch gewählt, Platzhalter geprüft
+  - [x] Archetyp-Kapitel I–IV und Kapitel „Zwei Stimmen“ (8 × 5 je Sprache, 150–250 Wörter) im Modul `chapters` (S-13)
+  - [ ] Sternkarte (SVG auf A19) mit Liste als Textalternative, ≤ 16 ms pro Frame bei 400 Tagen
+  - [ ] Rückblick- und Kapitelansicht als Vorschlag (D-57)
 - [ ] V04.6 „Ich“ und Gestaltung
 - [ ] V04.7 Teilen-Kern und Archetypkarte (E20)
 - [ ] QG-V04, Pages-Vorschau, Freigabe, Tag `v0.4.0`

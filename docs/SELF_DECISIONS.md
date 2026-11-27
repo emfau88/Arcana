@@ -19,6 +19,10 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-09 | 27.11.2026 | Pull Requests zusammenführen | Merge-Commit statt Squash | D-56 |
 | S-10 | 27.11.2026 | B-12 Kopfzeilen der Legung bei 130 % Schrift | in V05.2 mit der neuen Legung lösen | PROJECT_STATUS |
 | S-11 | 27.11.2026 | Linse an Ergänzungstagen und Hinweise | jeder dritte Reisetag, beim Ziehen festgelegt; Hinweise nur für vorhandene Inhalte | V04.3 |
+| S-12 | 27.11.2026 | Karten je Archetyp (Resonanz) | jede Karte zugeordnet, nur Tod und Stern doppelt | V04.2, CONTENT_MASTERPLAN §4 |
+| S-13 | 27.11.2026 | Wo Profile und Kapitel liegen | zwei eigene Module, bei Bedarf geladen | V04.2, V04.5 |
+| S-14 | 27.11.2026 | Aufbau der Rückblicke | über Reisetage, ruhiger Satz bei weniger als zwei Karten, keine Rückblick-Legung vor V05 | V04.5 |
+| S-15 | 27.11.2026 | Edition-Texte (Spannungen, Beziehungsmuster, Ritualreihe) | noch nicht geschrieben | V04.2, AGENTS.md |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -28,6 +32,10 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] Ton der Reisetexte, Stichprobe: Stationen 1, 13, 21 in allen drei Lesarten und Meilenstein Tag 7 (`src/content/modules/journey.de.ts`, S-02)
 - [ ] Linsen, Stichprobe von 10: Suchende × Narr, Hütende × Turm, Sehende × Stern, Verwandelnde × Tod, Wandernde × Wagen, Schaffende × Herrscherin, Weise × Eremit, Erneuernde × Gericht, Suchende × Teufel, Hütende × Mond (`src/content/modules/identity-lens.de.ts`, S-11)
 - [ ] Überschrift an Ergänzungstagen „Durch die Linse deiner zweiten Stimme“ (S-11)
+- [ ] **Schaufenster-Texte vollständig** (CONTENT_MASTERPLAN §8): acht Archetyp-Beschreibungen und Enthüllungssätze (`src/content/modules/archetypes.de.ts`)
+- [ ] Neue Kartenzuordnung je Archetyp (Sehende mit Glücksrad, Hütende mit Herrscher, Verwandelnde mit Teufel, Wandernde mit Liebenden, Weise mit Gehängtem; S-12)
+- [ ] Kapitel, Stichprobe: Suchende I, Hütende III, Weise IV, Erneuernde „Zwei Stimmen“ (`src/content/modules/chapters.de.ts`)
+- [ ] Rückblick-Bausteine, besonders der Ton bei vielen Schattenkarten (`review.balance.shadow.*` in `journey.de.ts`, S-14)
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -139,3 +147,41 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** Ergänzung nach Kalendertag statt Reisetag (springt bei Pausen, wirkt zufällig); jeden zweiten Tag (die Hauptstimme träte zu oft zurück); beide Linsen jeden Tag untereinander (mehr Text auf „Heute“, sichtbare Änderung). Hinweise für alles aus der Tabelle (würde auf noch leere Seiten zeigen).
 
 **Wechsel kostet:** eine Konstante; gespeicherte Tage behalten ihre Linse. Die Überschrift ist ein Text in `src/i18n/`.
+
+## S-12 · Karten je Archetyp (Resonanz)
+
+**Entschieden:** Der Vorschlag aus CONTENT_MASTERPLAN §4 wurde geändert: Sehende bekommen das Glücksrad statt des Sterns, Hütende den Herrscher statt der Herrscherin, Verwandelnde den Teufel statt des Magiers, Wandernde die Liebenden statt des Narren, Weise den Gehängten statt des Eremiten. Jetzt gehört jede der 22 Karten zu einem Archetyp, nur Tod (Verwandelnde, Erneuernde) und Stern (Suchende, Erneuernde) zu zweien (`src/content/resonance.ts`).
+
+**Warum:** Im Vorschlag kam der Stern dreimal vor, fünf Karten nie (Herrscher, Liebende, Glücksrad, Gehängter, Teufel). Der „Sanfte Spiegel“ (C9, 1.2) zählt die Archetypen der gezogenen Karten; mit der alten Liste hätte er Suchende, Sehende und Erneuernde bevorzugt. Die neuen Karten passen zum Bild der Archetypen (Muster und Kreisläufe, schützende Ordnung, lösbare Bindungen, Wahl am Scheideweg, neuer Blickwinkel).
+
+**Alternativen:** Vorschlag unverändert lassen (einfacher, aber unausgewogen); 22 Karten ohne Doppelung auf 8 × 3 Plätze (geht rechnerisch nicht ohne zwei Doppelungen); vier Karten je Archetyp (mehr Text, keine Vorgabe dafür).
+
+**Wechsel kostet:** eine Zeile in `resonance.ts` und der Satz mit den Karten in der Beschreibung (DE/EN); ein Unit-Test prüft, dass die Beschreibung ihre Karten nennt.
+
+## S-13 · Wo Profile und Kapitel liegen
+
+**Entschieden:** Ausführliche Profile im Modul `archetypes`, Kapitel im Modul `chapters`, beide bei Bedarf geladen. Das Startmodul `identity` enthält weiter nur Fragebogen und Linsen.
+
+**Warum:** Die Kapitel sind lang (≈ 40 kB roh je Sprache) und werden nur im Grimoire gelesen. Im Startmodul würden sie jeden Start belasten, auch den ersten.
+
+**Alternativen:** alles in `identity` wie in CONTENT_MASTERPLAN §1 skizziert (ein Modul weniger, aber Start ≈ 25 kB gz mehr); Kapitel je Archetyp einzeln (kleinste Ladung, aber 16 Dateien und mehr Verwaltung).
+
+**Wechsel kostet:** Schlüssel bleiben gleich, nur der Eintrag in `registry.ts` und der Ladeort ändern sich.
+
+## S-14 · Aufbau der Rückblicke
+
+**Entschieden:** Ein Rückblick deckt Reisetage ab (Woche = 7, Monat = 30 Tage mit Nutzung), nicht Kalendertage. Sätze kommen aus 40 Bausteinen, deterministisch nach Nummer des Rückblicks gewählt. Mit weniger als zwei Tageskarten gibt es statt Thema und Balance einen ruhigen Satz („Auch Stille gehört zur Reise“). Höchstens zwei eigene Notizen, die neuesten. Die Rückblick-Legung (Angebot aus PROGRESSION_DESIGN §7) kommt erst mit den Legungen in V05; bis dahin wird nicht auf sie hingewiesen.
+
+**Alternativen:** Kalenderwochen (würden nach Pausen leere oder halbe Rückblicke zeigen); Satzwahl per Zufall (nicht reproduzierbar); Balance als Zahlen („3 lichte, 3 dämmrige, 1 schattige“) statt als Satz (genauer, aber in DE schwierig zu beugen; die Zahlen kann die Oberfläche zusätzlich zeigen).
+
+**Wechsel kostet:** Bausteine sind Texte im Modul, die Auswahl eine Funktion in `src/domain/review.ts`.
+
+## S-15 · Edition-Texte
+
+**Entschieden:** Innere Spannungen, Beziehungsmuster und die Ritualreihe (C5, Edition) werden noch nicht geschrieben.
+
+**Warum:** Ohne freigegebenes Billing werden Edition-Inhalte nicht angezeigt (AGENTS.md, keine Attrappen). Ungenutzte Texte würden veralten und das Lektorat doppelt belasten.
+
+**Alternative:** jetzt schreiben und versteckt mitliefern (fertig, wenn Billing kommt, aber Lektorat und Gate für unsichtbaren Text).
+
+**Wechsel kostet:** etwa 40 Texte je Sprache, sobald V07 (Billing) freigegeben ist.
