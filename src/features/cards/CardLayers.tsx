@@ -12,10 +12,11 @@ import { deepCard, DEEP_ROLES } from '../../content/modules/cards-deep-keys.ts';
 import { dateFromKey } from '../../domain/clock.ts';
 import { journalItems } from '../../domain/journal.ts';
 import { cardEncounters, cardLevel, type CardLevel } from '../../domain/progress.ts';
-import { cardLayers, LEVEL_PHASE, type LevelPhase } from '../../domain/study.ts';
+import { cardLayers, LEVEL_PHASE, nextStudyPart, type LevelPhase } from '../../domain/study.ts';
 import { ALL_THEME_IDS, POSITIONS } from '../../domain/types.ts';
 import { fmt, formatDate } from '../../i18n/index.ts';
 import { useScreenText } from '../../i18n/screens.ts';
+import { CardStudy } from './CardStudy.tsx';
 import './card-page.css';
 
 /** Moon phase from new to full (D3): a lit disc with the shadow drawn as a second ellipse. */
@@ -53,7 +54,8 @@ export default function CardLayers({ id }: { id: string }) {
   const { status, retry } = useModules(['cards-deep', 'spreads']);
   const card = findCard(pack, id);
   const facts = factsOf(state);
-  const level: CardLevel = cardLevel(cardEncounters(facts).get(id));
+  const encounters = cardEncounters(facts).get(id);
+  const level: CardLevel = cardLevel(encounters);
   if (!card || level === 0) return null;
 
   const open = new Set(cardLayers(level));
@@ -73,6 +75,8 @@ export default function CardLayers({ id }: { id: string }) {
           {level < 4 ? <span className="small muted">{s.deeper}</span> : null}
         </p>
       </div>
+
+      {deep ? <CardStudy id={id} step={nextStudyPart(encounters)} level={level} texts={deep.study} /> : null}
 
       {open.has('message') && themeId && card.themes[themeId] ? (
         <Layer title={fmt(s.message, { theme: themeLabel(themeId) })}>

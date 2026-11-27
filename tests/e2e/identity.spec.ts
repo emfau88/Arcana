@@ -261,3 +261,44 @@ test('V05.1: the card page shows the level as a moon phase and every layer that 
   await expect(page.getByText('Mein Satz zu dieser Karte.')).toBeVisible();
   expect(problems).toEqual([]);
 });
+
+test('V05.1: the card study opens levels 2 and 3, and an answer makes level 4', async ({ page }, info) => {
+  test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
+  const t = ui(info);
+  const s = screens(info).card;
+  const problems = guard(page);
+  await completeOnboarding(page, t);
+  const profile = await readProfile(page);
+  // One encounter only: level 1. Everything after comes from the study, without chance.
+  const c = CONTENT.cards[7]!.id;
+  await putDaily(page, pastDays(profile, 1, {}).map((d) => ({ ...d, cardId: c })));
+  await page.goto(`/#/grimoire/card/${c}`);
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 1, name: s.levelNames[1]! }), { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.light, exact: true })).toHaveCount(0);
+
+  // Part 1: a tap on "Read" is enough.
+  await page.getByRole('button', { name: s.studyStart }).click();
+  await expect(page.getByRole('heading', { name: fmt(s.studyPart, { n: 1, name: s.studyParts[0]! }) })).toBeFocused();
+  await page.getByRole('button', { name: s.studyRead, exact: true }).click();
+  await expect(page.getByText(fmt(s.studyLevel, { n: 2, name: s.levelNames[2]! }))).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.study, exact: true })).toBeFocused();
+  await expect(page.getByRole('heading', { name: s.light, exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.otherThemes, exact: true })).toHaveCount(0);
+
+  // Part 2 with an answer: level 3 from the study, level 4 from the answer as a reflection.
+  await page.getByRole('button', { name: s.studyContinue }).click();
+  const answer = info.project.name.includes('-en-') ? 'I would keep the reins loose today.' : 'Ich würde heute die Zügel locker lassen.';
+  await page.getByLabel(s.studyAnswer).fill(answer);
+  await page.getByRole('button', { name: s.studyKeep }).click();
+  await expect(page.getByText(fmt(s.studyLevel, { n: 4, name: s.levelNames[4]! }))).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.symbols, exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.notes, exact: true })).toBeVisible();
+  await expect(page.getByText(answer)).toBeVisible();
+
+  // Stored facts: after a reload the level stays, and the study can be repeated at will.
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 4, name: s.levelNames[4]! }), { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: s.studyRepeat })).toBeVisible();
+  expect(problems).toEqual([]);
+});

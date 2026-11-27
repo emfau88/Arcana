@@ -74,3 +74,23 @@
   stroke: var(--brass-300);
   stroke-width: 1;
 }
+.card-study__label {
+  margin: 0;
+}
+.card-study__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  justify-content: flex-end;
+}
+.card-study__start {
+  justify-self: start;
+}
+.card-study__done {
+  margin: 0;
+  color: var(--brass-200);
+}
+/* The heading takes the focus after opening and finishing (like h1[tabindex='-1'] in screens.css). */
+.card-study h2[tabindex='-1']:focus {
+  outline: none;
+}
