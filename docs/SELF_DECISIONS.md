@@ -60,6 +60,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-48 | 27.11.2026 | Tagebuch als Chronik | alle Tageskarten, Legungen und eigenen Einträge, neueste zuerst; Filter nur für vorhandene Arten, nach Karte und „nur mit eigenen Worten“; lokale Suche über eigene Worte, Kartentitel, Thema und Legungsname | V05.4, PRODUCT_SYSTEMS E3 |
 | S-49 | 27.11.2026 | Löschen im Tagebuch | nimmt die eigenen Worte, nicht den Tag: Eintrag geleert mit `deletedAt`, Notiz geleert, `notedAt` hält die Reflexion; Reisetag und Kartenstufe sinken nicht | V05.4, IA §5.5, PROGRESSION_DESIGN |
 | S-50 | 27.11.2026 | Export von B3 | wie B2 (D-55) nach `art/b3/`, außerhalb von `public/`; Vignetten in einem gemeinsamen Maßstab ausgeschnitten, auch die Schlussvignette quadratisch; Rücken-Vorschau 240 × 360 ≤ 30 KB | V05, ASSET_REQUESTS |
+| S-51 | 27.11.2026 | Kartenrücken an Tag 2, 5 und 10 | Mondsichel an Tag 2, Sternenkompass an Tag 5, Goldenes Rad (A22, aus B5 vorgezogen) an Tag 10; die Meilensteine 14 und 75 entfallen, Tag 365 behält das Jahresbuch | D-66, V05.5, PROGRESSION_DESIGN §3.2 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -659,3 +660,25 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Schlussvignette im eigenen flachen Format (etwa 320 × 140): kleiner, aber abweichend von der Vorgabe; lässt sich beim Einbau noch ändern.
 
 **Wechsel kostet:** ein neuer Lauf des Skripts; die Master bleiben unverändert im Lieferordner.
+
+## S-51 · Kartenrücken an Tag 2, 5 und 10
+
+**Entschieden:** Nach D-66 öffnen sich die drei Kartenrücken früh. Zuordnung und Folgen habe ich so festgelegt:
+
+- **Tag 2:** Mondsichel (A20), zusammen mit der Einladung zu den Zahlen. Der Hinweis des Tages zeigt den Rücken, weil ein Meilenstein vor einer Welt-Einladung kommt.
+- **Tag 5:** Sternenkompass (A21), ein neuer fester Meilenstein mit eigenem Text.
+- **Tag 10:** Goldenes Rad (A22), zusammen mit dem persönlichen Symbol. A22 war für Tag 365 und Bulk B5 (V07) geplant und liegt schon im Lieferordner. Es ist jetzt wie die B3-Rücken exportiert, nach `art/b5/` (720 × 1080 mit 117,6 KB, Vorschau 240 × 360 mit 21,7 KB, beides im Budget).
+- **Tag 14 und 75:** Die festen Meilensteine entfallen. Tag 14 bleibt ein Meilenstein, weil der zweite Wochenrückblick an diesem Tag erscheint, mit dem allgemeinen Wochentext. Tag 75 ist kein Meilenstein mehr.
+- **Tag 365:** Hier bleibt das Jahresbuch, der Satz zum Goldenen Rad fällt weg.
+- **Texte:** Die Texte zu Tag 2, 5, 10 und 365 sind in DE und EN angepasst. Jeder hat höchstens drei Sätze und 220 Zeichen. Die Namen passen zu den Bildern: Die Mondsichel zeigt eine schmale Sichel mit Lilien, der Sternenkompass eine achtzackige Kompassrose in Astrolabium-Ringen und das Goldene Rad ein Rad mit acht Speichen, Sonnen- und Mondscheiben, Lorbeer und Weizen. Die Modulversion ist jetzt `journey-2026-11-27.4`.
+
+**Warum:** Am natürlichsten ist die Reihenfolge der Lieferung: Mondsichel und Sternenkompass gehören zu B3, das Goldene Rad ist das prächtigste Motiv. Für Tag 14 und 75 eine neue Belohnung zu erfinden, ginge über den freigegebenen Umfang hinaus. Tag 75 hätte sonst einen Meilenstein ohne Inhalt.
+
+**Alternativen:**
+- Rad an Tag 2 und Mondsichel an Tag 10: Das prächtigste Motiv käme zuerst, und es bliebe wenig zum Entdecken.
+- Tag 14 und 75 mit einer gestalterischen Freischaltung aus dem Jubiläums-Pool (Lesebändchen, Lorbeer): Der Pool reicht genau für die Tage 150 bis 250 und wäre danach leer.
+- Das Goldene Rad an Tag 365 lassen und an Tag 10 einen neuen, vierten Rücken anfordern: ein neues Bild, das noch niemand gezeichnet hat; der Eigentümer hat drei Rücken genannt.
+
+**Folgen:** Bis V05.5 gebaut ist, steht der Text zum Rücken schon in der Liste der erreichten Meilensteine auf der Reise-Seite, auch wenn es die Auswahl noch nicht gibt. So war es vorher für Tag 14 auch. Der Meilenstein-Moment auf „Heute“ und der Hinweis erscheinen erst, wenn `cardbacks` gebaut ist (D-54). Bis zu QG-V05 schließt V05.5 diese Lücke.
+
+**Wechsel kostet:** `FIXED_MILESTONES` in `src/domain/progress.ts`, `MILESTONE_TEXT_DAYS` in `src/domain/journey.ts` und die Texte im Modul `journey`.

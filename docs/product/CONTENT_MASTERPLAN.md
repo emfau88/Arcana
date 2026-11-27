@@ -64,7 +64,7 @@ Bestand G2: 264 Kartentexte, 56 Archetyp-Texte, 18 Thementexte, 20 Fragebogentex
 | Ergänzungskapitel (Tag 100) | 8 | 150–250 Wörter | V04 | Free |
 | **Reise** Stationen (21 × 3 Runden) | 63 | 2–3 Sätze | V04 | Free |
 | Wegeinführungen, Rundenabschlüsse | 13 | 2–3 Sätze | V04 | Free |
-| Meilenstein-Texte | 20 | 1–3 Sätze | V04 | Free |
+| Meilenstein-Texte | 19 (D-66: Tag 5 neu, Tag 14 und 75 entfallen) | 1–3 Sätze | V04 | Free |
 | Rückblick-Bausteine | 40 | Satzvorlagen | V04 | Free |
 | **Legungen** Definitionen, Rahmen, Labels, Synthesen (5 neue) | ~60 | kurz | V05 / V07 | Free / Edition |
 | **Numerologie** 12 Zahlen × (Schlagworte, Essenz, Lebenszahl, Geburtstagszahl, 3 Stärken, 3 Herausforderungen, 2 Reflexionen) | ~140 | Lebenszahl 100–150 Wörter, sonst kurz | V06 | Free / Edition (Herausforderungen ausführlich) |

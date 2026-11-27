@@ -64,22 +64,21 @@ Jeder Meilenstein öffnet **echten Inhalt** oder eine **gestalterische Freischal
 | Reisetag | Meilenstein | Belohnung (Typ) | Herkunft im Auftrag |
 |---|---|---|---|
 | 1 | Erste Karte, Archetyp enthüllt | Grimoire-Einband mit Namen der Archetypen, Station I | wie Auftrag |
-| 2 | Einladung: deine Zahlen | Weltvorstellung Numerologie (nichts gesperrt) | neu |
+| 2 | Kartenrücken „Mondsichel“, Einladung: deine Zahlen | gestalterisch (A20), wählbar für verdeckte Karten; Weltvorstellung Numerologie (nichts gesperrt) | Rücken: Eigentümer (D-66) |
 | 3 | Archetyp-Kapitel I „Deine Gabe“ | Inhalt (C6) | „vertiefende Archetyp-Botschaft“ |
 | 4 | Einladung: Engelszahlen | Weltvorstellung | neu |
+| 5 | Kartenrücken „Sternenkompass“ | gestalterisch (A21) | Eigentümer (D-66) |
 | 6 | Einladung: Symbole | Weltvorstellung | neu |
 | 7 | Erster Wochenrückblick | Inhalt (datenbasiert) + Rückblick-Legung | wie Auftrag |
-| 10 | Dein Symbol | persönliches Symbol = Leitsymbol des Hauptarchetyps, im Ex Libris | „spirituelles Symbol“ (Tag 14), vorgezogen |
-| 14 | Kartenrücken „Mondsichel“ | gestalterisch (A20), wählbar für verdeckte Karten | neu |
+| 10 | Dein Symbol, Kartenrücken „Goldenes Rad“ | persönliches Symbol = Leitsymbol des Hauptarchetyps, im Ex Libris; gestalterisch (A22) | Symbol: „spirituelles Symbol“ (Tag 14), vorgezogen; Rücken: Eigentümer (D-66), vorher Tag 365 |
 | 21 | Erste Runde vollendet | Sternbild I + Archetyp-Kapitel II „Deine Verbindungen“ (erweitertes Profil) | „erweitertes Archetypenprofil“ |
 | 30 | Erster Monatsrückblick | Inhalt (datenbasiert) | wie Auftrag |
 | 42 | Zweite Runde vollendet | Sternbild II + Archetyp-Kapitel III „Dein Schatten“ | neu |
 | 50 | Grimoire-Kapitel „Ex Libris“ veredelt | Goldschnitt-Variante des Einbands + persönliche Widmungsseite (eigener Satz, privat) | „besonderes Grimoire-Kapitel“ |
 | 63 | Dritte Runde vollendet | Sternbild III + Archetyp-Kapitel IV „Dein Weg“, Stationen lesen sich nun als „Weisheit“ | neu |
-| 75 | Kartenrücken „Sternenkompass“ | gestalterisch (A21) | neu |
 | 100 | Der erweiterte Pfad | Hundert-Tage-Rückblick, Ergänzungsarchetyp-Kapitel „Zwei Stimmen“ (bei Ergänzung) bzw. „Die andere Seite“ (Archetyp mit der zweithöchsten Punktzahl), Sternbild „Hundert“ | „erweiterter Entwicklungspfad“ |
 | 150, 200, 250, 300 | Jubiläum | Rückblick + Freischaltung aus Pool §3.3 | Regel |
-| 365 | Ein Jahr | Jahresbuch, Kartenrücken „Goldenes Rad“ (A22) | Regel |
+| 365 | Ein Jahr | Jahresbuch | Regel |
 
 ### 3.3 Pool gestalterischer Freischaltungen (für Jubiläen)
 

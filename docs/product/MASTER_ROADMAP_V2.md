@@ -147,7 +147,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Lokale Suche ohne Groß- und Kleinschreibung, Akzente und ß: 1.000 Einträge mit Index-Aufbau rund 9 ms ≤ 50 ms (Unit)
   - [x] Einzelne Einträge löschen: Worte weg, Tag und Kartenstufe bleiben (S-49); Schreiben, Bearbeiten, Löschen und Studium im Store, übersteht einen Neustart (Unit mit IndexedDB)
   - [ ] Tagebuch-Screen mit Filtern, Suche und Löschdialog im Grimoire-Buch (V05.3), dazu E2E
-- [ ] V05.5 Kartenrücken (E10)
+- [ ] V05.5 Kartenrücken (E10 entschieden, D-66: Tag 2, 5 und 10)
 - [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17)
 - [ ] QG-V05, geschlossener Test, Tag `v0.5.0`
 
@@ -278,7 +278,7 @@ Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentümer den Tagesorak
 | V05.2 Rollen-Legungen | Legungs-Engine mit Rollen R1–R8, Licht und Schatten, Neuanfang, Rückblick-Legung. Zwei Wege und Verbindung gebaut, aber nur mit `edition.spreads` sichtbar | Matrix-Test: jede Kartenkombination jeder Legung ergibt vollständigen Text in DE/EN. Kein Positionsname verspricht Zukunft (Content-Gate). Alte Readings werden unverändert angezeigt |
 | V05.3 Grimoire als Buch | Einband (A15), Inhaltsverzeichnis, 7 Kapitel mit Vignetten, Pergament (A30), Leerzustände, „Neu“-Glanz | jeder gespeicherte Eintrag in ≤ 3 Taps auffindbar (E2E). Jedes Kapitel hat einen gestalteten Leerzustand (Screenshot-Review) |
 | V05.4 Tagebuch und Suche | Tagebuch mit Filtern, Notizen aus Tageskarte und Legung zusammen mit `journal`, lokale Suche | Suche über 1.000 Einträge ≤ 50 ms. Einzelne Einträge löschbar (E2E) |
-| V05.5 Kartenrücken | Auswahl in Einstellungen, Freischaltung über Meilensteine 14 und 75 | Rücken wechselt in Heute und Orakel. Nicht freigeschaltete Rücken erscheinen nicht als Kaufangebot |
+| V05.5 Kartenrücken | Auswahl in Einstellungen, Freischaltung an den Reisetagen 2, 5 und 10 (D-66) | Rücken wechselt in Heute und Orakel. Nicht freigeschaltete Rücken erscheinen nicht als Kaufangebot |
 | V05.6 Orakel-Gestaltung und Testpaket | A03 im Orakel, Release-Build mit Testsignatur, Testanleitung, App-ID final (E11) | geschlossener Test kann starten (Freigabe E11, E17) |
 
 **Aufwand:** 7–8 Sitzungen. **Gate QG-V05:** Fertig-Kriterien, alle Perf-Budgets, TalkBack-Grundcheck, Version 0.5 im geschlossenen Test (nur nach Freigabe).
@@ -335,7 +335,7 @@ Angefordert wird **immer nur der nächste Bulk**; eingebaut, geprüft und ins Re
 | B2 | V04 | A05 Ich/Enthüllung, A06 Willkommen, A07–A14 Archetyp-Porträts, A19 Sternkarte | 11 | geliefert, eingebaut (D-58) |
 | B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | im Lieferordner vollständig, Einbau in V05 |
 | B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | im Lieferordner vollständig, Einbau in V06 |
-| B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“, A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
+| B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“ (für Tag 10 nach V05 vorgezogen und exportiert, D-66, S-51), A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
 | B6 | 1.1 | A34 Mondwelt | 1 | im Lieferordner, Einbau in 1.1 |
 | B7 | 1.2 | Zusatzdeck | 23 | im Lieferordner (23 Dateien), Einbau erst nach Entscheidung |
 | zurückgestellt | – | A16 Dekor-Sheet (nur falls ein Screen es braucht), A17 figurative Ersatzkarten (E3) | – | – |
@@ -433,7 +433,7 @@ Regeln:
 |---|---|---|---|
 | E8 | Fünf Tabs mit „Entdecken“ ab V06 | ja | V06 |
 | E9 | Fragebogen v2 (7 Fragen) für Bestandsnutzer: Angebot zum Neubestimmen statt Zwang | **entschieden 26.11.2026 (D-47):** Angebot, Profil bleibt | V04 |
-| E10 | Kartenrücken als Meilenstein-Belohnung (A20–A22) | ja | V05 |
+| E10 | Kartenrücken als Meilenstein-Belohnung (A20–A22) | **entschieden 27.11.2026 (D-66):** ja, früh an den Reisetagen 2, 5 und 10 (Mondsichel, Sternenkompass, Goldenes Rad; S-51) | V05 |
 | E11 | Finaler App-Name und App-ID (lässt sich nach dem ersten Play-Upload nicht mehr ändern). Eigentümer 27.11.2026: Es gibt eine alte Live-App ohne Nutzer, die ARCANA ersetzen soll; ob ihr Eintrag überschrieben wird oder ein neuer entsteht, hängt am Kontotyp und am Erstellungsdatum des Play-Kontos (noch offen) | vor dem geschlossenen Test festlegen | V05.6 |
 | E12 | Namenszahlen erst ab 1.3 | ja | – |
 | E13 | Lokale Benachrichtigungen über das offizielle Capacitor-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | ja | V07 |
@@ -452,7 +452,7 @@ Stand 27.11.2026, nach 0.4.1. V02, V03 und V04 sind abgeschlossen.
 1. **Design-Plan einbauen** (D-64): Die Muster sind entschieden (Punkt 2 A, Punkt 5 B, Punkt 6 A); eingebaut wird in V05 nach der Vorlage `muster/design-plan` (S-42), mit Texten in `i18n`, Tests, Android und Kontrastmessung.
 2. **V05 freigeben und umsetzen** auf `feature/v05-karten` (D-60), Reihenfolge nach S-29: V05.1 Logik und Texte, V05.2 Legungs-Engine, V05.4 Tagebuch und Suche, dann B3 exportieren und die Screens (V05.1, V05.3, V05.5, V05.6).
 3. **Vor QG-V05:** Leistungsmessung gegen die Referenz (D-52, B-08).
-4. **Eigentümer:** E10 Kartenrücken, E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor V05.6); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) sind entschieden.
+4. **Eigentümer:** E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor V05.6); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) und E10 (D-66) sind entschieden.
 5. **Kleine Reste:** Design-Plan Punkte 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request), noch nicht beauftragt.
 
 ## 11 · Ergänzungen nach der Freigabe (26.11.2026)
