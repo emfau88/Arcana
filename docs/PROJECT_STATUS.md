@@ -117,6 +117,22 @@ Prüfungen auf dem Branch (27.11.2026): `npm run check` PASS (200 Unit-Tests, Co
 
 Inhaltsversion des Kerns jetzt `p0-2026-11-27.1`. Gespeicherte Legungen behalten ihren alten Positionsnamen (D-09). Offen bleibt E18: ein menschliches Lektorat vor 1.0. Die Stationstexte der Narrenreise erzählen weiter von Figuren („Die Hohepriesterin sitzt zwischen zwei Säulen“); das ist dort Erzählung, keine Bildbeschreibung, und bleibt.
 
+## Korrekturen aus dem Design-Plan (27.11.2026, Branch `fix/v041-layout`, Version 0.4.1, D-63)
+
+Der Eigentümer hat nach dem Design-Audit die Punkte 1, 3 und 4 freigegeben. Der Branch baut auf `fix/v04-texte` auf.
+
+| Punkt | Vorher | Nachher | Beleg |
+|---|---|---|---|
+| 1 Hauptaktion sichtbar | Bei 375 × 812 px begann „Archetyp enthüllen“ bei 881 px, „Drei Karten ziehen“ bei 1.114 px, „Zur Tageskarte“ stand am Ende von 1.512 px | Die Hauptaktion bleibt am unteren Rand stehen (`.sticky-action`). Gemessen bei 360 × 800, 375 × 812, 412 × 915 (DE), 360 × 780 (EN) und 360 × 800 mit 130 % Schrift: alle drei Knöpfe vollständig im ersten Bildschirm und nicht verdeckt | `tests/e2e/layout.spec.ts` (drei Handy-Projekte) |
+| 3 Absätze | Beschreibung (bis 180 Wörter) und Kapitel (bis 250 Wörter) als ein Absatz | Beschreibungen in drei Absätzen, Kapitel in drei bis fünf, kein Absatz über 100 Wörter, die Schlussfrage abgesetzt in der Kursiv-Serife (`src/ui/Prose.tsx`). 96 Texte je Sprache gegliedert | `tests/unit/prose.test.tsx` |
+| 4a Willkommen | „Ohne Konto. Alles bleibt auf diesem Gerät.“ bei 375 × 812 px abgeschnitten | Zeile direkt unter „Beginnen“; bei 360 × 780 bis 412 × 915 px stehen Knopf, Zeile und „Fragen überspringen“ im ersten Bildschirm (bei 130 % Schrift wird gescrollt, wie auf „Heute“) | `layout.spec.ts` |
+| 4b Zähler | „1 / 22“ las sich als römische I | gerade Ziffern (`lining-nums`) | Aufnahme im Pull Request |
+| 4c Positionsnamen | „Herausforderung“ brach bei 360 bis 412 px in zwei Zeilen | einzeilig bei normaler Schrift (Abstand zum Nachbarn ≥ 22 px); bei 130 % Schrift bricht es weiter mit Trennstrich um | `layout.spec.ts` |
+
+Nebenbei gefunden: Der Tag `v0.4.0` trägt in `package.json`, im Android-Projekt und in der App noch die Version 0.3.0 (versionCode 4). Dieser Branch setzt 0.4.1 und versionCode 5.
+
+Prüfungen auf dem Branch: `npm run check` PASS (204 Unit-Tests, Content-Gate 0 Fehler und 0 Warnungen, Start-JS 139,5 kB); E2E auf dem Produktions-Build PASS (32 bestanden, 44 bewusst übersprungen, 0 fehlgeschlagen; neu `layout.spec.ts` auf 412 × 915, 360 × 780 und 320 × 640 px). **Android-Emulator: NOT RUN** (vor dem Merge nachholen: klebende Hauptaktion über der Tab-Leiste und Insets). Kontrastmessung der neuen Leiste: NOT RUN; der Schleier ist dunkler als jeder Hintergrund darunter, der Knopf selbst ist unverändert. Leistung gegen die Referenz: NOT RUN (D-52).
+
 ## Nachweise V04 (Stand 27.11.2026)
 
 | Prüfung | Ergebnis | Beleg |
