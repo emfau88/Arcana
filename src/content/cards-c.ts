@@ -187,12 +187,12 @@ export const CARDS_C: readonly CardContent[] = [
         en: 'Wholeness begins with you. When you experience yourself as complete, closeness can become freer. Celebrate what has grown well in your connections.',
       },
       career: {
-        de: 'Ein Vorhaben kommt zum Abschluss oder ist näher daran, als du denkst. Bring es sauber zu Ende und nimm dir Zeit, den Erfolg wahrzunehmen. Danach öffnet sich der nächste Kreis.',
-        en: 'A project is coming to completion, or is closer than you think. Bring it to a clean finish and take time to take in the success. Afterwards, the next circle opens.',
+        de: 'Vielleicht kommt ein Vorhaben gerade zum Abschluss oder ist näher daran, als du denkst. Bring es sauber zu Ende und nimm dir Zeit, den Erfolg wahrzunehmen. Danach öffnet sich der nächste Kreis.',
+        en: 'A project may be coming to completion, or be closer to it than you think. Bring it to a clean finish and take time to take in the success. Afterwards, the next circle opens.',
       },
       change: {
-        de: 'Ein Übergang ist fast geschafft. Schau, was du auf diesem Weg gewonnen hast. Mit diesem Wissen kannst du die nächste Schwelle gelassen betreten.',
-        en: 'A transition is almost complete. Look at what you have gained along the way. With that knowledge you can cross the next threshold calmly.',
+        de: 'Vielleicht ist ein Übergang schon fast geschafft. Schau, was du auf diesem Weg gewonnen hast. Mit diesem Wissen kannst du die nächste Schwelle gelassen betreten.',
+        en: 'A transition may already be almost complete. Look at what you have gained along the way. With that knowledge you can cross the next threshold calmly.',
       },
       balance: {
         de: 'Du bist mehr als deine Aufgaben. Spür heute, wie die verschiedenen Teile deines Lebens zusammengehören. Ganzheit fühlt sich oft wie Weite an.',

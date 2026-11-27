@@ -97,7 +97,7 @@ export const CARDS_B: readonly CardContent[] = [
     positions: {
       situation: {
         de: 'Ein Rückzug ist gerade wichtiger als neuer Trubel.',
-        en: 'Stepping back matters more right now than new bustle.',
+        en: 'Stepping back matters more right now than more bustle.',
       },
       challenge: {
         de: 'Aus Rückzug kann Isolation werden, wenn er kein Ende findet.',
@@ -134,8 +134,8 @@ export const CARDS_B: readonly CardContent[] = [
         en: 'Relationships have their seasons. A lighter or heavier phase does not say everything about the whole. See what you can contribute in this stretch.',
       },
       career: {
-        de: 'Gelegenheiten kommen und gehen in Wellen. Halte die Augen offen für eine Wendung, die sich jetzt bietet. Bereit zu sein heißt, beweglich zu bleiben.',
-        en: 'Opportunities come and go in waves. Keep your eyes open for a turn that is presenting itself now. Being ready means staying flexible.',
+        de: 'Gelegenheiten kommen und gehen in Wellen. Halte die Augen offen für eine Wendung, die sich vielleicht gerade bietet. Bereit zu sein heißt, beweglich zu bleiben.',
+        en: 'Opportunities come and go in waves. Keep your eyes open for a turn that may be presenting itself now. Being ready means staying flexible.',
       },
       change: {
         de: 'Manches lässt sich nicht steuern, nur beantworten. Konzentriere dich auf das, was in deinem Einfluss liegt, und lass den Rest sich drehen. Auch Zufälle lassen Raum für eigene Entscheidungen.',
@@ -147,7 +147,7 @@ export const CARDS_B: readonly CardContent[] = [
       },
       creativity: {
         de: 'Kreativität hat Phasen: Sammeln, Reifen, Gestalten, Loslassen. Erkenne, in welcher du gerade bist, und arbeite mit ihr statt gegen sie. Der nächste Schwung kommt.',
-        en: 'Creativity has phases: gathering, ripening, making, letting go. Recognise which one you are in and work with it rather than against it. The next swing will come.',
+        en: 'Creativity has phases: gathering, ripening, making, letting go. Recognise which one you are in and work with it rather than against it. The next surge will come.',
       },
     },
     positions: {
@@ -199,7 +199,7 @@ export const CARDS_B: readonly CardContent[] = [
       },
       balance: {
         de: 'Ausgleich heißt nicht, dass alles gleich viel Raum bekommt. Prüfe, wo du zu viel gibst und wo zu wenig. Kleine Korrekturen bringen dich wieder ins Lot.',
-        en: 'Balance does not mean everything gets the same room. Check where you give too much and where too little. Small corrections bring you back into line.',
+        en: 'Balance does not mean everything gets the same room. Check where you give too much and where too little. Small corrections bring you back to centre.',
       },
       creativity: {
         de: 'Auch Gestaltung braucht ein ehrliches Urteil. Schau dein Werk mit klarem Blick an: Was trägt, was kann weg? Kürzen ist oft der kreativste Schritt.',
@@ -432,8 +432,8 @@ export const CARDS_B: readonly CardContent[] = [
     },
     positions: {
       situation: {
-        de: 'Eine Gewohnheit oder Abhängigkeit prägt die Lage stärker als gedacht.',
-        en: 'A habit or dependency shapes the situation more than you thought.',
+        de: 'Eine Gewohnheit oder Bindung prägt die Lage stärker als gedacht.',
+        en: 'A habit or attachment shapes the situation more than you thought.',
       },
       challenge: {
         de: 'Bequemlichkeit kann sich wie Sicherheit anfühlen und dich doch binden.',
