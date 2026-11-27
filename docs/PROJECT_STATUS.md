@@ -89,6 +89,24 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 | B-14 | Android-Emulator: Das erste Teilen-Bild direkt nach dem Fragebogen brauchte manchmal ≈ 13,3 s statt ≤ 1,5 s (4 von 19 Läufen, heute 2 von 2 reproduziert). Ursache (Trace): Die Karte war nach ≈ 0,5 s gezeichnet, danach wartete die PNG-Kodierung. Chromium kodiert `toBlob` auf dem Hauptthread nur in Leerlaufphasen; auf einer ganz ruhigen Seite gibt es keine, dann greifen feste Fristen (Android: 4 s + 9 s) | **erledigt** (S-30): Die PNG-Kodierung läuft in einem kleinen Worker (`OffscreenCanvas.convertToBlob`), `toBlob` bleibt als Rückfall. Danach im selben Ablauf 230–299 ms; Story online 288–311 ms, offline nach Kaltstart 479–639 ms, Beitrag 94–137 ms (7 von 7 Läufen ≤ 1,5 s). Bild unverändert (Bildvergleich im E2E) | `visual/perf/v04-android-b13-b14.json`, `tests/e2e/identity.spec.ts` |
 | B-12 | Nach B-10: Bei 130 % Schrift (DE, 360 px) ist der Name „Herausforderung“ über der gezogenen Legung dreizeilig, die mittlere Karte sitzt dadurch 17 px tiefer als die äußeren (gleich groß, nur nicht auf einer Linie). Bei normaler Schrift auf einer Linie | offen, kosmetisch; wird in V05.2 mit der neuen Legung gelöst (S-10). Mögliche Lösung: Kopfzeilen der drei Spalten als gemeinsame Zeile (CSS-Subgrid) | `visual/evidence/v03-review-360-de130-412-en.webp` |
 
+## Textdurchsicht V04 (27.11.2026, Branch `fix/v04-texte`, D-62)
+
+Der Eigentümer hat die Textprüfung von V04 dem Agenten übertragen. Gelesen: alle V04-Texte vollständig in DE und EN (8 Profile mit Enthüllungssätzen, 176 Linsen, 136 Reise- und Rückblicktexte, 40 Kapitel je Sprache). Urteil: Ton einheitlich und ruhig, keine Vorhersagen, keine Druckwörter, Schatten als Fragen. Für V04 fehlen keine Texte; bewusst nicht geschrieben sind die Edition-Texte (S-15) und die Jubiläums-Rückblicke (S-22).
+
+| # | Befund | Korrektur | Entscheidung |
+|---|---|---|---|
+| T-01 | Rückblick nannte wiederkehrende Karten als nackten Titel: „Der Tod ist dir 3-mal begegnet“ (EN „Death came to you 3 times“); bei „Die Liebenden“ war das Verb falsch (drei von vier Bausteinen) | „Die Karte „{card}“ …“ / “The card “{card}” …” | S-35 |
+| T-02 | Linse Verwandelnde × Tod: „Der Tod ist dir vertraut wie eine Werkstatt“ | „Die Karte Tod ist dir vertraut …“ / “The Death card …” | S-35 |
+| T-03 | „Als Suchende gehst du …“ sprach die Person 39-mal weiblich an (8 Profile, 31 Kapitel), obwohl D-08 geschlechtsinklusive Namen will | Anrede ohne „als <Name>“; die Namen bleiben | S-32 |
+| T-04 | 138 von 176 Linsen je Sprache hielten zwei Hauptsätze mit Semikolon zusammen (Folge der Ein-Satz-Regel) | zwei schlichte Sätze; Regel 1–2 Sätze | S-33 |
+| T-05 | 12 Kapitelstellen beschrieben Bilder der klassischen Karten (Kind auf dem Pferd, tanzende Gestalt, Gestalten in Ketten), das gemalte Deck zeigt aber keine Figuren | beschrieben wird, was das Deck zeigt (Sonnenblumen, Erde im Kranz, offene Fesseln …) | S-34 |
+| T-06 | Enthüllungssatz und erster Satz der Beschreibung wiederholten die Essenz fast wörtlich (z. B. Weise dreimal „Du suchst das Verstehen hinter den Dingen“) | acht Enthüllungssätze je Sprache neu, dazu die Beschreibungsanfänge, die die Essenz wiederholten (DE fünf, EN vier) | S-36 |
+| T-07 | „In der Bildsprache dieser App“ achtmal | „In diesem Grimoire stehen dir drei Karten besonders nah“ | S-34 |
+| T-08 | Verrenkte Satzanfänge durch die Abwechslungsregel („Gestalten möchte in dir auch eine schaffende Seite“), zwei unklare Bezüge (Station XV und XX, Wiederkehr) | natürliche Wortstellung | – |
+| T-09 | EN: Germanismen („On the way it shows who …“, „Like a red thread“), „who“ für Karten ohne Person (Stern, Mond, Rad …), sechs Schlussfragen mit nachgestelltem „soon“ | idiomatisches Englisch | – |
+
+Prüfungen auf dem Branch (27.11.2026): `npm run check` PASS (200 Unit-Tests, Content-Gate 0 Fehler und 0 Warnungen, Start-JS 139,4 kB, größtes Modul `chapters.de` 13,6 kB gz); E2E auf dem Produktions-Build PASS (27 bestanden, 41 bewusst übersprungen, 0 fehlgeschlagen; der Bildvergleich der Teilen-Karte ist unverändert, sie zeigt Name, Essenz und Stärken). Android-Emulator und Leistung gegen die Referenz: NOT RUN (reine Textänderung, kein neuer Code im Startpfad). Nicht Teil dieser Durchsicht: die 264 Kartentexte aus G2 und die Oberflächentexte in `src/i18n/` (Lektorat E18 bleibt offen). Die Stationstexte der Narrenreise erzählen weiter von Figuren („Die Hohepriesterin sitzt zwischen zwei Säulen“); das ist dort Erzählung, keine Bildbeschreibung, und bleibt.
+
 ## Nachweise V04 (Stand 27.11.2026)
 
 | Prüfung | Ergebnis | Beleg |
