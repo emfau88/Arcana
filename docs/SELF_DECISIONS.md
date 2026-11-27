@@ -36,6 +36,8 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-26 | 27.11.2026 | Notizen im Rückblick | als Zitat im Text statt eigener Abschnitt, kurze Daten unter den Karten | V04.5 |
 | S-27 | 27.11.2026 | A06 hinter Willkommen und Fragen | abgedunkelt wie die ruhigen Screens | V04.6 |
 | S-28 | 27.11.2026 | Bildvergleich der Teilen-Karte | Feed-Karte auf ein Viertel verkleinert, je Sprache eine Referenz | V04.7 |
+| S-30 | 27.11.2026 | PNG-Kodierung der Teilen-Karte (B-14) | in einem kleinen Worker statt `toBlob` auf dem Hauptthread; `toBlob` als Rückfall | V04.7 |
+| S-31 | 27.11.2026 | Bildschirmwechsel zur Enthüllung (B-13) | Schrift, Raum A05 und Porträts schon auf dem Themenschritt laden; Favicon nicht angefasst | V04.2 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -335,3 +337,25 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** volle Größe (genauer, aber groß); Prüfsumme der Pixel (bricht bei jeder Glättungsänderung); nur Layoutmaße aus dem Renderer (schon als Unit-Test vorhanden, sieht aber keine Bildfehler).
 
 **Wechsel kostet:** ein Aufruf in `identity.spec.ts`; neue Referenzen mit `--update-snapshots`.
+
+## S-30 · PNG-Kodierung der Teilen-Karte im Worker (B-14)
+
+**Entschieden:** Die Karte wird wie bisher auf dem Hauptthread gezeichnet. Das fertige Bild geht als `ImageBitmap` an einen Worker (`src/share/encode.worker.ts`, 0,35 kB), der es 1:1 auf ein `OffscreenCanvas` gleicher Größe zeichnet und mit `convertToBlob` als PNG kodiert. Fehlen Worker, `OffscreenCanvas` oder `createImageBitmap`, oder scheitert der Worker, kodiert wie bisher `toBlob`.
+
+**Warum:** Der Trace zeigte: Die Karte war nach ≈ 0,5 s gezeichnet, danach war der Hauptthread frei und es entstand kein Frame. Chromium kodiert `toBlob` auf dem Hauptthread nur in Leerlaufphasen, die an Frames hängen; ohne sie greifen feste Fristen (Android: 4 s bis zum erzwungenen Start, 9 s bis zum Abschluss), daher die ≈ 13,3 s. In einem Worker kodiert Chromium sofort. Nachher 230–299 ms im Ablauf, der vorher 13,2–13,5 s brauchte; alle 7 Läufe ≤ 1,5 s. Das Bild bleibt gleich (Bildvergleich im E2E); der Hauptthread wird zusätzlich entlastet.
+
+**Alternativen:** während der Kodierung Frames erzwingen (`requestAnimationFrame`-Schleife, damit Leerlaufphasen entstehen; hängt an Interna des Schedulers); WebP statt PNG (wird ohnehin im Worker kodiert, ändert aber das Dateiformat beim Teilen); eigener PNG-Kodierer in JavaScript (mehr Code und Startgewicht).
+
+**Wechsel kostet:** eine Funktion in `src/share/render.ts`.
+
+## S-31 · Bildschirmwechsel zur Enthüllung (B-13)
+
+**Entschieden:** Auf dem letzten Fragebogenschritt (Thema) lädt die App im Leerlauf, was die Enthüllung braucht: die kursive Serifenschrift, den Raum A05 in der passenden Größe und die Porträts des voraussichtlichen Haupt- und Ergänzungs-Archetyps (`src/ui/warm.ts`, `warmWorld`). Auf dem Bildschirm ändert sich nichts.
+
+**Warum:** Trace und Versuche auf dem kalt gestarteten Emulator: Der Hauptthread ist beim Wechsel fast frei, der GPU-Thread rastert in Schritten zu 15–21 ms. Beim Tippen begannen erst Schrift, Raum und Porträt zu laden. Vorladen nahm den zweiten langen Frame weg (3 von 3 Läufen, nachher 7 von 7 Läufen mit 56,6–58,8 fps, meist 1 statt 2 lange Frames). Einzelne Ebenen auszublenden (Animation, Vektorlandschaft, Schrift-Halos, Bild, Porträt) änderte nichts; der verbleibende Frame beim Wechsel (117–183 ms) tritt auch beim Tab-Wechsel auf „Heute“ (167–233 ms) und „Grimoire“ (100–117 ms) auf und gehört zum Emulator. Die Grenze ≤ 120 ms aus §6 gilt unter den Referenzbedingungen (Playwright, 4× CPU-Drosselung), für den Emulator verlangt V04.2 ≥ 50 fps.
+
+**Nicht übernommen:** Im Android-WebView wird `favicon.svg` bei jeder Navigation neu geholt und als SVG-Dokument gelesen (38–54 ms Hauptthread). Das Entfernen brachte in 3 Läufen keine messbare Besserung, daher bleibt es (BACKLOG, Prüfung auf echtem Gerät in V07.5).
+
+**Alternativen:** Inhalte der Enthüllung erst kurz vor ihrem Moment einhängen (mehr Umbau, Wirkung unklar, weil schon das Ausblenden einzelner Ebenen nichts änderte); sichtbare Abstriche (weniger Ebenen, kein Halo), nur nach Rückfrage; nichts tun und auf dem echten Gerät messen.
+
+**Wechsel kostet:** ein Effekt im Fragebogen.

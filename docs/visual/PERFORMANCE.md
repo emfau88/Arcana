@@ -125,3 +125,21 @@ D-41 verändert „Heute sichtbar“ nicht: Der Vorwärm-Block entsteht nur bei 
 **Entscheidung des Eigentümers (D-52):** Keine weiteren Messrunden in V03. Die Messung gegen die Referenz läuft vor dem geschlossenen Test (QG-V05) und in der Härtung (V07.5), weil V04 neue Bilder bringt und Messungen davor sofort veralten. Für Android zählt der Kaltstart. Reserve, falls die Messung vor QG-V05 knapp wird: Kartenbilder in 560 px Breite per `srcset`/`sizes` ausliefern (Heldenkarte höchstens 272 CSS-px), spart ≈ 60 KB bei der Rückseite.
 
 Die Rohdaten der einen Runde aus der Vorgänger-Sitzung wurden nicht gesichert; die Werte stammen aus deren Übergabe.
+
+## V04 · Android: Enthüllung und Teilen (B-13, B-14), 27.11.2026
+
+Gemessen auf dem Emulator `Pixel_7` (2 GB RAM, Host-GPU über den GL-Übersetzer des Emulators, WebView 147, Debug-APK), vor jeder Serie kalt gestartet, erster Lauf nach der Installation verworfen. Werkzeuge: `scripts/android-trace.mjs` (Frames, Chrome-Trace, Versuche mit eingespieltem CSS/JS), `scripts/trace-analyze.mjs`, `scripts/android-v04.mjs`. Rohdaten: `docs/visual/perf/v04-android-b13-b14.json`.
+
+| Messung | vorher | nachher | Grenze | Ergebnis |
+|---|---|---|---|---|
+| Enthüllung (fps) | 52,4–58,0 (9 Läufe) | 56,6–58,8 (7 Läufe) | ≥ 50 fps (V04.2, Emulator) | PASS |
+| Enthüllung, Frames > 50 ms | 2 in jedem Lauf | 1 (6 Läufe), 2 (1 Lauf) | – | besser |
+| Enthüllung, schlechtester Frame | 117–233 ms | 117–183 ms | ≤ 120 ms gilt unter Referenzbedingungen (§6) | Emulator-Wert, siehe unten |
+| Tab-Wechsel zum Vergleich (schlechtester Frame) | „Heute“ 167–233, „Grimoire“ 100–117, „Ich“ 67, „Orakel“ 33–50 ms | – | – | – |
+| Erste Story direkt nach dem Fragebogen | 13.215 / 13.520 ms | 230–299 ms | ≤ 1,5 s | PASS |
+| Story / Beitrag online | 0,36–1,21 s / 0,13–0,25 s | 288–311 / 94–135 ms | ≤ 1,5 s | PASS |
+| Story / Beitrag offline nach Kaltstart | 0,51–1,65 s / 0,16–1,61 s | 479–639 / 94–137 ms | ≤ 1,5 s | PASS |
+
+**B-14:** Die Karte war nach ≈ 0,5 s gezeichnet; danach wartete `toBlob`, weil Chromium PNG auf dem Hauptthread nur in Leerlaufphasen kodiert und eine ganz ruhige Seite keine erzeugt (feste Fristen auf Android 4 s + 9 s). Lösung S-30: Kodierung im Worker.
+
+**B-13:** Beim Wechsel ist der Hauptthread fast frei; der GPU-Thread rastert in Schritten zu 15–21 ms (36 verworfene Frames in 1,5 s). Einzelne Ebenen auszublenden änderte nichts. Vorladen von Schrift, Raum und Porträt auf dem Themenschritt (S-31) nimmt den zweiten langen Frame weg. Der erste bleibt und tritt auf dem Emulator bei jedem Wechsel auf einen bildreichen Screen auf; Messung auf einem echten Gerät in V07.5.
