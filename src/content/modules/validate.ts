@@ -3,6 +3,7 @@
  * lengths, sentence counts, questions, forbidden phrasing (global + per module), placeholders and
  * varied openings. Pure; used by `npm run validate:content` and the unit tests.
  */
+import { journeyTextKeys } from '../../domain/journey.ts';
 import { LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
 import type { ContentPack } from '../schema.ts';
@@ -58,6 +59,11 @@ export const FORBIDDEN_PRESSURE: readonly RegExp[] = [
   /last chance/i,
   /don[’']t forget/i,
   /only \d+ (more|left)/i,
+  // No countdown to the next station or milestone (PROGRESSION_DESIGN §3.4).
+  /\bnoch \d+\b/i,
+  /\bin \d+ Tagen\b/i,
+  /\bin \d+ days\b/i,
+  /\b\d+ (more )?days? (left|to go)\b/i,
 ];
 
 export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
@@ -67,6 +73,16 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
       { pattern: /^question\.[a-z0-9-]+\.prompt$/, maxLen: 90 },
       { pattern: /^question\.[a-z0-9-]+\.[a-z0-9-]+$/, maxLen: 70 },
     ],
+  },
+  journey: {
+    required: () => journeyTextKeys(),
+    rules: [
+      { pattern: /^station\.(?:[1-9]|1\d|2[01])\.(?:encounter|return|wisdom)$/, maxLen: 220, sentences: [2, 3], group: 'station' },
+      { pattern: /^path\.(?:outer|inner|higher)\.[1-3]$/, maxLen: 220, sentences: [2, 3] },
+      { pattern: /^round\.(?:[1-3]|later)\.close$/, maxLen: 220, sentences: [2, 3] },
+      { pattern: /^milestone\.(?:day\.\d+|week|month|jubilee|year)$/, maxLen: 220, sentences: [1, 3], group: 'milestone' },
+    ],
+    forbidden: FORBIDDEN_PRESSURE,
   },
 };
 
