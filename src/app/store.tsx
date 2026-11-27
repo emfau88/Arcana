@@ -179,6 +179,8 @@ export interface AppActions {
   deleteJournalItem(item: Pick<JournalItem, 'source' | 'id'>): Promise<void>;
   /** A finished study part (V05.1): the event, and with an answer a journal entry of kind 'study'. */
   studyCard(cardId: CardId, part: StudyPart, answer: string): Promise<void>;
+  /** Marks a ritual as done today (V05.3, chapter Rituals). Once per ritual and day; not a journey day. */
+  markRitualDone(ritualId: string): Promise<void>;
   clearAllData(): Promise<void>;
   /** Records that something was seen or dismissed (idempotent, the first time wins). */
   markSeen(key: string): Promise<void>;
@@ -564,6 +566,14 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
           await repo.putJournalEntry(entry);
           dispatch({ type: 'journal', entry });
         }
+      },
+
+      async markRitualDone(ritualId) {
+        const now = clock.now();
+        const dateKey = localDateKey(now);
+        if (stateRef.current.events.some((e) => e.type === 'ritual.done' && e.refs.ritualId === ritualId && e.dateKey === dateKey)) return;
+        const event: ActivityEvent = { id: newId(rng), type: 'ritual.done', dateKey, at: now.toISOString(), refs: { ritualId } };
+        dispatch({ type: 'event', event: await repo.appendEvent(event) });
       },
 
       async clearAllData() {

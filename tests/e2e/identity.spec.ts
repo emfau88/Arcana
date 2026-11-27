@@ -1,79 +1,15 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { CONTENT } from '../../src/content/index.ts';
-import { localDateKey } from '../../src/domain/clock.ts';
-import { composeDaily } from '../../src/domain/oracle.ts';
-import type { DailyRecord, Profile } from '../../src/domain/types.ts';
 import { de } from '../../src/i18n/de.ts';
 import { fmt } from '../../src/i18n/index.ts';
 import { screensDe } from '../../src/i18n/screens.de.ts';
-import { completeOnboarding, guard, screens, ui } from './helpers.ts';
+import { completeOnboarding, guard, pastDays, putDaily, readProfile, screens, ui } from './helpers.ts';
 
 /*
  * V04 screens (proposal for the owner's review, D-57): "Ich" with "Why?", the eight archetypes,
  * the share card drawn on the device, the star map with the first weekly review, and the reveal
  * with reduced motion.
  */
-
-async function readProfile(page: Page): Promise<Profile> {
-  return page.evaluate(
-    () =>
-      new Promise<Profile>((resolve, reject) => {
-        const r = indexedDB.open('personal-oracle');
-        r.onsuccess = () => {
-          const g = r.result.transaction('kv').objectStore('kv').get('profile');
-          g.onsuccess = () => {
-            r.result.close();
-            resolve(g.result as Profile);
-          };
-          g.onerror = () => reject(g.error);
-        };
-        r.onerror = () => reject(r.error);
-      }),
-  );
-}
-
-/** Daily records on the `n` days before today, built with the app's own domain code. */
-function pastDays(profile: Profile, n: number, notes: Record<number, string>): DailyRecord[] {
-  const ids = CONTENT.cards.map((c) => c.id);
-  return Array.from({ length: n }, (_, k) => {
-    const d = new Date();
-    d.setDate(d.getDate() - (n - k));
-    const dateKey = localDateKey(d);
-    const cardId = ids[k % ids.length]!;
-    return {
-      dateKey,
-      deckId: CONTENT.deckId,
-      cardId,
-      themeId: profile.themeId,
-      archetypeId: profile.archetypeId,
-      locale: 'de',
-      contentVersion: CONTENT.version,
-      content: composeDaily(CONTENT, cardId, profile.themeId, profile.archetypeId, 'de'),
-      revealedAt: new Date(`${dateKey}T08:00:00`).toISOString(),
-      note: notes[k] ?? '',
-    } as DailyRecord;
-  });
-}
-
-async function putDaily(page: Page, records: DailyRecord[]) {
-  await page.evaluate(
-    (records) =>
-      new Promise((resolve, reject) => {
-        const r = indexedDB.open('personal-oracle');
-        r.onsuccess = () => {
-          const tx = r.result.transaction('daily', 'readwrite');
-          for (const rec of records) tx.objectStore('daily').put(rec);
-          tx.oncomplete = () => {
-            r.result.close();
-            resolve(null);
-          };
-          tx.onerror = () => reject(tx.error);
-        };
-        r.onerror = () => reject(r.error);
-      }),
-    records,
-  );
-}
 
 test('V04: "Ich" explains the archetype, lists all eight and draws the share card on the device', async ({ page }, info) => {
   test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
@@ -151,7 +87,7 @@ test('V04: the star map grows with recorded days and the first weekly review quo
   await page.reload();
 
   await page.getByRole('link', { name: de.nav.grimoire }).click();
-  const entry = page.getByRole('button', { name: de.grimoire.journeyEntry });
+  const entry = page.getByRole('button', { name: new RegExp(`^V ${screensDe.book.chapters.journey}`) });
   await expect(entry).toContainText(de.common.new);
   await entry.click();
   await expect(page.getByRole('heading', { level: 1, name: screensDe.journeyMap.title })).toBeVisible();

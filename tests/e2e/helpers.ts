@@ -1,5 +1,9 @@
 /** Shared steps of the end-to-end tests. */
 import { expect, type Page, type TestInfo } from '@playwright/test';
+import { CONTENT } from '../../src/content/index.ts';
+import { localDateKey } from '../../src/domain/clock.ts';
+import { composeDaily } from '../../src/domain/oracle.ts';
+import type { DailyRecord, Profile } from '../../src/domain/types.ts';
 import { de, type Messages } from '../../src/i18n/de.ts';
 import { en } from '../../src/i18n/en.ts';
 import { fmt } from '../../src/i18n/index.ts';
@@ -45,4 +49,67 @@ export async function completeOnboarding(page: Page, t: Messages) {
   await page.getByRole('button', { name: t.onboarding.finish }).click();
   await expect(page.getByText(t.archetype.eyebrow, { exact: true })).toBeVisible();
   await page.getByRole('button', { name: t.archetype.toToday }).click();
+}
+
+/** The stored profile, read straight from IndexedDB. */
+export async function readProfile(page: Page): Promise<Profile> {
+  return page.evaluate(
+    () =>
+      new Promise<Profile>((resolve, reject) => {
+        const r = indexedDB.open('personal-oracle');
+        r.onsuccess = () => {
+          const g = r.result.transaction('kv').objectStore('kv').get('profile');
+          g.onsuccess = () => {
+            r.result.close();
+            resolve(g.result as Profile);
+          };
+          g.onerror = () => reject(g.error);
+        };
+        r.onerror = () => reject(r.error);
+      }),
+  );
+}
+
+/** Daily records on the `n` days before today, built with the app's own domain code. */
+export function pastDays(profile: Profile, n: number, notes: Record<number, string>): DailyRecord[] {
+  const ids = CONTENT.cards.map((c) => c.id);
+  return Array.from({ length: n }, (_, k) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (n - k));
+    const dateKey = localDateKey(d);
+    const cardId = ids[k % ids.length]!;
+    return {
+      dateKey,
+      deckId: CONTENT.deckId,
+      cardId,
+      themeId: profile.themeId,
+      archetypeId: profile.archetypeId,
+      locale: 'de',
+      contentVersion: CONTENT.version,
+      content: composeDaily(CONTENT, cardId, profile.themeId, profile.archetypeId, 'de'),
+      revealedAt: new Date(`${dateKey}T08:00:00`).toISOString(),
+      note: notes[k] ?? '',
+    } as DailyRecord;
+  });
+}
+
+/** Writes daily records straight into IndexedDB; reload the page afterwards. */
+export async function putDaily(page: Page, records: DailyRecord[]) {
+  await page.evaluate(
+    (records) =>
+      new Promise((resolve, reject) => {
+        const r = indexedDB.open('personal-oracle');
+        r.onsuccess = () => {
+          const tx = r.result.transaction('daily', 'readwrite');
+          for (const rec of records) tx.objectStore('daily').put(rec);
+          tx.oncomplete = () => {
+            r.result.close();
+            resolve(null);
+          };
+          tx.onerror = () => reject(tx.error);
+        };
+        r.onerror = () => reject(r.error);
+      }),
+    records,
+  );
 }

@@ -11,7 +11,7 @@ import './world.css';
  * Everything here is static after a short entrance: a few stars twinkle three times
  * (≈10 s) and then the scene is completely still (E5). Reduced motion: no animation.
  */
-export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap';
+export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap' | 'grimoire';
 
 const base = import.meta.env.BASE_URL;
 /** Painted backgrounds by scene; filled when the assets from ASSET_REQUESTS.md arrive. */
@@ -26,6 +26,8 @@ const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; 
   profile: { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
   'profile-calm': { src: 'world/bg-profile.webp', srcSmall: 'world/bg-profile-720.webp' },
   starmap: { src: 'world/bg-starmap.webp', srcSmall: 'world/bg-starmap-720.webp' },
+  // B3 (S-50): A04 the grimoire library, behind the book and its chapters (V05.3).
+  grimoire: { src: 'world/bg-grimoire.webp', srcSmall: 'world/bg-grimoire-720.webp' },
 };
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
 const SMALL_SCREEN = '(max-width: 520px)';

@@ -751,35 +751,6 @@ h1[tabindex='-1']:focus {
 }
 
 /* ------------------------------------------------------------ Grimoire */
-.grimoire__progress {
-  display: grid;
-  gap: 4px;
-  margin-bottom: var(--s-4);
-}
-.grimoire__meter {
-  height: 4px;
-  border-radius: 4px;
-  background: rgba(196, 185, 208, 0.14);
-  overflow: hidden;
-  margin-bottom: var(--s-3);
-}
-.grimoire__meter span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, var(--brass-500), var(--brass-200));
-  border-radius: inherit;
-  transition: width 800ms var(--ease-out);
-}
-.grimoire__count .display {
-  font-size: 2.4rem;
-  line-height: 1;
-  /* Design plan point 4: lining figures, so "1 / 22" does not read as a Roman "I". */
-  font-variant-numeric: lining-nums;
-}
-
-.grimoire__tabs {
-  margin: var(--s-4) 0 var(--s-4);
-}
 .collection {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -788,8 +759,7 @@ h1[tabindex='-1']:focus {
   padding: 0;
   list-style: none;
 }
-.collection__link,
-.collection__locked {
+.collection__link {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -811,13 +781,6 @@ h1[tabindex='-1']:focus {
   font-size: 1rem;
   line-height: 1.2;
   margin-top: 4px;
-}
-.collection__name--muted {
-  color: var(--text-3);
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-shadow: 0 0 4px rgba(6, 8, 18, 0.9), 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 18px rgba(6, 8, 18, 0.85);
 }
 .collection__num {
   display: block;
@@ -1227,10 +1190,6 @@ h1[tabindex='-1']:focus {
     gap: var(--s-3);
     padding-inline: var(--s-3);
   }
-}
-
-.grimoire__entries {
-  margin-bottom: var(--s-5);
 }
 
 /* B2 A05 (reveal, "Ich", "Warum?", Teilen): the painted room has a light beam at the top and a lit

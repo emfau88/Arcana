@@ -1,0 +1,390 @@
+/* The Grimoire as a book (V05.3, PRODUCT_SYSTEMS E1, S-55). The cover (A15) lies in the library (A04);
+   the contents and the first page of each chapter are parchment (A30) in dark ink with the chapter
+   vignettes (A23–A29). Lists below a chapter head stay on the dark panels of the app. */
+.book,
+.book-chapter {
+  --book-ink: #2b2238;
+  --book-ink-2: #4e4058;
+  --book-gold: #6e5020;
+  --book-line: rgba(110, 80, 32, 0.32);
+}
+
+/* The library (A04) has a lit window at the top: free-standing text gets the dark halo (D-49) and
+   the lighter gold, as in the other painted rooms. */
+.stage--scene-grimoire :is(.flank__text, .screen-head h1, .back-link) {
+  text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 2px rgba(6, 8, 18, 0.9);
+}
+.stage--scene-grimoire .flank__text {
+  color: var(--gold-200);
+}
+
+/* ------------------------------------------------------------------ Cover */
+.book__cover {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+  margin: calc(-1 * var(--s-3)) 0 var(--s-5);
+}
+.book__cover img {
+  width: min(100%, 340px);
+  height: auto;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.6));
+}
+.book__owner {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--gold-200);
+  text-align: center;
+  text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 2px rgba(6, 8, 18, 0.9);
+}
+
+/* ------------------------------------------------------------- Parchment */
+.book-page,
+.chapter-head {
+  background: var(--parchment) url('/world/parchment-tile.webp') repeat;
+  background-size: 260px;
+  color: var(--book-ink);
+  box-shadow:
+    0 18px 40px -18px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(110, 80, 32, 0.25),
+    inset 0 0 36px rgba(110, 80, 32, 0.16);
+}
+.book-page {
+  position: relative;
+  padding: var(--s-5) var(--s-4);
+  border-radius: var(--r-s);
+}
+.book-page__title {
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  text-align: center;
+  color: var(--book-ink);
+}
+.book-page__tail {
+  display: block;
+  width: 96px;
+  height: auto;
+  margin: var(--s-3) auto 0;
+}
+
+/* -------------------------------------------------------------- Contents */
+.book__chapters {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.book__chapters li + li {
+  border-top: 1px solid var(--book-line);
+}
+.book__chapter {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-height: 72px;
+  padding: var(--s-2) var(--s-1);
+  border: 0;
+  border-radius: var(--r-s);
+  background: none;
+  color: var(--book-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.book__chapter:hover {
+  background: rgba(110, 80, 32, 0.08);
+}
+.book__chapter:focus-visible {
+  outline: 2px solid var(--book-ink);
+  outline-offset: 1px;
+}
+.book__vignette {
+  flex: none;
+  width: 52px;
+  height: 52px;
+}
+.book__chapter-text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.book__chapter-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+/* Numerals right-aligned in their own column, so titles and counts line up. */
+.book__num {
+  flex: none;
+  width: 1.9rem;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: right;
+  color: var(--book-gold);
+  letter-spacing: 0.06em;
+}
+.book__count {
+  font-size: var(--fs-small);
+  color: var(--book-ink-2);
+}
+.book__chevron {
+  color: var(--book-gold);
+  font-size: 1.3rem;
+}
+/* E2 on parchment: the teal of "new", dark enough to read on the page. */
+.book-page .chip--new {
+  border-color: rgba(15, 95, 88, 0.45);
+  background: rgba(79, 209, 197, 0.16);
+  color: #0d5a53;
+}
+
+/* ---------------------------------------------------------- Chapter head */
+.chapter-head {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-1);
+  margin-bottom: var(--s-5);
+  padding: var(--s-4) var(--s-4) var(--s-5);
+  border-radius: var(--r-s);
+  text-align: center;
+}
+.chapter-head__vignette {
+  width: 96px;
+  height: 96px;
+}
+.chapter-head__num {
+  margin: 0;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--book-gold);
+}
+.chapter-head .display {
+  color: var(--book-ink);
+  font-weight: 600;
+}
+.chapter-head__count {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--book-ink-2);
+}
+.chapter-head__intro {
+  max-width: 34ch;
+  margin: var(--s-2) 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  color: var(--book-ink);
+}
+
+/* ------------------------------------------------------------ Empty state */
+.book-empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
+  text-align: center;
+}
+.book-empty__text {
+  max-width: 34ch;
+  margin: 0;
+  line-height: 1.55;
+}
+.book-page .btn--ghost {
+  color: var(--book-ink);
+  border-color: rgba(43, 34, 56, 0.45);
+  background: rgba(255, 255, 255, 0.18);
+}
+.book-page .btn--ghost:hover {
+  border-color: var(--book-ink);
+}
+
+/* ----------------------------------------------------------------- Cards */
+.book-chapter__levels {
+  margin: calc(-1 * var(--s-2)) 0 var(--s-4);
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--text-2);
+}
+.collection__level {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--text-2);
+}
+/* Design plan point 7: the cards still to come are one quiet line, not rows of identical backs. */
+.book-chapter__waiting {
+  margin: var(--s-5) auto 0;
+  max-width: 34ch;
+  text-align: center;
+  text-wrap: balance;
+  font-variant-numeric: lining-nums;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.45;
+  color: var(--text-2);
+  text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 2px rgba(6, 8, 18, 0.9);
+}
+.collection__item .chip--new {
+  padding: 2px 10px;
+}
+/* Level 4 wears a gold frame (D3); a level not yet looked at glows teal until its page opens (E2). */
+.collection__item--gold .ocard__face {
+  box-shadow: 0 0 0 2px var(--gold-400), 0 0 16px rgba(217, 181, 110, 0.4);
+}
+.collection__item--new .ocard__face {
+  box-shadow: 0 0 0 2px rgba(79, 209, 197, 0.75), 0 0 18px rgba(79, 209, 197, 0.45);
+}
+.collection__item--gold.collection__item--new .ocard__face {
+  box-shadow: 0 0 0 2px var(--gold-400), 0 0 0 4px rgba(79, 209, 197, 0.7), 0 0 20px rgba(79, 209, 197, 0.45);
+}
+
+/* --------------------------------------------------------------- Journal */
+.journal-write {
+  display: grid;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+.journal-write .panel__label {
+  margin: 0;
+}
+.journal-write__save {
+  justify-self: end;
+}
+.journal-tools {
+  display: grid;
+  gap: var(--s-3);
+  margin-bottom: var(--s-2);
+}
+.journal-tools__search {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-s);
+  border: 1px solid var(--surface-line);
+  background: rgba(8, 6, 16, 0.7);
+  color: var(--text-1);
+  font: inherit;
+}
+.journal-tools__search::placeholder {
+  color: var(--text-3);
+}
+.journal-tools__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.journal-tools__chip {
+  min-height: 40px;
+  padding: 6px 14px;
+  background: rgba(16, 14, 32, 0.8);
+  cursor: pointer;
+}
+.journal-tools__chip[aria-pressed='true'] {
+  border-color: var(--brass-400);
+  background: var(--brass-400);
+  color: var(--text-on-brass);
+}
+.journal-tools__result {
+  min-height: 1.5em;
+  margin: 0 0 var(--s-2);
+  font-size: var(--fs-small);
+  color: var(--text-2);
+}
+.journal__item {
+  display: grid;
+  border-radius: var(--r-m);
+  border: 1px solid var(--surface-line);
+  background: linear-gradient(180deg, rgba(34, 26, 56, 0.88), rgba(16, 18, 40, 0.9));
+}
+.journal__item .history__row {
+  border: 0;
+  background: none;
+}
+.history__row--static {
+  cursor: default;
+}
+.journal__words {
+  display: grid;
+  gap: var(--s-1);
+  margin: 0 var(--s-4) var(--s-2);
+  padding: var(--s-2) 0 0 var(--s-3);
+  border-left: 1px solid var(--brass-line);
+}
+.journal__text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--text-1);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.journal__delete {
+  justify-self: end;
+}
+
+/* --------------------------------------------------------------- Rituals */
+.ritual-list {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ritual {
+  display: grid;
+  gap: var(--s-2);
+}
+.ritual .panel__label,
+.ritual__text {
+  margin: 0;
+}
+.ritual__text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.45;
+  color: var(--text-1);
+}
+.ritual__mark {
+  justify-self: start;
+}
+.ritual__mark:disabled {
+  opacity: 1;
+  color: var(--text-2);
+  border-color: var(--surface-line);
+  cursor: default;
+}
+.ritual-list--starters {
+  width: 100%;
+  text-align: left;
+}
+.ritual-list__starter {
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--book-line);
+}
+.ritual-list__starter p {
+  margin: 0;
+  line-height: 1.5;
+}
+.ritual-list__from {
+  margin-bottom: var(--s-1) !important;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--book-gold);
+}

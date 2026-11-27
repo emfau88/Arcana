@@ -1,11 +1,12 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { goBack, navigate, type ParsedRoute } from '../../app/router.ts';
 import { factsOf, useApp } from '../../app/store.tsx';
 import { findCard } from '../../content/index.ts';
 import { dateFromKey } from '../../domain/clock.ts';
 import { lensArchetypeOf } from '../../domain/lens.ts';
 import { buildHistory, deriveCollection } from '../../domain/oracle.ts';
-import { availableChapters, availableReviews, unseenKeys } from '../../domain/unlocks.ts';
+import { levelSeenKey } from '../../domain/book.ts';
+import { cardEncounters, cardLevel } from '../../domain/progress.ts';
 import { fmt, formatDate, toRoman } from '../../i18n/index.ts';
 import { Divider, useToast } from '../../ui/feedback.tsx';
 import { Flank } from '../../ui/Ornaments.tsx';
@@ -14,152 +15,6 @@ import { OracleCard } from '../../ui/OracleCard.tsx';
 import { Interpretation, savedSpread, Spread } from '../oracle/Oracle.tsx';
 
 const toDate = (iso: string) => new Date(iso);
-
-/* --------------------------------------------------------------- Overview */
-
-export function Grimoire({ view }: { view: 'collection' | 'history' }) {
-  const { t, pack, state } = useApp();
-  const locale = state.settings.locale;
-  const collection = deriveCollection(state.dailies, state.readings);
-  const history = buildHistory(state.dailies, state.readings);
-  const total = pack.cards.length;
-  const pct = total ? Math.round((collection.size / total) * 100) : 0;
-  const select = (v: 'collection' | 'history') => navigate(v === 'history' ? '/grimoire/history' : '/grimoire', { replace: true });
-  const listFrom = view === 'history' ? '/grimoire/history' : '/grimoire';
-  const facts = factsOf(state);
-  const hasNew = unseenKeys([...availableReviews(facts), ...availableChapters(facts, state.profile, pack.questions)], state.seen).size > 0;
-
-  return (
-    <div className="screen grimoire">
-      <header className="screen-head">
-        <Flank className="screen-head__flank">{t.grimoire.eyebrow}</Flank>
-        <h1 className="display h1" tabIndex={-1}>
-          {t.grimoire.title}
-        </h1>
-      </header>
-
-      <section className="panel panel--brass grimoire__progress" aria-label={fmt(t.grimoire.progress, { n: collection.size, total })}>
-        <div className="grimoire__meter" role="meter" aria-valuemin={0} aria-valuemax={total} aria-valuenow={collection.size} aria-hidden="true">
-          <span style={{ width: `${pct}%` }} />
-        </div>
-        <p className="grimoire__count">
-          <span className="display">{collection.size}</span>
-          <span className="muted"> / {total}</span>
-        </p>
-        <p className="small">{fmt(t.grimoire.progress, { n: collection.size, total })}</p>
-      </section>
-
-      {/* V04: the journey (star map, reviews, chapters) and the eight archetypes; V05 turns this into the book. */}
-      <ul className="row-list grimoire__entries">
-        <li>
-          <button type="button" className="row-link" onClick={() => navigate('/grimoire/journey')}>
-            <span className="row-link__text">
-              <span>{t.grimoire.journeyEntry}</span>
-              <span className="small">{t.grimoire.journeyEntrySub}</span>
-            </span>
-            {hasNew ? <span className="chip chip--new">{t.common.new}</span> : null}
-            <span aria-hidden="true">›</span>
-          </button>
-        </li>
-        <li>
-          <button type="button" className="row-link" onClick={() => navigate('/grimoire/archetypes')}>
-            <span className="row-link__text">
-              <span>{t.grimoire.archetypesEntry}</span>
-              <span className="small">{t.grimoire.archetypesEntrySub}</span>
-            </span>
-            <span aria-hidden="true">›</span>
-          </button>
-        </li>
-      </ul>
-
-      {state.skippedCorrupt > 0 ? <p className="notice notice--error">{fmt(t.errors.corrupt, { n: state.skippedCorrupt })}</p> : null}
-
-      <div className="segmented grimoire__tabs" role="tablist" aria-label={t.grimoire.filterLabel}>
-        <button type="button" role="tab" id="tab-col" aria-controls="panel-grim" aria-selected={view === 'collection'} onClick={() => select('collection')}>
-          {t.grimoire.collection}
-        </button>
-        <button type="button" role="tab" id="tab-his" aria-controls="panel-grim" aria-selected={view === 'history'} onClick={() => select('history')}>
-          {t.grimoire.history}
-        </button>
-      </div>
-
-      <div id="panel-grim" role="tabpanel" aria-labelledby={view === 'history' ? 'tab-his' : 'tab-col'}>
-        {view === 'collection' ? (
-          <>
-            {collection.size === 0 ? (
-              <div className="empty">
-                <p className="muted">{t.grimoire.emptyCollection}</p>
-                <button type="button" className="btn btn--ghost" onClick={() => navigate('/today', { replace: true })}>
-                  {t.grimoire.toToday}
-                </button>
-              </div>
-            ) : null}
-            <ul className="collection">
-              {pack.cards.map((card) => {
-                const entry = collection.get(card.id);
-                return (
-                  <li key={card.id} className="collection__item">
-                    {entry ? (
-                      <button type="button" className="collection__link" onClick={() => navigate(`/grimoire/card/${card.id}?from=${listFrom}`)}>
-                        <OracleCard card={card} locale={locale} faceUp size="grid" label="" />
-                        <span className="collection__name">
-                          <span className="collection__num">{toRoman(card.order)}</span>
-                          {card.title[locale]}
-                        </span>
-                        <span className="small">{fmt(t.grimoire.appearances, { n: entry.appearances })}</span>
-                      </button>
-                    ) : (
-                      <div className="collection__locked">
-                        <OracleCard card={null} locale={locale} faceUp={false} size="grid" label={t.grimoire.undiscovered} dimmed />
-                        <span className="collection__name collection__name--muted">{t.grimoire.undiscovered}</span>
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </>
-        ) : history.length === 0 ? (
-          <div className="empty">
-            <p className="muted">{t.grimoire.emptyHistory}</p>
-            <button type="button" className="btn btn--ghost" onClick={() => navigate('/today', { replace: true })}>
-              {t.grimoire.toToday}
-            </button>
-          </div>
-        ) : (
-          <ul className="history">
-            {history.map((item) => {
-              const isDaily = item.kind === 'daily';
-              const ids = isDaily ? [item.record.cardId] : item.reading.cardIds;
-              const title = isDaily ? item.record.content.cardTitle : item.reading.content.themeLabel;
-              const sub = isDaily ? item.record.content.themeLabel : item.reading.content.positions.map((p) => p.cardTitle).join(' · ');
-              const date = isDaily ? formatDate(dateFromKey(item.record.dateKey), locale) : formatDate(toDate(item.reading.createdAt), locale);
-              const to = isDaily ? `/grimoire/day/${item.record.dateKey}?from=${listFrom}` : `/grimoire/reading/${item.reading.id}?from=${listFrom}`;
-              return (
-                <li key={isDaily ? `d-${item.record.dateKey}` : `r-${item.reading.id}`}>
-                  <button type="button" className="history__row" onClick={() => navigate(to)}>
-                    <span className={`history__cards history__cards--${ids.length}`} aria-hidden="true">
-                      {ids.map((id) => (
-                        <OracleCard key={id} card={findCard(pack, id) ?? null} locale={locale} faceUp size="mini" label="" />
-                      ))}
-                    </span>
-                    <span className="history__text">
-                      <span className="eyebrow">{isDaily ? t.grimoire.daily : t.grimoire.reading}</span>
-                      <span className="history__title">{title}</span>
-                      <span className="small">
-                        {date} · {sub}
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------ Detail shell */
 
@@ -196,10 +51,17 @@ export function NotFound({ parsed }: { parsed: ParsedRoute }) {
 const CardLayers = lazy(() => import('../cards/CardLayers.tsx'));
 
 export function CardDetail({ id, parsed }: { id: string; parsed: ParsedRoute }) {
-  const { t, pack, state } = useApp();
+  const { t, pack, state, actions } = useApp();
   const locale = state.settings.locale;
   const card = findCard(pack, id);
   const entry = deriveCollection(state.dailies, state.readings).get(id);
+  const level = cardLevel(cardEncounters(factsOf(state)).get(id));
+  const seenKey = levelSeenKey(id, level);
+  const seen = state.seen.some((f) => f.key === seenKey);
+  // Opening the card page settles its "new" glow in the cards chapter (E2).
+  useEffect(() => {
+    if (level > 0 && !seen) void actions.markSeen(seenKey).catch(() => undefined);
+  }, [level, seen, seenKey, actions]);
   if (!card || !entry) return <NotFound parsed={parsed} />;
   const history = buildHistory(state.dailies, state.readings).filter((h) =>
     h.kind === 'daily' ? h.record.cardId === id : h.reading.cardIds.includes(id),

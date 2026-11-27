@@ -3,7 +3,7 @@ import { Component, lazy, Suspense, useEffect, useMemo, useRef, useState, type R
 import { activeBack } from '../domain/cardbacks.ts';
 import { journeyDays } from '../domain/progress.ts';
 import { ArchetypeReveal, Questionnaire, Welcome } from '../features/onboarding/Onboarding.tsx';
-import { CardDetail, DayDetail, Grimoire, ReadingDetail } from '../features/grimoire/Grimoire.tsx';
+import { CardDetail, DayDetail, ReadingDetail } from '../features/grimoire/Grimoire.tsx';
 import { Oracle } from '../features/oracle/Oracle.tsx';
 import { Today } from '../features/today/Today.tsx';
 import { onHardwareBack } from '../platform/native.ts';
@@ -25,6 +25,7 @@ const loadIdentity = () => import('../features/identity/Identity.tsx');
 const loadJourney = () => import('../features/journey/JourneyScreens.tsx');
 const loadProfile = () => import('../features/profile/Profile.tsx');
 const loadShare = () => import('../features/share/SharePreview.tsx');
+const loadBook = () => import('../features/grimoire/Book.tsx');
 const WhyScreen = lazy(() => loadIdentity().then((m) => ({ default: m.WhyScreen })));
 const ArchetypeLibrary = lazy(() => loadIdentity().then((m) => ({ default: m.ArchetypeLibrary })));
 const ArchetypeDetail = lazy(() => loadIdentity().then((m) => ({ default: m.ArchetypeDetail })));
@@ -34,10 +35,12 @@ const ChapterDetail = lazy(() => loadJourney().then((m) => ({ default: m.Chapter
 const Profile = lazy(() => loadProfile().then((m) => ({ default: m.Profile })));
 const Settings = lazy(() => loadProfile().then((m) => ({ default: m.Settings })));
 const SharePreview = lazy(() => loadShare().then((m) => ({ default: m.SharePreview })));
+const Book = lazy(() => loadBook().then((m) => ({ default: m.Book })));
+const BookChapter = lazy(() => loadBook().then((m) => ({ default: m.BookChapter })));
 
 /** `texts` loads content modules the first path needs later (the reveal after the questions). */
 function prefetchScreens(texts: () => Promise<unknown>): () => void {
-  const go = () => void Promise.all([loadIdentity(), loadJourney(), loadProfile(), loadShare(), texts()]).catch(() => undefined);
+  const go = () => void Promise.all([loadIdentity(), loadJourney(), loadProfile(), loadShare(), loadBook(), texts()]).catch(() => undefined);
   if (typeof window.requestIdleCallback === 'function') {
     const id = window.requestIdleCallback(go, { timeout: 4000 });
     return () => window.cancelIdleCallback(id);
@@ -98,6 +101,13 @@ function sceneOf(route: Route): WorldScene {
     case 'review':
     case 'chapter':
       return 'starmap';
+    case 'grimoire':
+    case 'bookChapter':
+    case 'card':
+    case 'day':
+    case 'reading':
+      // B3 (V05.3): the book lies in the grimoire library (A04), dimmed for its long pages.
+      return 'grimoire';
     default:
       return 'calm';
   }
@@ -219,7 +229,10 @@ export function App() {
       screen = <Oracle />;
       break;
     case 'grimoire':
-      screen = <Grimoire view={route.view} />;
+      screen = <Book />;
+      break;
+    case 'bookChapter':
+      screen = <BookChapter key={route.chapter} chapter={route.chapter} parsed={parsed} />;
       break;
     case 'card':
       screen = <CardDetail key={route.id} id={route.id} parsed={parsed} />;

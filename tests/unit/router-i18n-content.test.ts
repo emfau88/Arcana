@@ -15,8 +15,13 @@ describe('router', () => {
     expect(parsePath('#/welcome').route).toEqual({ name: 'welcome' });
     expect(parsePath('#/onboarding/3').route).toEqual({ name: 'onboarding', step: 3 });
     expect(parsePath('#/onboarding/0').route.name).toBe('notfound');
-    expect(parsePath('#/grimoire').route).toEqual({ name: 'grimoire', view: 'collection' });
-    expect(parsePath('#/grimoire/history').route).toEqual({ name: 'grimoire', view: 'history' });
+    expect(parsePath('#/grimoire').route).toEqual({ name: 'grimoire' });
+    // V05.3: the book's own chapters; the V04 history path lands in the journal.
+    expect(parsePath('#/grimoire/cards').route).toEqual({ name: 'bookChapter', chapter: 'cards' });
+    expect(parsePath('#/grimoire/journal').route).toEqual({ name: 'bookChapter', chapter: 'journal' });
+    expect(parsePath('#/grimoire/history').route).toEqual({ name: 'bookChapter', chapter: 'journal' });
+    expect(parsePath('#/grimoire/rituals').route).toEqual({ name: 'bookChapter', chapter: 'rituals' });
+    expect(parsePath('#/grimoire/cards/x').route.name).toBe('notfound');
     expect(parsePath('#/grimoire/card/major-19-sun').route).toEqual({ name: 'card', id: 'major-19-sun' });
     expect(parsePath('#/grimoire/day/2026-11-26?from=/today').route).toEqual({ name: 'day', dateKey: '2026-11-26' });
     expect(parsePath('#/grimoire/reading/abc').route).toEqual({ name: 'reading', id: 'abc' });
@@ -100,15 +105,17 @@ describe('router', () => {
     expect(back('#/archetype?from=/profile')).toBe('/profile');
     expect(back('#/grimoire')).toBe('/today');
     expect(back('#/grimoire/history')).toBe('/grimoire');
-    expect(back('#/grimoire/card/x')).toBe('/grimoire');
+    expect(back('#/grimoire/rituals')).toBe('/grimoire');
+    expect(back('#/grimoire/card/x')).toBe('/grimoire/cards');
     expect(back('#/grimoire/card/x?from=/today')).toBe('/today');
-    expect(back('#/grimoire/reading/x')).toBe('/grimoire/history');
+    expect(back('#/grimoire/card/x?from=/grimoire/journal')).toBe('/grimoire/journal');
+    expect(back('#/grimoire/reading/x')).toBe('/grimoire/journal');
     expect(back('#/grimoire/day/2026-11-26?from=/grimoire/history')).toBe('/grimoire/history');
   });
 
   it('ignores untrusted "from" targets', () => {
-    expect(backTarget(parsePath('#/grimoire/card/x?from=https://evil.example'))).toBe('/grimoire');
-    expect(backTarget(parsePath('#/grimoire/reading/x?from=/welcome'))).toBe('/grimoire/history');
+    expect(backTarget(parsePath('#/grimoire/card/x?from=https://evil.example'))).toBe('/grimoire/cards');
+    expect(backTarget(parsePath('#/grimoire/reading/x?from=/welcome'))).toBe('/grimoire/journal');
   });
 });
 

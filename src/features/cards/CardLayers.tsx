@@ -12,31 +12,13 @@ import { deepCard, DEEP_ROLES } from '../../content/modules/cards-deep-keys.ts';
 import { dateFromKey } from '../../domain/clock.ts';
 import { journalItems } from '../../domain/journal.ts';
 import { cardEncounters, cardLevel, type CardLevel } from '../../domain/progress.ts';
-import { cardLayers, LEVEL_PHASE, nextStudyPart, type LevelPhase } from '../../domain/study.ts';
+import { cardLayers, LEVEL_PHASE, nextStudyPart } from '../../domain/study.ts';
 import { ALL_THEME_IDS, POSITIONS } from '../../domain/types.ts';
 import { fmt, formatDate } from '../../i18n/index.ts';
 import { useScreenText } from '../../i18n/screens.ts';
+import { MoonPhase } from '../../ui/MoonPhase.tsx';
 import { CardStudy } from './CardStudy.tsx';
 import './card-page.css';
-
-/** Moon phase from new to full (D3): a lit disc with the shadow drawn as a second ellipse. */
-export function MoonPhase({ phase, size = 28 }: { phase: LevelPhase; size?: number }) {
-  // Lit share of the disc: new 0, crescent ¼, half ½, gibbous ¾, full 1. The terminator is an
-  // ellipse whose half-width follows the share (right side lit, like a waxing moon).
-  const lit = { new: 0, crescent: 0.25, half: 0.5, gibbous: 0.75, full: 1 }[phase];
-  const r = 10;
-  const k = Math.abs(1 - 2 * lit) * r; // terminator half-width
-  const sweep = lit > 0.5 ? 1 : 0;
-  const d = lit === 0 || lit === 1 ? '' : `M 12 2 A ${r} ${r} 0 0 1 12 22 A ${k} ${r} 0 0 ${sweep} 12 2 Z`;
-  return (
-    <svg className="moon-phase" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r={r} className="moon-phase__dark" />
-      {lit === 1 ? <circle cx="12" cy="12" r={r} className="moon-phase__lit" /> : null}
-      {d ? <path d={d} className="moon-phase__lit" /> : null}
-      <circle cx="12" cy="12" r={r} className="moon-phase__rim" />
-    </svg>
-  );
-}
 
 function Layer({ title, children }: { title: string; children: ReactNode }) {
   return (

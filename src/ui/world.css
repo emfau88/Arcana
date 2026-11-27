@@ -182,7 +182,8 @@
 }
 .world-scene--calm .world-scene__dim,
 .world-scene--profile-calm .world-scene__dim,
-.world-scene--welcome .world-scene__dim {
+.world-scene--welcome .world-scene__dim,
+.world-scene--grimoire .world-scene__dim {
   opacity: 1;
 }
 

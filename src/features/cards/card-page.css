@@ -60,20 +60,6 @@
 .card-layer__notes p {
   margin: 2px 0 0;
 }
-.moon-phase {
-  flex: none;
-}
-.moon-phase__dark {
-  fill: rgba(10, 8, 20, 0.65);
-}
-.moon-phase__lit {
-  fill: var(--brass-200);
-}
-.moon-phase__rim {
-  fill: none;
-  stroke: var(--brass-300);
-  stroke-width: 1;
-}
 .card-study__label {
   margin: 0;
 }
