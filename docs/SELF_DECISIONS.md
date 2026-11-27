@@ -63,6 +63,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-51 | 27.11.2026 | Kartenrücken an Tag 2, 5 und 10 | Mondsichel an Tag 2, Sternenkompass an Tag 5, Goldenes Rad (A22, aus B5 vorgezogen) an Tag 10; die Meilensteine 14 und 75 entfallen, Tag 365 behält das Jahresbuch | D-66, V05.5, PROGRESSION_DESIGN §3.2 |
 | S-52 | 27.11.2026 | Auswahl der Kartenrücken | in den Einstellungen nur freigeschaltete Rücken als Vorschau mit Namen, der Standard heißt „Klassisch“; gilt für jede verdeckte Karte; Meilenstein-Moment nennt den Rücken mit Namen, „Ansehen“ führt zur Auswahl; Tagestext nur, wenn alles von diesem Tag gebaut ist | V05.5, D-66, D-54 |
 | S-53 | 27.11.2026 | Kartenseite, Teil 1 | Stufe als Mondphase mit Namen unter Titel und Essenz, darunter jede offene Ebene in einem eigenen Panel in der Reihenfolge der Stufen; nicht Geöffnetes fehlt einfach; das Profilthema steht oben als Botschaft, die Themenliste zeigt dann die anderen fünf; eigener Lade-Chunk | V05.1, PRODUCT_SYSTEMS D, D3, D4 |
+| S-54 | 27.11.2026 | Kartenstudium (Kartenseite, Teil 2) | eigenes Panel direkt unter der Stufe, öffnet sich an Ort und Stelle; Teil 1 „Hinschauen“, Teil 2 „Dein Leben“; „Gelesen“ genügt, eine Antwort ist freiwillig und wird zum Tagebucheintrag; danach ein ruhiger Satz mit der neuen Stufe und der Weg zu Teil 2; beliebig oft wiederholbar | V05.1, PRODUCT_SYSTEMS D2, PROGRESSION_DESIGN §4 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -89,6 +90,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] **Löschen im Tagebuch** (V05.4, S-49): Worte weg, Tag bleibt. Passt das zu deiner Erwartung, oder sollen auch ganze Tageskarten und Legungen einzeln löschbar sein?
 - [ ] **Auswahl der Kartenrücken** (V05.5, S-52, Nachweis `docs/visual/evidence/v05-kartenruecken.webp` und `v05-kartenruecken-android.webp`): eigener Abschnitt in den Einstellungen unter Sprache und Bewegung, vier Vorschauen in einer Reihe, der gewählte Rücken wie ein gewähltes Segment gerahmt. Bei 412 px werden „Mondsichel“ und „Sternenkompass“ getrennt. Passt das, oder soll die Auswahl größer (zwei Spalten) oder auch auf „Ich“ sichtbar sein?
 - [ ] **Kartenseite, Teil 1** (V05.1, S-53, Nachweis `docs/visual/evidence/v05-kartenseite.webp` und `v05-kartenseite-android.webp`): Stufe als Mondphase („Stufe 4 · Verinnerlicht“), darunter je Ebene ein Panel mit goldener Überschrift. Stufennamen: Entdeckt, Verstanden, Vertieft, Verinnerlicht. Passt die Länge der Seite bei Stufe 4, oder sollen die Ebenen ab Stufe 3 aufklappbar sein?
+- [ ] **Kartenstudium** (V05.1, S-54, Nachweis `docs/visual/evidence/v05-kartenstudium.webp` und `v05-kartenstudium-android.webp`): Panel „Kartenstudium“ direkt unter der Stufe mit einem Satz und „Studium beginnen“; geöffnet zeigt es den Impuls, ein freiwilliges Antwortfeld und „Gelesen“ bzw. „Antwort festhalten“. Soll das Studium lieber unter den Ebenen stehen oder als eigene Seite öffnen?
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -730,3 +732,23 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Alle sechs Themen inklusive Profilthema: doppelt den obersten Text wörtlich.
 
 **Wechsel kostet:** `src/features/cards/CardLayers.tsx`, `card-page.css` und der Block `card` in `src/i18n/screens.*.ts`.
+
+## S-54 · Kartenstudium (Kartenseite, Teil 2)
+
+**Entschieden:** Das Kartenstudium sitzt als eigenes Panel „Kartenstudium“ direkt unter der Stufe auf der Kartenseite und öffnet sich an Ort und Stelle, ohne neue Route.
+
+- **Zu:** ein Satz und ein Knopf. Vor dem ersten Studium: „Zwei kurze Teile von je ein bis zwei Minuten: erst hinschauen, dann die Karte mit deinem Leben verbinden. Eine Antwort ist freiwillig.“ und „Studium beginnen“. Nach Teil 1: „Teil 2 verbindet die Karte mit deinem Leben.“ und „Weiter mit Teil 2“. Nach beiden Teilen: „Du hast diese Karte studiert. Du kannst jederzeit wieder hineinschauen.“ und „Noch einmal studieren“ (D2: freiwillig, beliebig oft).
+- **Offen:** Überschrift „Teil 1 von 2 · Hinschauen“ bzw. „Teil 2 von 2 · Dein Leben“, der Impuls aus `cards-deep` (endet in einer Frage), ein Antwortfeld „Deine Antwort (freiwillig)“ wie das Notizfeld und zwei Knöpfe: „Später“ und „Gelesen“; mit Text heißt der zweite „Antwort festhalten“.
+- **Festhalten:** ein Ereignis `card.studied` (zählt als Reisetag) und, nur mit Text, ein Tagebucheintrag der Art `study`; er erscheint unter „Deine Worte zu dieser Karte“ und zählt als Reflexion. Die Stufe folgt daraus (D-09): Teil 1 öffnet Stufe 2, Teil 2 Stufe 3, mit einer Antwort Stufe 4.
+- **Rückmeldung:** im Panel ein ruhiger Satz, vorgelesen über `aria-live`: „Teil 1 ist festgehalten.“, und wenn die Stufe gestiegen ist, „Die Karte steht jetzt auf Stufe 2 · Verstanden.“ Kein Feuerwerk, kein Zähler. Der Fokus geht beim Öffnen, Festhalten und Schließen auf die Überschrift des Panels (ohne Rahmen, wie bei den Bildschirmüberschriften).
+- **Wiederholen:** Ein erneutes Studium beginnt wieder bei Teil 1 und bietet danach Teil 2 an; jede Antwort wird ein eigener Eintrag.
+
+**Warum:** Die Kartenseite ist der Ort des Studiums (IA §3: „Studium beginnen / Notiz“). An Ort und Stelle bleibt die Karte sichtbar, und die neuen Ebenen erscheinen direkt darunter. Weil „Gelesen“ genügt, braucht niemand eine Antwort, um weiterzukommen (D2); was geschrieben wird, bleibt lokal.
+
+**Alternativen:**
+- Eigene Seite `#/grimoire/card/<id>/study`: mehr Ruhe zum Schreiben, aber ein Zurück-Weg mehr und die neuen Ebenen sind nicht direkt zu sehen; bleibt als Frage in der Prüfliste.
+- Studium unter den Ebenen: auf Stufe 1 schwer zu finden, gerade dann ist es der Weg zu mehr.
+- Beide Teile in einem Schritt: widerspricht den „zwei kurzen Teilen“ (D2) und macht die Sitzung lang.
+- Antwort als Pflicht für Teil 2: D2 sieht nur für Teil 1 ausdrücklich „Gelesen genügt“ vor, die Studien-Logik nimmt beides ohne Text an; eine Pflicht wäre Druck.
+
+**Wechsel kostet:** `src/features/cards/CardStudy.tsx`, die Studien-Texte im Block `card` von `src/i18n/screens.*.ts` und der Test „card study“ in `tests/e2e/identity.spec.ts`.

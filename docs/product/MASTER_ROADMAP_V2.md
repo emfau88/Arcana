@@ -131,12 +131,12 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 
-- [ ] V05.1 Kartenseite und Vertiefung (4/5)
+- [x] V05.1 Kartenseite und Vertiefung (5/5)
   - [x] Logik: Stufen 0–4 aus Begegnungen und Studium, Ebenen kumulativ, Studium in zwei Teilen (`src/domain/study.ts`; jede Stufe in ≤ 2 Sitzungen, ungespeicherte Legungen zählen nicht, Unit)
   - [x] Texte: Modul `cards-deep`, 22 Karten × 15 Texte in DE und EN, in drei Gruppen gegen die Bilder geschrieben; Content-Gate mit Verbotsliste für Zukunftsversprechen (S-43, S-44)
   - [x] A4 wechselnde Reflexion und Ritual auf „Heute“: Variante aus den Begegnungstagen, im Datensatz gespeichert; 66 simulierte Tage ohne gleiche Kombination in 21 Tagen (Unit, S-45)
   - [x] Kartenseite, Teil 1: Stufe als Mondphase und alle offenen Ebenen kumulativ, nichts Gesperrtes sichtbar (E2E Stufe 2 und 4 in DE und EN, Browser 412/360 px, Android-Emulator, S-53)
-  - [ ] Kartenseite, Teil 2: Studium in zwei Teilen auf der Kartenseite; Studien-Ereignisse und Tagebucheinträge im Store (die Aktion steht)
+  - [x] Kartenseite, Teil 2: Studium in zwei Teilen auf der Kartenseite, „Gelesen“ genügt, Antwort freiwillig als Tagebucheintrag; Studium öffnet Stufe 2 und 3, eine Antwort Stufe 4, übersteht Neustart (E2E DE und EN, Android-Emulator, S-54)
 - [ ] V05.2 Rollen-Legungen (3/4)
   - [x] Engine: Rollen R1–R8 und sieben Legungen (Drei Karten, Licht und Schatten, Neuanfang, Rückblick auf Woche und Monat; Zwei Wege und Verbindung nur mit `edition.spreads`); Legung und Rollen im Datensatz, die klassische Legung bleibt unverändert (`src/domain/spreads.ts`, S-46, S-47)
   - [x] Texte: Modul `spreads` mit 72 Rahmentexten je Sprache; Content-Gate ohne Ergebnis-Positionen, Zukunftsversprechen und Aussagen über andere (S-46)
