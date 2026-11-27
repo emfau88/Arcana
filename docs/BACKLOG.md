@@ -41,7 +41,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 ## Reise und Identität (nach V04)
 
 - [ ] Hundert-Tage- und Jubiläums-Rückblicke, Jahrbuch, Sternbild „Hundert“: eigener Bereich `jubilees`, noch nicht gebaut; danach in `BUILD_FEATURES` eintragen (S-22).
-- [ ] B-07: die vom Eigentümer gewählte Variante einbauen (Empfehlung B, Panel unter der Fußzeile, `scripts/b07/`).
+- [x] B-07: die vom Eigentümer gewählte Variante B eingebaut (Panel unter der Fußzeile, D-59).
 - [ ] Optional: Willkommen als „Buch als Bühne“ neu anordnen, damit A06 unabgedunkelt wirkt (S-27).
 
 ## Bekannte Kleinigkeiten
