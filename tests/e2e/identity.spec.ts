@@ -112,12 +112,16 @@ test('V04: "Ich" explains the archetype, lists all eight and draws the share car
   await expect(page.getByRole('heading', { level: 1, name: t.profile.title })).toBeVisible();
 
   // Share card: drawn on the device within 1.5 s (V04.7), only local data, saved under a neutral name.
+  // The PNG is encoded in a worker, not by toBlob on the main thread (B-14).
+  const workers: string[] = [];
+  page.on('worker', (w) => workers.push(w.url()));
   await page.getByRole('button', { name: s.me.share }).click();
   const preview = page.locator('.share-page__preview img');
   await expect(preview).toBeVisible({ timeout: 5000 });
   expect(await preview.getAttribute('src')).toMatch(/^data:image\/png;base64,/);
   const ms = Number(await page.locator('.share-page__preview').getAttribute('data-export-ms'));
   expect(ms, 'export time in ms').toBeLessThanOrEqual(1500);
+  expect(workers.some((u) => u.includes('encode.worker')), 'PNG encoded in a worker').toBe(true);
   await page.getByRole('radio', { name: s.share.feed }).click();
   await expect(page.locator('.share-page__preview--feed img')).toBeVisible({ timeout: 5000 });
   // Image comparison (V04.7): the feed card, scaled to a quarter in the same browser so the

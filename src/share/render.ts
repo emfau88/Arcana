@@ -119,6 +119,51 @@ export async function renderArchetypeCard(model: ArchetypeShareModel, format: Sh
     return ctx.measureText(text).width;
   });
   drawArchetypeCard(ctx, layout, img);
-  const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('PNG export failed'))), 'image/png'));
+  const blob = await encodePng(canvas);
   return { blob, layout, ms: Math.round(performance.now() - t0) };
+}
+
+let encoder: Worker | null = null;
+let nextId = 0;
+
+/**
+ * PNG encoding in a worker (B-14, see encode.worker.ts); `toBlob` on the main thread stays as
+ * the fallback where workers, OffscreenCanvas or createImageBitmap are missing or fail.
+ */
+async function encodePng(canvas: HTMLCanvasElement): Promise<Blob> {
+  if (typeof Worker === 'function' && typeof OffscreenCanvas === 'function' && typeof createImageBitmap === 'function') {
+    try {
+      return await encodeInWorker(canvas);
+    } catch {
+      encoder?.terminate();
+      encoder = null;
+    }
+  }
+  return new Promise<Blob>((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('PNG export failed'))), 'image/png'));
+}
+
+async function encodeInWorker(canvas: HTMLCanvasElement): Promise<Blob> {
+  const bitmap = await createImageBitmap(canvas);
+  encoder ??= new Worker(new URL('./encode.worker.ts', import.meta.url), { type: 'module' });
+  const worker = encoder;
+  const id = ++nextId;
+  return new Promise<Blob>((resolve, reject) => {
+    const done = () => {
+      worker.removeEventListener('message', onMessage);
+      worker.removeEventListener('error', onError);
+    };
+    const onMessage = (event: MessageEvent<{ id: number; blob?: Blob; error?: string }>) => {
+      if (event.data.id !== id) return;
+      done();
+      if (event.data.blob) resolve(event.data.blob);
+      else reject(new Error(event.data.error ?? 'PNG export failed'));
+    };
+    const onError = () => {
+      done();
+      reject(new Error('PNG worker failed'));
+    };
+    worker.addEventListener('message', onMessage);
+    worker.addEventListener('error', onError);
+    worker.postMessage({ id, bitmap }, [bitmap]);
+  });
 }
