@@ -20,20 +20,20 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 | A06 | `bg-welcome.png` | B2 / V04 | Willkommen, 7 Fragen | einzeln | geliefert, eingebaut (abgedunkelt, S-27) |
 | A07–A14 | `archetype-<id>.png` (8×) | B2 / V04 | Archetyp-Porträts | einzeln, eine Serie | geliefert, eingebaut |
 | A19 | `bg-starmap.png` | B2 / V04 | Sternkarte (Reise), Rückblicke | einzeln | geliefert, eingebaut |
-| A03 | `bg-oracle.png` | B3 / V05 | Orakel, Legungen | einzeln | nach QG-V04 |
-| A04 | `bg-grimoire.png` | B3 / V05 | Grimoire (Buch, Kapitel) | einzeln | nach QG-V04 |
-| A15 | `grimoire-book.png` | B3 / V05 | Buch-Einband im Grimoire | einzeln, transparent | nach QG-V04 |
-| A20 | `cardback-crescent.png` | B3 / V05 | Kartenrücken „Mondsichel“ (Meilenstein 14) | einzeln | nach QG-V04 |
-| A21 | `cardback-compass.png` | B3 / V05 | Kartenrücken „Sternenkompass“ (Meilenstein 75) | einzeln | nach QG-V04 |
-| A23–A29 | `grimoire-vignettes.png` | B3 / V05 | 7 Kapitel-Vignetten plus Schlussvignette | ein Sheet, transparent | nach QG-V04 |
-| A30 | `parchment-tile.png` | B3 / V05 | Pergament der Buchseiten | einzeln, kachelbar | nach QG-V04 |
-| A32 | `bg-discover.png` | B4 / V06 | Entdecken (Zahlen, Engelszahlen, Symbole) | einzeln | nach QG-V05 |
-| A33 | `symbols-sheet-1.png`, `symbols-sheet-2.png` | B4 / V06 | 24 Symbole des Lexikons | 2 Sheets, transparent | nach QG-V05 und finaler Symbolliste |
-| A18 | `store-feature.png` | B5 / V07 | Store-Grafik 1024 × 500 | einzeln | nach QG-V06 und E11 (Name) |
-| A22 | `cardback-golden-wheel.png` | B5 / V07 | Kartenrücken „Goldenes Rad“ (Tag 365) | einzeln | nach QG-V06 |
-| A31 | `cardback-edition.png` | B5 / V07 | Kartenrücken der Edition | einzeln | nur mit Billing-Freigabe (E14) |
-| A34 | `bg-moon.png` | B6 / 1.1 | Mondwelt | einzeln | nach Release 1.0 |
-| – | Zusatzdeck (23 Bilder) | B7 / 1.2 | erstes Kartendeck als Einzelkauf | Serie | nach Entscheidung, eigene Anfrage |
+| A03 | `bg-oracle.png` | B3 / V05 | Orakel, Legungen | einzeln | geliefert (Lieferordner), Einbau in V05 |
+| A04 | `bg-grimoire.png` | B3 / V05 | Grimoire (Buch, Kapitel) | einzeln | geliefert (Lieferordner), Einbau in V05 |
+| A15 | `grimoire-book.png` | B3 / V05 | Buch-Einband im Grimoire | einzeln, transparent | geliefert (Lieferordner), Einbau in V05 |
+| A20 | `cardback-crescent.png` | B3 / V05 | Kartenrücken „Mondsichel“ (Meilenstein 14) | einzeln | geliefert (Lieferordner), Einbau in V05 |
+| A21 | `cardback-compass.png` | B3 / V05 | Kartenrücken „Sternenkompass“ (Meilenstein 75) | einzeln | geliefert (Lieferordner), Einbau in V05 |
+| A23–A29 | `grimoire-vignettes.png` | B3 / V05 | 7 Kapitel-Vignetten plus Schlussvignette | ein Sheet, transparent | geliefert (Lieferordner), Einbau in V05 |
+| A30 | `parchment-tile.png` | B3 / V05 | Pergament der Buchseiten | einzeln, kachelbar | geliefert (Lieferordner), Einbau in V05 |
+| A32 | `bg-discover.png` | B4 / V06 | Entdecken (Zahlen, Engelszahlen, Symbole) | einzeln | geliefert (Lieferordner), Einbau in V06 |
+| A33 | `symbols-sheet-1.png`, `symbols-sheet-2.png` | B4 / V06 | 24 Symbole des Lexikons | 2 Sheets, transparent | geliefert (Lieferordner), Einbau in V06 nach finaler Symbolliste |
+| A18 | `store-feature.png` | B5 / V07 | Store-Grafik 1024 × 500 | einzeln | geliefert (Lieferordner), Einbau in V07 nach E11 (Name) |
+| A22 | `cardback-golden-wheel.png` | B5 / V07 | Kartenrücken „Goldenes Rad“ (Tag 365) | einzeln | geliefert (Lieferordner), Einbau in V07 |
+| A31 | `cardback-edition.png` | B5 / V07 | Kartenrücken der Edition | einzeln | geliefert (Lieferordner), Einbau nur mit Billing-Freigabe (E14) |
+| A34 | `bg-moon.png` | B6 / 1.1 | Mondwelt | einzeln | geliefert (Lieferordner), Einbau in 1.1 |
+| – | Zusatzdeck (23 Bilder) | B7 / 1.2 | erstes Kartendeck als Einzelkauf | Serie | geliefert (Lieferordner, 23 Dateien „Sternenwerkstatt“), Einbau erst nach Entscheidung |
 | A16 | `props-sheet.png` | zurückgestellt | Dekor-Objekte | Sheet | nur falls ein Screen es braucht |
 | A17 | `card-<id>.png` | zurückgestellt | figurative Ersatzkarten | einzeln | Entscheidung E3 |
 
@@ -41,19 +41,21 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 
 - [x] B1 · A01, A02 geliefert und eingebaut (V02)
 - [x] B2 · für V04, Ablauf in §0.1 · geliefert 26.11.2026 (11/11), als WebP exportiert (D-55) und mit den V04-Screens in `public/` eingebaut (27.11.2026, D-58)
-- [ ] B3 · für V05 · teilweise geliefert (A03, A04, A15, A20, A21, A23–A29, A30)
-- [ ] B4 · für V06 · teilweise geliefert (A32, zwei Symbol-Sheets A33)
-- [ ] B5 · für V07 · teilweise geliefert (A18, A22, Kartenrücken Edition)
-- [ ] B6 · für 1.1 · A34 geliefert
-- [ ] B7 · für 1.2 · Zusatzdeck in Arbeit (Rücken und erste Karten geliefert)
+- [ ] B3 · für V05 · im Lieferordner vollständig (7 Dateien: A03, A04, A15, A20, A21, A23–A29 als ein Sheet, A30; Stand 27.11.2026); Prüfung, Export und Einbau mit den V05-Screens
+- [ ] B4 · für V06 · im Lieferordner vollständig (3 Dateien: A32, zwei Symbol-Sheets A33; Stand 27.11.2026); Einbau in V06
+- [ ] B5 · für V07 · im Lieferordner vollständig (3 Dateien: A18, A22, A31; Stand 27.11.2026); Einbau in V07, A31 nur mit Billing
+- [ ] B6 · für 1.1 · im Lieferordner vollständig (A34); Einbau in 1.1
+- [ ] B7 · für 1.2 · im Lieferordner vollständig (Rücken und 22 Karten, Stand 27.11.2026); Prüfung und Einbau erst nach der Entscheidung für das Zusatzdeck
 
 **Lieferweg:** Ein Bild-Agent legt die Masters nach und nach in `%USERPROFILE%\Pictures\Arcana\<Bulk>\` ab (nicht im Repo). Eingebaut wird **erst im Paket, das sie braucht** (B2 in V04, B3 in V05 usw.): dort geprüft, als WebP exportiert und ins Repo übernommen. Bis dahin bleiben sie im Lieferordner.
 
-**Bis Release 1.0:** 2 geliefert, ≈ 30 neue Dateien. Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen im Code (Abschnitt 5).
+**Bis Release 1.0:** 13 Dateien eingebaut (B1, B2), 13 weitere liegen im Lieferordner (B3–B5). Ein Haken oben heißt: geprüft, exportiert und im Repo; die Bulks B3–B7 bleiben deshalb offen, bis ihr Paket sie einbaut. Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen im Code (Abschnitt 5).
 
-## 0.1 · Aktuelle Anforderung: Bulk B2 (für V04 Identität und Reise)
+## 0.1 · Abgeschlossen: Bulk B2 (für V04 Identität und Reise)
 
-V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bilder werden erst in V04 eingebaut. Sie jetzt zu erzeugen spart Wartezeit, ändert aber nichts an V02 oder V03.
+**Aktuell wird nichts angefordert** (Stand 27.11.2026): Alle Bulks bis B7 liegen im Lieferordner. Der nächste Schritt ist der Export von B3 in V05 (wie B2, D-55). Der Ablauf von B2 bleibt hier als Vorlage stehen.
+
+V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bilder wurden in V04 eingebaut.
 
 | Reihenfolge | ID | Datei | Wofür in V04 |
 |---|---|---|---|

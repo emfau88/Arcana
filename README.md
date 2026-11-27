@@ -4,12 +4,14 @@
 
 Link auf dem Handy öffnen (Chrome oder Safari). Die App läuft komplett im Browser. Alle Eingaben bleiben lokal auf deinem Gerät, es gibt kein Konto, keinen Server und kein Tracking.
 
-> **Stand: G2 abgeschlossen (Version 0.2.0).**
-> Alle 22 Karten und alle 6 Themen sind enthalten, in Deutsch und Englisch. Die Karten sind das gemalte Deck v2 (siehe [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md)). Die Seite wird bei jedem Push auf `main` automatisch neu gebaut.
+> **Stand: Version 0.4.1 (27.11.2026).** Drei von sechs Paketen bis zum Release 1.0 sind fertig: Tagesorakel (V02), Fundament (V03), Identität und Reise (V04).
+> Enthalten sind 22 gemalte Karten (Deck v2, siehe [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md)), 6 Themen, 8 Archetypen mit Fragebogen und die Narrenreise, alles in Deutsch und Englisch. Als Nächstes kommt V05 (Kartenvertiefung, Legungen, Grimoire als Buch, Tagebuch). Die Seite wird bei jedem Push auf `main` automatisch neu gebaut.
 
 ---
 
-Ein persönliches, symbolisches Tagesorakel: ein kurzes freiwilliges Profil mit acht Archetypen, eine Tageskarte pro Kalendertag, ein Drei-Karten-Orakel (Situation, Herausforderung, Impuls) und ein Grimoire mit Sammlung, Verlauf und Notizen. Die Deutungen sind Reflexionsimpulse, keine Vorhersage und keine Diagnose.
+ARCANA ist ein persönliches, symbolisches Orakel mit drei verbindenden Systemen: **Identität** (acht Archetypen aus sieben freiwilligen Fragen, mit „Warum?“ als nachvollziehbarer Rechnung), **Reise** (Narrenreise mit 63 Stationen, Meilensteine ohne Streak-Druck, Sternkarte, Wochen- und Monatsrückblick) und **Grimoire** (Sammlung, Verlauf, Notizen, Kapitel). Dazu kommen eine Tageskarte pro Kalendertag mit einer Linse je Archetyp, ein Drei-Karten-Orakel (Situation, Herausforderung, Impuls) und eine teilbare Archetypkarte. Die Deutungen sind Reflexionsimpulse, keine Vorhersage und keine Diagnose.
+
+Der Plan bis 1.0 steht in [docs/product/MASTER_ROADMAP_V2.md](docs/product/MASTER_ROADMAP_V2.md).
 
 Derselbe Web-Code läuft im Browser und als gebündelte Android-App (Capacitor). Die App lädt dabei keine Remote-URL.
 
@@ -30,7 +32,7 @@ npm run test:e2e          # Browser-E2E (Playwright, baut und startet die Previe
 npm run validate:content  # Inhalts-Validator (DE/EN, verbotene Begriffe, Vollständigkeit)
 npm run typecheck         # TypeScript strict
 npm run lint              # ESLint, 0 Warnungen erlaubt
-npm run check             # typecheck + lint + content + test + build
+npm run check             # typecheck + lint + content + test + build (mit Bundle-Report und Budgets)
 npm run art               # Icons, Papierkorn und Kartenvorlagen rendern (art/*.mjs → public/icons, docs/assets)
 ```
 
@@ -52,21 +54,22 @@ adb -s emulator-5554 install -r android\app\build\outputs\apk\debug\app-debug.ap
 
 | Pfad | Inhalt |
 |---|---|
-| `src/domain` | Reine Logik: Archetypen-Scoring, Tagesorakel, Readings, Uhr/Zufall injizierbar |
-| `src/content` | Kuratierte DE/EN-Inhalte, Schema und Validator |
-| `src/platform` | IndexedDB-Speicher, Android-Brücke, Textzoom |
-| `src/features` | Heute, Orakel, Grimoire, Profil, Onboarding |
+| `src/domain` | Reine Logik: Archetypen-Scoring und „Warum?“, Tagesorakel, Linsen, Readings, Reise, Meilensteine, Rückblicke, Sternkarte, Rechte; Uhr und Zufall injizierbar |
+| `src/content` | Kuratierte DE/EN-Inhalte, Schema und Validator; `modules/` lädt Identität, Archetypen, Kapitel und Reise je Sprache nach |
+| `src/platform` | IndexedDB-Speicher (Schema 2 mit Migration), Android-Brücke, Textzoom |
+| `src/features` | Heute, Orakel, Grimoire, Identität („Ich“), Reise, Teilen, Einstellungen, Onboarding |
+| `src/share`, `src/ui`, `src/i18n` | Renderer der Teilen-Karte, gemeinsame Bausteine, Oberflächentexte DE/EN |
 | `art/` | Vektorgeneratoren für Icons, Textur, Kartenrahmen und das alte Vektordeck |
 | `scripts/assets/` | Export des gemalten Kartendecks aus den PNG-Mastern (Python + Pillow) |
 | `android/` | Capacitor-Android-Projekt |
 | `tests/` | Unit- und E2E-Tests |
 | `docs/` | Status, Entscheidungen, Gate-Berichte, Testnachweise, Screenshots |
 
-Der aktuelle Stand steht in [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md), die Gate-Berichte (G0–G2) in [docs/GATE_REPORTS.md](docs/GATE_REPORTS.md).
+Der aktuelle Stand steht in [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md), die Gate-Berichte (G0–G2, danach je Paket) in [docs/GATE_REPORTS.md](docs/GATE_REPORTS.md), die Entscheidungen in [docs/DECISIONS.md](docs/DECISIONS.md) und [docs/SELF_DECISIONS.md](docs/SELF_DECISIONS.md).
 
 ## Datenschutz
 
-Es gibt kein Backend, keine Runtime-KI, kein Tracking und keine CDN-Assets. Fonts und Bilder liegen im Paket. Profil, Tageskarten, Readings und Notizen liegen nur in der IndexedDB des jeweiligen Browsers oder Geräts. „Alle Daten löschen“ im Profil entfernt sie vollständig. Ein Android-Backup ist deaktiviert.
+Es gibt kein Backend, keine Runtime-KI, kein Tracking und keine CDN-Assets. Fonts und Bilder liegen im Paket. Profil, Tageskarten, Readings und Notizen liegen nur in der IndexedDB des jeweiligen Browsers oder Geräts. „Alle Daten löschen“ unter „Ich“ › Einstellungen entfernt sie vollständig. Ein Android-Backup ist deaktiviert.
 
 ## Lizenzen
 

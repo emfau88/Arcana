@@ -38,6 +38,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-26 | 27.11.2026 | Notizen im Rückblick | als Zitat im Text statt eigener Abschnitt, kurze Daten unter den Karten | V04.5 |
 | S-27 | 27.11.2026 | A06 hinter Willkommen und Fragen | abgedunkelt wie die ruhigen Screens | V04.6 |
 | S-28 | 27.11.2026 | Bildvergleich der Teilen-Karte | Feed-Karte auf ein Viertel verkleinert, je Sprache eine Referenz | V04.7 |
+| S-29 | 27.11.2026 | Reihenfolge in V05 | Logik und Texte zuerst (Kartentiefe, Legungen, Suche), danach B3 und die Screens | D-57, V05 |
 | S-30 | 27.11.2026 | PNG-Kodierung der Teilen-Karte (B-14) | in einem kleinen Worker statt `toBlob` auf dem Hauptthread; `toBlob` als Rückfall | V04.7 |
 | S-31 | 27.11.2026 | Bildschirmwechsel zur Enthüllung (B-13) | Schrift, Raum A05 und Porträts schon auf dem Themenschritt laden; Favicon nicht angefasst | V04.2 |
 | S-32 | 27.11.2026 | Anrede in Profilen und Kapiteln | kein „als <Name>“ mehr; die Namen bleiben ohne Artikel | D-08, D-62 |
@@ -50,10 +51,11 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-39 | 27.11.2026 | Hauptaktion bleibt sichtbar | klebt am unteren Rand der Scrollfläche, Schleier dahinter; auf der Enthüllung als eigenes Element des Screens | D-63, Punkt 1 |
 | S-40 | 27.11.2026 | Absätze in langen Texten | Leerzeile im Inhalt, Regel nach Sinnabschnitten, Schlussfrage abgesetzt | D-63, Punkt 3 |
 | S-41 | 27.11.2026 | Positionsnamen der Legung | engere Laufweite, das Etikett darf in die Lücke neben seiner Karte reichen | D-63, Punkt 4 |
+| S-42 | 27.11.2026 | Muster für die Design-Punkte 2, 5 und 6 | eigener Branch, echte Screens, per Schalter zuschaltbar, nicht zum Mergen | D-63 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
-Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird erst nach der Durchsicht.
+Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird erst nach der Durchsicht. V04 ist freigegeben und gemergt (D-61); die offenen Punkte bleiben als Liste für Rückmeldungen.
 
 - [ ] Angebot „Drei neue Fragen“ im Profil (`visual/evidence/v04-angebot-profil-360.webp`, S-05)
 - [x] Ton der Reisetexte, Stichprobe: Stationen 1, 13, 21 in allen drei Lesarten und Meilenstein Tag 7 (`src/content/modules/journey.de.ts`, S-02)
@@ -351,6 +353,16 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 
 **Wechsel kostet:** ein Aufruf in `identity.spec.ts`; neue Referenzen mit `--update-snapshots`.
 
+## S-29 · Reihenfolge in V05
+
+**Entschieden:** V05 beginnt auf `feature/v05-karten`, gestapelt auf den V04-Kopf, solange Pull Request #4 offen ist. Zuerst entsteht, was ohne Gestaltung prüfbar ist: das Modul `cards-deep` mit der Studien-Logik (V05.1), die Legungs-Engine mit Rollen (V05.2) und Tagebuch und Suche als Logik (V05.4). Danach werden die B3-Bilder exportiert und die Screens als Vorschlag gebaut (Kartenseite, Grimoire als Buch, Kartenrücken, Orakel). Die Texte entstehen in drei Gruppen zu sieben Karten, damit jede Gruppe für sich durch das Content-Gate geht.
+
+**Warum:** Die Textmenge (≈ 330 je Sprache) ist der Engpass (CONTENT_MASTERPLAN §3). Logik und Texte sind ohne Oberfläche vollständig testbar und ändern sich nicht, wenn die Durchsicht von V04 Gestaltungswünsche bringt. Die Screens profitieren dann von den Rückmeldungen zu V04.
+
+**Alternativen:** mit dem Grimoire als Buch beginnen (sichtbarer Fortschritt, aber Gestaltung vor der V04-Durchsicht); auf den Merge von #4 warten (sauberer, aber Stillstand); Texte für alle 22 Karten in einem Zug (schneller, aber eine einzige große Prüfung).
+
+**Wechsel kostet:** nichts; die Bulks sind unabhängig.
+
 ## S-30 · PNG-Kodierung der Teilen-Karte im Worker (B-14)
 
 **Entschieden:** Die Karte wird wie bisher auf dem Hauptthread gezeichnet. Das fertige Bild geht als `ImageBitmap` an einen Worker (`src/share/encode.worker.ts`, 0,35 kB), der es 1:1 auf ein `OffscreenCanvas` gleicher Größe zeichnet und mit `convertToBlob` als PNG kodiert. Fehlen Worker, `OffscreenCanvas` oder `createImageBitmap`, oder scheitert der Worker, kodiert wie bisher `toBlob`.
@@ -476,3 +488,23 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternativen:** kürzeres Wort („Hürde“; ändert die Deutungssprache und alle Hilfetexte); kleinere Schrift (schlechter lesbar); Umbruch lassen.
 
 **Wechsel kostet:** drei Zeilen CSS. In V05.2 wird die Legung ohnehin neu gebaut (B-12).
+
+## S-42 · Muster für die Design-Punkte 2, 5 und 6
+
+**Entschieden:** Die Muster entstehen auf dem Branch `muster/design-plan` (von `main` 0.4.1) als echte Screens der App, je zwei Varianten. Ein Muster ersetzt einen Screen nur, wenn es im Browser zugeschaltet ist (`localStorage` „arcana.muster“, z. B. `oracle=a;reveal=a;starmap=b`, gelesen in `src/app/muster.ts`); ohne Schalter gleicht die App 0.4.1. Der Branch wird nicht gemergt; die gewählten Varianten werden in V05 ordentlich gebaut (Texte in `i18n`, Tests, Android, Kontrast).
+
+- **Punkt 2, Orakel als Bühne:** gemalte Sternwarte (A03 aus B3, nur für das Muster exportiert), die drei Karten stehen am Tisch und drehen sich nach dem Ziehen an derselben Stelle um. A: Reihe, Themen als eine Zeile zum Wischen. B: Fächer, Themen als Raster.
+- **Punkt 5, Enthüllung:** A ein Moment auf einem Bildschirm (Porträt, Name, ein Satz, zweite Stimme, „Zur Tageskarte“, leise „Mein Profil ansehen“). B wie 0.4.1 ohne den doppelten Aufklapper.
+- **Punkt 6, Sternkarte:** A drei Ringe für die drei Wege, der Weg führt als Spirale nach innen. B ein frei gesetztes Sternbild. In beiden: Wegenden größer, heutiger Stern leuchtet, Ziffer nur am gewählten Stern, Antippen nennt Karte, Weg und Stand.
+
+Empfehlung an den Eigentümer: dreimal A; beim Orakel lassen sich Reihe (A) und Themen-Raster (B) mischen.
+
+**Entscheidung des Eigentümers (27.11.2026, D-64):** Punkt 2 **A**, Punkt 5 **B**, Punkt 6 **A**. Zu Punkt 5 gegen die Empfehlung: Bei einem einzigen Moment würden Nutzer nicht verstehen, dass im Profil mehr steht.
+
+**Warum:** Entschieden wird am echten Screen mit echten Bildern und Texten, nicht an einer Zeichnung (AGENTS.md: kein Mockup als Beleg). Der Schalter hält `main` und die Vorschau unberührt, bis der Eigentümer gewählt hat.
+
+**Alternativen:** Zeichnungen oder Bildmontagen (schneller, aber ohne Aussage über Layout und Schrift); Varianten direkt in V05 bauen und eine wieder entfernen (mehr Aufwand, Risiko halber Reste); Varianten in der Pages-Vorschau umschaltbar machen (sichtbar für alle, braucht eine Oberfläche dafür).
+
+**Wechsel kostet:** nichts; der Branch bleibt als Referenz und kann gelöscht werden.
+
+**Geprüft:** `npm run check` PASS (204 Unit-Tests, Budgets eingehalten). Aufnahmen bei 375 × 812 px, Deutsch, Browser. **NOT RUN:** Android, Englisch, 130 % Schrift, Kontrastmessung, E2E mit zugeschaltetem Muster.
