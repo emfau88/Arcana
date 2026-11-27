@@ -49,11 +49,11 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 
 **Lieferweg:** Ein Bild-Agent legt die Masters nach und nach in `%USERPROFILE%\Pictures\Arcana\<Bulk>\` ab (nicht im Repo). Eingebaut wird **erst im Paket, das sie braucht** (B2 in V04, B3 in V05 usw.): dort geprüft, als WebP exportiert und ins Repo übernommen. Bis dahin bleiben sie im Lieferordner.
 
-**Bis Release 1.0:** 13 Dateien eingebaut (B1, B2), 13 weitere liegen im Lieferordner (B3–B5). Ein Haken oben heißt: geprüft, exportiert und im Repo; die Bulks B3–B7 bleiben deshalb offen, bis ihr Paket sie einbaut. Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen im Code (Abschnitt 5).
+**Bis Release 1.0** (Stand 28.11.2026): B1 und B2 eingebaut, von B3 alles außer A03 (kommt mit V05.6), dazu A22 aus B5; im Lieferordner warten noch B4 (V06) sowie A18 und A31 (V07). Ein Haken oben heißt: geprüft, exportiert und im Repo; die Bulks B3–B7 bleiben deshalb offen, bis ihr Paket sie einbaut. Zahlen, Engelszahlen, Medaillons, Monde, Sternbilder, Ornamente und Stufen-Symbole entstehen im Code (Abschnitt 5).
 
 ## 0.1 · Abgeschlossen: Bulk B2 (für V04 Identität und Reise)
 
-**Aktuell wird nichts angefordert** (Stand 27.11.2026): Alle Bulks bis B7 liegen im Lieferordner. B3 ist geprüft und exportiert (`art/b3/`, S-50) und wird mit den V05-Screens eingebaut. Der Ablauf von B2 bleibt hier als Vorlage stehen.
+**Aktuell wird nichts angefordert** (Stand 28.11.2026): Alle Bulks bis B7 liegen im Lieferordner. B3 ist geprüft und exportiert (`art/b3/`, S-50) und bis auf A03 eingebaut (V05.3, V05.5); A03 folgt mit dem Orakel in V05.6. Der Ablauf von B2 bleibt hier als Vorlage stehen.
 
 V04 baut Fragebogen, Archetyp-Enthüllung, „Ich“ und die Sternkarte. Die Bilder wurden in V04 eingebaut.
 

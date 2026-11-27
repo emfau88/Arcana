@@ -36,7 +36,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 
 ## Was funktioniert (Browser und Android-Emulator)
 
-Stand 0.4.1 (27.11.2026).
+Stand 0.4.1 (27.11.2026); was nur auf dem Branch `feature/v05-karten` läuft, ist markiert (28.11.2026).
 
 - **Erste Sitzung:** Willkommen, 7 freiwillige Fragen (Fragebogen v2), Wahl aus 6 Themen und Archetyp-Enthüllung mit Porträt (4,3 s, überspringbar, bei reduzierter Bewegung statisch). Überspringen führt zum offenen Profil. Die Hauptaktion bleibt auf jedem Schritt im ersten Bildschirm (0.4.1).
 - **Identität („Ich“):** Hauptarchetyp und zweite Stimme (bei höchstens 1 Punkt Abstand ab 4 Antworten), ausführliches Profil in Absätzen, „Warum?“ als Rechnung aus den eigenen Antworten, Bibliothek der acht Archetypen, Archetyp selbst wählen oder offen lassen, Fragen erneut beantworten. Bestehende Profile aus dem kürzeren Fragebogen bleiben gültig und sehen das Angebot „Drei neue Fragen“ (E9, D-53).
@@ -44,13 +44,14 @@ Stand 0.4.1 (27.11.2026).
 - **Tageskarte:** eine Karte pro lokalem Kalendertag (auch über Mitternacht und nach dem Zurückkehren aus dem Hintergrund), freiwillige Enthüllung, Botschaft, Linse je Archetyp und Karte (zweite Stimme jeden dritten Reisetag), Reflexionsfrage, Mini-Ritual, Notiz, höchstens ein Hinweis pro Tag. Nach Neustart erscheint dieselbe Karte.
 - **Reise:** Reisetag aus allen zählenden Handlungen (abgeleitet, nie gezählt), Narrenreise mit 63 Stationen, Meilensteine mit Meilenstein-Moment, Sternkarte mit Liste als Textalternative, Wochen- und Monatsrückblick aus eigenen Daten, Archetyp-Kapitel I–IV und „Zwei Stimmen“. Keine Streaks, kein Verlust bei Pausen.
 - **Drei-Karten-Orakel** mit Situation, Herausforderung und Impuls in allen 6 Themen, einzeln aufdeckbar, speichern oder verwerfen. Die Deutung wird unveränderlich gespeichert. Ein halb aufgedecktes Reading wird wiederhergestellt.
+- **Karten** (V05.1 und V05.5, auf dem Branch): Kartenseite mit Stufe als Mondphase und allen geöffneten Ebenen, Kartenstudium in zwei Teilen (Stufe 2 bis 4), wechselnde Reflexion und Ritual auf „Heute“, drei Kartenrücken an den Reisetagen 2, 5 und 10 mit Auswahl in den Einstellungen.
 - **Grimoire als Buch** (V05.3, auf dem Branch): Einband und Inhalt mit den Kapiteln Karten (Stufen, „Neu“), Archetypen, Tagebuch (schreiben, suchen, filtern, eigene Worte löschen), Rituale („Heute gemacht“) und Reise mit Sternkarte, Rückblicken und Kapiteln. Symbole und Zahlen kommen mit V06.
 - **Teilen:** Archetypkarte als Story (1080 × 1920) und Beitrag (1080 × 1350) über das Teilen-Blatt des Systems, ohne private Felder, auch offline.
 - **Einstellungen** (eigene Seite unter „Ich“): Thema, Sprache (DE/EN), Bewegung, „Alle Daten löschen“.
 - **Daten:** Schema 2 mit additiver Migration aus 0.2, Sicherungsformat als Typ mit Prüfer (die Oberfläche dazu kommt in V07.3), Rechteabfrage ohne Billing.
 - **Android:** gebündelter Build ohne Remote-URL, offline lauffähig. Zurück-Regeln, Insets, Schriftgrößen 130 %/200 % und reduzierte Bewegung sind geprüft; das Update von 0.3.0 auf 0.4.1 behält die Daten.
 
-**Noch nicht gebaut (Plan bis 1.0):** Auswahl der Rollen-Legungen im Orakel (die Engine steht), Sternkarte als drei Ringe (V05); Entdecken-Tab, Numerologie, Engelszahlen, Symbol-Lexikon (V06); weitere Teilen-Vorlagen, Erinnerung, Sicherung und Wiederherstellung, Edition, Härtung, Store (V07).
+**Noch nicht gebaut (Plan bis 1.0):** Auswahl der Rollen-Legungen im Orakel (die Engine steht), Orakel als Bühne, Sternkarte als drei Ringe, Korrektur der Enthüllung (V05); Ex Libris (noch ohne Bulk, Vorschlag V06.6); Entdecken-Tab, Numerologie, Engelszahlen, Symbol-Lexikon (V06); weitere Teilen-Vorlagen, Erinnerung, Sicherung und Wiederherstellung, Edition, Härtung, Store (V07).
 
 ## Offene Punkte
 
@@ -79,12 +80,12 @@ Fortschritt je Paket und Bulk als Checkliste: `docs/product/MASTER_ROADMAP_V2.md
 - [ ] Name „ARCANA“ und App-ID festlegen (E11, vor dem geschlossenen Test).
 - [ ] TalkBack manuell prüfen (V07.5). Bisher nicht manuell geprüft. Als Ersatz wurden die Accessibility-Labels per uiautomator geprüft (G3).
 - [x] **0.4.1** gemergt (27.11.2026, `dae2854`), Tag `v0.4.1`: Textdurchsicht (#5, D-62) und Design-Plan Punkte 1, 3 und 4 (#6, D-63); danach `main` in `feature/v05-karten` gemergt. Der Tag `v0.4.0` trug intern noch Version 0.3.0; 0.4.1 ist die erste Version mit stimmender Nummer in Paket, Android-Projekt und App.
-- [ ] Design-Plan (`SELF_DECISIONS.md` S-39 bis S-41, D-63): Punkte 2 (Bühnen), 5 (Enthüllung als Moment) und 6 (Sternkarte) an Mustern entscheiden, bevor V05 die Screens baut. **Die Muster liegen vor** (27.11.2026, Branch `muster/design-plan`, je zwei Varianten als echte Screens, S-42; Aufnahmen im Design-Plan des Eigentümers), **entschieden vom Eigentümer am 27.11.2026 (D-64): Punkt 2 Variante A, Punkt 5 Variante B, Punkt 6 Variante A**; der Einbau in V05 ist offen; 7 kommt mit V05.3; 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request) sind noch nicht beauftragt.
+- [ ] Design-Plan (`SELF_DECISIONS.md` S-39 bis S-41, D-63): Punkte 2 (Bühnen), 5 (Enthüllung als Moment) und 6 (Sternkarte) an Mustern entscheiden, bevor V05 die Screens baut. **Die Muster liegen vor** (27.11.2026, Branch `muster/design-plan`, je zwei Varianten als echte Screens, S-42; Aufnahmen im Design-Plan des Eigentümers), **entschieden vom Eigentümer am 27.11.2026 (D-64): Punkt 2 Variante A, Punkt 5 Variante B, Punkt 6 Variante A**; eingebaut ist Punkt 7 (V05.3, S-55); offen sind 2 (mit V05.6), 5 (kleine Korrektur: der Aufklapper „So entsteht dein Archetyp“ steht noch auf der Enthüllung) und 6 (Rest von V05.3); 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request) sind noch nicht beauftragt.
 - [ ] **Eigentümer:** Kontotyp und Erstellungsdatum des Play-Kontos nennen (alte App überschreiben oder neuer Eintrag, E11/E17). Die alte App hat laut Eigentümer keine Nutzer.
 - [x] Live-Seite des Eigentümers (Claude-Dokument „ARCANA · Masterplan V2“) auf den Stand 0.4.1 gebracht (27.11.2026): Fortschritt, V04 im Detail, 0.4.1, nächste Schritte.
 - [x] Doku-Altlasten bereinigt (27.11.2026): README (stand auf G2/0.2.0), Roadmap §0, §3, §5, §9 und §10, `ASSET_REQUESTS.md` §0 und §0.1, `GATE_REPORTS.md` (Berichte je Paket ergänzt), „Orte“ und „Was funktioniert“ in dieser Datei. Der Stand liegt jetzt auch auf `main`.
 
-## Bekannte offene Fehler und Grenzfälle (Stand V04, 27.11.2026)
+## Bekannte offene Fehler und Grenzfälle (Stand 28.11.2026; V05 hat bisher keine neuen gebracht)
 
 | # | Befund | Status | Wo |
 |---|---|---|---|
