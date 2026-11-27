@@ -4,6 +4,7 @@
 // Usage: node scripts/export-art.mjs <bulk> <masterDir> <outDir>
 //   bulk: b2 (A05, A06, A19 backgrounds; A07–A14 portraits)
 //         b3 (A03, A04 backgrounds; A15 book; A20, A21 card backs; A23–A29 vignettes; A30 parchment)
+//         b5 (A22 card back, pulled into V05 by D-66; A18 and A31 follow in V07)
 // Encoding uses the project's Playwright Chromium (canvas → WebP); nothing is downloaded.
 // The large size is the master's own size (1024 × 1536, like A01): no upscaling.
 import { chromium } from '@playwright/test';
@@ -12,8 +13,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const [, , bulk, masterDir, outDir] = process.argv;
-if (!['b2', 'b3'].includes(bulk) || !masterDir || !outDir) {
-  console.error('Usage: node scripts/export-art.mjs b2|b3 <masterDir> <outDir>');
+if (!['b2', 'b3', 'b5'].includes(bulk) || !masterDir || !outDir) {
+  console.error('Usage: node scripts/export-art.mjs b2|b3|b5 <masterDir> <outDir>');
   process.exit(2);
 }
 
@@ -51,6 +52,10 @@ if (bulk === 'b2') {
     // Share image (V04.7, loaded lazily): master size, budget like the large backgrounds.
     JOBS.push(job(`archetype-${id}.png`, 'archetypes', `archetype-${id}-1024.webp`, 1024, 1536, 320));
   }
+} else if (bulk === 'b5') {
+  // Same sizes as the B3 card backs (ASSET_REQUESTS A20–A22).
+  JOBS.push(job('cardback-golden-wheel.png', 'backs', 'cardback-golden-wheel.webp', 720, 1080, 140));
+  JOBS.push(job('cardback-golden-wheel.png', 'backs/thumbs', 'cardback-golden-wheel.webp', 240, 360, 30));
 } else {
   for (const id of ['bg-oracle', 'bg-grimoire']) {
     JOBS.push(job(`${id}.png`, 'world', `${id}.webp`, 1024, 1536, 320));

@@ -1,0 +1,18 @@
+[
+  {
+    "file": "backs/cardback-golden-wheel.webp",
+    "size": "720x1080",
+    "kb": 117.6,
+    "budgetKb": 140,
+    "quality": 0.88,
+    "ok": true
+  },
+  {
+    "file": "backs/thumbs/cardback-golden-wheel.webp",
+    "size": "240x360",
+    "kb": 21.7,
+    "budgetKb": 30,
+    "quality": 0.92,
+    "ok": true
+  }
+]
