@@ -173,6 +173,10 @@ export const de = {
     about: 'Über diese Version',
     version: 'Version {v} · Inhalte {c}',
     aboutBody: '22 Karten, sechs Lebensthemen, acht Archetypen. Alles läuft lokal auf diesem Gerät.',
+    offerTitle: 'Drei neue Fragen',
+    offerBody: 'Der Fragebogen hat jetzt sieben Fragen und zeichnet dein Profil genauer. Deine bisherigen Antworten bleiben eingetragen. Dein Profil ändert sich erst, wenn du am Ende bestätigst.',
+    offerStart: 'Neue Fragen beantworten',
+    offerLater: 'Nicht jetzt',
   },
   errors: {
     storageTitle: 'Der lokale Speicher ist nicht erreichbar',

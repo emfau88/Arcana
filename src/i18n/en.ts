@@ -175,6 +175,10 @@ export const en: Messages = {
     about: 'About this version',
     version: 'Version {v} · content {c}',
     aboutBody: '22 cards, six life themes, eight archetypes. Everything runs locally on this device.',
+    offerTitle: 'Three new questions',
+    offerBody: 'The questionnaire now has seven questions and draws your profile more precisely. Your earlier answers stay filled in. Your profile only changes when you confirm at the end.',
+    offerStart: 'Answer the new questions',
+    offerLater: 'Not now',
   },
   errors: {
     storageTitle: 'Local storage is not available',

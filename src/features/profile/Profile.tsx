@@ -3,6 +3,7 @@ import { navigate } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { getArchetype, resolveTheme } from '../../content/index.ts';
 import { ModuleLoadError } from '../../content/modules/registry.ts';
+import { QUESTIONNAIRE_VERSION } from '../../domain/archetypes.ts';
 import { LOCALES, type ArchetypeId, type Locale, type MotionPreference } from '../../domain/types.ts';
 import { fmt } from '../../i18n/index.ts';
 import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
@@ -10,6 +11,8 @@ import { Flank } from '../../ui/Ornaments.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 
 export const APP_VERSION = '0.3.0';
+/** Gesehen-Markierung: the offer of questionnaire v2 was dismissed (E9, D-47). */
+export const OFFER_V2_KEY = 'offer:questionnaire-v2';
 
 export function Profile() {
   const { t, pack, state, actions } = useApp();
@@ -22,6 +25,13 @@ export function Profile() {
   const [choosing, setChoosing] = useState(false);
   const manual = profile?.archetypeSource === 'manual';
   const current = profile?.archetypeId ?? null;
+  // E9: people who answered the shorter questionnaire are offered the new questions once; their
+  // profile stays as it is until they finish. Nothing changes if they dismiss it.
+  const offerV2 =
+    profile !== null &&
+    Object.keys(profile.answers).length > 0 &&
+    (profile.questionnaireVersion ?? 1) < QUESTIONNAIRE_VERSION &&
+    !state.seen.some((s) => s.key === OFFER_V2_KEY);
 
   const guard = async (fn: () => Promise<void>) => {
     try {
@@ -34,6 +44,14 @@ export function Profile() {
   const redo = () => {
     actions.setPending(profile?.answers ?? {}, profile?.themeId ?? null);
     navigate('/onboarding/1');
+  };
+
+  /** Starts at the first unanswered question; earlier answers stay filled in. */
+  const answerNew = () => {
+    const answers = profile?.answers ?? {};
+    const first = pack.questions.findIndex((q) => answers[q.id] === undefined);
+    actions.setPending(answers, profile?.themeId ?? null);
+    navigate(`/onboarding/${first === -1 ? 1 : first + 1}`);
   };
 
   const pick = (id: ArchetypeId | null) =>
@@ -97,6 +115,23 @@ export function Profile() {
           </button>
         </div>
       </section>
+
+      {offerV2 ? (
+        <section className="panel profile__offer" aria-labelledby="prof-offer">
+          <h2 id="prof-offer" className="panel__label">
+            {t.profile.offerTitle}
+          </h2>
+          <p className="small">{t.profile.offerBody}</p>
+          <div className="profile__actions">
+            <button type="button" className="btn btn--ghost btn--block" onClick={answerNew}>
+              {t.profile.offerStart}
+            </button>
+            <button type="button" className="btn btn--quiet btn--block" onClick={() => void guard(() => actions.markSeen(OFFER_V2_KEY))}>
+              {t.profile.offerLater}
+            </button>
+          </div>
+        </section>
+      ) : null}
 
       {choosing ? (
         <section id="prof-choose" className="profile__group" aria-labelledby="prof-choose-title">

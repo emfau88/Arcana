@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { de } from '../../src/i18n/de.ts';
 import { en } from '../../src/i18n/en.ts';
+import { CONTENT } from '../../src/content/index.ts';
 import { texts as identityDe } from '../../src/content/modules/identity.de.ts';
 
 /**
@@ -22,7 +23,7 @@ test('content modules: onboarding works offline after start; a missing language 
   await context.setOffline(true);
 
   await page.getByRole('button', { name: de.welcome.start }).click();
-  for (const q of ['q-calling', 'q-decision', 'q-place', 'q-invite']) {
+  for (const q of CONTENT.questions.map((x) => x.id)) {
     await expect(page.getByRole('heading', { name: identityDe[`question.${q}.prompt`] })).toBeVisible();
     // Answers come from the module too, never raw keys.
     await expect(page.getByText(`question.${q}.`, { exact: false })).toHaveCount(0);

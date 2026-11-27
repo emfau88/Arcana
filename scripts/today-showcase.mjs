@@ -54,7 +54,8 @@ function record(cardId, dateKey, profile) {
 async function onboard(page) {
   await page.goto(baseUrl);
   await page.getByRole('button', { name: L ? 'Beginnen' : 'Begin' }).click();
-  for (let i = 0; i < 4; i++) {
+  // Answer until the theme step shows (four questions up to 0.3, seven from V04.1).
+  for (let i = 0; i < 12 && !(await page.locator('#theme-prompt').isVisible()); i++) {
     await page.getByRole('radio').nth(i === 3 ? 2 : i % 4).click();
     await page.waitForTimeout(400);
   }

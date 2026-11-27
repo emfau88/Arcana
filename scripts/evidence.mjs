@@ -116,9 +116,9 @@ const L = locale === 'de';
 await page.getByRole('button', { name: L ? 'Beginnen' : 'Begin' }).click();
 await settle(500);
 await shot('frage-1');
-for (let i = 0; i < 4; i++) {
-  const radios = page.getByRole('radio');
-  await radios.nth(i === 3 ? 2 : i % 4).click();
+// Answer until the theme step shows (four questions up to 0.3, seven from V04.1).
+for (let i = 0; i < 12 && !(await page.locator('#theme-prompt').isVisible()); i++) {
+  await page.getByRole('radio').nth(i === 3 ? 2 : i % 4).click();
   await page.waitForTimeout(450);
 }
 await settle(400);

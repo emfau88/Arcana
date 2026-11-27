@@ -38,7 +38,8 @@ describe('content modules', () => {
     const report = validateModule('identity', MODULE_RULES.identity, CONTENT, { de: {}, en: {} });
     expect(report.errors).toContain('identity/de: missing question.q-calling.prompt');
     expect(report.errors).toContain('identity/en: missing question.q-calling.prompt');
-    expect(report.errors.length).toBe(2 * 20);
+    // Two locales × (prompt + four answers) per question.
+    expect(report.errors.length).toBe(2 * CONTENT.questions.length * 5);
   });
 
   it('finds missing translations, unknown keys, empty and forbidden texts', async () => {

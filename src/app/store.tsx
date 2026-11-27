@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useReducer,
 import { CONTENT } from '../content/index.ts';
 import { loadModules, ModuleLoadError, STARTUP_MODULES, text, type LoadedModules, type ModuleId } from '../content/modules/registry.ts';
 import type { ContentPack } from '../content/schema.ts';
-import { PROFILE_VERSION, scoreArchetype } from '../domain/archetypes.ts';
+import { PROFILE_VERSION, QUESTIONNAIRE_VERSION, scoreArchetype } from '../domain/archetypes.ts';
 import { localDateKey, msUntilNextLocalDay, systemClock, type Clock } from '../domain/clock.ts';
 import {
   createDailyRecord,
@@ -22,6 +22,7 @@ import type {
   Profile,
   Reading,
   ReadingDraft,
+  SeenFlag,
   Settings,
   ThemeId,
 } from '../domain/types.ts';
@@ -39,6 +40,8 @@ export interface AppState {
   dailies: DailyRecord[];
   readings: Reading[];
   draft: ReadingDraft | null;
+  /** Gesehen-Markierungen (e.g. a dismissed offer). Facts only, never counters. */
+  seen: SeenFlag[];
   skippedCorrupt: number;
   /** Why the start failed: the local database or the texts of a content module. */
   errorKind: 'storage' | 'content';
@@ -60,6 +63,7 @@ type Action =
   | { type: 'daily'; record: DailyRecord }
   | { type: 'draft'; draft: ReadingDraft | null }
   | { type: 'reading'; reading: Reading }
+  | { type: 'seen'; flag: SeenFlag }
   | { type: 'today'; key: string }
   | { type: 'pending'; answers: Answers; theme: ThemeId | null }
   | { type: 'cleared'; settings: Settings; modules: LoadedModules };
@@ -93,6 +97,8 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, draft: action.draft };
     case 'reading':
       return { ...state, readings: upsert(state.readings, action.reading, (r) => r.id === action.reading.id) };
+    case 'seen':
+      return { ...state, seen: upsert(state.seen, action.flag, (s) => s.key === action.flag.key) };
     case 'today':
       return state.todayKey === action.key ? state : { ...state, todayKey: action.key };
     case 'pending':
@@ -106,6 +112,7 @@ function reducer(state: AppState, action: Action): AppState {
         dailies: [],
         readings: [],
         draft: null,
+        seen: [],
         skippedCorrupt: 0,
         pendingAnswers: {},
         pendingTheme: null,
@@ -134,6 +141,8 @@ export interface AppActions {
   updateDailyNote(dateKey: string, note: string): Promise<void>;
   updateReadingNote(id: string, note: string): Promise<void>;
   clearAllData(): Promise<void>;
+  /** Records that something was seen or dismissed (idempotent, the first time wins). */
+  markSeen(key: string): Promise<void>;
 }
 
 interface AppContextValue {
@@ -173,6 +182,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     dailies: [],
     readings: [],
     draft: null,
+    seen: [],
     skippedCorrupt: 0,
     errorKind: 'storage',
     modules: {},
@@ -223,6 +233,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             dailies: snap.dailies,
             readings: snap.readings,
             draft: snap.draft,
+            seen: snap.seen,
             skippedCorrupt: snap.skippedCorrupt,
             todayKey: localDateKey(clock.now()),
           },
@@ -275,6 +286,9 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
           themeId,
           archetypeId: result.archetypeId,
           archetypeSource: 'questions',
+          secondaryArchetypeId: result.complementId,
+          scores: result.scores,
+          questionnaireVersion: QUESTIONNAIRE_VERSION,
           profileVersion: PROFILE_VERSION,
           updatedAt: clock.now().toISOString(),
         };
@@ -314,8 +328,12 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
       async setArchetype(archetypeId) {
         const p = stateRef.current.profile;
         const now = clock.now().toISOString();
+        // A complement from the questionnaire stays, unless it would now equal the main archetype
+        // or the profile is left open (then there is no "second" voice).
+        const secondary =
+          p?.secondaryArchetypeId === undefined ? {} : { secondaryArchetypeId: archetypeId !== null && p.secondaryArchetypeId !== archetypeId ? p.secondaryArchetypeId : null };
         const profile: Profile = p
-          ? { ...p, archetypeId, archetypeSource: 'manual', updatedAt: now }
+          ? { ...p, archetypeId, archetypeSource: 'manual', ...secondary, updatedAt: now }
           : { answers: {}, themeId: pack.defaultTheme, archetypeId, archetypeSource: 'manual', profileVersion: PROFILE_VERSION, updatedAt: now };
         await repo.putProfile(profile);
         dispatch({ type: 'profile', profile });
@@ -420,6 +438,11 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         const settings = defaultSettings();
         const modules = settings.locale === stateRef.current.settings.locale ? stateRef.current.modules : await loadModules(STARTUP_MODULES, settings.locale);
         dispatch({ type: 'cleared', settings, modules });
+      },
+
+      async markSeen(key) {
+        const flag = await repo.markSeen(key, clock.now().toISOString());
+        dispatch({ type: 'seen', flag });
       },
     }),
     [repo, clock, rng, pack, persistSettings],

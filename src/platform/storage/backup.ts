@@ -2,7 +2,7 @@ import type { ActivityEvent, DailyRecord, Favorite, JournalEntry, PersonalData, 
 import { SCHEMA_VERSION, type Snapshot, type StoreData } from './repository.ts';
 import {
   isDailyRecord,
-  isProfile,
+  normalizeProfile,
   isReading,
   isSettings,
   normalizeEvent,
@@ -154,7 +154,7 @@ export function parseBackup(text: string): ParsedBackup {
   };
 
   const kv: StoreData['kv'] = {};
-  const profile = single<Profile>('profile', guarded(isProfile));
+  const profile = single<Profile>('profile', normalizeProfile);
   const settings = single<Settings>('settings', guarded(isSettings));
   // The birth date is only taken when the file says it was included on purpose.
   const personal = includesPersonal ? single<PersonalData>('personal', normalizePersonal) : undefined;

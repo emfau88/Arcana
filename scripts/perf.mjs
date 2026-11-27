@@ -96,7 +96,8 @@ const results = { conditions: { viewport: '412x915@2', cpu: '4x', net: '40ms/10M
   const setup = await ctx.newPage();
   await setup.goto(baseUrl);
   await setup.getByRole('button', { name: 'Beginnen' }).click();
-  for (let i = 0; i < 4; i++) {
+  // Answer until the theme step shows: four questions in the reference build, seven from V04.1.
+  for (let i = 0; i < 12 && !(await setup.locator('#theme-prompt').isVisible()); i++) {
     await setup.getByRole('radio').nth(i % 4).click();
     await setup.waitForTimeout(450);
   }
