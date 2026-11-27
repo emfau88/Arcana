@@ -126,6 +126,9 @@ test('V04: with reduced motion the reveal shows everything at once', async ({ pa
   // No staged steps and no skip button: the call to action is there at once.
   await expect(page.getByRole('button', { name: de.archetype.toToday })).toBeVisible({ timeout: 800 });
   await expect(page.getByRole('button', { name: de.common.skip, exact: true })).toHaveCount(0);
+  // Design plan point 5, variant B (D-64): "Why?" stays, the second fold-out with the same explanation is gone.
+  await expect(page.getByRole('button', { name: de.archetype.why })).toBeVisible();
+  await expect(page.locator('.reveal details.explain')).toHaveCount(0);
 });
 
 test('V05.5: card backs open on journey days 2, 5 and 10 and change every face-down card', async ({ page }, info) => {
