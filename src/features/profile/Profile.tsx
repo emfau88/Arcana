@@ -15,7 +15,7 @@ import { DetailHeader } from '../grimoire/Grimoire.tsx';
 import { ArchetypePortrait } from '../../ui/Portrait.tsx';
 import { ArchetypeProfile } from '../identity/Identity.tsx';
 
-export const APP_VERSION = '0.3.0';
+export const APP_VERSION = '0.4.1';
 /** Gesehen-Markierung: the offer of questionnaire v2 was dismissed (E9, D-47). */
 export const OFFER_V2_KEY = 'offer:questionnaire-v2';
 
