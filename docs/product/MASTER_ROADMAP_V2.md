@@ -169,13 +169,13 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 ### V06 · Zahlen und Symbole (0.6)
 
-Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahlen`. **Läuft seit 28.11.2026** (Zuruf des Eigentümers, D-69; E8 fünf Tabs und Ex Libris in V06.6 entschieden). Schritt 0 erledigt: Symbolliste gegen die Kartenbilder (S-64), B4 exportiert (S-63). Schritt 1 erledigt: Numerologie als Logik (30 Rechenfälle) und Modul `numbers` mit 194 Texten je Sprache (S-65); die Screens folgen mit Schritt 4 und 5. Schritt 2 erledigt: Engelszahlen als Logik (Eigenschaftstest über jede Eingabe) und Modul `angels` mit 160 Texten je Sprache (S-66). Schritt 3 erledigt: Symbol-Lexikon mit abgeleiteter Entdeckung und Modul `symbols` mit 120 Texten je Sprache, Verweise im Inhalts-Gate geprüft (S-67).
+Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahlen`. **Läuft seit 28.11.2026** (Zuruf des Eigentümers, D-69; E8 fünf Tabs und Ex Libris in V06.6 entschieden). Schritt 0 erledigt: Symbolliste gegen die Kartenbilder (S-64), B4 exportiert (S-63). Schritt 1 erledigt: Numerologie als Logik (30 Rechenfälle) und Modul `numbers` mit 194 Texten je Sprache (S-65); die Screens folgen mit Schritt 4 und 5. Schritt 2 erledigt: Engelszahlen als Logik (Eigenschaftstest über jede Eingabe) und Modul `angels` mit 160 Texten je Sprache (S-66). Schritt 3 erledigt: Symbol-Lexikon mit abgeleiteter Entdeckung und Modul `symbols` mit 120 Texten je Sprache, Verweise im Inhalts-Gate geprüft (S-67). Schritt 4 erledigt: Entdecken-Tab mit Suche, Zahlen mit Rechenweg und Geburtsdatum unter „Ich“, Engelszahlen mit Begegnungen, Symbol-Lexikon mit den Bildern aus B4; Kontrast in vier Größen ohne Verstoß, Android 8/8 (S-68). Nebenbei B-15 im Orakel behoben.
 
-- [ ] V06.1 Entdecken-Tab (E8)
-- [ ] V06.2 Numerologie
-- [ ] V06.3 Engelszahlen
-- [ ] V06.4 Symbol-Lexikon
-- [ ] V06.5 Gestaltung
+- [x] V06.1 Entdecken-Tab (E8): fünf Tabs mit Label auch bei 320 px und 130 % Schrift, Hub mit Suche, Routen mit Herkunft; Android-Zurück im Emulator geprüft (S-68)
+- [ ] V06.2 Numerologie: Rechnen, Texte, Geburtsdatum, Rechenweg und Zahlseiten fertig (S-65, S-68); offen: Tageszahl in „Heute“ (Schritt 5)
+- [x] V06.3 Engelszahlen: Eingabe, 22 kuratierte und zusammengesetzte Deutungen, Begegnung mit Ort, Favoriten (S-66, S-68)
+- [x] V06.4 Symbol-Lexikon: 24 Symbole mit Bild und Kartenverweisen, Nachschlagen nie gesperrt (E2E, S-67, S-68)
+- [x] V06.5 Gestaltung: A32 als Welt, A33 als Symbolbilder, Medaillons im Code; Kontrast 0 Verstöße in vier Größen (S-68)
 - [ ] V06.6 Zweite Säule verbinden
 - [ ] QG-V06, Test-Update, Tag `v0.6.0`
 
@@ -201,7 +201,7 @@ Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahle
 - [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
 - [x] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19: geliefert (11/11), als WebP im Budget, eingebaut in `public/` und im Layout geprüft (Beschnitt, Kontrast, D-58)
 - [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04): geprüft und als WebP exportiert (`art/b3/`, S-50); eingebaut: Kartenrücken (V05.5), Grimoire-Welt, Buch, Vignetten und Pergament (V05.3), A03 Orakel (V05.6, S-58); offen: Vignetten Symbole und Zahlen mit V06
-- [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
+- [x] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05): geprüft und exportiert (S-63), eingebaut mit dem Entdecken-Tab (V06.5, S-68)
 - [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)
 - [ ] B6 · Mondwelt (nach 1.0)
 - [ ] B7 · erstes Premium-Deck (nach Entscheidung)
@@ -353,7 +353,7 @@ Angefordert wird **immer nur der nächste Bulk**; eingebaut, geprüft und ins Re
 | B1 | V02 | A01 Nachtwelt, A02 Pflanzenecken | 2 | geliefert |
 | B2 | V04 | A05 Ich/Enthüllung, A06 Willkommen, A07–A14 Archetyp-Porträts, A19 Sternkarte | 11 | geliefert, eingebaut (D-58) |
 | B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | exportiert (S-50), eingebaut bis auf die Vignetten Symbole und Zahlen (mit V06) |
-| B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | geprüft und exportiert (S-63), Einbau in V06 |
+| B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | geprüft und exportiert (S-63), eingebaut (V06.5, S-68) |
 | B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“ (für Tag 10 nach V05 vorgezogen und exportiert, D-66, S-51), A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
 | B6 | 1.1 | A34 Mondwelt | 1 | im Lieferordner, Einbau in 1.1 |
 | B7 | 1.2 | Zusatzdeck | 23 | im Lieferordner (23 Dateien), Einbau erst nach Entscheidung |
@@ -466,7 +466,7 @@ Regeln:
 
 ## 10 · Nächste Schritte
 
-Stand 28.11.2026. V02 bis V05 sind abgeschlossen und gemergt (0.5.0 auf `main`, Tag `v0.5.0`, D-68; Doku-Pull-Request #9 ebenfalls gemergt). Der Umsetzungsplan für V06 steht in `docs/V06_PLAN.md` (S-62); **V06 läuft seit 28.11.2026** auf `feature/v06-zahlen` (Zuruf des Eigentümers, D-69).
+Stand 28.11.2026. V02 bis V05 sind abgeschlossen und gemergt (0.5.0 auf `main`, Tag `v0.5.0`, D-68; Doku-Pull-Request #9 ebenfalls gemergt). Der Umsetzungsplan für V06 steht in `docs/V06_PLAN.md` (S-62); **V06 läuft seit 28.11.2026** auf `feature/v06-zahlen` (Zuruf des Eigentümers, D-69). Schritt 0 bis 4 von 6 sind fertig (Entdecken-Tab gebaut, S-68); als Nächstes die zweite Säule in „Heute“, „Ich“ und im Grimoire mit dem Ex Libris (V06.6).
 
 1. **V05 fertig bauen:** Sternkarte als drei Ringe (Punkt 6 A, S-56), Korrektur der Enthüllung (Punkt 5 B, S-57) und Orakel als Bühne mit der Auswahl der Legungen und B-12 (Punkt 2 A, S-58) sind gebaut (28.11.2026), ebenso das Testpaket (Release-Build 0.5.0 mit Testsignatur und Testanleitung, S-59, `docs/TESTPAKET.md`); E11 (App-Name und App-ID) liegt beim Eigentümer, bis dahin bleibt der geschlossene Test BLOCKED. Der Branch `muster/design-plan` (S-42) wird nicht gemergt und kann nach QG-V05 gelöscht werden.
 2. **QG-V05 geprüft** (28.11.2026, PASS mit Ausnahme D-67, `docs/GATE_REPORTS.md`). Die Leistungsmessung gegen die Referenz ist gelaufen: „Heute“ sichtbar und Erststart liegen knapp über den Grenzen, alles andere hält (`docs/visual/PERFORMANCE.md` „V05“). **Eigentümer 28.11.2026 (D-67):** Ausnahme wie D-52, Behebung spätestens in V07.5 (Option 1, bei Bedarf Option 2), V05 nach den übrigen Prüfungen mergen. Es folgen Android-Kaltstart, TalkBack-Grundcheck, alle Prüfungen auf dem Endstand, Gate-Bericht und Pull Request nach `main`.
