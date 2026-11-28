@@ -1,0 +1,1803 @@
+{
+ "note": "QG-V05 measurement against the fixed reference main@03abb3c, interleaved ref/cur per round (Roadmap §6). Conditions as scripts/perf.mjs (412x915@2, CPU 4x, 40ms/10Mbit, cache off, 5 runs). Host CPU load 40-88 % (other processes), hence normalisation: value x baseline / reference-in-the-same-round. Series A: feature/v05-karten @ 54dd029; series B: plus 560 px card images (S-60), tried and not adopted (no measurable gain, see PERFORMANCE.md).",
+ "baseline": {
+  "firstLaunchReady": 1327,
+  "todayReady": 996,
+  "todayFcp": 496,
+  "todayLcp": 896
+ },
+ "series": {
+  "A-54dd029": {
+   "ref-1": {
+    "measuredAt": "2026-11-28T01:31:25.034Z",
+    "baseUrl": "http://127.0.0.1:5182/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 929,
+       "runs": [
+        1082,
+        904,
+        929,
+        890,
+        931
+       ]
+      },
+      "fcp": {
+       "median": 496,
+       "runs": [
+        664,
+        484,
+        504,
+        496,
+        488
+       ]
+      },
+      "lcp": {
+       "median": 956,
+       "runs": [
+        1088,
+        884,
+        992,
+        956,
+        820
+       ]
+      },
+      "kb": {
+       "median": 406,
+       "runs": [
+        406,
+        406,
+        406,
+        406,
+        406
+       ]
+      },
+      "imgKb": {
+       "median": 214,
+       "runs": [
+        214,
+        214,
+        214,
+        214,
+        214
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1021,
+       "runs": [
+        833,
+        970,
+        1107,
+        1032,
+        1021
+       ]
+      },
+      "fcp": {
+       "median": 508,
+       "runs": [
+        468,
+        480,
+        516,
+        772,
+        508
+       ]
+      },
+      "lcp": {
+       "median": 1032,
+       "runs": [
+        768,
+        1060,
+        1032,
+        952,
+        1092
+       ]
+      },
+      "kb": {
+       "median": 560,
+       "runs": [
+        388,
+        560,
+        560,
+        560,
+        560
+       ]
+      },
+      "imgKb": {
+       "median": 330,
+       "runs": [
+        196,
+        330,
+        330,
+        330,
+        330
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 58,
+       "runs": [
+        58
+       ]
+      },
+      "worstFrameMs": {
+       "median": 67,
+       "runs": [
+        67
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "cur-1": {
+    "measuredAt": "2026-11-28T01:32:54.341Z",
+    "baseUrl": "http://127.0.0.1:5181/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 1193,
+       "runs": [
+        1216,
+        1121,
+        1193,
+        1120,
+        1285
+       ]
+      },
+      "fcp": {
+       "median": 548,
+       "runs": [
+        548,
+        532,
+        548,
+        528,
+        576
+       ]
+      },
+      "lcp": {
+       "median": 1200,
+       "runs": [
+        1304,
+        1200,
+        1228,
+        1184,
+        1056
+       ]
+      },
+      "kb": {
+       "median": 630,
+       "runs": [
+        630,
+        630,
+        630,
+        630,
+        630
+       ]
+      },
+      "imgKb": {
+       "median": 361,
+       "runs": [
+        361,
+        361,
+        361,
+        361,
+        361
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1292,
+       "runs": [
+        1167,
+        1326,
+        1262,
+        1460,
+        1292
+       ]
+      },
+      "fcp": {
+       "median": 556,
+       "runs": [
+        576,
+        556,
+        524,
+        528,
+        572
+       ]
+      },
+      "lcp": {
+       "median": 1292,
+       "runs": [
+        1568,
+        1292,
+        1156,
+        1408,
+        1252
+       ]
+      },
+      "kb": {
+       "median": 780,
+       "runs": [
+        654,
+        780,
+        780,
+        780,
+        780
+       ]
+      },
+      "imgKb": {
+       "median": 473,
+       "runs": [
+        347,
+        473,
+        473,
+        473,
+        473
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 52,
+       "runs": [
+        52
+       ]
+      },
+      "worstFrameMs": {
+       "median": 67,
+       "runs": [
+        67
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "ref-2": {
+    "measuredAt": "2026-11-28T01:35:48.360Z",
+    "baseUrl": "http://127.0.0.1:5182/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 918,
+       "runs": [
+        918,
+        865,
+        884,
+        965,
+        928
+       ]
+      },
+      "fcp": {
+       "median": 516,
+       "runs": [
+        536,
+        516,
+        480,
+        548,
+        480
+       ]
+      },
+      "lcp": {
+       "median": 900,
+       "runs": [
+        968,
+        936,
+        896,
+        900,
+        796
+       ]
+      },
+      "kb": {
+       "median": 406,
+       "runs": [
+        406,
+        406,
+        406,
+        406,
+        406
+       ]
+      },
+      "imgKb": {
+       "median": 214,
+       "runs": [
+        214,
+        214,
+        214,
+        214,
+        214
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1027,
+       "runs": [
+        894,
+        1031,
+        1027,
+        1014,
+        1142
+       ]
+      },
+      "fcp": {
+       "median": 492,
+       "runs": [
+        496,
+        480,
+        492,
+        484,
+        500
+       ]
+      },
+      "lcp": {
+       "median": 920,
+       "runs": [
+        820,
+        920,
+        932,
+        928,
+        920
+       ]
+      },
+      "kb": {
+       "median": 541,
+       "runs": [
+        388,
+        541,
+        541,
+        541,
+        541
+       ]
+      },
+      "imgKb": {
+       "median": 311,
+       "runs": [
+        196,
+        311,
+        311,
+        311,
+        311
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 57,
+       "runs": [
+        57
+       ]
+      },
+      "worstFrameMs": {
+       "median": 67,
+       "runs": [
+        67
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "cur-2": {
+    "measuredAt": "2026-11-28T01:34:26.293Z",
+    "baseUrl": "http://127.0.0.1:5181/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 1038,
+       "runs": [
+        1260,
+        1004,
+        1038,
+        1014,
+        1457
+       ]
+      },
+      "fcp": {
+       "median": 576,
+       "runs": [
+        636,
+        556,
+        576,
+        568,
+        588
+       ]
+      },
+      "lcp": {
+       "median": 1176,
+       "runs": [
+        1300,
+        1124,
+        1128,
+        1176,
+        1472
+       ]
+      },
+      "kb": {
+       "median": 630,
+       "runs": [
+        630,
+        630,
+        630,
+        630,
+        630
+       ]
+      },
+      "imgKb": {
+       "median": 361,
+       "runs": [
+        361,
+        361,
+        361,
+        361,
+        361
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1352,
+       "runs": [
+        1192,
+        1352,
+        1354,
+        1349,
+        1358
+       ]
+      },
+      "fcp": {
+       "median": 556,
+       "runs": [
+        572,
+        556,
+        560,
+        532,
+        544
+       ]
+      },
+      "lcp": {
+       "median": 1300,
+       "runs": [
+        3524,
+        1332,
+        1280,
+        1188,
+        1300
+       ]
+      },
+      "kb": {
+       "median": 780,
+       "runs": [
+        653,
+        780,
+        780,
+        780,
+        780
+       ]
+      },
+      "imgKb": {
+       "median": 473,
+       "runs": [
+        347,
+        473,
+        473,
+        473,
+        473
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 55,
+       "runs": [
+        55
+       ]
+      },
+      "worstFrameMs": {
+       "median": 67,
+       "runs": [
+        67
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "ref-3": {
+    "measuredAt": "2026-11-28T01:37:11.787Z",
+    "baseUrl": "http://127.0.0.1:5182/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 927,
+       "runs": [
+        927,
+        935,
+        1178,
+        893,
+        926
+       ]
+      },
+      "fcp": {
+       "median": 524,
+       "runs": [
+        532,
+        524,
+        760,
+        496,
+        500
+       ]
+      },
+      "lcp": {
+       "median": 944,
+       "runs": [
+        932,
+        848,
+        1248,
+        968,
+        944
+       ]
+      },
+      "kb": {
+       "median": 406,
+       "runs": [
+        406,
+        406,
+        406,
+        406,
+        406
+       ]
+      },
+      "imgKb": {
+       "median": 214,
+       "runs": [
+        214,
+        214,
+        214,
+        214,
+        214
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 972,
+       "runs": [
+        862,
+        1073,
+        1022,
+        972,
+        945
+       ]
+      },
+      "fcp": {
+       "median": 492,
+       "runs": [
+        480,
+        496,
+        492,
+        740,
+        492
+       ]
+      },
+      "lcp": {
+       "median": 972,
+       "runs": [
+        784,
+        972,
+        1084,
+        892,
+        1016
+       ]
+      },
+      "kb": {
+       "median": 560,
+       "runs": [
+        388,
+        560,
+        560,
+        560,
+        560
+       ]
+      },
+      "imgKb": {
+       "median": 330,
+       "runs": [
+        196,
+        330,
+        330,
+        330,
+        330
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 58,
+       "runs": [
+        58
+       ]
+      },
+      "worstFrameMs": {
+       "median": 67,
+       "runs": [
+        67
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "cur-3": {
+    "measuredAt": "2026-11-28T01:38:39.823Z",
+    "baseUrl": "http://127.0.0.1:5181/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 1150,
+       "runs": [
+        1150,
+        963,
+        1163,
+        1091,
+        1236
+       ]
+      },
+      "fcp": {
+       "median": 524,
+       "runs": [
+        548,
+        524,
+        524,
+        520,
+        560
+       ]
+      },
+      "lcp": {
+       "median": 1136,
+       "runs": [
+        1216,
+        1120,
+        1176,
+        1136,
+        980
+       ]
+      },
+      "kb": {
+       "median": 630,
+       "runs": [
+        630,
+        630,
+        630,
+        630,
+        630
+       ]
+      },
+      "imgKb": {
+       "median": 361,
+       "runs": [
+        361,
+        361,
+        361,
+        361,
+        361
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1281,
+       "runs": [
+        1030,
+        1421,
+        1281,
+        1349,
+        1158
+       ]
+      },
+      "fcp": {
+       "median": 524,
+       "runs": [
+        516,
+        524,
+        524,
+        524,
+        524
+       ]
+      },
+      "lcp": {
+       "median": 1192,
+       "runs": [
+        1448,
+        1096,
+        1244,
+        1188,
+        1192
+       ]
+      },
+      "kb": {
+       "median": 779,
+       "runs": [
+        654,
+        779,
+        779,
+        779,
+        779
+       ]
+      },
+      "imgKb": {
+       "median": 472,
+       "runs": [
+        347,
+        472,
+        472,
+        472,
+        472
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 57,
+       "runs": [
+        57
+       ]
+      },
+      "worstFrameMs": {
+       "median": 50,
+       "runs": [
+        50
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   }
+  },
+  "B-560px": {
+   "ref-1": {
+    "measuredAt": "2026-11-28T01:46:53.339Z",
+    "baseUrl": "http://127.0.0.1:5182/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 954,
+       "runs": [
+        989,
+        2780,
+        865,
+        924,
+        954
+       ]
+      },
+      "fcp": {
+       "median": 540,
+       "runs": [
+        548,
+        560,
+        492,
+        504,
+        540
+       ]
+      },
+      "lcp": {
+       "median": 968,
+       "runs": [
+        988,
+        2600,
+        936,
+        860,
+        968
+       ]
+      },
+      "kb": {
+       "median": 406,
+       "runs": [
+        406,
+        406,
+        406,
+        406,
+        406
+       ]
+      },
+      "imgKb": {
+       "median": 214,
+       "runs": [
+        214,
+        214,
+        214,
+        214,
+        214
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 991,
+       "runs": [
+        852,
+        1052,
+        1054,
+        945,
+        991
+       ]
+      },
+      "fcp": {
+       "median": 500,
+       "runs": [
+        544,
+        500,
+        532,
+        464,
+        480
+       ]
+      },
+      "lcp": {
+       "median": 944,
+       "runs": [
+        948,
+        944,
+        940,
+        832,
+        964
+       ]
+      },
+      "kb": {
+       "median": 492,
+       "runs": [
+        388,
+        492,
+        492,
+        492,
+        492
+       ]
+      },
+      "imgKb": {
+       "median": 261,
+       "runs": [
+        196,
+        261,
+        261,
+        261,
+        261
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 55,
+       "runs": [
+        55
+       ]
+      },
+      "worstFrameMs": {
+       "median": 100,
+       "runs": [
+        100
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "cur-1": {
+    "measuredAt": "2026-11-28T01:48:22.235Z",
+    "baseUrl": "http://127.0.0.1:5181/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 1130,
+       "runs": [
+        1130,
+        1388,
+        1055,
+        1175,
+        1108
+       ]
+      },
+      "fcp": {
+       "median": 568,
+       "runs": [
+        556,
+        536,
+        572,
+        568,
+        576
+       ]
+      },
+      "lcp": {
+       "median": 1176,
+       "runs": [
+        1232,
+        536,
+        1168,
+        1216,
+        1176
+       ]
+      },
+      "kb": {
+       "median": 572,
+       "runs": [
+        572,
+        572,
+        572,
+        572,
+        572
+       ]
+      },
+      "imgKb": {
+       "median": 303,
+       "runs": [
+        303,
+        303,
+        303,
+        303,
+        303
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1254,
+       "runs": [
+        1177,
+        1230,
+        1283,
+        1271,
+        1254
+       ]
+      },
+      "fcp": {
+       "median": 556,
+       "runs": [
+        556,
+        552,
+        560,
+        556,
+        512
+       ]
+      },
+      "lcp": {
+       "median": 1220,
+       "runs": [
+        1572,
+        1220,
+        1256,
+        1128,
+        1124
+       ]
+      },
+      "kb": {
+       "median": 651,
+       "runs": [
+        596,
+        651,
+        651,
+        651,
+        651
+       ]
+      },
+      "imgKb": {
+       "median": 344,
+       "runs": [
+        288,
+        344,
+        344,
+        344,
+        344
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 52,
+       "runs": [
+        52
+       ]
+      },
+      "worstFrameMs": {
+       "median": 83,
+       "runs": [
+        83
+       ]
+      },
+      "jank": {
+       "median": 3,
+       "runs": [
+        3
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "ref-2": {
+    "measuredAt": "2026-11-28T01:51:14.960Z",
+    "baseUrl": "http://127.0.0.1:5182/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 883,
+       "runs": [
+        1052,
+        917,
+        852,
+        832,
+        883
+       ]
+      },
+      "fcp": {
+       "median": 508,
+       "runs": [
+        560,
+        472,
+        472,
+        508,
+        508
+       ]
+      },
+      "lcp": {
+       "median": 884,
+       "runs": [
+        560,
+        884,
+        852,
+        940,
+        960
+       ]
+      },
+      "kb": {
+       "median": 406,
+       "runs": [
+        406,
+        406,
+        406,
+        406,
+        406
+       ]
+      },
+      "imgKb": {
+       "median": 214,
+       "runs": [
+        214,
+        214,
+        214,
+        214,
+        214
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 986,
+       "runs": [
+        900,
+        986,
+        944,
+        1189,
+        1055
+       ]
+      },
+      "fcp": {
+       "median": 512,
+       "runs": [
+        536,
+        512,
+        472,
+        932,
+        500
+       ]
+      },
+      "lcp": {
+       "median": 980,
+       "runs": [
+        968,
+        980,
+        840,
+        1052,
+        1012
+       ]
+      },
+      "kb": {
+       "median": 484,
+       "runs": [
+        388,
+        484,
+        484,
+        484,
+        484
+       ]
+      },
+      "imgKb": {
+       "median": 254,
+       "runs": [
+        196,
+        254,
+        254,
+        254,
+        254
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 55,
+       "runs": [
+        55
+       ]
+      },
+      "worstFrameMs": {
+       "median": 117,
+       "runs": [
+        117
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "cur-2": {
+    "measuredAt": "2026-11-28T01:49:52.501Z",
+    "baseUrl": "http://127.0.0.1:5181/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 1143,
+       "runs": [
+        1504,
+        1143,
+        1205,
+        1129,
+        1136
+       ]
+      },
+      "fcp": {
+       "median": 556,
+       "runs": [
+        768,
+        560,
+        556,
+        552,
+        536
+       ]
+      },
+      "lcp": {
+       "median": 1216,
+       "runs": [
+        1576,
+        1216,
+        1284,
+        1148,
+        1164
+       ]
+      },
+      "kb": {
+       "median": 572,
+       "runs": [
+        572,
+        572,
+        572,
+        572,
+        572
+       ]
+      },
+      "imgKb": {
+       "median": 303,
+       "runs": [
+        303,
+        303,
+        303,
+        303,
+        303
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1284,
+       "runs": [
+        1089,
+        1284,
+        1228,
+        1296,
+        1395
+       ]
+      },
+      "fcp": {
+       "median": 556,
+       "runs": [
+        556,
+        540,
+        560,
+        548,
+        572
+       ]
+      },
+      "lcp": {
+       "median": 1192,
+       "runs": [
+        1536,
+        1116,
+        1192,
+        1156,
+        1344
+       ]
+      },
+      "kb": {
+       "median": 625,
+       "runs": [
+        596,
+        625,
+        625,
+        625,
+        625
+       ]
+      },
+      "imgKb": {
+       "median": 318,
+       "runs": [
+        288,
+        318,
+        318,
+        318,
+        318
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 51,
+       "runs": [
+        51
+       ]
+      },
+      "worstFrameMs": {
+       "median": 117,
+       "runs": [
+        117
+       ]
+      },
+      "jank": {
+       "median": 2,
+       "runs": [
+        2
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "ref-3": {
+    "measuredAt": "2026-11-28T01:52:38.601Z",
+    "baseUrl": "http://127.0.0.1:5182/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 886,
+       "runs": [
+        886,
+        983,
+        876,
+        953,
+        859
+       ]
+      },
+      "fcp": {
+       "median": 500,
+       "runs": [
+        504,
+        548,
+        500,
+        496,
+        476
+       ]
+      },
+      "lcp": {
+       "median": 892,
+       "runs": [
+        892,
+        996,
+        944,
+        872,
+        836
+       ]
+      },
+      "kb": {
+       "median": 406,
+       "runs": [
+        406,
+        406,
+        406,
+        406,
+        406
+       ]
+      },
+      "imgKb": {
+       "median": 214,
+       "runs": [
+        214,
+        214,
+        214,
+        214,
+        214
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1040,
+       "runs": [
+        875,
+        1029,
+        1054,
+        1040,
+        2400
+       ]
+      },
+      "fcp": {
+       "median": 516,
+       "runs": [
+        492,
+        460,
+        516,
+        536,
+        1768
+       ]
+      },
+      "lcp": {
+       "median": 1028,
+       "runs": [
+        800,
+        912,
+        1028,
+        1040,
+        2396
+       ]
+      },
+      "kb": {
+       "median": 536,
+       "runs": [
+        388,
+        536,
+        536,
+        536,
+        536
+       ]
+      },
+      "imgKb": {
+       "median": 306,
+       "runs": [
+        196,
+        306,
+        306,
+        306,
+        306
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 57,
+       "runs": [
+        57
+       ]
+      },
+      "worstFrameMs": {
+       "median": 67,
+       "runs": [
+        67
+       ]
+      },
+      "jank": {
+       "median": 1,
+       "runs": [
+        1
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   "cur-3": {
+    "measuredAt": "2026-11-28T01:54:09.213Z",
+    "baseUrl": "http://127.0.0.1:5181/",
+    "conditions": {
+     "viewport": "412x915@2",
+     "cpu": "4x",
+     "net": "40ms/10Mbit",
+     "cache": "disabled",
+     "runs": 5
+    },
+    "scenarios": {
+     "first-launch": {
+      "ready": {
+       "median": 1220,
+       "runs": [
+        1194,
+        1220,
+        1352,
+        1100,
+        1246
+       ]
+      },
+      "fcp": {
+       "median": 584,
+       "runs": [
+        588,
+        584,
+        560,
+        544,
+        624
+       ]
+      },
+      "lcp": {
+       "median": 1268,
+       "runs": [
+        1268,
+        1288,
+        1212,
+        1164,
+        1316
+       ]
+      },
+      "kb": {
+       "median": 572,
+       "runs": [
+        572,
+        572,
+        572,
+        572,
+        572
+       ]
+      },
+      "imgKb": {
+       "median": 303,
+       "runs": [
+        303,
+        303,
+        303,
+        303,
+        303
+       ]
+      }
+     },
+     "today": {
+      "ready": {
+       "median": 1417,
+       "runs": [
+        1853,
+        1251,
+        1552,
+        1417,
+        1302
+       ]
+      },
+      "fcp": {
+       "median": 584,
+       "runs": [
+        732,
+        560,
+        584,
+        616,
+        584
+       ]
+      },
+      "lcp": {
+       "median": 1308,
+       "runs": [
+        2072,
+        1180,
+        1308,
+        1376,
+        1272
+       ]
+      },
+      "kb": {
+       "median": 659,
+       "runs": [
+        596,
+        659,
+        659,
+        659,
+        659
+       ]
+      },
+      "imgKb": {
+       "median": 352,
+       "runs": [
+        288,
+        352,
+        352,
+        352,
+        352
+       ]
+      }
+     },
+     "reveal": {
+      "fps": {
+       "median": 52,
+       "runs": [
+        52
+       ]
+      },
+      "worstFrameMs": {
+       "median": 83,
+       "runs": [
+        83
+       ]
+      },
+      "jank": {
+       "median": 3,
+       "runs": [
+        3
+       ]
+      }
+     },
+     "idle": {
+      "runningAnimations": {
+       "median": 0,
+       "runs": [
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    }
+   }
+  }
+ }
+}
