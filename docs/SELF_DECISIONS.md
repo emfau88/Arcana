@@ -74,6 +74,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-62 | 28.11.2026 | Reihenfolge in V06 | Symbol-Abgleich mit den Kartenbildern zuerst, dann Logik und Texte (Numerologie, Engelszahlen, Symbole), danach B4 und die Screens mit dem Entdecken-Tab (nach E8), zuletzt die zweite Säule; Plan in `docs/V06_PLAN.md` | V06 |
 | S-63 | 28.11.2026 | Export von B4 | wie B2 und B3 nach `art/b4/`; A32 in 1024 und 720 px; 24 Symbole aus beiden Sheets in einem gemeinsamen Maßstab, 256 px (≤ 20 KB) und zusätzlich 96 px für Listen (≤ 6 KB); Alpha in 32 Stufen, sieben Generator-Pünktchen beim Export weggelassen | V06 Schritt 0 |
 | S-64 | 28.11.2026 | Symbolliste gegen die Kartenbilder | alle 24 bleiben; 17 stehen in Bildern und nennen diese Karten, sieben (Lotus, Schmetterling, Phönix, Schlange, Eule, Auge, Feder) stehen in keinem Bild und werden über die Karten ihrer Archetypen entdeckt | V06 Schritt 0 |
+| S-65 | 28.11.2026 | Numerologie: Logik und Texte | Rechenweg als Daten aus der Funktion; Zyklen auf dem lokalen Datumsschlüssel; Tagestext wechselt im Neun-Tage-Block; Herausforderungen geschrieben, aber nur mit Edition; Geburtsjahr ab 1900; Karten-Sätze beschreiben die Bilder von Deck v2 | V06 Schritt 1 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -925,3 +926,21 @@ Sieben Symbole stehen in keinem Bild: Lotus, Schmetterling, Phönix, Schlange, E
 **Alternativen:** die sieben durch Motive ersetzen, die in den Bildern stehen (etwa Löwe, Kette, Krug, Granatapfel, Herz, Lorbeer, Posaune; braucht neue Bilder oder SVG-Ersatz und ändert die Resonanz aus V04); die sieben behalten, aber nur über den Meilenstein an Tag 10 entdecken (dann blieben die meisten für immer Silhouetten, das Kapitel wäre nie vollständig); die Tradition als Bildort zählen (widerspricht §6).
 
 **Wechsel kostet:** eine Tabelle in `src/content/symbols.ts` und die Texte der betroffenen Symbole.
+
+## S-65 · Numerologie: Logik und Texte
+
+**Entschieden:** Die Numerologie steht als reine Logik in `src/domain/numerology.ts` und als Inhaltsmodul `numbers` (194 Texte je Sprache, `src/content/modules/numbers.*.ts`), beide mit Tests (30 Rechenfälle, Inhalts-Gate, Markierungstest). Noch nicht sichtbar: Die Screens kommen mit dem Entdecken-Tab (Schritt 4), Heute, Ich und Grimoire mit der zweiten Säule (Schritt 5).
+
+- **Rechenweg als Daten:** Jede Zahl kommt mit ihrem Weg (Teile, Summe, Reduktionskette). Die Oberfläche zeigt diesen Weg und rechnet nie selbst; so ist der angezeigte Rechenweg immer die Funktion (Abnahme G2).
+- **Zeit:** Persönliches Jahr, Monat und Tag rechnen auf dem lokalen Datumsschlüssel wie die Tageskarte. Der Test prüft den Jahreswechsel in drei Zeitzonen (UTC−10, UTC, UTC+14).
+- **Tagestext:** Drei Fassungen je Tageszahl. Weil dieselbe Tageszahl alle neun Kalendertage wiederkehrt (am 1., 10. und 19.), richtet sich die Fassung nach dem Neun-Tage-Block des Monats. Mit „Kalendertag modulo 3“ käme in einem Monat immer dieselbe Fassung.
+- **Herausforderungen:** Sie sind geschrieben und geprüft (als Fragen, §2), erscheinen aber nur mit dem Recht `edition.numbers`. Ohne Billing sieht niemand sie und es gibt keinen Hinweis darauf (keine Attrappe).
+- **Geburtsdatum:** Angenommen werden echte Kalendertage von 1900 bis heute, nichts in der Zukunft.
+- **Deutung markiert:** Jede Essenz beginnt mit „Traditionell steht die … für“, Jahres- und Monatstexte nennen die Tradition, die Erklärung des Rechenwegs sagt „symbolische Deutung, keine Vorhersage“. Ein Test prüft das für beide Sprachen.
+- **Karten-Sätze:** Die Lebenszahl-Texte nennen ihre Karte und beschreiben deren Bild in Deck v2, in dem keine Figuren vorkommen (leerer Thron, Wagen ohne Zugtiere, Löwe neben der Blume). Die 33 gehört in der App zur Herrscherin, der Text sagt das offen („verbindet diese App“).
+
+**Warum:** Die Logik zuerst und ohne Oberfläche zu bauen hält die Abnahme prüfbar (Testvektoren, Rechenweg = Funktion), und die Texte stehen fertig, wenn die Screens kommen. Das Modul wird nur bei Bedarf geladen, das Start-JS bleibt bei 144,7 kB.
+
+**Alternativen:** den Rechenweg in der Oberfläche aus dem Datum neu aufbauen (zwei Rechenwege, die auseinanderlaufen können); den Tagestext zufällig wählen (gleiches Datum, anderer Text, widerspricht der Unveränderlichkeit); die Herausforderungen erst mit Billing schreiben (dann fehlen sie beim Inhalts-Gate und in der Durchsicht); die Karten-Sätze nach der Tradition statt nach dem Bild (Magier mit erhobenem Arm, den es in diesem Deck nicht gibt).
+
+**Wechsel kostet:** eine Funktion in `numbers-keys.ts` (Tagestext) oder einzelne Texte; die Rechenlogik ist durch die Testvektoren festgelegt.

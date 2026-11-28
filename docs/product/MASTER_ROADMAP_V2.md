@@ -169,7 +169,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 ### V06 · Zahlen und Symbole (0.6)
 
-Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahlen`. **Läuft seit 28.11.2026** (Zuruf des Eigentümers, D-69; E8 fünf Tabs und Ex Libris in V06.6 entschieden). Schritt 0 erledigt: Symbolliste gegen die Kartenbilder (S-64), B4 exportiert (S-63).
+Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahlen`. **Läuft seit 28.11.2026** (Zuruf des Eigentümers, D-69; E8 fünf Tabs und Ex Libris in V06.6 entschieden). Schritt 0 erledigt: Symbolliste gegen die Kartenbilder (S-64), B4 exportiert (S-63). Schritt 1 erledigt: Numerologie als Logik (30 Rechenfälle) und Modul `numbers` mit 194 Texten je Sprache (S-65); die Screens folgen mit Schritt 4 und 5.
 
 - [ ] V06.1 Entdecken-Tab (E8)
 - [ ] V06.2 Numerologie
