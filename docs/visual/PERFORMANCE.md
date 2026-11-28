@@ -177,3 +177,5 @@ Gemessen mit `scripts/perf.mjs` unter den festen Bedingungen, abwechselnd gegen 
 | 2 · Große Variante (zusätzlich) | nur die aktive Sprache der Oberflächen- und Kartentexte laden, die andere erst beim Sprachwechsel | nein | weitere ≈ 1,5–2 h | weitere ≈ 10–15 kB gzip (die Kartentexte beider Sprachen stecken im Start-JS), aber riskanter (Sprachwechsel, Tests, Content-Gate) |
 | 3 · Ausnahme wie D-52 | Ergebnis hinnehmen, Behebung in der Härtung V07.5 | nein | – | QG-V05 mit dokumentierter Ausnahme |
 | 4 · Raumbild nach der Karte laden | Das Gemälde erscheint einen Augenblick nach der Karte | **ja** (nur nach Rückfrage) | ≈ 1 h | „Heute“ sichtbar dürfte deutlich sinken, das Bild blendet aber sichtbar später ein |
+
+**Entscheidung des Eigentümers (D-67, 28.11.2026):** Ausnahme wie D-52. Das Ergebnis wird hingenommen und vermerkt, V05 wird nach den übrigen QG-V05-Prüfungen gemergt. B-08 wird spätestens in der Härtung V07.5 behoben, zuerst mit Option 1, bei Bedarf mit Option 2; Option 4 nur nach Rückfrage. Bis dahin prüft jedes Gate das Start-JS-Budget (≤ 160 kB, Stand 144,6 kB), damit der Abstand nicht unbemerkt wächst.

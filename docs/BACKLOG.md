@@ -46,7 +46,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] V07.5, echtes Gerät: Bildschirmwechsel auf bildreiche Screens (Enthüllung, „Heute“, Grimoire) mit `scripts/android-trace.mjs` messen; auf dem Emulator bleibt ein langer Frame von 100–230 ms (B-13, S-31).
 - [ ] V07.5, echtes Gerät: Das Android-WebView holt `favicon.svg` bei jeder Navigation und liest es als SVG-Dokument (38–54 ms Hauptthread). Auf dem Emulator ohne messbare Wirkung auf die Frames; auf dem Gerät prüfen, ob sich das Entfernen in der App lohnt (S-31).
 
-## Leistung (B-08, Entscheidung des Eigentümers vor QG-V05)
+## Leistung (B-08, Ausnahme des Eigentümers D-67, Behebung spätestens in V07.5)
 
 - [ ] Option 1, kleine Variante (unsichtbar, ≈ 1,5–2 h mit Messung): Orakel, Willkommen mit Fragebogen und die Detailteile des Grimoires als eigene Chunks laden und im Leerlauf vorladen; die Identität erst nach dem ersten Bild berechnen. Ziel: „Heute“ sichtbar ≤ 1.250 ms, Erststart ≤ 1.600 ms (`docs/visual/PERFORMANCE.md` „V05“).
 - [ ] Option 2, große Variante (unsichtbar, weitere ≈ 1,5–2 h, riskanter): nur die aktive Sprache der Oberflächen- und Kartentexte im Start-JS, die andere beim Sprachwechsel nachladen.
