@@ -47,6 +47,10 @@ export const MODULE_LOADERS: Partial<Record<ModuleId, Record<Locale, Loader>>> =
     de: () => import('./angels.de.ts'),
     en: () => import('./angels.en.ts'),
   },
+  symbols: {
+    de: () => import('./symbols.de.ts'),
+    en: () => import('./symbols.en.ts'),
+  },
 };
 
 /** Module versions, stored nowhere but reported by the content gate and the build. */
@@ -59,6 +63,7 @@ export const MODULE_VERSIONS: Partial<Record<ModuleId, string>> = {
   spreads: 'spreads-2026-11-27.1',
   numbers: 'numbers-2026-11-28.1',
   angels: 'angels-2026-11-28.1',
+  symbols: 'symbols-2026-11-28.1',
 };
 
 /** Modules every start needs (onboarding, today). Loaded in parallel with the database. */

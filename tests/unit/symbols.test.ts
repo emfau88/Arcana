@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { DECK } from '../../src/content/index.ts';
+import { CONTENT, DECK } from '../../src/content/index.ts';
+import { texts as archetypesDe } from '../../src/content/modules/archetypes.de.ts';
+import { texts as archetypesEn } from '../../src/content/modules/archetypes.en.ts';
+import { symbolsKeys } from '../../src/content/modules/symbols-keys.ts';
+import { texts as de } from '../../src/content/modules/symbols.de.ts';
+import { texts as en } from '../../src/content/modules/symbols.en.ts';
+import { symbolRefs } from '../../src/content/modules/validate.ts';
 import { RESONANCE, SYMBOL_IDS } from '../../src/content/resonance.ts';
 import { LEXICON_SYMBOL_IDS, SYMBOL_CARDS, symbolArchetypes, symbolSources } from '../../src/content/symbols.ts';
 import { ARCHETYPE_ORDER } from '../../src/domain/types.ts';
@@ -41,5 +47,46 @@ describe('symbol lexicon structure (V06.4, S-64)', () => {
 
   it('every guiding symbol of an archetype is in the lexicon (day-10 milestone "your symbol")', () => {
     for (const a of ARCHETYPE_ORDER) expect(LEXICON_SYMBOL_IDS).toContain(RESONANCE[a].symbols[0]);
+  });
+});
+
+describe('symbol lexicon texts (V06.4, H5)', () => {
+  it('has exactly 5 keys per symbol, 120 per language', () => {
+    expect(symbolsKeys()).toHaveLength(120);
+    expect(Object.keys(de).sort()).toEqual([...symbolsKeys()].sort());
+    expect(Object.keys(en).sort()).toEqual([...symbolsKeys()].sort());
+  });
+
+  it('marks every meaning as tradition in both languages', () => {
+    for (const id of LEXICON_SYMBOL_IDS) {
+      expect(de[`symbol.${id}.meaning`], id).toMatch(/[Tt]raditionell/);
+      expect(en[`symbol.${id}.meaning`], id).toMatch(/[Tt]raditionally/);
+    }
+  });
+
+  it('uses the same names as the archetype resonance', () => {
+    for (const id of SYMBOL_IDS) {
+      expect(de[`symbol.${id}.name`]).toBe(archetypesDe[`symbol.${id}`]);
+      expect(en[`symbol.${id}.name`]).toBe(archetypesEn[`symbol.${id}`]);
+    }
+  });
+
+  it('speaks of this deck only where the symbol is in a picture, and names only those cards', () => {
+    const titles = DECK.map((c) => ({ id: c.id, title: c.title.en.replace(/^The /, '') }));
+    for (const id of LEXICON_SYMBOL_IDS) {
+      const inPicture = SYMBOL_CARDS[id].length > 0;
+      expect(de[`symbol.${id}.meaning`]!.includes('In diesem Deck'), id).toBe(inPicture);
+      const at = en[`symbol.${id}.meaning`]!.indexOf('In this deck');
+      expect(at >= 0, id).toBe(inPicture);
+      if (!inPicture) continue;
+      const deck = en[`symbol.${id}.meaning`]!.slice(at);
+      for (const t of titles) if (new RegExp(`\b${t.title}\b`).test(deck)) expect(SYMBOL_CARDS[id], `${id} names ${t.title}`).toContain(t.id);
+    }
+  });
+
+  it('passes the reference check of the content gate', () => {
+    expect(symbolRefs(CONTENT)).toEqual([]);
+    const broken = { ...CONTENT, cards: CONTENT.cards.filter((c) => c.id !== 'major-11-justice') };
+    expect(symbolRefs(broken)).toEqual(expect.arrayContaining(['symbol scales: unknown card major-11-justice', 'symbol scales: no card to discover it through']));
   });
 });

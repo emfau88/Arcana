@@ -11,6 +11,8 @@ import { cardsDeepKeys } from './cards-deep-keys.ts';
 import { chapterKeys } from './chapter-keys.ts';
 import { numbersKeys } from './numbers-keys.ts';
 import { angelsKeys } from './angels-keys.ts';
+import { symbolsKeys } from './symbols-keys.ts';
+import { LEXICON_SYMBOL_IDS, SYMBOL_CARDS, symbolSources } from '../symbols.ts';
 import { ARCHETYPE_ORDER, LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
 import type { ContentPack } from '../schema.ts';
@@ -38,6 +40,8 @@ export interface ModuleRules {
   rules: readonly KeyRule[];
   /** Forbidden phrasing in this module, in addition to the global list. */
   forbidden?: readonly RegExp[];
+  /** References from the module's structure to core (card ids, symbol ids); each message is an error. */
+  refs?(pack: ContentPack): string[];
 }
 
 /** Phrases forbidden in every module (CONTENT_MASTERPLAN §7 "alle"), on top of the core list. */
@@ -142,6 +146,32 @@ export const FORBIDDEN_ANGEL: readonly RegExp[] = [
   /(?:certainly|surely|definitely) means/i,
   /twin flame/i,
 ];
+
+/**
+ * Symbols (CONTENT_MASTERPLAN §7, PRODUCT_SYSTEMS H): a symbol has a traditional meaning, never a
+ * power of its own. No promise of protection or luck, no talisman to own.
+ */
+export const FORBIDDEN_SYMBOL: readonly RegExp[] = [
+  /schützt (?:dich|vor)\b/i,
+  /bringt (?:dir )?Glück/i,
+  /Glücksbringer/i,
+  /\b(?:Talisman|Amulett)/i,
+  /\bprotects? (?:you|against|from)\b/i,
+  /\bbrings? (?:you )?(?:good )?luck\b/i,
+  /\blucky charm/i,
+  /\b(?:talisman|amulet)/i,
+];
+
+/** Every card a symbol points to exists, and every symbol can be found through at least one card (H6). */
+export function symbolRefs(pack: ContentPack): string[] {
+  const cards = new Set(pack.cards.map((c) => c.id));
+  const errors: string[] = [];
+  for (const id of LEXICON_SYMBOL_IDS) {
+    for (const c of SYMBOL_CARDS[id]) if (!cards.has(c)) errors.push(`symbol ${id}: unknown card ${c}`);
+    if (!symbolSources(id).cards.some((c) => cards.has(c))) errors.push(`symbol ${id}: no card to discover it through`);
+  }
+  return errors;
+}
 
 const CARD = 'major-\\d{2}-[a-z-]+';
 const deep = (prefix: string) => new RegExp(`^${prefix}\\.${CARD}$`);
@@ -263,6 +293,20 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
     ],
     forbidden: [...FORBIDDEN_ANGEL, ...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE],
   },
+  // V06.4 symbol lexicon (CONTENT_MASTERPLAN §3, §6): meaning 50–80 words, light, shadow and reflection one sentence.
+  // No ritual list: in tarot the staff belongs to the element of fire, and symbols carry no rituals.
+  symbols: {
+    required: () => symbolsKeys(),
+    refs: symbolRefs,
+    rules: [
+      { pattern: /^symbol\.[a-z]+\.name$/, maxLen: 24 },
+      { pattern: /^symbol\.[a-z]+\.meaning$/, maxLen: 600, words: [50, 80], sentences: [3, 6], group: 'meaning' },
+      { pattern: /^symbol\.[a-z]+\.light$/, maxLen: 140, sentences: [1, 1], group: 'light' },
+      { pattern: /^symbol\.[a-z]+\.shadow$/, maxLen: 140, sentences: [1, 1], question: true, group: 'shadow' },
+      { pattern: /^symbol\.[a-z]+\.reflection$/, maxLen: 120, sentences: [1, 1], question: true, group: 'reflection' },
+    ],
+    forbidden: [...FORBIDDEN_SYMBOL, ...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE],
+  },
 };
 
 export interface ModuleReport {
@@ -288,6 +332,7 @@ export function validateModule(id: ModuleId, rules: ModuleRules | undefined, pac
   if (!rules) return { id, keys: 0, errors: [`${id}: no validation rules`], warnings };
   const required = new Set(rules.required(pack));
   if (required.size === 0) errors.push(`${id}: the structure requires no keys (empty module)`);
+  for (const e of rules.refs?.(pack) ?? []) errors.push(`${id}: ${e}`);
   const forbidden = [...FORBIDDEN_ALL, ...(rules.forbidden ?? [])];
   const allKeys = new Set<string>();
   for (const l of LOCALES) for (const k of Object.keys(tables[l] ?? {})) allKeys.add(k);
