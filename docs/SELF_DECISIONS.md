@@ -68,6 +68,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-56 | 28.11.2026 | Sternkarte als drei Ringe | Variante A aus dem Muster unverändert übernommen: drei Ringe, Spirale nach innen, Wegenden größer, heutiger Stern leuchtet, Ziffer nur am gewählten Stern; die Zeile darunter nennt Station, Karte, Weg („Der innere Weg“) und Stand mit den vorhandenen Texten; Trefferfläche je Stern Radius 18; vollendete Runden klein in derselben Spiralform | V05.3, D-64 Punkt 6 |
 | S-57 | 28.11.2026 | Aufklapper auf der Enthüllung | entfällt nur nach einer Enthüllung mit Archetyp (wie im Muster, Variante B); beim offenen Profil bleibt er, dort ist er ohne beantwortete Frage die einzige Erklärung; Text `howItWorks` bleibt deshalb | D-64 Punkt 5 |
 | S-58 | 28.11.2026 | Orakel als Bühne mit den Legungen | Muster A übernommen und auf 2–5 Karten erweitert: Legungen als eigene Zeile über den Themen mit Kurzbeschreibung, Karten in einer Reihe am Tisch, Breite wie bei drei Karten; Rückblick legt die Fadenkarte offen und zieht eine; Fragen der Positionen und „Deine Woche in Karten“ in der Deutung; Kopfzeilen per Subgrid (B-12); Kontrast auf A03 mit Hof und Körperfarbe | V05.6, V05.2, D-64 Punkt 2 |
+| S-59 | 28.11.2026 | Testsignatur des Testpakets | eigener Testschlüssel, nur lokal (`android/keystore.properties`, per `.gitignore` ausgeschlossen), Entwicklungs-App-ID, Version 0.5.0; nicht der spätere Play-Upload-Schlüssel | V05.6, E11, RELEASE_CHECKLIST |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -99,6 +100,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] **Meilenstein-Moment an Reisetag 1** (S-55): Soll das Buch am ersten Tag mit einem Moment „Dein Grimoire ist aufgeschlagen“ begrüßt werden? Dafür müsste die Freischaltung vom Ex Libris (Tag 50) getrennt werden; bisher ist er aus.
 - [ ] **Sternkarte als drei Ringe** (V05.3, S-56, Nachweis `docs/visual/evidence/v05-sternkarte.webp` und `v05-sternkarte-android.webp`): gebaut wie das gewählte Muster A. Neu gegenüber dem Muster: Die Zeile unter der Karte nennt den Weg mit den Namen von „Heute“ („Der innere Weg · heute“), und die vollendeten Runden erscheinen klein als dieselbe Spirale. Passt das, oder soll beim Antippen zusätzlich der Stationstext erscheinen?
 - [ ] **Orakel als Bühne mit den Legungen** (V05.6, S-58, Nachweis `docs/visual/evidence/v05-orakel.webp`, `v05-orakel-klein.webp` und `v05-orakel-android.webp`): gebaut wie Muster A, dazu die Legungen als eigene Knopfzeile über den Themen mit Kurzbeschreibung. Neu gegenüber dem Muster: vier Karten werden schmaler, der Rückblick zeigt die Fadenkarte offen, die Deutung nennt die Frage jeder Position und beim Rückblick alle eigenen Karten der Woche. Für den Kontrast liegen unter den Positionsnamen weiche dunkle Höfe, graue Texte sind auf dieser Bühne hell. Passt das, oder soll die Auswahl der Legung ein eigener Schritt sein oder die letzte Legung gemerkt werden?
+- [ ] **Testanleitung** (V05.6, S-59, `docs/TESTPAKET.md`): vor dem Weitergeben an Testerinnen und Tester lesen. Passen Ton, Umfang des Testauftrags und der Hinweis, dass Deinstallieren alle Einträge löscht? Den Weg für Rückmeldungen nennst du selbst.
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -840,3 +842,17 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Kontrast mit dunklerem Schleier über dem Fenster oder kleinen Schildern unter den Namen: sicher, aber sichtbar anders als das gewählte Muster.
 
 **Wechsel kostet:** Auswahl und Reihe in `src/features/oracle/Oracle.tsx`, Gestaltung in `src/features/oracle/oracle-stage.css`; die E2E-Tests `tests/e2e/oracle.spec.ts` prüfen Angebot, Neuanfang und Rückblick.
+
+## S-59 · Testsignatur des Testpakets
+
+**Entschieden:** Das Testpaket (V05.6) ist ein Release-Build mit einem eigenen Testschlüssel (RSA 3072, PKCS12, Zertifikat „Arcana Test Signature“, gültig 25 Jahre). `android/app/build.gradle` liest Pfad, Alias und Kennwörter aus `android/keystore.properties`; Datei und Schlüssel (`android/keystore/arcana-test.jks`) bleiben lokal und sind per `.gitignore` ausgeschlossen, das Kennwort ist zufällig erzeugt und steht nirgends im Repo. Fehlt die Datei, bleibt der Release-Build unsigniert. App-ID bleibt die Entwicklungs-ID `com.energycrafted.personaloracle.dev`, der Name „Arcana“, denn beides entscheidet der Eigentümer mit E11. Die Version steigt mit dem Testpaket auf 0.5.0 (versionCode 6) in Paket, Android-Projekt und App, damit Testende die Fassung nennen können; der Tag `v0.5.0` folgt erst nach Freigabe und Merge. Die Testanleitung steht in `docs/TESTPAKET.md`.
+
+**Warum:** Die Release-Checkliste verlangt seit G2 einen Release-Modus-Testbuild mit zulässiger Testsignatur und Entwicklungs-ID. Ein eigener Schlüssel trennt Testpakete von Entwicklungs-Builds und lässt spätere Testpakete mit Daten darüber installieren. Der Upload-Schlüssel für Play hängt an E11 und E15 und gehört außerhalb des Repos; ihn jetzt anzulegen hieße, der Entscheidung vorzugreifen.
+
+**Alternativen:**
+- Mit dem Debug-Schlüssel des Rechners signieren: kein zusätzlicher Schlüssel, aber das bekannte Kennwort „android“, und Testpakete wären von Entwicklungs-Builds nicht zu unterscheiden.
+- Unsignierter Release-Build: nichts zu verwahren, lässt sich aber nicht installieren.
+- Gleich den späteren Upload-Schlüssel anlegen: spart einen Schritt, legt aber Name, Ablage und Verwahrung fest, bevor E11 und E15 entschieden sind.
+- Version erst beim Tag erhöhen: hielte die Nummer an den Tag gebunden, Testende hätten aber „0.4.1“ gesehen.
+
+**Wechsel kostet:** Ein neuer Testschlüssel bedeutet einmal deinstallieren auf jedem Testgerät (Daten weg). Der Wechsel auf die finale App-ID ist für Android eine neue App, also ebenfalls eine Neuinstallation; deshalb die Empfehlung, die Sicherung (V07.3) vor den geschlossenen Test zu ziehen (Roadmap §10 Punkt 5).

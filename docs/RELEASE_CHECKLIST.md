@@ -4,7 +4,7 @@ Stand G2: noch kein Release-Kandidat. Die Liste wird in G3/G4 abgehakt.
 
 ## G3 — technischer Kandidat
 - [ ] `npm ci && npm run check && npm run test:e2e` grün auf sauberem Checkout
-- [ ] Release-Modus-Testbuild (zulässige Testsignatur, dev-ID), SHA-256 und Größe dokumentiert
+- [x] Release-Modus-Testbuild (zulässige Testsignatur, dev-ID), SHA-256 und Größe dokumentiert (28.11.2026, Version 0.5.0, `docs/TESTPAKET.md`, S-59)
 - [ ] Manifest: nur `INTERNET`, Backup aus, kein `server.url`, keine Debug-Endpunkte
 - [ ] Startup, Reveal und Scroll gemessen. Kein Overflow, kein Crash, keine ANRs
 - [ ] Q01–Q16 vollständig
