@@ -10,6 +10,7 @@ import { archetypeKeys } from './archetype-keys.ts';
 import { cardsDeepKeys } from './cards-deep-keys.ts';
 import { chapterKeys } from './chapter-keys.ts';
 import { numbersKeys } from './numbers-keys.ts';
+import { angelsKeys } from './angels-keys.ts';
 import { ARCHETYPE_ORDER, LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
 import type { ContentPack } from '../schema.ts';
@@ -127,6 +128,21 @@ export const FORBIDDEN_SPREAD: readonly RegExp[] = [
   /\bwhat (?:he|she|they) (?:thinks?|feels?|wants?)\b/i,
 ];
 
+/**
+ * Angel numbers (CONTENT_MASTERPLAN §7, PRODUCT_SYSTEMS H): a traditional meaning, never a message
+ * from someone, never a statement about another person, never a promise.
+ */
+export const FORBIDDEN_ANGEL: readonly RegExp[] = [
+  /Engel (?:sagen|sagt|wollen|möchten|schicken)/i,
+  /Zeichen, dass (?:er|sie)\b/i,
+  /bedeutet (?:sicher|bestimmt|garantiert)/i,
+  /Zwillingsflamme/i,
+  /angels? (?:tells?|says?|wants?|sends?)\b/i,
+  /sign that (?:he|she|they)\b/i,
+  /(?:certainly|surely|definitely) means/i,
+  /twin flame/i,
+];
+
 const CARD = 'major-\\d{2}-[a-z-]+';
 const deep = (prefix: string) => new RegExp(`^${prefix}\\.${CARD}$`);
 const num = (part: string) => new RegExp(`^number\\.(?:[1-9]|11|22|33)\\.${part}$`);
@@ -230,6 +246,22 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
       { pattern: /^path\.(?:life|birthday|year|month|day|method)$/, maxLen: 320, sentences: [1, 3] },
     ],
     forbidden: [...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE],
+  },
+  // V06.3 angel numbers (CONTENT_MASTERPLAN §3, §6): meaning 50–80 words, the rest short.
+  angels: {
+    required: () => angelsKeys(),
+    rules: [
+      { pattern: /^seq\.\d{3,4}\.title$/, maxLen: 40 },
+      { pattern: /^seq\.\d{3,4}\.meaning$/, maxLen: 600, words: [50, 80], sentences: [3, 6], group: 'meaning' },
+      { pattern: /^seq\.\d{3,4}\.light$/, maxLen: 140, sentences: [1, 1], group: 'light' },
+      { pattern: /^seq\.\d{3,4}\.shadow$/, maxLen: 140, sentences: [1, 1], question: true, group: 'shadow' },
+      { pattern: /^seq\.\d{3,4}\.reflection$/, maxLen: 120, sentences: [1, 1], question: true, group: 'reflection' },
+      { pattern: /^seq\.\d{3,4}\.ritual$/, maxLen: 200, sentences: [1, 2], group: 'ritual' },
+      { pattern: /^digit\.\d\.keyword$/, maxLen: 24 },
+      { pattern: /^digit\.\d\.meaning$/, maxLen: 120, sentences: [1, 1] },
+      { pattern: /^pattern\.(?:single|repeat|stair|mirror|alternating|doubles|frame|mixed)$/, maxLen: 200, sentences: [1, 2] },
+    ],
+    forbidden: [...FORBIDDEN_ANGEL, ...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE],
   },
 };
 

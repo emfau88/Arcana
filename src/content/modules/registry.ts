@@ -8,7 +8,7 @@
  */
 import type { Locale } from '../../domain/types.ts';
 
-export type ModuleId = 'identity' | 'archetypes' | 'chapters' | 'journey' | 'cards-deep' | 'spreads' | 'numbers' | 'symbols' | 'moon';
+export type ModuleId = 'identity' | 'archetypes' | 'chapters' | 'journey' | 'cards-deep' | 'spreads' | 'numbers' | 'angels' | 'symbols' | 'moon';
 export type TextTable = Readonly<Record<string, string>>;
 
 type Loader = () => Promise<{ texts: TextTable }>;
@@ -43,6 +43,10 @@ export const MODULE_LOADERS: Partial<Record<ModuleId, Record<Locale, Loader>>> =
     de: () => import('./numbers.de.ts'),
     en: () => import('./numbers.en.ts'),
   },
+  angels: {
+    de: () => import('./angels.de.ts'),
+    en: () => import('./angels.en.ts'),
+  },
 };
 
 /** Module versions, stored nowhere but reported by the content gate and the build. */
@@ -54,6 +58,7 @@ export const MODULE_VERSIONS: Partial<Record<ModuleId, string>> = {
   'cards-deep': 'cards-deep-2026-11-27.1',
   spreads: 'spreads-2026-11-27.1',
   numbers: 'numbers-2026-11-28.1',
+  angels: 'angels-2026-11-28.1',
 };
 
 /** Modules every start needs (onboarding, today). Loaded in parallel with the database. */
