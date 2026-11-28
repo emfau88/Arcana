@@ -9,6 +9,7 @@ import { spreadTextKeys } from '../../domain/spreads.ts';
 import { archetypeKeys } from './archetype-keys.ts';
 import { cardsDeepKeys } from './cards-deep-keys.ts';
 import { chapterKeys } from './chapter-keys.ts';
+import { numbersKeys } from './numbers-keys.ts';
 import { ARCHETYPE_ORDER, LOCALES, type Locale } from '../../domain/types.ts';
 import { FORBIDDEN, PLACEHOLDER, sentences } from '../validate.ts';
 import type { ContentPack } from '../schema.ts';
@@ -128,6 +129,7 @@ export const FORBIDDEN_SPREAD: readonly RegExp[] = [
 
 const CARD = 'major-\\d{2}-[a-z-]+';
 const deep = (prefix: string) => new RegExp(`^${prefix}\\.${CARD}$`);
+const num = (part: string) => new RegExp(`^number\\.(?:[1-9]|11|22|33)\\.${part}$`);
 
 export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
   identity: {
@@ -209,6 +211,25 @@ export const MODULE_RULES: Partial<Record<ModuleId, ModuleRules>> = {
       { pattern: /^review\.(?:week|month)\.past$/, maxLen: 32 },
     ],
     forbidden: [...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE, ...FORBIDDEN_SPREAD],
+  },
+  // V06.2 numerology (CONTENT_MASTERPLAN §3, §5): life path 100–150 words, year about 80, month about 40, day one sentence.
+  numbers: {
+    required: () => numbersKeys(),
+    rules: [
+      { pattern: num('keywords'), maxLen: 60 },
+      { pattern: num('essence'), maxLen: 220, sentences: [1, 2] },
+      { pattern: num('life'), maxLen: 1100, words: [100, 150], sentences: [6, 10] },
+      { pattern: /^number\.(?:[1-9]|11|22)\.birthday$/, maxLen: 200, sentences: [1, 2] },
+      { pattern: num('strength\\.[1-3]'), maxLen: 140, sentences: [1, 1], group: 'strength' },
+      // Challenges as a question (§2 "Schatten als Frage"), never a verdict.
+      { pattern: num('challenge\\.[1-3]'), maxLen: 140, sentences: [1, 1], question: true, group: 'challenge' },
+      { pattern: num('reflection\\.[12]'), maxLen: 120, sentences: [1, 1], question: true, group: 'reflection' },
+      { pattern: /^year\.[1-9]$/, maxLen: 650, words: [60, 100], sentences: [5, 8] },
+      { pattern: /^month\.[1-9]$/, maxLen: 300, words: [25, 55], sentences: [2, 4] },
+      { pattern: /^day\.[1-9]\.[1-3]$/, maxLen: 110, sentences: [1, 1], group: 'day' },
+      { pattern: /^path\.(?:life|birthday|year|month|day|method)$/, maxLen: 320, sentences: [1, 3] },
+    ],
+    forbidden: [...FORBIDDEN_RITUAL, ...FORBIDDEN_ADDRESS, ...FORBIDDEN_SEMICOLON, ...FORBIDDEN_FUTURE],
   },
 };
 
