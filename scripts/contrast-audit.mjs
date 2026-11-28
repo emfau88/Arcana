@@ -14,6 +14,16 @@ function collect() {
     const m = c.match(/[\d.]+/g)?.map(Number) ?? [0, 0, 0, 0];
     return { r: m[0], g: m[1], b: m[2], a: m.length > 3 ? m[3] : 1 };
   };
+  // The veil of a sticky main action (D-63, screens.css) is at least 90 % opaque from 2.1rem below
+  // its top edge. It lets taps through (pointer-events: none), so elementFromPoint does not see it:
+  // text that has scrolled beneath that part is covered by design and is measured at another scroll
+  // step, like any other covered text (S-58).
+  const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const veils = [...document.querySelectorAll('.sticky-action')].map((s) => {
+    const r = s.getBoundingClientRect();
+    return { el: s, top: r.top + 2.1 * rem, bottom: r.bottom };
+  });
+  const underVeil = (el, r) => veils.some((v) => !v.el.contains(el) && r.b > v.top && r.y < v.bottom);
   let node;
   while ((node = walker.nextNode())) {
     if (!node.textContent.trim()) continue;
@@ -38,7 +48,7 @@ function collect() {
       const hit = document.elementFromPoint(x, y);
       return hit && (hit === el || el.contains(hit));
     };
-    const visible = rects.filter((r) => own((r.x + r.r) / 2, (r.y + r.b) / 2) && own(r.x + 1, r.y + 1) && own(r.r - 1, r.y + 1) && own(r.x + 1, r.b - 1) && own(r.r - 1, r.b - 1));
+    const visible = rects.filter((r) => !underVeil(el, r) && own((r.x + r.r) / 2, (r.y + r.b) / 2) && own(r.x + 1, r.y + 1) && own(r.r - 1, r.y + 1) && own(r.x + 1, r.b - 1) && own(r.r - 1, r.b - 1));
     if (!visible.length) continue;
     seen.add(el);
     // Gradient text (background-clip: text) cannot be measured this way; it is listed, not judged.
