@@ -52,6 +52,25 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-40 | 27.11.2026 | Absätze in langen Texten | Leerzeile im Inhalt, Regel nach Sinnabschnitten, Schlussfrage abgesetzt | D-63, Punkt 3 |
 | S-41 | 27.11.2026 | Positionsnamen der Legung | engere Laufweite, das Etikett darf in die Lücke neben seiner Karte reichen | D-63, Punkt 4 |
 | S-42 | 27.11.2026 | Muster für die Design-Punkte 2, 5 und 6 | eigener Branch, echte Screens, per Schalter zuschaltbar, nicht zum Mergen | D-63 |
+| S-43 | 27.11.2026 | Aufbau des Moduls `cards-deep` | 15 Texte je Karte, Schlüsselwort = erstes der drei Schlagworte, Studium als Impuls mit Frage, Schatten endet als Frage, Gruppen über eine Liste geschriebener Karten | V05.1, CONTENT_MASTERPLAN §3 |
+| S-44 | 27.11.2026 | Keine Zukunftsversprechen in Kartentiefe und Rollen | eigene Verbotsliste (`wirst`, `bald`, `Zukunft`, `you will`, `soon`, `future` …) für das ganze Modul | V05.1, V05.2, PRODUCT_SYSTEMS F |
+| S-45 | 27.11.2026 | Wechselnde Reflexion und Ritual auf „Heute“ (A4) | Reflexion = Begegnungstage mod 3, Ritual = Begegnungstage mod 2, Variante 0 = Kerntext; `cards-deep` lädt beim Ziehen | V05.1, PRODUCT_SYSTEMS A4 |
+| S-46 | 27.11.2026 | Legungs-Engine und gespeicherte Legungen | Rollen R1–R8, sieben Legungen, R1–R3 behalten die alten Positions-IDs, klassische Legung unverändert, Modul `spreads`, Verbotsliste für Ergebnis-Positionen und Aussagen über andere; B-12 kommt mit V05.6 | V05.2, PRODUCT_SYSTEMS F |
+| S-47 | 27.11.2026 | Rückblick-Legung | roter Faden aus den eigenen Karten der letzten 7 bzw. 30 Reisetage plus eine neue Karte, alle Karten des Zeitraums als Reihe | V05.2 |
+| S-48 | 27.11.2026 | Tagebuch als Chronik | alle Tageskarten, Legungen und eigenen Einträge, neueste zuerst; Filter nur für vorhandene Arten, nach Karte und „nur mit eigenen Worten“; lokale Suche über eigene Worte, Kartentitel, Thema und Legungsname | V05.4, PRODUCT_SYSTEMS E3 |
+| S-49 | 27.11.2026 | Löschen im Tagebuch | nimmt die eigenen Worte, nicht den Tag: Eintrag geleert mit `deletedAt`, Notiz geleert, `notedAt` hält die Reflexion; Reisetag und Kartenstufe sinken nicht | V05.4, IA §5.5, PROGRESSION_DESIGN |
+| S-50 | 27.11.2026 | Export von B3 | wie B2 (D-55) nach `art/b3/`, außerhalb von `public/`; Vignetten in einem gemeinsamen Maßstab ausgeschnitten, auch die Schlussvignette quadratisch; Rücken-Vorschau 240 × 360 ≤ 30 KB | V05, ASSET_REQUESTS |
+| S-51 | 27.11.2026 | Kartenrücken an Tag 2, 5 und 10 | Mondsichel an Tag 2, Sternenkompass an Tag 5, Goldenes Rad (A22, aus B5 vorgezogen) an Tag 10; die Meilensteine 14 und 75 entfallen, Tag 365 behält das Jahresbuch | D-66, V05.5, PROGRESSION_DESIGN §3.2 |
+| S-52 | 27.11.2026 | Auswahl der Kartenrücken | in den Einstellungen nur freigeschaltete Rücken als Vorschau mit Namen, der Standard heißt „Klassisch“; gilt für jede verdeckte Karte; Meilenstein-Moment nennt den Rücken mit Namen, „Ansehen“ führt zur Auswahl; Tagestext nur, wenn alles von diesem Tag gebaut ist | V05.5, D-66, D-54 |
+| S-53 | 27.11.2026 | Kartenseite, Teil 1 | Stufe als Mondphase mit Namen unter Titel und Essenz, darunter jede offene Ebene in einem eigenen Panel in der Reihenfolge der Stufen; nicht Geöffnetes fehlt einfach; das Profilthema steht oben als Botschaft, die Themenliste zeigt dann die anderen fünf; eigener Lade-Chunk | V05.1, PRODUCT_SYSTEMS D, D3, D4 |
+| S-54 | 27.11.2026 | Kartenstudium (Kartenseite, Teil 2) | eigenes Panel direkt unter der Stufe, öffnet sich an Ort und Stelle; Teil 1 „Hinschauen“, Teil 2 „Dein Leben“; „Gelesen“ genügt, eine Antwort ist freiwillig und wird zum Tagebucheintrag; danach ein ruhiger Satz mit der neuen Stufe und der Weg zu Teil 2; beliebig oft wiederholbar | V05.1, PRODUCT_SYSTEMS D2, PROGRESSION_DESIGN §4 |
+| S-55 | 28.11.2026 | Grimoire als Buch, Teil 1 | Einband (A15) mit den Namen der eigenen Archetypen in der Bibliothek (A04), Inhalt auf Pergament (A30) mit Vignetten; nur gebaute Kapitel, römisch I–V (Karten, Archetypen, Tagebuch, Rituale, Reise); Kapitelanfang als Pergamentseite; Karten: nur Entdecktes, der Rest als eine Zeile (Design-Plan Punkt 7); Tagebuch mit Schreiben, Suche, Filtern und Löschdialog; Rituale mit „Heute gemacht“, leer drei Einstiegsrituale; „Neu“ für eine neue Kartenstufe erst ab dem ersten Öffnen des Buchs | V05.3, V05.4, PRODUCT_SYSTEMS E, D-63 |
+| S-56 | 28.11.2026 | Sternkarte als drei Ringe | Variante A aus dem Muster unverändert übernommen: drei Ringe, Spirale nach innen, Wegenden größer, heutiger Stern leuchtet, Ziffer nur am gewählten Stern; die Zeile darunter nennt Station, Karte, Weg („Der innere Weg“) und Stand mit den vorhandenen Texten; Trefferfläche je Stern Radius 18; vollendete Runden klein in derselben Spiralform | V05.3, D-64 Punkt 6 |
+| S-57 | 28.11.2026 | Aufklapper auf der Enthüllung | entfällt nur nach einer Enthüllung mit Archetyp (wie im Muster, Variante B); beim offenen Profil bleibt er, dort ist er ohne beantwortete Frage die einzige Erklärung; Text `howItWorks` bleibt deshalb | D-64 Punkt 5 |
+| S-58 | 28.11.2026 | Orakel als Bühne mit den Legungen | Muster A übernommen und auf 2–5 Karten erweitert: Legungen als eigene Zeile über den Themen mit Kurzbeschreibung, Karten in einer Reihe am Tisch, Breite wie bei drei Karten; Rückblick legt die Fadenkarte offen und zieht eine; Fragen der Positionen und „Deine Woche in Karten“ in der Deutung; Kopfzeilen per Subgrid (B-12); Kontrast auf A03 mit Hof und Körperfarbe | V05.6, V05.2, D-64 Punkt 2 |
+| S-59 | 28.11.2026 | Testsignatur des Testpakets | eigener Testschlüssel, nur lokal (`android/keystore.properties`, per `.gitignore` ausgeschlossen), Entwicklungs-App-ID, Version 0.5.0; nicht der spätere Play-Upload-Schlüssel | V05.6, E11, RELEASE_CHECKLIST |
+| S-60 | 28.11.2026 | Kartenbilder in 560 px (Reserve aus D-52) | versucht und zurückgenommen: Bilder auf „Heute“ ≈ 130 KB kleiner, aber „Heute sichtbar“ ohne messbaren Gewinn und die Enthüllung mit mehr Rucklern; die Karten bleiben bei 720 px, die Entscheidung über die Leistung liegt beim Eigentümer | QG-V05, D-52, B-08, PERFORMANCE.md „V05“ |
+| S-61 | 28.11.2026 | Vorlesefehler aus dem TalkBack-Grundcheck | unsichtbare Pausen nur für Screenreader: Komma zwischen den Schlagworten auf „Heute“ und nach der Kartennummer in der Legung; Bild pixelgleich | QG-V05, TalkBack |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -73,6 +92,17 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [x] **B-07 wählen:** Eigentümer hat B gewählt (27.11.2026, D-59), eingebaut
 - [ ] Meilenstein-Moment auf „Heute“ (Gestaltung und Zeitpunkt, S-20)
 - [ ] Eigene Notizen als Zitat im Rückblick-Text (S-26)
+- [ ] **Kartentiefe** (V05.1, S-43): alle 22 Karten in drei Gruppen (0–VII, VIII–XIV, XV–XXI), je 15 Texte in DE und EN (`src/content/modules/cards-deep.de.ts`, `cards-deep.en.ts`); besonders Ton von Schatten und Rollen und die Symbolik gegen die Bilder
+- [ ] **Rahmen der Legungen** (V05.2, S-46, S-47): Namen, Kurzbeschreibungen, Einleitungen und Fragen aller sieben Legungen in DE und EN (`src/content/modules/spreads.de.ts`, `spreads.en.ts`); besonders Zwei Wege und Verbindung (nur die eigene Seite) und der Rückblick
+- [ ] **Löschen im Tagebuch** (V05.4, S-49): Worte weg, Tag bleibt. Passt das zu deiner Erwartung, oder sollen auch ganze Tageskarten und Legungen einzeln löschbar sein?
+- [ ] **Auswahl der Kartenrücken** (V05.5, S-52, Nachweis `docs/visual/evidence/v05-kartenruecken.webp` und `v05-kartenruecken-android.webp`): eigener Abschnitt in den Einstellungen unter Sprache und Bewegung, vier Vorschauen in einer Reihe, der gewählte Rücken wie ein gewähltes Segment gerahmt. Bei 412 px werden „Mondsichel“ und „Sternenkompass“ getrennt. Passt das, oder soll die Auswahl größer (zwei Spalten) oder auch auf „Ich“ sichtbar sein?
+- [ ] **Kartenseite, Teil 1** (V05.1, S-53, Nachweis `docs/visual/evidence/v05-kartenseite.webp` und `v05-kartenseite-android.webp`): Stufe als Mondphase („Stufe 4 · Verinnerlicht“), darunter je Ebene ein Panel mit goldener Überschrift. Stufennamen: Entdeckt, Verstanden, Vertieft, Verinnerlicht. Passt die Länge der Seite bei Stufe 4, oder sollen die Ebenen ab Stufe 3 aufklappbar sein?
+- [ ] **Kartenstudium** (V05.1, S-54, Nachweis `docs/visual/evidence/v05-kartenstudium.webp` und `v05-kartenstudium-android.webp`): Panel „Kartenstudium“ direkt unter der Stufe mit einem Satz und „Studium beginnen“; geöffnet zeigt es den Impuls, ein freiwilliges Antwortfeld und „Gelesen“ bzw. „Antwort festhalten“. Soll das Studium lieber unter den Ebenen stehen oder als eigene Seite öffnen?
+- [ ] **Grimoire als Buch** (V05.3, S-55, Nachweis `docs/visual/evidence/v05-grimoire-buch.webp`, `v05-grimoire-leer.webp` und `v05-grimoire-buch-android.webp`): Buch in der Bibliothek, Inhalt und Kapitelanfänge auf Pergament, Listen auf dunklen Panels. Passen Größe des Buchs (der Inhalt beginnt erst nach dem ersten Bildschirm) und die Zeile „17 weitere Karten warten auf ihren Tag.“ statt der verdeckten Rücken?
+- [ ] **Meilenstein-Moment an Reisetag 1** (S-55): Soll das Buch am ersten Tag mit einem Moment „Dein Grimoire ist aufgeschlagen“ begrüßt werden? Dafür müsste die Freischaltung vom Ex Libris (Tag 50) getrennt werden; bisher ist er aus.
+- [ ] **Sternkarte als drei Ringe** (V05.3, S-56, Nachweis `docs/visual/evidence/v05-sternkarte.webp` und `v05-sternkarte-android.webp`): gebaut wie das gewählte Muster A. Neu gegenüber dem Muster: Die Zeile unter der Karte nennt den Weg mit den Namen von „Heute“ („Der innere Weg · heute“), und die vollendeten Runden erscheinen klein als dieselbe Spirale. Passt das, oder soll beim Antippen zusätzlich der Stationstext erscheinen?
+- [ ] **Orakel als Bühne mit den Legungen** (V05.6, S-58, Nachweis `docs/visual/evidence/v05-orakel.webp`, `v05-orakel-klein.webp` und `v05-orakel-android.webp`): gebaut wie Muster A, dazu die Legungen als eigene Knopfzeile über den Themen mit Kurzbeschreibung. Neu gegenüber dem Muster: vier Karten werden schmaler, der Rückblick zeigt die Fadenkarte offen, die Deutung nennt die Frage jeder Position und beim Rückblick alle eigenen Karten der Woche. Für den Kontrast liegen unter den Positionsnamen weiche dunkle Höfe, graue Texte sind auf dieser Bühne hell. Passt das, oder soll die Auswahl der Legung ein eigener Schritt sein oder die letzte Legung gemerkt werden?
+- [ ] **Testanleitung** (V05.6, S-59, `docs/TESTPAKET.md`): vor dem Weitergeben an Testerinnen und Tester lesen. Passen Ton, Umfang des Testauftrags und der Hinweis, dass Deinstallieren alle Einträge löscht? Den Weg für Rückmeldungen nennst du selbst.
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -176,6 +206,8 @@ Zielbereich laut Roadmap: 40–70 % mit Ergänzung. Alle Regeln erreichen alle 5
 **Alternative:** jetzt mit gemeinsamer Kopfzeile (CSS-Subgrid) beheben; ändert das Raster der Legung, und die Arbeit würde in V05 wahrscheinlich ersetzt.
 
 **Wechsel kostet:** eine CSS-Änderung an der Legung plus Screenshot-Prüfung.
+
+**Nachtrag (V05.2, S-46):** V05.2 hat nur die Engine gebracht, die Legung auf dem Bildschirm wird erst mit der Orakel-Gestaltung V05.6 als Reihe neu gebaut (D-64, Variante A). B-12 wird darum dort gelöst.
 
 ## S-11 · Linse an Ergänzungstagen und Hinweise
 
@@ -508,3 +540,347 @@ Empfehlung an den Eigentümer: dreimal A; beim Orakel lassen sich Reihe (A) und 
 **Wechsel kostet:** nichts; der Branch bleibt als Referenz und kann gelöscht werden.
 
 **Geprüft:** `npm run check` PASS (204 Unit-Tests, Budgets eingehalten). Aufnahmen bei 375 × 812 px, Deutsch, Browser. **NOT RUN:** Android, Englisch, 130 % Schrift, Kontrastmessung, E2E mit zugeschaltetem Muster.
+
+## S-43 · Aufbau des Moduls `cards-deep`
+
+**Entschieden:** Je Karte fünfzehn Texte: Licht, Schatten, Schlüsselwort, Symbolik (Stufe 2 und 3), die Rollen R4–R8 (Licht, Schatten, Wurzel, Möglichkeit, Brücke), Studium Teil 1 und Teil 2, persönliche Frage (Stufe 4), Reflexion 2 und 3 und Ritual 2 (Wechsel auf „Heute“ nach A4, Ritual 2 ist zugleich das zweite Ritual der Stufe 4). Das sind 330 Texte je Sprache, wie im Masterplan. Geschrieben wird je Karte ein Objekt (`DeepCard`), das `deepTable` in flache Schlüssel übersetzt; die Kartenseite liest es mit `deepCard` zurück. Im Einzelnen:
+
+- **Schlüsselwort** erklärt das erste der drei Schlagworte, die auf „Heute“ unter dem Kartennamen stehen (Narr „Aufbruch“, Magier „Wille“ …), in zwei Sätzen.
+- **Schatten** ist eine Beobachtung, die mit einer Frage endet (Content-Gate: muss mit „?“ enden), nie ein Urteil (CONTENT_MASTERPLAN §2).
+- **Studium:** Teil 1 schaut auf das Bild, Teil 2 auf das eigene Leben; beide enden mit einer Frage. Ein Tipp auf „Gelesen“ genügt, eine Antwort mit Text wird ein Tagebucheintrag `study` und zählt als Reflexion (Stufe 4). So ist jede Stufe in höchstens zwei Studien-Sitzungen erreichbar (Unit).
+- **Symbolik** beschreibt das gemalte Deck (S-34), geprüft gegen `docs/assets/card-prompts.md` und die Bilder selbst (Übersicht und einzelne Karten).
+- **Gruppen:** `DEEP_CARD_IDS` nennt die geschriebenen Karten; das Content-Gate verlangt genau diese. So geht jede Gruppe für sich durch das Gate (S-29). Gruppe 1 ist 0–VII (der Narr und der äußere Weg, acht Karten).
+- **Stilprobe:** Der Masterplan (§8) sieht je Modul fünf Texte zur Freigabe vor. Der Eigentümer hat die Texte dem Agenten übertragen (D-62) und für die Reise schon auf die Stilprobe verzichtet (D-54); darum steht Gruppe 1 als Probe in der Liste „Nachprüfen“, die Arbeit wartet aber nicht darauf.
+
+**Warum:** Ein Objekt je Karte hält die fünfzehn Texte einer Karte beisammen; beim Schreiben und Lesen sieht man, ob sie sich wiederholen. Flache Schlüssel bleiben das Format aller Module (Content-Gate, Ladefunktion). Das erste Schlagwort ist das, was Nutzer täglich unter dem Namen lesen.
+
+**Alternativen:** je Facette eine Liste von 22 Texten wie bei den Linsen (gut für Abwechslung über Karten, schlecht für die Stimmigkeit einer Karte); ein eigenes, nicht in den Schlagworten stehendes Schlüsselwort (eine weitere Begriffsliste); alle drei Schlagworte erklären (dreimal so viel Text, wird lang); Studium mit getrennten Feldern für Lesetext und Frage (88 statt 44 Texte, mehr Bildschirm).
+
+**Wechsel kostet:** Texte und ein Feld im Typ; gespeicherte Datensätze enthalten nur Fakten (Ereignis, Tagebuch), keine Texte aus diesem Modul.
+
+## S-44 · Keine Zukunftsversprechen in Kartentiefe und Rollen
+
+**Entschieden:** Das Modul `cards-deep` hat eine eigene Verbotsliste `FORBIDDEN_FUTURE`: DE `wirst`, `bald`, `Zukunft`, `demnächst`; EN `you will`, `you’ll`, `it/this/that/something/things will`, `soon`, `future`. Dazu gelten die Listen für Rituale, Anrede (S-32) und Semikolon (S-33). Die Rolle „Möglichkeit“ spricht von dem, was sich öffnen *könnte*.
+
+**Warum:** PRODUCT_SYSTEMS F verlangt, dass keine Position Zukunft verspricht; das galt bisher nur für Positionsnamen. Die Rollentexte sind die Stelle, an der eine Legung am ehesten wie eine Vorhersage klingt.
+
+**Alternativen:** nur Positionsnamen prüfen (Masterplan-Minimum, lässt Vorhersagen im Text durch); ein Verbot von „wird“ (trifft das deutsche Passiv, zu viele falsche Treffer).
+
+**Wechsel kostet:** eine Liste in `src/content/modules/validate.ts`. Nebenwirkung: Auch „as soon as“ und das Passiv mit „wirst“ sind ausgeschlossen; beides ließ sich ohne Verlust umformulieren.
+
+## S-45 · Wechselnde Reflexion und Ritual auf „Heute“ (A4)
+
+**Entschieden:** Die Variante ergibt sich aus der Zahl n der bisherigen Begegnungstage mit der gezogenen Karte (Tageskarte oder gespeicherte Legung, mehrere an einem Tag sind ein Tag, wie bei der Kartenstufe): Reflexion = n mod 3, Ritual = n mod 2. Variante 0 ist der Kerntext, Reflexion 1–2 und Ritual 1 kommen aus `cards-deep`. Beide Zähler laufen gleichzeitig, deshalb kommen alle sechs Paare vor, bevor sich eines wiederholt. Indizes und Texte werden beim Ziehen im `DailyRecord` gespeichert und nie neu berechnet. Der Store lädt `cards-deep` erst beim Ziehen der Tageskarte. Fehlt das Modul (Ladefehler) oder wechselt die Sprache während des Ladens, bleibt es bei Variante 0 mit den Kerntexten.
+
+**Warum:** PRODUCT_SYSTEMS A4 verlangt eine deterministische Variante aus den bisherigen Begegnungen, gespeichert im Datensatz. Die Begegnungstage aus `cardEncounters` sind dieselbe abgeleitete Größe wie bei den Kartenstufen (abgeleitet, nicht gezählt). Laden beim Ziehen hält den Start schlank: Start-JS 140,5 kB (+1,1 kB für die Logik), das Modul selbst (16,8 kB DE gz) lädt nur einmal am Tag.
+
+**Alternativen:** Reflexion n mod 3 und Ritual ⌊n/3⌋ mod 2 (ebenfalls sechs Paare, das Ritual wechselt aber erst nach drei Begegnungen); Variante nach Reisetag statt nach Begegnungen (widerspricht A4, dieselbe Karte könnte zweimal dieselben Texte zeigen); `cards-deep` beim Start laden (rund 17 kB gz mehr bei jedem Start).
+
+**Wechsel kostet:** `varietyFor` in `src/domain/oracle.ts` und die Ladestelle in `src/app/store.tsx`. Gespeicherte Tage bleiben, wie sie sind.
+
+## S-46 · Legungs-Engine und gespeicherte Legungen (V05.2)
+
+**Entschieden:** Eine Legung ist eine Anordnung von Rollen (`src/domain/spreads.ts`). Es gibt sieben Legungen:
+
+| Legung | Rollen | Thema |
+|---|---|---|
+| Drei Karten | Kern, Herausforderung, Impuls (R1–R3) | frei |
+| Licht und Schatten | Licht, Schatten, Brücke | frei |
+| Neuanfang | Wurzel, Licht, Möglichkeit, Impuls | frei |
+| Rückblick auf Woche und Monat (S-47) | Wurzel, Impuls | frei |
+| Zwei Wege (Edition) | Kern, Möglichkeit, Möglichkeit, Licht, Impuls | fest „Veränderung & Entscheidungen“ |
+| Verbindung (Edition) | Kern, Brücke, Licht, Schatten, Impuls | fest „Liebe & Beziehungen“ |
+
+Zwei Wege und Verbindung sind gebaut, erscheinen aber nur mit `edition.spreads`. Die Rollen R1–R3 behalten die bisherigen Positions-IDs (`situation`, `challenge`, `impulse`) und lesen die Kerntexte der Karte; R4–R8 lesen `role.<rolle>.<karte>` aus `cards-deep`. Name und Frage jeder Position, Einleitung und Kurzbeschreibung stehen im neuen Modul `spreads` (72 Texte je Sprache). Die Zusammenfassung ist der Thementext der Karte auf der letzten Position, wie bei der klassischen Legung.
+
+Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entwurf und Datensatz aus 0.2 unverändert (kein `spreadId`, keine `roles`). Neue Legungen speichern zusätzlich `spreadId`, `roles` und die Namen der Positionen. Die Speicherprüfung nimmt 2–7 verschiedene Karten an; Positionen und Aufdeck-Liste müssen zur Zahl der Karten passen. Die Module `spreads` und `cards-deep` laden erst beim Start einer neuen Legung. Das Content-Gate `FORBIDDEN_SPREAD` verbietet Ergebnis- und Ausblick-Positionen sowie Aussagen darüber, was eine andere Person denkt, fühlt oder will. Dazu gelten die Listen für Anrede, Semikolon und Zukunft (S-32, S-33, S-44).
+
+**Warum:** PRODUCT_SYSTEMS F und die Roadmap verlangen Rollen statt fester Positionen, einen Matrix-Test über jede Kombination und unverändert angezeigte alte Legungen. Weil R1–R3 die alten IDs behalten, braucht es keine Migration und kein Umdeuten gespeicherter Datensätze (D-09). Die Begegnungen je Rolle (Kartenstufe) zählen alte und neue Legungen gleich. Kosten: Start-JS 142,0 kB (+1,5 kB), Modul `spreads` 1,5 kB gz.
+
+**Alternativen:**
+- R1 als `core` speichern, wie in INFORMATION_ARCHITECTURE skizziert: Alte Datensätze müssten beim Lesen umgedeutet werden, und die Rolle „Kern“ hätte zwei Namen.
+- Eine Zusammenfassung als eigener Text je Legung: rund 40 Texte mehr je Sprache, ohne Bezug zu den gezogenen Karten.
+- Zwei Wege und Verbindung mit frei wählbarem Thema: Die Fragen passen nur zu einer Entscheidung bzw. einer Beziehung.
+- Die Module beim App-Start laden: rund 18 kB gz mehr bei jedem Start.
+
+**Folgen:** B-12 (Kopfzeilen der Legung bei 130 % Schrift) wird nicht in V05.2 behoben, wie S-10 vorsah, sondern mit der Orakel-Gestaltung V05.6. Dort wird die Legung als Reihe neu gebaut (D-64, Variante A). Auswahl und Anzeige der neuen Legungen im Orakel kommen ebenfalls mit V05.6.
+
+**Wechsel kostet:** Rollen und Legungen sind Daten in `spreads.ts` und Texte im Modul. Eine weitere Legung braucht eine Definition und ihre Rahmentexte. Gespeicherte Legungen behalten ihren Text.
+
+## S-47 · Rückblick-Legung aus den eigenen Karten
+
+**Entschieden:** Der Rückblick auf die Woche (ab Reisetag 7) und auf den Monat (ab Reisetag 30) zieht nur eine neue Karte. Er sammelt alle Karten aus Tageskarten und gespeicherten Legungen der letzten 7 bzw. 30 Reisetage in der Reihenfolge der ersten Begegnung. Die häufigste wird zum roten Faden auf der ersten Position („Was nachwirkt“, Rolle Wurzel); bei Gleichstand gilt die zuletzt begegnete. Die zweite Position („Was jetzt dran ist“, Rolle Impuls) ist eine neue Karte, die im Zeitraum nicht vorkam. Kamen alle 22 Karten vor, ist es eine beliebige außer dem roten Faden. Alle Karten des Zeitraums erscheinen als Reihe „Deine Woche in Karten“ mit Titel und Essenz. Angeboten wird der Rückblick erst, wenn es im Zeitraum eigene Karten gibt.
+
+**Warum:** Der Rückblick soll aus den eigenen Karten entstehen. Ein roter Faden plus eine neue Karte hält den Text kurz und vollständig (zwei Rollentexte), die Reihe zeigt trotzdem den ganzen Zeitraum. Reisetage statt Kalendertage, damit eine Pause nichts kostet (keine Verluste bei Pausen).
+
+**Alternativen:**
+- Jede Karte des Zeitraums mit eigenem Rollentext: bis zu 30 Absätze, zu lang für einen Moment.
+- Zeitraum nach Kalendertagen: Nach einer Pause wäre der Rückblick leer, das wirkt wie ein Verlust.
+- Roter Faden nach Kartenstufe statt nach Häufigkeit: bevorzugt lange bekannte Karten statt der Karten des Zeitraums.
+
+**Wechsel kostet:** `reviewCards` und `drawSpread` in `src/domain/spreads.ts`. Gespeicherte Rückblicke behalten Karten und Text.
+
+## S-48 · Tagebuch als Chronik
+
+**Entschieden:** Das Tagebuch (Grimoire-Kapitel IV) ist eine abgeleitete Chronik aller Tageskarten, gespeicherten Legungen und eigenen Einträge, neueste zuerst (`src/domain/journal.ts`). Notizen bleiben an ihrer Tageskarte oder Legung (IA §5.3), nichts wird kopiert.
+
+- **Filter:** Tageskarten, Legungen, Reflexionen (freies Schreiben, Reflexion, Studium), Zahlen, Mond. Angeboten werden nur Filter mit Einträgen, also bis V06 kein Zahlen- und bis 1.1 kein Mondfilter. Dazu nach Karte und „nur mit eigenen Worten“.
+- **Suche:** lokal über die eigenen Worte, die Kartentitel und das Thema in der Sprache der App und den gespeicherten Namen einer Legung. Groß- und Kleinschreibung, Akzente und ß spielen keine Rolle („Mäßigkeit“ findet „massigkeit“), jedes Wort muss vorkommen, Teilwörter genügen.
+- **Bezüge:** Ein Eintrag über eine Legung zeigt deren Karten. Eine Reflexion mit Bezug auf eine Karte zählt für Kartenstufe 4 wie eine Notiz (PROGRESSION_DESIGN: „eigene Notiz zur Karte“).
+- **Schreiben:** In V05.4 entstehen Einträge der Arten „frei“ und „Reflexion“, höchstens 2.000 Zeichen wie Notizen. Studienantworten entstehen auf der Kartenseite; die Store-Aktion `studyCard` dafür steht schon (V05.1).
+- **Store:** Tagebuch und Ereignisse liegen jetzt im Store und fließen über `factsOf` in jede Ableitung (Reisetag, Kartenstufen, Rückblicke, Legungen).
+
+**Warum:** PRODUCT_SYSTEMS E nennt für Kapitel IV Tageskarten, Legungen, Reflexionen, Zahlen- und Mondeinträge, und jeder gespeicherte Eintrag soll in ≤ 3 Taps auffindbar sein. Das Buch hat keinen eigenen Verlauf, darum wird das Tagebuch die Chronik. Ein Index je Datenstand macht jede Suche zu einem einfachen Textvergleich: 1.000 Einträge mit Aufbau des Index und zwei Suchen brauchen rund 9 ms (Grenze 50 ms). Start-JS 142,6 kB (+0,6 kB).
+
+**Alternativen:**
+- Nur Einträge mit eigenen Worten: ruhiger, aber eine Legung ohne Notiz wäre im Buch nur über die Reise auffindbar. Als Filter „nur mit eigenen Worten“ trotzdem da.
+- Notizen in den Store `journal` verschieben: widerspricht IA §5.3 (keine Datenverschiebung) und bräuchte eine Migration.
+- Auch in den gespeicherten Deutungstexten suchen: Fast jedes Wort stünde in jeder Legung, die eigenen Worte gingen unter.
+- Volltext-Index mit Wortstämmen: bei 1.000 Einträgen nicht nötig.
+
+**Wechsel kostet:** `src/domain/journal.ts`; gespeicherte Daten ändern sich nicht.
+
+## S-49 · Löschen nimmt die Worte, nicht den Tag
+
+**Entschieden:** Löschen im Tagebuch entfernt die eigenen Worte:
+
+- **Eigener Eintrag:** Der Text wird geleert, der Eintrag bekommt `deletedAt` und erscheint weder im Tagebuch noch in der Suche. Datum, Art und Bezug bleiben als Tatsache dieses Tages. Leerer Text beim Bearbeiten gilt als Löschen.
+- **Tageskarte oder Legung:** Die Notiz wird geleert, die Karte oder Legung selbst bleibt.
+- **Reflexion bleibt gezählt:** Die erste Notiz mit Text setzt einmalig `notedAt` (neues optionales Feld an Tageskarte und Legung, wird nie entfernt). Eine Notiz mit Text aus der Zeit vor 0.5 bekommt es bei ihrer ersten Änderung, auch beim Löschen.
+- Tageskarten und Legungen lassen sich nicht einzeln löschen; alles zusammen weiter über „Alle Daten löschen“.
+
+**Warum:** IA §5.5 verlangt, einzelne Tagebucheinträge zu löschen. PROGRESSION_DESIGN sagt zugleich, dass Reisetag und Kartenstufen nie sinken, weil Tatsachen nur mit „Alle Daten löschen“ verschwinden. Ohne die Tatsache könnte ein gelöschter Eintrag den einzigen Reisetag eines Tages wegnehmen (Station und schon gesehene Meilensteine stimmten dann nicht mehr) oder die Stufe 4 einer Karte. Die Worte selbst sind weg; es bleiben ein Datum, eine Art und eine Karte. Eine Tageskarte einzeln zu löschen hieße, die Karte des Tages neu ziehen zu können.
+
+**Alternativen:**
+- Eintrag wirklich entfernen: einfacher, aber Reisetag und Kartenstufe könnten sinken.
+- Neues Ereignis „Eintrag gelöscht“ im Store `events`: gleiche Wirkung, aber ein zweiter Ort für dieselbe Tatsache und ein neuer Ereignistyp.
+- Tageskarten und Legungen einzeln löschbar: widerspricht „eine Karte pro Tag“ und dem Grundsatz, dass die Reise nicht sinkt.
+
+**Folgen:** Eine Notiz, die schon vor 0.5 geleert wurde, hat kein `notedAt` und zählt nicht (wie bisher). Der Löschdialog im Screen (V05.3) soll sagen, dass die Worte gelöscht werden und der Tag Teil der Reise bleibt.
+
+**Wechsel kostet:** `erasedEntry` in `src/domain/journal.ts`, `firstNoted` in `src/platform/storage/indexeddb.ts` und die Zählung in `cardEncounters`. Die Felder sind optional und additiv, das Schema bleibt bei Version 2.
+
+## S-50 · Export von B3
+
+**Entschieden:** Die sieben B3-Master (A03, A04, A15, A20, A21, A23–A29 als Sheet, A30) sind geprüft und mit `scripts/export-art.mjs b3` in 18 WebP-Dateien exportiert, alle im Budget (`art/b3/export-report.json`, Kontaktbogen `docs/visual/evidence/v05-b3-export.webp`). Wie bei B2 (D-55) liegen sie unter `art/b3/` und kommen erst mit dem Screen, der sie nutzt, per `git mv` nach `public/`.
+
+- **Vignetten:** Das Sheet wird an den Grenzen der Motive ausgeschnitten, alle acht im selben Maßstab (Quadrat = größtes Motiv plus 6 % Luft, 334 px im Master → 320 px), damit die Goldlinien überall gleich stark wirken. Auch die Schlussvignette ist ein Quadrat wie die anderen (ASSET_REQUESTS nennt 320 × 320 für alle). Um ≤ 30 KB zu halten, liegt die Qualität bei 0,68–0,84; bei 96 und 160 px ist kein Unterschied zu sehen.
+- **Kartenrücken:** Groß 720 × 1080 (≤ 140 KB) und Vorschau 240 × 360 wie `public/cards/thumbs`. Für die Vorschau nennt ASSET_REQUESTS kein Budget, gewählt sind 30 KB wie bei den Porträt-Vorschauen (19–20 KB erreicht).
+- **Prüfung:** Kein Motiv berührt den Rand seiner Zelle. Das Buch (A15) hat saubere Kanten und überall transparente Ecken. Der Buchkörper hat Alpha 250–254 statt 255, ist also fast deckend; durchscheinend wirkt er nicht. Das Pergament (A30) ist nahtlos (Randspalten gleich) und schwankt in L* nur um 1,2 Punkte (Grenze 8), Tinte `#2B2238` erreicht darauf etwa 10,7:1. Beide Rücken sind als Vorschau klar von der Standard-Rückseite und voneinander zu unterscheiden.
+- Das Skript kann jetzt Ausschnitte aus einem Sheet (nur für die Vignetten) und prüft Alpha und Pergament. Ein neuer Lauf für B2 ergibt dieselben 30 Dateien in gleicher Größe und Qualität.
+
+**Warum:** Gleiches Vorgehen wie bei B2, damit Web-Build und APK erst wachsen, wenn ein Screen die Bilder zeigt. Der gemeinsame Maßstab ist die einzige Art, die Vignetten als eine Serie wirken zu lassen.
+
+**Alternativen:**
+- Direkt nach `public/`: wäre sofort im Build und in der APK, auch für Screens, die noch fehlen.
+- Jede Vignette auf 320 px füllen: Motive gleich groß, aber verschieden dicke Linien.
+- Vignetten verlustfrei: deutlich über 30 KB je Datei.
+- Schlussvignette im eigenen flachen Format (etwa 320 × 140): kleiner, aber abweichend von der Vorgabe; lässt sich beim Einbau noch ändern.
+
+**Wechsel kostet:** ein neuer Lauf des Skripts; die Master bleiben unverändert im Lieferordner.
+
+## S-51 · Kartenrücken an Tag 2, 5 und 10
+
+**Entschieden:** Nach D-66 öffnen sich die drei Kartenrücken früh. Zuordnung und Folgen habe ich so festgelegt:
+
+- **Tag 2:** Mondsichel (A20), zusammen mit der Einladung zu den Zahlen. Der Hinweis des Tages zeigt den Rücken, weil ein Meilenstein vor einer Welt-Einladung kommt.
+- **Tag 5:** Sternenkompass (A21), ein neuer fester Meilenstein mit eigenem Text.
+- **Tag 10:** Goldenes Rad (A22), zusammen mit dem persönlichen Symbol. A22 war für Tag 365 und Bulk B5 (V07) geplant und liegt schon im Lieferordner. Es ist jetzt wie die B3-Rücken exportiert, nach `art/b5/` (720 × 1080 mit 117,6 KB, Vorschau 240 × 360 mit 21,7 KB, beides im Budget).
+- **Tag 14 und 75:** Die festen Meilensteine entfallen. Tag 14 bleibt ein Meilenstein, weil der zweite Wochenrückblick an diesem Tag erscheint, mit dem allgemeinen Wochentext. Tag 75 ist kein Meilenstein mehr.
+- **Tag 365:** Hier bleibt das Jahresbuch, der Satz zum Goldenen Rad fällt weg.
+- **Texte:** Die Texte zu Tag 2, 5, 10 und 365 sind in DE und EN angepasst. Jeder hat höchstens drei Sätze und 220 Zeichen. Die Namen passen zu den Bildern: Die Mondsichel zeigt eine schmale Sichel mit Lilien, der Sternenkompass eine achtzackige Kompassrose in Astrolabium-Ringen und das Goldene Rad ein Rad mit acht Speichen, Sonnen- und Mondscheiben, Lorbeer und Weizen. Die Modulversion ist jetzt `journey-2026-11-27.4`.
+
+**Warum:** Am natürlichsten ist die Reihenfolge der Lieferung: Mondsichel und Sternenkompass gehören zu B3, das Goldene Rad ist das prächtigste Motiv. Für Tag 14 und 75 eine neue Belohnung zu erfinden, ginge über den freigegebenen Umfang hinaus. Tag 75 hätte sonst einen Meilenstein ohne Inhalt.
+
+**Alternativen:**
+- Rad an Tag 2 und Mondsichel an Tag 10: Das prächtigste Motiv käme zuerst, und es bliebe wenig zum Entdecken.
+- Tag 14 und 75 mit einer gestalterischen Freischaltung aus dem Jubiläums-Pool (Lesebändchen, Lorbeer): Der Pool reicht genau für die Tage 150 bis 250 und wäre danach leer.
+- Das Goldene Rad an Tag 365 lassen und an Tag 10 einen neuen, vierten Rücken anfordern: ein neues Bild, das noch niemand gezeichnet hat; der Eigentümer hat drei Rücken genannt.
+
+**Folgen:** Bis V05.5 gebaut ist, steht der Text zum Rücken schon in der Liste der erreichten Meilensteine auf der Reise-Seite, auch wenn es die Auswahl noch nicht gibt. So war es vorher für Tag 14 auch. Der Meilenstein-Moment auf „Heute“ und der Hinweis erscheinen erst, wenn `cardbacks` gebaut ist (D-54). Bis zu QG-V05 schließt V05.5 diese Lücke.
+
+**Wechsel kostet:** `FIXED_MILESTONES` in `src/domain/progress.ts`, `MILESTONE_TEXT_DAYS` in `src/domain/journey.ts` und die Texte im Modul `journey`.
+
+## S-52 · Auswahl der Kartenrücken
+
+**Entschieden:** Mit V05.5 werden die drei Rücken wählbar.
+
+- **Ort:** ein eigener Abschnitt „Kartenrücken“ in den Einstellungen (`#/me/settings`, unter Sprache und Bewegung), wie IA §5.2 (`Settings.cardBack`) und die Roadmap („Auswahl in Einstellungen“) es vorsehen. Er erscheint erst, wenn neben dem Standard ein zweiter Rücken offen ist (ab Reisetag 2).
+- **Nur Offenes:** Gezeigt werden nur freigeschaltete Rücken, als Vorschau 240 × 360 mit Namen, als Radiogruppe. Solange nicht alle offen sind, steht darunter ein ruhiger Satz: „Weitere Rücken kommen auf deiner Reise dazu.“ Es gibt kein Schloss, keine Vorschau auf Gesperrtes, keinen Tag und keinen Zähler.
+- **Namen:** Der Standard-Rücken heißt „Klassisch“ / „Classic“. „Mondphasen“ läge nahe am Bild, klänge aber neben „Mondsichel“ zu ähnlich, und der Standard zeigt ebenfalls einen Stern wie der Sternenkompass.
+- **Wirkung:** Der gewählte Rücken gilt für jede verdeckte Karte über einen gemeinsamen Kontext in `OracleCard`: Tageskarte auf „Heute“, Legung im Orakel und unentdeckte Karten in der Sammlung. Nur die Willkommensseite behält den Standard, denn vor dem ersten Tag ist kein anderer offen.
+- **Ableitung:** Welche Rücken offen sind, folgt aus dem Reisetag und der Meilenstein-Tabelle (`src/domain/cardbacks.ts`); gespeichert wird nur die Wahl. Eine Wahl, die (noch) nicht offen ist, etwa aus einer Sicherung oder ein unbekannter Name, zeigt den Standard. Eine kaputte Wahl wird beim Laden und Wiederherstellen verworfen, die übrigen Einstellungen bleiben (`normalizeSettings`).
+- **Meilenstein-Moment:** Der Rücken wird mit Namen genannt („Neuer Kartenrücken: Goldenes Rad“), Überschrift „Neu für deine Karten“, und „Ansehen“ führt zur Auswahl. Der Tagestext erscheint nur, wenn alles von diesem Tag gebaut ist. Die Texte zu Tag 2 und 10 nennen auch die Zahlenwelt und das persönliche Symbol aus V06; nach D-54 wird nichts angekündigt, bevor es da ist. Die Folge: Tag 7 zeigt seinen Text erst wieder, wenn die Rückblick-Legung im Orakel gebaut ist (V05.6).
+- **Bilder:** Die Rücken liegen jetzt unter `public/cards/backs/`, mit Vorschauen unter `public/cards/backs/thumbs/` (aus `art/b3/` und `art/b5/` per `git mv`). Die APK wächst um rund 430 KB.
+
+**Warum:** Wo die Auswahl liegt und wie sie heißt, geben IA und Roadmap vor. Weil nur Offenes gezeigt wird, gibt es nichts, was wie ein Kaufangebot oder wie Druck aussehen kann (L-Leitplanken, V05.5 „Fertig, wenn“). Der gemeinsame Kontext hält jede verdeckte Karte gleich, ohne dass jeder Screen eine Eigenschaft weiterreichen muss.
+
+**Alternativen:**
+- Alle vier Rücken zeigen, die gesperrten abgedunkelt mit „ab Tag 5“: macht Gesperrtes sichtbar und zählt Tage, beides ausgeschlossen.
+- Auswahl auf „Ich“ statt in den Einstellungen: dort stehen Archetyp und Zahlen; die Rücken sind eine Einstellung.
+- Nur Heute und Orakel umstellen, die Sammlung im Grimoire mit Standard: zwei Rückseiten in einer App wirken wie ein Fehler.
+- Tagestext immer zeigen: würde an Tag 2 und 10 Inhalte aus V06 ankündigen.
+
+**Folgen:** Auf der Reise-Seite stehen in der Liste der erreichten Meilensteine weiter die Tagestexte von Tag 2, 4, 6 und 10, die auch die Welten aus V06 nennen. So ist es schon seit V04, und mit V06 erledigt es sich.
+
+**Wechsel kostet:** `src/domain/cardbacks.ts`, der Abschnitt in `src/features/profile/Profile.tsx`, `CardBackContext` in `src/ui/OracleCard.tsx` und `MilestoneMoment.tsx`.
+
+## S-53 · Kartenseite, Teil 1
+
+**Entschieden:** Die Kartenseite im Grimoire (`#/grimoire/card/<id>`) zeigt unter Bild, Titel und Essenz die Stufe der Karte und alle Ebenen, die diese Stufe geöffnet hat. Das Studium (Teil 2) folgt als eigener Schritt.
+
+- **Stufe:** ein Mondphasen-Symbol (D3: Neumond bis Vollmond, gezeichnet als SVG, kein Balken) mit „Stufe {n} · {Name}“. Die Namen folgen PRODUCT_SYSTEMS D und PROGRESSION_DESIGN: Entdeckt, Verstanden, Vertieft, Verinnerlicht (EN: Discovered, Understood, Deepened, Taken to heart). Unter Stufe 4 steht ein ruhiger Satz, dass sich weitere Ebenen mit neuen Begegnungen und dem Kartenstudium öffnen; es gibt keinen Zähler und kein „noch 2 Tage“.
+- **Ebenen:** jede offene Ebene in einem eigenen Panel mit goldener Überschrift, in der Reihenfolge der Stufen: Botschaft für das Profilthema (1), Licht, Schatten, Schlüsselwort (2), die anderen Lebensthemen, die Karte in Legungen (R1–R8) und das Bild (3), deine Worte zu dieser Karte, ein zweites Ritual und deine Frage (4). Was noch nicht offen ist, fehlt einfach: kein Schloss, keine grauen Platzhalter (D4, L-Leitplanken).
+- **Keine Dopplung:** Die Botschaft zum eigenen Thema steht oben; die Liste der Themen auf Stufe 3 heißt dann „In den anderen Lebensthemen“ und zeigt die übrigen fünf. Ohne Profilthema zeigt sie alle sechs.
+- **Deine Worte:** Notizen aus Tageskarten, Legungen und Tagebuch, die diese Karte nennen und Text haben (aus `journalItems`), mit Datum.
+- **Laden:** Die Ebenen sind ein eigener Lade-Chunk (`src/features/cards/CardLayers.tsx`, 0,9 kB CSS) und holen die Module `cards-deep` und `spreads`; der Startpfad wächst nicht. Fehlen die Module, steht ein Satz mit „Erneut versuchen“, Botschaft und Themen (aus dem Kern) bleiben.
+
+**Warum:** Die Panels halten jeden Lesetext auf einer ruhigen Fläche über dem gemalten Hintergrund (Kontrast als Mindestwert). Die Stufen-Reihenfolge macht sichtbar, was mit der Zeit dazukam, ohne dass etwas verschlossen wirkt.
+
+**Alternativen:**
+- Ebenen als aufklappbare Liste: kürzer, aber versteckt Inhalte hinter einem Tippen; bleibt als Frage in der Prüfliste.
+- Gesperrte Ebenen grau mit „ab Stufe 3“ zeigen: verstößt gegen „keine gesperrten Wissensinhalte“.
+- Fortschrittsbalken statt Mondphase: D3 sieht die Mondphase vor.
+- Alle sechs Themen inklusive Profilthema: doppelt den obersten Text wörtlich.
+
+**Wechsel kostet:** `src/features/cards/CardLayers.tsx`, `card-page.css` und der Block `card` in `src/i18n/screens.*.ts`.
+
+## S-54 · Kartenstudium (Kartenseite, Teil 2)
+
+**Entschieden:** Das Kartenstudium sitzt als eigenes Panel „Kartenstudium“ direkt unter der Stufe auf der Kartenseite und öffnet sich an Ort und Stelle, ohne neue Route.
+
+- **Zu:** ein Satz und ein Knopf. Vor dem ersten Studium: „Zwei kurze Teile von je ein bis zwei Minuten: erst hinschauen, dann die Karte mit deinem Leben verbinden. Eine Antwort ist freiwillig.“ und „Studium beginnen“. Nach Teil 1: „Teil 2 verbindet die Karte mit deinem Leben.“ und „Weiter mit Teil 2“. Nach beiden Teilen: „Du hast diese Karte studiert. Du kannst jederzeit wieder hineinschauen.“ und „Noch einmal studieren“ (D2: freiwillig, beliebig oft).
+- **Offen:** Überschrift „Teil 1 von 2 · Hinschauen“ bzw. „Teil 2 von 2 · Dein Leben“, der Impuls aus `cards-deep` (endet in einer Frage), ein Antwortfeld „Deine Antwort (freiwillig)“ wie das Notizfeld und zwei Knöpfe: „Später“ und „Gelesen“; mit Text heißt der zweite „Antwort festhalten“.
+- **Festhalten:** ein Ereignis `card.studied` (zählt als Reisetag) und, nur mit Text, ein Tagebucheintrag der Art `study`; er erscheint unter „Deine Worte zu dieser Karte“ und zählt als Reflexion. Die Stufe folgt daraus (D-09): Teil 1 öffnet Stufe 2, Teil 2 Stufe 3, mit einer Antwort Stufe 4.
+- **Rückmeldung:** im Panel ein ruhiger Satz, vorgelesen über `aria-live`: „Teil 1 ist festgehalten.“, und wenn die Stufe gestiegen ist, „Die Karte steht jetzt auf Stufe 2 · Verstanden.“ Kein Feuerwerk, kein Zähler. Der Fokus geht beim Öffnen, Festhalten und Schließen auf die Überschrift des Panels (ohne Rahmen, wie bei den Bildschirmüberschriften).
+- **Wiederholen:** Ein erneutes Studium beginnt wieder bei Teil 1 und bietet danach Teil 2 an; jede Antwort wird ein eigener Eintrag.
+
+**Warum:** Die Kartenseite ist der Ort des Studiums (IA §3: „Studium beginnen / Notiz“). An Ort und Stelle bleibt die Karte sichtbar, und die neuen Ebenen erscheinen direkt darunter. Weil „Gelesen“ genügt, braucht niemand eine Antwort, um weiterzukommen (D2); was geschrieben wird, bleibt lokal.
+
+**Alternativen:**
+- Eigene Seite `#/grimoire/card/<id>/study`: mehr Ruhe zum Schreiben, aber ein Zurück-Weg mehr und die neuen Ebenen sind nicht direkt zu sehen; bleibt als Frage in der Prüfliste.
+- Studium unter den Ebenen: auf Stufe 1 schwer zu finden, gerade dann ist es der Weg zu mehr.
+- Beide Teile in einem Schritt: widerspricht den „zwei kurzen Teilen“ (D2) und macht die Sitzung lang.
+- Antwort als Pflicht für Teil 2: D2 sieht nur für Teil 1 ausdrücklich „Gelesen genügt“ vor, die Studien-Logik nimmt beides ohne Text an; eine Pflicht wäre Druck.
+
+**Wechsel kostet:** `src/features/cards/CardStudy.tsx`, die Studien-Texte im Block `card` von `src/i18n/screens.*.ts` und der Test „card study“ in `tests/e2e/identity.spec.ts`.
+
+## S-55 · Grimoire als Buch, Teil 1
+
+**Entschieden:** Der Tab „Grimoire“ ist ein Buch. Oben das Buch (A15) in der Bibliothek (A04, abgedunkelt wie die ruhigen Screens), darunter als Bildunterschrift die Namen des eigenen Archetyps und der zweiten Stimme. Darunter eine Pergamentseite (A30) „Inhalt“ mit je einer Zeile pro Kapitel: Vignette (A23–A29), römische Ziffer, Name, eine Zahl und „Neu“, wenn dort etwas Neues wartet; am Ende die Schlussvignette.
+
+- **Kapitel:** Nur, was gebaut ist, und in der Reihenfolge des Buchs: I Karten, II Archetypen, III Tagebuch, IV Rituale, V Reise. Symbole und Zahlen kommen mit V06 dazu (D-54: nichts ankündigen, was es nicht gibt); die Ziffern verschieben sich dann. Archetypen und Reise behalten ihre Seiten aus V04.
+- **Kapitelanfang:** eine Pergamentseite mit Vignette, „Kapitel n“, Name, Zahl und einem Satz, was hier steht. Die Listen darunter stehen auf den dunklen Panels der App, damit lange Inhalte lesbar bleiben.
+- **I Karten:** Zeile mit den Stufen („5 entdeckt · 1 verstanden …“), dann nur die entdeckten Karten mit Mondphase und Stufenname, Gold-Rahmen ab Stufe 4; darunter eine ruhige Zeile „17 weitere Karten warten auf ihren Tag.“ (Design-Plan Punkt 7, D-63). Ohne Karte: „Deine erste Karte wartet auf dich“ und der Weg zur Tageskarte.
+- **III Tagebuch:** oben „Etwas aufschreiben“ (freier Eintrag), dann Suche, Filter (nur vorhandene Arten, dazu „Nur mit eigenen Worten“) und die Chronik. Tageskarten und Legungen öffnen ihre Seite, ein Eintrag zu einer Karte die Kartenseite; Einträge ohne Karte stehen für sich. Eigene Worte haben „Worte löschen“ mit Bestätigung (S-49).
+- **IV Rituale:** die Mini-Rituale der eigenen Tageskarten, je Karte und Variante einmal, das zuletzt begegnete zuerst, mit „Heute gemacht“ (einmal am Tag, zählt nicht als Reisetag). Leer: drei Einstiegsrituale aus Narr, Stern und Sonne und der Weg zur Tageskarte.
+- **„Neu“ (E2):** an einer Karte, deren Stufe gestiegen ist, bis ihre Seite geöffnet wurde; im Inhalt an „Karten“ und wie bisher an „Reise“. Was vor dem ersten Öffnen des Buchs erreicht war, gilt nicht als neu, damit nach dem Update nicht alles leuchtet.
+- **Wege:** `#/grimoire/cards`, `#/grimoire/journal` (alte Links auf `#/grimoire/history` landen hier), `#/grimoire/rituals`. Jeder gespeicherte Eintrag ist in höchstens drei Taps erreichbar (E2E).
+
+**Warum:** Das Buch ist das Versprechen des Grimoires (PRODUCT_SYSTEMS E). Pergament für Inhalt und Kapitelanfänge macht es zum Buch, ohne lange Listen auf hellen Grund zu setzen. Nur Gebautes zu zeigen hält die Regel aus D-54. Punkt 7 des Design-Plans war als Empfehlung mit V05 vorgesehen: Am ersten Tag sieht man, was man hat, nicht 21 gleiche Rücken.
+
+**Alternativen:**
+- Alle sieben Kapitel mit „bald“: verstößt gegen D-54.
+- Die Tabs „Sammlung“ und „Verlauf“ behalten und das Buch nur als Kopf darüber: weniger Umbau, aber kein Buch und keine Kapitel.
+- Ganze Kapitelseiten auf Pergament: liest sich bei langen Listen und Bildern schlechter, und die Karten verlieren den dunklen Grund.
+- Unentdeckte Karten als kleine gedimmte Reihe (zweite Option aus Punkt 7): zeigt die Lücke weiter, wenn auch leiser.
+- „Neu“ für alle Stufen ab dem Update: hätte bei bestehenden Nutzern jede Karte leuchten lassen.
+- Meilenstein-Moment am Reisetag 1 („grimoire-cover“) jetzt einschalten: Er teilt sich die Freischaltung mit dem Ex Libris (Tag 50), das noch nicht gebaut ist; beides müsste getrennt werden. Bleibt als Frage in der Prüfliste.
+
+**Wechsel kostet:** `src/features/grimoire/Book.tsx` und `book.css`, `src/domain/book.ts`, die Texte im Block `book` von `src/i18n/screens.*.ts`, die Wege in `src/app/router.ts` und `tests/e2e/book.spec.ts`.
+
+## S-56 · Sternkarte als drei Ringe
+
+**Entschieden:** Die Sternkarte im Kapitel Reise übernimmt Variante A aus dem Muster (S-42, D-64 Punkt 6) ohne Änderung der Optik: Die 21 Stationen einer Runde stehen auf drei Ringen (äußerer Weg außen, innerer Weg darin, höherer Weg in der Mitte), Station I oben, im Uhrzeigersinn. Jeder Ring beginnt einen halben Schritt nach dem letzten Stern des vorigen, so führt der Weg als eine Spirale nach innen: ein Bogen entlang des Rings, ein gerader Schritt zum nächsten. Gezeichnet wird nur der erreichte Weg (golden, leicht leuchtend), dazu die drei Ringe als feine Bahnen. Wegenden (VII, XIV, XXI) sind größer, noch nicht erreichte Wegenden als Umriss; der heutige Stern leuchtet; nur der gewählte Stern trägt seine römische Ziffer (zuerst der heutige). Antippen wählt einen Stern; darunter nennt eine Zeile Station, Karte, Weg und Stand und wird Screenreadern angesagt (`aria-live`).
+
+- **Texte:** keine neuen. Der Weg nutzt die Namen von „Heute“ („Der äußere Weg“, EN “The outer path”), der Stand die Wörter der Liste („erreicht“, „heute“, „noch vor dir“). Das Muster hatte eigene, nicht übersetzte Kurzformen („Äußerer Weg“).
+- **Geometrie** als reine Funktion in `src/domain/starmap.ts` (`starPosition`, `wayPath`, `RING_RADII`), Zeichenfläche 320 × 320. Kein Stern liegt näher als 36 Einheiten am nächsten, die unsichtbare Trefferfläche hat Radius 18 (im Muster 15) und überlappt so nirgends (Unit).
+- **Vollendete Runden** erscheinen klein in derselben Spirale statt in der alten Schlangenlinie (gleiche Größe und Farben wie bisher).
+- **Barrierefreiheit:** Die Karte bleibt ein Bild mit Beschriftung („Sternkarte der Runde 1: 9 von 21 Stationen erreicht“), die Liste darunter bleibt die vollständige Textalternative. Die Sterne selbst sind keine Knöpfe.
+
+**Warum:** Der Eigentümer hat am Muster entschieden (D-64), also gilt die Optik des Musters. Vorhandene Texte halten DE und EN gleich und vermeiden zwei Namen für denselben Weg. Die Geometrie im Modell macht sie testbar und hält die Zeichnung konstant klein (21 Sterne bei jedem Reisetag).
+
+**Alternativen:**
+- Sterne als Knöpfe für Tastatur und TalkBack: 21 zusätzliche Fokusziele vor der Liste, die dasselbe sagt; die Liste ist der ruhigere Weg.
+- Beim Antippen auch den Stationstext zeigen: mehr Inhalt an der Karte, aber eine zweite Stelle neben dem Panel „Deine Station“. Steht als Frage in der Prüfliste.
+- Vollendete Runden in der alten Form lassen: zwei Formen für dasselbe Sternbild.
+- Trefferfläche 15 wie im Muster: kleiner als nötig, auf dem Emulator aber ebenfalls treffsicher.
+
+**Wechsel kostet:** `src/domain/starmap.ts`, `StarMapFigure` in `src/features/journey/JourneyScreens.tsx` und `journey-screens.css`, dazu `tests/unit/journey-screens.test.ts` und der Sternkarten-Test in `tests/e2e/identity.spec.ts`. Gespeichert wird nichts; die Karte wird aus den Reisetagen abgeleitet.
+
+**Geprüft:** `npm run check` PASS (253 Unit-Tests, Start-JS 144,2 kB), E2E Sternkarte mit Antippen PASS, Kontrast DE 412 und EN 360 ohne Verstoß, Scrollen mit 400 Tagen bei 4× CPU-Drosselung Median 16,7 ms und Maximum 16,8 ms je Frame (wie V04.5), Android-Emulator PASS mit echtem Antippen.
+
+## S-57 · Aufklapper auf der Enthüllung
+
+**Entschieden:** Nach einer Enthüllung mit Archetyp entfällt der Aufklapper „So entsteht dein Archetyp“ (D-64 Punkt 5, Variante B); „Warum?“ steht direkt darüber und erklärt dasselbe ausführlich aus den eigenen Antworten. Alles andere bleibt wie in 0.4.1. Beim offenen Profil („Dein Weg bleibt offen“) bleibt der Aufklapper: Wer keine Frage beantwortet hat, sieht dort kein „Warum?“, und er ist die einzige Erklärung. Der Text `archetype.howItWorks` bleibt deshalb in DE und EN.
+
+**Warum:** So steht es im Muster, das der Eigentümer gewählt hat (Variante B entfernte ihn nur im Archetyp-Zweig). Leitlinie aus D-64: Inhalte lieber sichtbar lassen als verstecken.
+
+**Alternativen:**
+- Auch beim offenen Profil entfernen, wenn „Warum?“ dort erscheint (ab einer beantworteten Frage): konsequenter, aber nicht Teil des gezeigten Musters.
+- Überall entfernen und den Text löschen: Wer alle Fragen überspringt, erfährt dann auf diesem Screen nicht, wie ein Archetyp entsteht.
+
+**Wechsel kostet:** eine Zeile in `src/features/onboarding/Onboarding.tsx` und die Prüfung im E2E-Test „with reduced motion the reveal shows everything at once“.
+
+## S-58 · Orakel als Bühne mit den Legungen
+
+**Entschieden:** Das Orakel steht in der gemalten Sternwarte (A03) wie im gewählten Muster A (D-64 Punkt 2): Karten in einer Reihe auf dem Tisch, Themen als eine Zeile, Hauptaktion unten; nach dem Ziehen drehen sich die Karten an derselben Stelle um. Dazu kommen die Legungen aus V05.2:
+- **Auswahl:** eine zweite Zeile gleicher Knöpfe über den Themen, darunter die Kurzbeschreibung der gewählten Legung. Angeboten wird nur, was `availableSpreads` erlaubt: Drei Karten, Licht und Schatten, Neuanfang, ab Reisetag 7 der Wochenrückblick, ab Tag 30 der Monatsrückblick. Zwei Wege und Verbindung bleiben ohne Billing unsichtbar, auch nicht als Platzhalter. Ohne Modul `spreads` (offline vor dem ersten Laden) bleibt es bei den drei Karten ohne Auswahlzeile. Jeder Besuch beginnt mit „Drei Karten“.
+- **Reihe für 2–5 Karten:** Die Karten bleiben so breit wie bei drei Karten und werden nur bei vier oder fünf schmaler; die Reihe ist mittig. Der Tisch-Abstand rechnet mit der Kartenhöhe, so stehen alle Größen auf der Tischkante. Die Hauptaktion nennt die Zahl („Vier Karten ziehen“, beim Rückblick „Eine Karte ziehen“).
+- **Rückblick:** Die Fadenkarte aus den eigenen Karten liegt offen, gezogen wird nur die neue. In der Deutung steht nach der Einleitung „Deine Woche in Karten“ bzw. „Dein Monat in Karten“ mit allen eigenen Karten des Zeitraums (kleine Karte, Titel, Essenz), denn die Einleitung sagt, dass die Legung mit diesen Karten beginnt.
+- **Deutung:** Unter dem Positionsnamen steht die Frage der Position (nur bei den neuen Legungen; die klassische Legung hat keine). Über der gezogenen Legung steht der Name der Legung statt „Freie Legung“; die klassische behält „Freie Legung“.
+- **B-12:** Name, Karte und Titel jeder Position teilen sich drei Zeilen (CSS-Subgrid). Bricht ein Name bei 130 % Schrift um, rücken alle Karten gemeinsam; sie bleiben auf einer Linie. Das gilt auch im Grimoire.
+- **Kontrast auf A03:** Das Mondfenster hinter den Positionsnamen und der beleuchtete Tisch sind heller als die anderen Räume; mit den Halos des Musters lagen 20 Lesetexte unter 4,5 : 1 (bis 2,4 : 1). Ohne das Bild zu verändern: unter kurzen Namen und der Themenzeile ein weicher dunkler Hof (der Halo aus D-49, nur breiter), Kurzbeschreibung, Einleitung, Hinweis und „Legung verwerfen“ in der Körperfarbe statt Grau (wie S-23), Geisterknöpfe und die Gespeichert-Zeile mit dunkler Fläche wie im Raum von „Ich“. Danach 0 Texte unter dem Minimum bei 412, 360 und 320 px, DE und EN, auch bei 130 % Schrift.
+- **Prüfwerkzeug:** `scripts/contrast-audit.mjs` zählt Text, der unter den mindestens 90 % deckenden Teil des Schleiers der klebenden Hauptaktion gescrollt ist, als verdeckt. Der Schleier lässt Taps durch, darum sah der Prüfer ihn nicht und maß Text, der dort gar nicht lesbar ist, gegen den Goldknopf (1,1 : 1). Derselbe Text wird an der Scrollstelle gemessen, an der er frei steht, wie jeder andere verdeckte Text.
+
+**Warum:** Das Muster ist vom Eigentümer gewählt; die Erweiterungen bleiben in seiner Sprache (Knopfzeile, Reihe, Halo). Eine Zeile mehr ist der kürzeste Weg zur Legung, ohne die Karten vom Tisch zu schieben.
+
+**Alternativen:**
+- Legungen in einem Auswahlblatt oder als Liste mit Beschreibung: mehr Platz für Erklärungen, aber ein Tap mehr und ein neues Muster.
+- Legungen als Kartenreihe vor den Themen (ein eigener Schritt): klarer, aber zwei Schritte bis zum Ziehen.
+- Fünf Karten in zwei Reihen: größere Karten, aber kein Tisch mehr in einer Reihe; Variante B (Fächer) hatte der Eigentümer abgewählt.
+- Letzte Legung merken statt jedes Mal „Drei Karten“: bequemer, braucht aber ein neues gespeichertes Feld.
+- Rückblick-Karten am Ende der Deutung oder als schmale Reihe nur mit Bildern: kürzer beim Monat (bis zu 22 Karten), aber die Einleitung verweist auf sie am Anfang, und ohne Essenz fehlt der Rückblick.
+- Kontrast mit dunklerem Schleier über dem Fenster oder kleinen Schildern unter den Namen: sicher, aber sichtbar anders als das gewählte Muster.
+
+**Wechsel kostet:** Auswahl und Reihe in `src/features/oracle/Oracle.tsx`, Gestaltung in `src/features/oracle/oracle-stage.css`; die E2E-Tests `tests/e2e/oracle.spec.ts` prüfen Angebot, Neuanfang und Rückblick.
+
+## S-59 · Testsignatur des Testpakets
+
+**Entschieden:** Das Testpaket (V05.6) ist ein Release-Build mit einem eigenen Testschlüssel (RSA 3072, PKCS12, Zertifikat „Arcana Test Signature“, gültig 25 Jahre). `android/app/build.gradle` liest Pfad, Alias und Kennwörter aus `android/keystore.properties`; Datei und Schlüssel (`android/keystore/arcana-test.jks`) bleiben lokal und sind per `.gitignore` ausgeschlossen, das Kennwort ist zufällig erzeugt und steht nirgends im Repo. Fehlt die Datei, bleibt der Release-Build unsigniert. App-ID bleibt die Entwicklungs-ID `com.energycrafted.personaloracle.dev`, der Name „Arcana“, denn beides entscheidet der Eigentümer mit E11. Die Version steigt mit dem Testpaket auf 0.5.0 (versionCode 6) in Paket, Android-Projekt und App, damit Testende die Fassung nennen können; der Tag `v0.5.0` folgt erst nach Freigabe und Merge. Die Testanleitung steht in `docs/TESTPAKET.md`.
+
+**Warum:** Die Release-Checkliste verlangt seit G2 einen Release-Modus-Testbuild mit zulässiger Testsignatur und Entwicklungs-ID. Ein eigener Schlüssel trennt Testpakete von Entwicklungs-Builds und lässt spätere Testpakete mit Daten darüber installieren. Der Upload-Schlüssel für Play hängt an E11 und E15 und gehört außerhalb des Repos; ihn jetzt anzulegen hieße, der Entscheidung vorzugreifen.
+
+**Alternativen:**
+- Mit dem Debug-Schlüssel des Rechners signieren: kein zusätzlicher Schlüssel, aber das bekannte Kennwort „android“, und Testpakete wären von Entwicklungs-Builds nicht zu unterscheiden.
+- Unsignierter Release-Build: nichts zu verwahren, lässt sich aber nicht installieren.
+- Gleich den späteren Upload-Schlüssel anlegen: spart einen Schritt, legt aber Name, Ablage und Verwahrung fest, bevor E11 und E15 entschieden sind.
+- Version erst beim Tag erhöhen: hielte die Nummer an den Tag gebunden, Testende hätten aber „0.4.1“ gesehen.
+
+**Wechsel kostet:** Ein neuer Testschlüssel bedeutet einmal deinstallieren auf jedem Testgerät (Daten weg). Der Wechsel auf die finale App-ID ist für Android eine neue App, also ebenfalls eine Neuinstallation; deshalb die Empfehlung, die Sicherung (V07.3) vor den geschlossenen Test zu ziehen (Roadmap §10 Punkt 5).
+
+## S-60 · Kartenbilder in 560 px
+
+**Entschieden:** Die Reserve aus D-52 wurde vor QG-V05 gebaut und gemessen, dann zurückgenommen. Große Karten luden per `srcset`/`sizes` eine 560 × 840-Fassung neben der 720er (Heldenkarte höchstens 272 CSS-px, also 544 Gerätepixel bei 2×); die Bildqualität war geprüft (PSNR ≥ 35 dB). Gemessen mit `scripts/perf.mjs` abwechselnd gegen die Referenz: Bilder auf „Heute“ 318–352 KB statt 473 KB, „Heute sichtbar“ normiert 1.260 / 1.297 / 1.357 ms gegen 1.260 / 1.311 / 1.313 ms ohne die Änderung, also kein messbarer Gewinn. Die Enthüllung hatte 2–3 Ruckler statt 1, zweimal über der Grenze von 2. Die Karten bleiben bei 720 px.
+
+**Warum:** Der Engpass ist nicht die Bildgröße, sondern die Zeit bis der Browser die Bilder überhaupt anfragt (größeres Start-JS, `docs/visual/PERFORMANCE.md` „V05“). 26 zusätzliche Dateien (1,5 MB im Repo und in der APK), ein zweiter Exportschritt und ein mögliches Risiko für die Enthüllung lohnen sich ohne Gewinn nicht.
+
+**Alternativen:**
+- Behalten, weil es Daten spart: 130–155 KB weniger je Start auf „Heute“, aber die Grenze wird trotzdem gerissen und die Enthüllung ist unsicher.
+- Nur die Rückseite in 560 px: kleinster Eingriff, gleiche Ursache, gleiches Ergebnis zu erwarten.
+- Mit mehr Läufen klären, ob die Ruckler an der Änderung liegen: kostet ≈ 30 min Messzeit für eine Änderung, die das Problem nicht löst.
+
+**Wechsel kostet:** ≈ 30 min: Exportskript für die Mittelgröße (Pillow, wie `scripts/assets/export-cards.py`), `srcset`/`sizes` in `src/ui/OracleCard.tsx`, Prüfung im Content-Gate, danach neu messen.
+
+## S-61 · Vorlesefehler aus dem TalkBack-Grundcheck
+
+**Entschieden:** Im TalkBack-Grundcheck (QG-V05, Emulator) las der Bedienungshilfen-Baum zwei Stellen ohne Pause: die Schlagworte auf „Heute“ als ein Wort („AwakeningReflectionCalling“, die Sterne dazwischen sind zu Recht ausgeblendet) und in der Legung Kartennummer und Titel („VIThe Lovers“, die Nummer steht als Block über dem Titel). Beide bekommen ein Komma, das nur Screenreader sehen (`.sr-only`): jetzt „Awakening, Reflection, Calling“ und „VI, The Lovers“. Das Bild bleibt gleich (Zeile der Schlagworte auf dem Emulator pixelgleich).
+
+**Warum:** Gehört zum Grundcheck und ist ohne sichtbare Änderung behebbar; die Optik bleibt unangetastet (AGENTS.md).
+
+**Alternativen:**
+- Die Sterne nicht mehr ausblenden: TalkBack würde „Stern“ oder das Zeichen vorlesen.
+- `aria-label` am Absatz: an einem Absatz ohne Rolle lesen Screenreader es nicht verlässlich.
+- Nummer und Titel als getrennte Zeilen im Baum: ändert das Markup der Kopfzeilen, an denen B-12 (Subgrid) hängt.
+
+**Wechsel kostet:** je eine Zeile in `src/features/today/Today.tsx` und `src/features/oracle/Oracle.tsx`.

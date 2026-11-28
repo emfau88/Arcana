@@ -11,7 +11,10 @@ export type Route =
   | { name: 'why' }
   | { name: 'today' }
   | { name: 'oracle' }
-  | { name: 'grimoire'; view: 'collection' | 'history' }
+  /** The book (V05.3): cover and contents. */
+  | { name: 'grimoire' }
+  /** Chapters of the book with their own page here; archetypes and journey have theirs since V04. */
+  | { name: 'bookChapter'; chapter: 'cards' | 'journal' | 'rituals' }
   | { name: 'card'; id: string }
   | { name: 'day'; dateKey: string }
   | { name: 'reading'; id: string }
@@ -59,7 +62,9 @@ export function parsePath(rawPath: string): ParsedRoute {
         if (seg[1] === 'card' && seg[2]) return { name: 'card', id: seg[2] };
         if (seg[1] === 'day' && seg[2]) return { name: 'day', dateKey: seg[2] };
         if (seg[1] === 'reading' && seg[2]) return { name: 'reading', id: seg[2] };
-        if (seg[1] === 'history') return { name: 'grimoire', view: 'history' };
+        // V04 links to the history land in the journal, which now holds it (V05.3).
+        if ((seg[1] === 'history' || seg[1] === 'journal') && seg[2] === undefined) return { name: 'bookChapter', chapter: 'journal' };
+        if ((seg[1] === 'cards' || seg[1] === 'rituals') && seg[2] === undefined) return { name: 'bookChapter', chapter: seg[1] };
         if (seg[1] === 'archetypes') return seg[2] ? { name: 'archetypeDetail', id: seg[2] } : { name: 'archetypes' };
         if (seg[1] === 'journey' && seg[2] === undefined) return { name: 'journey' };
         if (seg[1] === 'chapter' && seg[2]) return { name: 'chapter', id: seg[2] };
@@ -67,7 +72,7 @@ export function parsePath(rawPath: string): ParsedRoute {
           const index = Number(seg[3]);
           if (Number.isInteger(index) && index >= 1) return { name: 'review', kind: seg[2], index };
         }
-        if (seg[1] === undefined) return { name: 'grimoire', view: 'collection' };
+        if (seg[1] === undefined) return { name: 'grimoire' };
         return { name: 'notfound', path };
       case 'me':
       case 'profile': // V04: "Profil" became "Ich" (#/me); the old path stays valid.
@@ -83,7 +88,7 @@ export function parsePath(rawPath: string): ParsedRoute {
   return { route, from, path };
 }
 
-const ALLOWED_FROM = new Set(['/today', '/oracle', '/grimoire', '/grimoire/history', '/me', '/profile', '/archetype', '/grimoire/archetypes', '/grimoire/journey']);
+const ALLOWED_FROM = new Set(['/today', '/oracle', '/grimoire', '/grimoire/history', '/grimoire/cards', '/grimoire/journal', '/grimoire/rituals', '/me', '/profile', '/archetype', '/grimoire/archetypes', '/grimoire/journey']);
 /** Pages with an id that may be the origin of another page (`from` carries the id). */
 const FROM_PATTERN = /^\/grimoire\/(archetypes\/[a-z]+|review\/(week|month)\/\d{1,3})$/;
 
@@ -145,12 +150,14 @@ export function backTarget(parsed: ParsedRoute): string | 'exit' {
     case 'notfound':
       return '/today';
     case 'grimoire':
-      return route.view === 'history' ? '/grimoire' : '/today';
+      return '/today';
+    case 'bookChapter':
+      return '/grimoire';
     case 'card':
-      return safeFrom ?? '/grimoire';
+      return safeFrom ?? '/grimoire/cards';
     case 'day':
     case 'reading':
-      return safeFrom ?? '/grimoire/history';
+      return safeFrom ?? '/grimoire/journal';
   }
 }
 

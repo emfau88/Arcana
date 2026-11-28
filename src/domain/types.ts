@@ -36,6 +36,14 @@ export const isArchetypeId = (id: string): id is ArchetypeId => (ARCHETYPE_ORDER
 export type PositionId = 'situation' | 'challenge' | 'impulse';
 export const POSITIONS: readonly PositionId[] = ['situation', 'challenge', 'impulse'];
 
+/**
+ * Roles of a spread (V05.2, PRODUCT_SYSTEMS F): R1–R3 keep the ids of the classic positions
+ * ('situation' is R1 "core"), so stored readings already name their roles. R4–R8 are new.
+ */
+export const DEEP_ROLE_IDS = ['light', 'shadow', 'root', 'possibility', 'bridge'] as const;
+export type RoleId = PositionId | (typeof DEEP_ROLE_IDS)[number];
+export const ROLES: readonly RoleId[] = [...POSITIONS, ...DEEP_ROLE_IDS];
+
 export type CardId = string;
 export type QuestionId = string;
 export type AnswerId = string;
@@ -71,6 +79,8 @@ export interface Settings {
   locale: Locale;
   motion: MotionPreference;
   onboardingDone: boolean;
+  /** Chosen card back (V05.5, D-66). Missing or not open yet = the standard back. */
+  cardBack?: string;
 }
 
 /** Fully rendered, immutable daily content. Stored as-is so history never changes. */
@@ -99,8 +109,15 @@ export interface DailyRecord {
   revealedAt: string;
   note: string;
   /**
+   * Since when the note held text (V05.4, S-49): set on the first save with text, for a note from
+   * before 0.5 on its first change. Never removed, so a deleted note still counts as a reflection.
+   * Missing in older records and without a note.
+   */
+  notedAt?: string;
+  /**
    * Variant indices fixed when the record was created (V04.3, IA §5.2): lens 0 = main archetype,
-   * 1 = complement; reflection and ritual stay 0 until V05 brings more variants. Missing in older records.
+   * 1 = complement; reflection 0–2 and ritual 0–1 from the earlier encounters with the card (A4, V05.1),
+   * 0 = the core text. Never recomputed. Missing in older records.
    */
   variant?: { lens: number; reflection: number; ritual: number };
   /** Complement archetype at the moment of drawing (V04.3). Missing in older records. */
@@ -108,8 +125,11 @@ export interface DailyRecord {
 }
 
 export interface ReadingPositionContent {
-  position: PositionId;
+  /** The role of the position (classic readings: 'situation', 'challenge', 'impulse'). */
+  position: RoleId;
   positionLabel: string;
+  /** The question of the position (spreads since V05.2; classic readings have none). */
+  question?: string;
   cardId: CardId;
   cardOrder: number;
   cardTitle: string;
@@ -124,14 +144,22 @@ export interface ReadingContent {
   synthesisTitle: string;
   synthesis: string;
   reflection: string;
+  /** Name of the spread (since V05.2; missing = the classic three cards). */
+  spreadName?: string;
+  /** Review spreads: heading and the own cards of the period, oldest first (V05.2). */
+  past?: { title: string; cards: Array<{ cardId: CardId; cardOrder: number; cardTitle: string; essence: string }> };
 }
 
 export interface Reading {
   id: string;
   deckId: string;
   themeId: ThemeId;
-  /** Three distinct cards in the fixed order situation, challenge, impulse. */
-  cardIds: [CardId, CardId, CardId];
+  /** Distinct cards, one per position (classic: situation, challenge, impulse). */
+  cardIds: CardId[];
+  /** Spread of the reading (V05.2). Missing = 'classic-3'. */
+  spreadId?: string;
+  /** Role per position (V05.2). Missing = the classic positions. */
+  roles?: RoleId[];
   locale: Locale;
   contentVersion: string;
   content: ReadingContent;
@@ -139,6 +167,8 @@ export interface Reading {
   /** Local day at the moment of saving (since 0.3). Missing in older records: derived from createdAt. */
   dateKey?: string;
   note: string;
+  /** Since when the note held text (V05.4, S-49), as on DailyRecord. */
+  notedAt?: string;
 }
 
 /** An unsaved, possibly half-revealed reading. Persisted so a resume never re-draws silently. */
@@ -146,9 +176,13 @@ export interface ReadingDraft {
   id: string;
   deckId: string;
   themeId: ThemeId;
-  cardIds: [CardId, CardId, CardId];
-  revealed: [boolean, boolean, boolean];
+  cardIds: CardId[];
+  revealed: boolean[];
   createdAt: string;
+  /** Spread being laid (V05.2). Missing = 'classic-3'. */
+  spreadId?: string;
+  /** Review spreads: the own cards of the period, fixed when the draft is created. */
+  past?: CardId[];
 }
 
 export interface CollectionEntry {
@@ -192,6 +226,11 @@ export interface JournalEntry {
   createdAt: string;
   /** Missing = createdAt. */
   updatedAt: string;
+  /**
+   * Deleted by the person (V05.4, S-49): the text is gone, date, kind and refs stay as the fact
+   * of that day. Hidden in the journal. Missing = not deleted.
+   */
+  deletedAt?: string;
 }
 
 export type ActivityType = 'card.studied' | 'ritual.done' | 'review.opened' | 'world.introduced';

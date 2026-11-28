@@ -5,7 +5,7 @@
  */
 import { useEffect, useState } from 'react';
 import { navigate, originOf, type ParsedRoute } from '../../app/router.ts';
-import { useApp } from '../../app/store.tsx';
+import { factsOf, useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
 import { findCard, getArchetype, getTheme } from '../../content/index.ts';
 import { CHAPTERS, chapterKey, type ChapterId } from '../../content/modules/chapter-keys.ts';
@@ -14,7 +14,7 @@ import { dateFromKey } from '../../domain/clock.ts';
 import { journeyStation, milestoneTextKey } from '../../domain/journey.ts';
 import { journeyDayToday, milestonesReached, journeyDays, type Facts } from '../../domain/progress.ts';
 import { buildReview, reviewSentences, type ReviewKind } from '../../domain/review.ts';
-import { STARMAP_VIEW, starMapModel, starPosition, type StarMap } from '../../domain/starmap.ts';
+import { RING_RADII, STARMAP_VIEW, starMapModel, starPosition, wayPath, type StarMap } from '../../domain/starmap.ts';
 import { availableChapters, availableReviews, unseenKeys, type ChapterEntry } from '../../domain/unlocks.ts';
 import type { Locale } from '../../domain/types.ts';
 import { useScreenText, type ScreenMessages } from '../../i18n/screens.ts';
@@ -28,7 +28,7 @@ const REVIEWS_SHOWN = 6;
 
 function useFacts(): Facts {
   const { state } = useApp();
-  return { dailies: state.dailies, readings: state.readings };
+  return factsOf(state);
 }
 
 export function chapterTitle(s: ScreenMessages, entry: Pick<ChapterEntry, 'id' | 'variant'>): string {
@@ -42,47 +42,95 @@ function reviewTitle(s: ScreenMessages, kind: ReviewKind, index: number): string
 
 /* ------------------------------------------------------------- Star map */
 
-function StarMapFigure({ map, label }: { map: StarMap; label: string }) {
-  const path = map.nodes.map((n, i) => `${i === 0 ? 'M' : 'L'}${n.x} ${n.y}`).join(' ');
-  const reachedPath = map.nodes
-    .filter((n) => n.state !== 'ahead')
-    .map((n, i) => `${i === 0 ? 'M' : 'L'}${n.x} ${n.y}`)
-    .join(' ');
+const r1 = (n: number) => Math.round(n * 10) / 10;
+
+/** Four-pointed star of radius `s` around (x, y). */
+function starShape(x: number, y: number, s: number): string {
+  const k = s * 0.26;
+  return `M${r1(x)} ${r1(y - s)}l${r1(k)} ${r1(s - k)} ${r1(s - k)} ${r1(k)} ${r1(k - s)} ${r1(k)} ${r1(-k)} ${r1(s - k)} ${r1(-k)} ${r1(k - s)} ${r1(k - s)} ${r1(-k)} ${r1(s - k)} ${r1(-k)}z`;
+}
+
+/**
+ * The round as three rings (design plan point 6, variant A, D-64): the way leads inwards, the
+ * last star of each path is larger, today's star glows, and only the selected star (today's at
+ * first) shows its numeral. Tapping a star names card, path and state below the map; the list
+ * under the map stays the text version for screen readers.
+ */
+function StarMapFigure({ map, label, cardTitle, pathName, stateLabel }: {
+  map: StarMap;
+  label: string;
+  cardTitle(station: number): string;
+  pathName(path: 0 | 1 | 2): string;
+  stateLabel: Record<StarMap['nodes'][number]['state'], string>;
+}) {
+  const [selected, setSelected] = useState(map.reached);
+  const sel = map.nodes.find((n) => n.station === selected) ?? map.nodes[map.reached - 1]!;
+  const C = STARMAP_VIEW.width / 2;
   return (
-    <figure className="starmap" role="img" aria-label={label}>
-      <svg viewBox={`0 0 ${STARMAP_VIEW.width} ${STARMAP_VIEW.height}`} aria-hidden="true">
-        <defs>
-          <radialGradient id="sm-gold">
-            <stop offset="0" stopColor="#fff4d2" />
-            <stop offset="0.55" stopColor="#e3c27e" />
-            <stop offset="1" stopColor="#9a7338" />
-          </radialGradient>
-          <radialGradient id="sm-glow">
-            <stop offset="0" stopColor="#4fd1c5" stopOpacity="0.5" />
-            <stop offset="1" stopColor="#4fd1c5" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <path d={path} className="starmap__line" />
-        {reachedPath.includes('L') ? <path d={reachedPath} className="starmap__line starmap__line--reached" /> : null}
-        {map.nodes.map((n) => (
-          <g key={n.station} className={`starmap__star starmap__star--${n.state}`}>
-            {n.state === 'current' ? <circle cx={n.x} cy={n.y} r="17" fill="url(#sm-glow)" /> : null}
-            {n.state === 'ahead' ? (
-              <circle cx={n.x} cy={n.y} r="3.2" />
-            ) : (
-              <path
-                d={`M${n.x} ${n.y - 7}l1.9 5.1 5.1 1.9-5.1 1.9-1.9 5.1-1.9-5.1-5.1-1.9 5.1-1.9z`}
-                fill="url(#sm-gold)"
-                transform={n.state === 'current' ? `rotate(45 ${n.x} ${n.y})` : undefined}
-              />
-            )}
-            <text x={n.x} y={n.y + 19} className="starmap__num">
-              {toRoman(n.station)}
-            </text>
+    <div className="starmap-wrap">
+      <figure className="starmap" role="img" aria-label={label}>
+        <svg viewBox={`0 0 ${STARMAP_VIEW.width} ${STARMAP_VIEW.height}`} aria-hidden="true">
+          <defs>
+            <radialGradient id="sm-gold">
+              <stop offset="0" stopColor="#fff8e0" />
+              <stop offset="0.5" stopColor="#ecd08e" />
+              <stop offset="1" stopColor="#a67c3c" />
+            </radialGradient>
+            <radialGradient id="sm-glow">
+              <stop offset="0" stopColor="#fff1c4" stopOpacity="0.75" />
+              <stop offset="0.35" stopColor="#4fd1c5" stopOpacity="0.38" />
+              <stop offset="1" stopColor="#4fd1c5" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="sm-core">
+              <stop offset="0" stopColor="#f6e6b8" stopOpacity="0.28" />
+              <stop offset="1" stopColor="#f6e6b8" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+          <circle cx={C} cy={C} r="30" fill="url(#sm-core)" className="starmap__core" />
+          <g className="starmap__orbits">
+            {RING_RADII.map((r) => (
+              <circle key={r} cx={C} cy={C} r={r} />
+            ))}
           </g>
-        ))}
-      </svg>
-    </figure>
+          {map.reached > 1 ? <path d={wayPath(map.reached)} className="starmap__line" /> : null}
+          {map.nodes.map((n) => {
+            const end = n.station % 7 === 0;
+            const isSel = n.station === sel.station;
+            return (
+              <g
+                key={n.station}
+                className={`starmap__star starmap__star--${n.state}${isSel ? ' is-selected' : ''}`}
+                onClick={() => setSelected(n.station)}
+              >
+                {n.state === 'current' ? <circle cx={n.x} cy={n.y} r="22" fill="url(#sm-glow)" /> : null}
+                {isSel && n.state !== 'current' ? <circle cx={n.x} cy={n.y} r="11" className="starmap__ring" /> : null}
+                {n.state === 'ahead' ? (
+                  end ? (
+                    <path d={starShape(n.x, n.y, 7)} className="starmap__ghost" />
+                  ) : (
+                    <circle cx={n.x} cy={n.y} r="2.3" className="starmap__dot" />
+                  )
+                ) : (
+                  <path d={starShape(n.x, n.y, end ? 10 : n.state === 'current' ? 8 : 5.6)} fill="url(#sm-gold)" />
+                )}
+                {isSel ? (
+                  <text x={n.x} y={n.y + (n.y > STARMAP_VIEW.height - 40 ? -16 : 24)} className="starmap__num">
+                    {toRoman(n.station)}
+                  </text>
+                ) : null}
+                <circle cx={n.x} cy={n.y} r="18" className="starmap__hit" />
+              </g>
+            );
+          })}
+        </svg>
+      </figure>
+      <p className="starmap__caption" aria-live="polite">
+        <span className="starmap__caption-num">{toRoman(sel.station)}</span> {cardTitle(sel.station)}
+        <span className="starmap__caption-state">
+          {pathName(sel.path)} · {stateLabel[sel.state]}
+        </span>
+      </p>
+    </div>
   );
 }
 
@@ -92,7 +140,7 @@ function Constellation({ round, label }: { round: number; label: string }) {
   return (
     <li className="constellation">
       <svg viewBox={`0 0 ${STARMAP_VIEW.width} ${STARMAP_VIEW.height}`} aria-hidden="true">
-        <path d={pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x} ${p.y}`).join(' ')} />
+        <path d={wayPath(21)} />
         {pts.map((p, i) => (
           <circle key={i} cx={p.x} cy={p.y} r="7" />
         ))}
@@ -136,7 +184,14 @@ export function JourneyPage({ parsed }: { parsed: ParsedRoute }) {
       <p className="journey-page__round eyebrow">
         {fmt(s.journeyMap.round, { n: map.round })} · {fmt(t.today.journeyDayShort, { n: day })}
       </p>
-      <StarMapFigure map={map} label={fmt(s.journeyMap.mapLabel, { n: map.round, k: map.reached })} />
+      <StarMapFigure
+        key={`${map.round}-${map.reached}`}
+        map={map}
+        label={fmt(s.journeyMap.mapLabel, { n: map.round, k: map.reached })}
+        cardTitle={(n) => cardOf(n)?.title[locale] ?? ''}
+        pathName={(p) => ([t.today.pathOuter, t.today.pathInner, t.today.pathHigher] as const)[p]}
+        stateLabel={stateLabel}
+      />
 
       <details className="explain journey-page__list">
         <summary>{s.journeyMap.listTitle}</summary>

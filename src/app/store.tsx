@@ -1,24 +1,33 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, type ReactNode } from 'react';
 import { CONTENT } from '../content/index.ts';
+import { deepCard } from '../content/modules/cards-deep-keys.ts';
 import { loadModules, ModuleLoadError, STARTUP_MODULES, text, type LoadedModules, type ModuleId } from '../content/modules/registry.ts';
 import type { ContentPack } from '../content/schema.ts';
 import { PROFILE_VERSION, QUESTIONNAIRE_VERSION, scoreArchetype } from '../domain/archetypes.ts';
 import { localDateKey, msUntilNextLocalDay, systemClock, type Clock } from '../domain/clock.ts';
 import {
   createDailyRecord,
-  createDraft,
+  createSpreadDraft,
   finalizeReading,
   previousDailyCard,
   revealAll,
   revealPosition,
 } from '../domain/oracle.ts';
+import type { CardBackId } from '../domain/cardbacks.ts';
+import { editedEntry, erasedEntry, newJournalEntry, type JournalItem, type WritableKind } from '../domain/journal.ts';
 import { lensKey } from '../domain/lens.ts';
-import { journeyDayToday } from '../domain/progress.ts';
-import { cryptoRng, type Rng } from '../domain/random.ts';
+import { cardEncounters, journeyDayToday, type Facts } from '../domain/progress.ts';
+import { studyFacts, type StudyPart } from '../domain/study.ts';
+import { CLASSIC_SPREAD, type SpreadId, type SpreadTexts } from '../domain/spreads.ts';
+import { cryptoRng, newId, type Rng } from '../domain/random.ts';
 import type {
+  ActivityEvent,
   Answers,
   ArchetypeId,
+  CardId,
   DailyRecord,
+  JournalEntry,
+  JournalRefs,
   Locale,
   MotionPreference,
   Profile,
@@ -41,6 +50,10 @@ export interface AppState {
   profile: Profile | null;
   dailies: DailyRecord[];
   readings: Reading[];
+  /** Own journal entries, deleted ones included (they keep the fact of their day, S-49). */
+  journal: JournalEntry[];
+  /** Append-only activities such as a finished study part (V05.1). */
+  events: ActivityEvent[];
   draft: ReadingDraft | null;
   /** Gesehen-Markierungen (e.g. a dismissed offer). Facts only, never counters. */
   seen: SeenFlag[];
@@ -65,6 +78,8 @@ type Action =
   | { type: 'daily'; record: DailyRecord }
   | { type: 'draft'; draft: ReadingDraft | null }
   | { type: 'reading'; reading: Reading }
+  | { type: 'journal'; entry: JournalEntry }
+  | { type: 'event'; event: ActivityEvent }
   | { type: 'seen'; flag: SeenFlag }
   | { type: 'today'; key: string }
   | { type: 'pending'; answers: Answers; theme: ThemeId | null }
@@ -99,6 +114,10 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, draft: action.draft };
     case 'reading':
       return { ...state, readings: upsert(state.readings, action.reading, (r) => r.id === action.reading.id) };
+    case 'journal':
+      return { ...state, journal: upsert(state.journal, action.entry, (j) => j.id === action.entry.id) };
+    case 'event':
+      return { ...state, events: upsert(state.events, action.event, (e) => e.id === action.event.id) };
     case 'seen':
       return { ...state, seen: upsert(state.seen, action.flag, (s) => s.key === action.flag.key) };
     case 'today':
@@ -113,6 +132,8 @@ function reducer(state: AppState, action: Action): AppState {
         profile: null,
         dailies: [],
         readings: [],
+        journal: [],
+        events: [],
         draft: null,
         seen: [],
         skippedCorrupt: 0,
@@ -136,14 +157,30 @@ export interface AppActions {
   setArchetype(archetypeId: ArchetypeId | null): Promise<void>;
   setLocale(locale: Locale): Promise<void>;
   setMotion(motion: MotionPreference): Promise<void>;
+  /** Chooses the back of face-down cards (V05.5). Only open backs are offered. */
+  setCardBack(id: CardBackId): Promise<void>;
   revealToday(): Promise<DailyRecord>;
-  startReading(themeId: ThemeId): Promise<ReadingDraft>;
-  revealReadingCard(index: 0 | 1 | 2): Promise<void>;
+  /** Starts a spread (default: the classic three cards). Other spreads load their texts first. */
+  startReading(themeId: ThemeId, spreadId?: SpreadId): Promise<ReadingDraft>;
+  revealReadingCard(index: number): Promise<void>;
   revealAllReading(): Promise<void>;
   saveReading(): Promise<Reading>;
   discardReading(): Promise<void>;
   updateDailyNote(dateKey: string, note: string): Promise<void>;
   updateReadingNote(id: string, note: string): Promise<void>;
+  /** Writes an own entry into the journal (V05.4). Empty text is refused. */
+  writeJournalEntry(kind: WritableKind, text: string, refs?: JournalRefs): Promise<JournalEntry>;
+  /** New text for an entry; empty text deletes it (S-49). */
+  editJournalEntry(id: string, text: string): Promise<void>;
+  /**
+   * Deletes the own words of a journal item (S-49): an entry is erased, the note of a daily card
+   * or a reading is emptied. The card or reading itself stays, as does the day on the journey.
+   */
+  deleteJournalItem(item: Pick<JournalItem, 'source' | 'id'>): Promise<void>;
+  /** A finished study part (V05.1): the event, and with an answer a journal entry of kind 'study'. */
+  studyCard(cardId: CardId, part: StudyPart, answer: string): Promise<void>;
+  /** Marks a ritual as done today (V05.3, chapter Rituals). Once per ritual and day; not a journey day. */
+  markRitualDone(ritualId: string): Promise<void>;
   clearAllData(): Promise<void>;
   /** Records that something was seen or dismissed (idempotent, the first time wins). */
   markSeen(key: string): Promise<void>;
@@ -173,6 +210,11 @@ export interface AppProviderProps {
   entitlements?: EntitlementProvider;
 }
 
+/** Everything the derivations read (journey, card levels, reviews, journal). */
+export function factsOf(s: Pick<AppState, 'dailies' | 'readings' | 'journal' | 'events'>): Facts {
+  return { dailies: s.dailies, readings: s.readings, journal: s.journal, events: s.events };
+}
+
 function defaultSettings(): Settings {
   return { locale: detectLocale(), motion: 'system', onboardingDone: false };
 }
@@ -185,6 +227,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     profile: null,
     dailies: [],
     readings: [],
+    journal: [],
+    events: [],
     draft: null,
     seen: [],
     skippedCorrupt: 0,
@@ -236,6 +280,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             profile: snap.profile,
             dailies: snap.dailies,
             readings: snap.readings,
+            journal: snap.journal,
+            events: snap.events,
             draft: snap.draft,
             seen: snap.seen,
             skippedCorrupt: snap.skippedCorrupt,
@@ -272,6 +318,16 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     },
     [repo],
   );
+
+  /** Texts of a spread in the current locale (V05.2): modules spreads and cards-deep, loaded on first use. */
+  const loadSpreadTexts = useCallback(async (): Promise<SpreadTexts> => {
+    const locale = stateRef.current.settings.locale;
+    const have = stateRef.current.modules;
+    const missing = (['spreads', 'cards-deep'] as const).filter((id) => !have[id]);
+    const loaded: LoadedModules = missing.length > 0 ? await loadModules(missing, locale) : {};
+    if (missing.length > 0) dispatch({ type: 'modules', modules: loaded, locale });
+    return { spreads: loaded.spreads ?? have.spreads, deep: loaded['cards-deep'] ?? have['cards-deep'] };
+  }, []);
 
   const actions = useMemo<AppActions>(
     () => ({
@@ -357,14 +413,32 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         dispatch({ type: 'settings', settings: next, modules });
       },
       setMotion: (motion) => persistSettings({ ...stateRef.current.settings, motion }),
+      setCardBack: (cardBack) => persistSettings({ ...stateRef.current.settings, cardBack }),
 
       revealToday() {
         if (inflightDaily.current) return inflightDaily.current;
         const run = (async () => {
-          const s = stateRef.current;
           const key = localDateKey(clock.now());
+          const known = stateRef.current.dailies.find((d) => d.dateKey === key);
+          if (known) return known;
+          // A4: reflections 2–3 and ritual 2 live in cards-deep. If it cannot load, the core texts stay.
+          const locale = stateRef.current.settings.locale;
+          let loaded = stateRef.current.modules['cards-deep'];
+          if (!loaded) {
+            try {
+              const m = await loadModules(['cards-deep'], locale);
+              loaded = m['cards-deep'];
+              dispatch({ type: 'modules', modules: m, locale });
+            } catch {
+              /* variant 0 */
+            }
+          }
+          const s = stateRef.current;
           const existing = s.dailies.find((d) => d.dateKey === key);
           if (existing) return existing;
+          // The deep texts must be in the language of the record (a switch during loading drops them).
+          const deep = s.settings.locale === locale ? loaded : undefined;
+          const facts = factsOf(s);
           const record = createDailyRecord({
             pack,
             clock,
@@ -374,9 +448,13 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             locale: s.settings.locale,
             previousCardId: previousDailyCard(s.dailies, key),
             lens: {
-              journeyDay: journeyDayToday({ dailies: s.dailies, readings: s.readings }, key),
+              journeyDay: journeyDayToday(facts, key),
               complementId: s.profile?.secondaryArchetypeId ?? null,
               text: (archetypeId, cardId) => s.modules.identity?.[lensKey(archetypeId, cardId)],
+            },
+            variety: {
+              encounters: (cardId) => cardEncounters(facts).get(cardId)?.days.size ?? 0,
+              deep: (cardId) => deepCard(deep, cardId),
             },
           });
           const stored = await repo.addDailyIfAbsent(record);
@@ -391,13 +469,15 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         return run;
       },
 
-      async startReading(themeId) {
+      async startReading(themeId, spreadId = CLASSIC_SPREAD) {
         const existing = stateRef.current.draft;
         if (existing) return existing; // never silently replace an unfinished reading
         if (busy.current) throw new Error('busy');
         busy.current = true;
         try {
-          const draft = createDraft(pack, themeId, clock, rng);
+          if (spreadId !== CLASSIC_SPREAD) await loadSpreadTexts();
+          const s = stateRef.current;
+          const draft = createSpreadDraft(pack, spreadId, themeId, clock, rng, factsOf(s));
           await repo.putDraft(draft);
           dispatch({ type: 'draft', draft });
           return draft;
@@ -426,7 +506,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
       async saveReading() {
         const d = stateRef.current.draft;
         if (!d) throw new Error('No reading to save');
-        const reading = finalizeReading(pack, d, stateRef.current.settings.locale, clock);
+        const texts = d.spreadId && d.spreadId !== CLASSIC_SPREAD ? await loadSpreadTexts() : {};
+        const reading = finalizeReading(pack, d, stateRef.current.settings.locale, clock, texts);
         const stored = await repo.saveReading(reading);
         dispatch({ type: 'reading', reading: stored });
         dispatch({ type: 'draft', draft: null });
@@ -439,13 +520,60 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
       },
 
       async updateDailyNote(dateKey, note) {
-        const record = await repo.updateDailyNote(dateKey, note);
+        const record = await repo.updateDailyNote(dateKey, note, clock.now().toISOString());
         dispatch({ type: 'daily', record });
       },
 
       async updateReadingNote(id, note) {
-        const reading = await repo.updateReadingNote(id, note);
+        const reading = await repo.updateReadingNote(id, note, clock.now().toISOString());
         dispatch({ type: 'reading', reading });
+      },
+
+      async writeJournalEntry(kind, text, refs = {}) {
+        const entry = newJournalEntry(kind, text, refs, clock.now(), newId(rng));
+        await repo.putJournalEntry(entry);
+        dispatch({ type: 'journal', entry });
+        return entry;
+      },
+
+      async editJournalEntry(id, text) {
+        const existing = stateRef.current.journal.find((j) => j.id === id);
+        if (!existing) throw new Error(`No journal entry ${id}`);
+        const entry = editedEntry(existing, text, clock.now());
+        await repo.putJournalEntry(entry);
+        dispatch({ type: 'journal', entry });
+      },
+
+      async deleteJournalItem(item) {
+        const now = clock.now().toISOString();
+        if (item.source === 'daily') {
+          dispatch({ type: 'daily', record: await repo.updateDailyNote(item.id, '', now) });
+        } else if (item.source === 'reading') {
+          dispatch({ type: 'reading', reading: await repo.updateReadingNote(item.id, '', now) });
+        } else {
+          const existing = stateRef.current.journal.find((j) => j.id === item.id);
+          if (!existing || existing.deletedAt !== undefined) return;
+          const entry = erasedEntry(existing, clock.now());
+          await repo.putJournalEntry(entry);
+          dispatch({ type: 'journal', entry });
+        }
+      },
+
+      async studyCard(cardId, part, answer) {
+        const { event, entry } = studyFacts(cardId, part, answer, clock.now(), () => newId(rng));
+        dispatch({ type: 'event', event: await repo.appendEvent(event) });
+        if (entry) {
+          await repo.putJournalEntry(entry);
+          dispatch({ type: 'journal', entry });
+        }
+      },
+
+      async markRitualDone(ritualId) {
+        const now = clock.now();
+        const dateKey = localDateKey(now);
+        if (stateRef.current.events.some((e) => e.type === 'ritual.done' && e.refs.ritualId === ritualId && e.dateKey === dateKey)) return;
+        const event: ActivityEvent = { id: newId(rng), type: 'ritual.done', dateKey, at: now.toISOString(), refs: { ritualId } };
+        dispatch({ type: 'event', event: await repo.appendEvent(event) });
       },
 
       async clearAllData() {
@@ -460,7 +588,7 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
         dispatch({ type: 'seen', flag });
       },
     }),
-    [repo, clock, rng, pack, persistSettings],
+    [repo, clock, rng, pack, persistSettings, loadSpreadTexts],
   );
 
   const t = MESSAGES[state.settings.locale];

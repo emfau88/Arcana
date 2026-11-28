@@ -1,79 +1,15 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { CONTENT } from '../../src/content/index.ts';
-import { localDateKey } from '../../src/domain/clock.ts';
-import { composeDaily } from '../../src/domain/oracle.ts';
-import type { DailyRecord, Profile } from '../../src/domain/types.ts';
 import { de } from '../../src/i18n/de.ts';
 import { fmt } from '../../src/i18n/index.ts';
 import { screensDe } from '../../src/i18n/screens.de.ts';
-import { completeOnboarding, guard, screens, ui } from './helpers.ts';
+import { completeOnboarding, guard, pastDays, putDaily, readProfile, screens, ui } from './helpers.ts';
 
 /*
  * V04 screens (proposal for the owner's review, D-57): "Ich" with "Why?", the eight archetypes,
  * the share card drawn on the device, the star map with the first weekly review, and the reveal
  * with reduced motion.
  */
-
-async function readProfile(page: Page): Promise<Profile> {
-  return page.evaluate(
-    () =>
-      new Promise<Profile>((resolve, reject) => {
-        const r = indexedDB.open('personal-oracle');
-        r.onsuccess = () => {
-          const g = r.result.transaction('kv').objectStore('kv').get('profile');
-          g.onsuccess = () => {
-            r.result.close();
-            resolve(g.result as Profile);
-          };
-          g.onerror = () => reject(g.error);
-        };
-        r.onerror = () => reject(r.error);
-      }),
-  );
-}
-
-/** Daily records on the `n` days before today, built with the app's own domain code. */
-function pastDays(profile: Profile, n: number, notes: Record<number, string>): DailyRecord[] {
-  const ids = CONTENT.cards.map((c) => c.id);
-  return Array.from({ length: n }, (_, k) => {
-    const d = new Date();
-    d.setDate(d.getDate() - (n - k));
-    const dateKey = localDateKey(d);
-    const cardId = ids[k % ids.length]!;
-    return {
-      dateKey,
-      deckId: CONTENT.deckId,
-      cardId,
-      themeId: profile.themeId,
-      archetypeId: profile.archetypeId,
-      locale: 'de',
-      contentVersion: CONTENT.version,
-      content: composeDaily(CONTENT, cardId, profile.themeId, profile.archetypeId, 'de'),
-      revealedAt: new Date(`${dateKey}T08:00:00`).toISOString(),
-      note: notes[k] ?? '',
-    } as DailyRecord;
-  });
-}
-
-async function putDaily(page: Page, records: DailyRecord[]) {
-  await page.evaluate(
-    (records) =>
-      new Promise((resolve, reject) => {
-        const r = indexedDB.open('personal-oracle');
-        r.onsuccess = () => {
-          const tx = r.result.transaction('daily', 'readwrite');
-          for (const rec of records) tx.objectStore('daily').put(rec);
-          tx.oncomplete = () => {
-            r.result.close();
-            resolve(null);
-          };
-          tx.onerror = () => reject(tx.error);
-        };
-        r.onerror = () => reject(r.error);
-      }),
-    records,
-  );
-}
 
 test('V04: "Ich" explains the archetype, lists all eight and draws the share card on the device', async ({ page }, info) => {
   test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
@@ -151,11 +87,18 @@ test('V04: the star map grows with recorded days and the first weekly review quo
   await page.reload();
 
   await page.getByRole('link', { name: de.nav.grimoire }).click();
-  const entry = page.getByRole('button', { name: de.grimoire.journeyEntry });
+  const entry = page.getByRole('button', { name: new RegExp(`^V ${screensDe.book.chapters.journey}`) });
   await expect(entry).toContainText(de.common.new);
   await entry.click();
   await expect(page.getByRole('heading', { level: 1, name: screensDe.journeyMap.title })).toBeVisible();
   await expect(page.locator('.starmap__star')).toHaveCount(21);
+  // Three rings (D-64): the caption names today's station; tapping a star names card, path and state.
+  const caption = page.locator('.starmap__caption');
+  await expect(caption).toContainText(`${de.today.pathInner} · ${screensDe.journeyMap.current}`);
+  await page.locator('.starmap__star').nth(2).locator('.starmap__hit').click();
+  await expect(caption).toContainText('III');
+  await expect(caption).toContainText(`${de.today.pathOuter} · ${screensDe.journeyMap.reached}`);
+  await expect(page.locator('.starmap__num')).toHaveCount(1);
 
   const week = fmt(screensDe.review.weekTitle, { n: 1 });
   await page.getByRole('button', { name: week }).click();
@@ -183,4 +126,125 @@ test('V04: with reduced motion the reveal shows everything at once', async ({ pa
   // No staged steps and no skip button: the call to action is there at once.
   await expect(page.getByRole('button', { name: de.archetype.toToday })).toBeVisible({ timeout: 800 });
   await expect(page.getByRole('button', { name: de.common.skip, exact: true })).toHaveCount(0);
+  // Design plan point 5, variant B (D-64): "Why?" stays, the second fold-out with the same explanation is gone.
+  await expect(page.getByRole('button', { name: de.archetype.why })).toBeVisible();
+  await expect(page.locator('.reveal details.explain')).toHaveCount(0);
+});
+
+test('V05.5: card backs open on journey days 2, 5 and 10 and change every face-down card', async ({ page }, info) => {
+  test.skip(info.project.name !== 'mobile-de-412', 'covered once');
+  const problems = guard(page);
+  await completeOnboarding(page, de);
+  await page.getByRole('link', { name: de.nav.profile }).click();
+  await page.getByRole('button', { name: de.profile.settings }).click();
+  // Before journey day 2 there is nothing to choose, and nothing locked is shown.
+  await expect(page.getByRole('heading', { level: 1, name: de.profile.settings })).toBeVisible();
+  await expect(page.getByRole('heading', { name: de.profile.cardBack })).toHaveCount(0);
+
+  const profile = await readProfile(page);
+  await putDaily(page, pastDays(profile, 9, {}));
+  await page.reload();
+  const backs = page.getByRole('radiogroup', { name: de.profile.cardBack }).getByRole('radio');
+  await expect(backs).toHaveCount(3);
+  await expect(page.getByText(de.profile.cardBackMore)).toBeVisible();
+  await page.getByRole('radio', { name: de.profile.backs.compass }).click();
+  await expect(page.getByRole('radio', { name: de.profile.backs.compass })).toHaveAttribute('aria-checked', 'true');
+
+  // Today: the face-down card shows the chosen back.
+  await page.getByRole('link', { name: de.nav.today }).click();
+  await expect(page.locator('.ocard__back img').first()).toHaveAttribute('src', /cards\/backs\/cardback-compass\.webp$/);
+
+  // Revealing today makes journey day 10: the moment names the new back and leads to the settings.
+  await page.getByRole('button', { name: de.today.draw }).click();
+  await expect(page.getByText(de.milestone.openedBacks, { exact: true })).toBeVisible();
+  await expect(page.getByText(fmt(de.milestone.cardBack, { name: de.profile.backs['golden-wheel'] }), { exact: true })).toBeVisible();
+  // The day text also names the personal symbol (V06), so it waits until that is built (D-54).
+  await expect(page.locator('.milestone-moment__text')).toHaveCount(0);
+  await page.getByRole('button', { name: de.milestone.view }).click();
+  await expect(backs).toHaveCount(4);
+  await expect(page.getByText(de.profile.cardBackMore)).toHaveCount(0);
+  await page.getByRole('radio', { name: de.profile.backs['golden-wheel'] }).click();
+  await expect(page.getByRole('radio', { name: de.profile.backs['golden-wheel'] })).toHaveAttribute('aria-checked', 'true');
+
+  // The choice survives a reload, and the face-down cards of a reading show it too.
+  await page.reload();
+  await expect(page.getByRole('radio', { name: de.profile.backs['golden-wheel'] })).toHaveAttribute('aria-checked', 'true');
+  await page.getByRole('link', { name: de.nav.oracle }).click();
+  await page.getByRole('button', { name: de.oracle.draw }).click();
+  await expect(page.locator('.spread button.ocard .ocard__back img').first()).toHaveAttribute('src', /cards\/backs\/thumbs\/cardback-golden-wheel\.webp$/);
+  expect(problems).toEqual([]);
+});
+
+test('V05.1: the card page shows the level as a moon phase and every layer that level opened', async ({ page }, info) => {
+  test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
+  const t = ui(info);
+  const s = screens(info).card;
+  const problems = guard(page);
+  await completeOnboarding(page, t);
+  const profile = await readProfile(page);
+  // Card A on four days with a note (level 4), card B on two days (level 2). Facts only, no counter.
+  const a = CONTENT.cards[3]!.id;
+  const b = CONTENT.cards[5]!.id;
+  const seeded = pastDays(profile, 6, { 0: 'Mein Satz zu dieser Karte.' }).map((d, k) => ({ ...d, cardId: k < 4 ? a : b }));
+  await putDaily(page, seeded);
+
+  await page.goto(`/#/grimoire/card/${b}`);
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 2, name: s.levelNames[2]! }), { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.light, exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.keyword, exact: true })).toBeVisible();
+  // Not opened yet: simply not there, nothing locked is shown.
+  await expect(page.getByRole('heading', { name: s.themes, exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: s.question, exact: true })).toHaveCount(0);
+
+  await page.goto(`/#/grimoire/card/${a}`);
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 4, name: s.levelNames[4]! }), { exact: true })).toBeVisible();
+  await expect(page.getByText(s.deeper)).toHaveCount(0);
+  for (const h of [s.light, s.shadow, s.keyword, s.otherThemes, s.roles, s.symbols, s.notes, s.ritual, s.question]) {
+    await expect(page.getByRole('heading', { name: h, exact: true })).toBeVisible();
+  }
+  await expect(page.getByText('Mein Satz zu dieser Karte.')).toBeVisible();
+  expect(problems).toEqual([]);
+});
+
+test('V05.1: the card study opens levels 2 and 3, and an answer makes level 4', async ({ page }, info) => {
+  test.skip(!['mobile-de-412', 'mobile-en-360'].includes(info.project.name), 'one viewport per language');
+  const t = ui(info);
+  const s = screens(info).card;
+  const problems = guard(page);
+  await completeOnboarding(page, t);
+  const profile = await readProfile(page);
+  // One encounter only: level 1. Everything after comes from the study, without chance.
+  const c = CONTENT.cards[7]!.id;
+  await putDaily(page, pastDays(profile, 1, {}).map((d) => ({ ...d, cardId: c })));
+  await page.goto(`/#/grimoire/card/${c}`);
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 1, name: s.levelNames[1]! }), { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.light, exact: true })).toHaveCount(0);
+
+  // Part 1: a tap on "Read" is enough.
+  await page.getByRole('button', { name: s.studyStart }).click();
+  await expect(page.getByRole('heading', { name: fmt(s.studyPart, { n: 1, name: s.studyParts[0]! }) })).toBeFocused();
+  await page.getByRole('button', { name: s.studyRead, exact: true }).click();
+  await expect(page.getByText(fmt(s.studyLevel, { n: 2, name: s.levelNames[2]! }))).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.study, exact: true })).toBeFocused();
+  await expect(page.getByRole('heading', { name: s.light, exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.otherThemes, exact: true })).toHaveCount(0);
+
+  // Part 2 with an answer: level 3 from the study, level 4 from the answer as a reflection.
+  await page.getByRole('button', { name: s.studyContinue }).click();
+  const answer = info.project.name.includes('-en-') ? 'I would keep the reins loose today.' : 'Ich würde heute die Zügel locker lassen.';
+  await page.getByLabel(s.studyAnswer).fill(answer);
+  await page.getByRole('button', { name: s.studyKeep }).click();
+  await expect(page.getByText(fmt(s.studyLevel, { n: 4, name: s.levelNames[4]! }))).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.symbols, exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: s.notes, exact: true })).toBeVisible();
+  await expect(page.getByText(answer)).toBeVisible();
+
+  // Stored facts: after a reload the level stays, and the study can be repeated at will.
+  await page.reload();
+  await expect(page.getByText(fmt(s.level, { n: 4, name: s.levelNames[4]! }), { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: s.studyRepeat })).toBeVisible();
+  expect(problems).toEqual([]);
 });

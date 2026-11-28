@@ -3,6 +3,8 @@ import { CONTENT } from '../../src/content/index.ts';
 import { de } from '../../src/i18n/de.ts';
 import { en } from '../../src/i18n/en.ts';
 import { fmt } from '../../src/i18n/index.ts';
+import { screensDe } from '../../src/i18n/screens.de.ts';
+import { screensEn } from '../../src/i18n/screens.en.ts';
 import { completeOnboarding, guard, ui } from './helpers.ts';
 
 /** Every store of the app's database with its record count (kv: number of keys). */
@@ -74,10 +76,13 @@ test('complete flow: onboarding → daily card → reading → grimoire → prof
   await page.getByRole('button', { name: t.oracle.save }).click();
   await expect(page.getByRole('button', { name: t.oracle.newReading })).toBeVisible();
 
-  // Grimoire: collection and history reflect both.
+  // Grimoire as a book (V05.3): the cards chapter and the journal reflect both.
+  const book = (t === de ? screensDe : screensEn).book;
   await page.getByRole('link', { name: t.nav.grimoire }).click();
+  await page.getByRole('button', { name: new RegExp(`^I ${book.chapters.cards}`) }).click();
   await expect(page.locator('.collection .ocard').first()).toBeVisible();
-  await page.getByRole('tab', { name: t.grimoire.history }).click();
+  await page.getByRole('button', { name: t.common.back }).click();
+  await page.getByRole('button', { name: new RegExp(`^III ${book.chapters.journal}`) }).click();
   await expect(page.locator('.history__row')).toHaveCount(2);
 
   // Persistence across a full reload.
@@ -224,7 +229,7 @@ test('all six themes give a complete three-card reading (DE/EN)', async ({ page 
   expect(CONTENT.themes).toHaveLength(6);
   for (const [i, theme] of CONTENT.themes.entries()) {
     const label = theme.label[locale];
-    await page.locator('.choice').filter({ has: page.getByText(label, { exact: true }) }).click();
+    await page.getByRole('radiogroup', { name: t.oracle.chooseTheme }).getByRole('radio', { name: label, exact: true }).click();
     await page.getByRole('button', { name: t.oracle.draw }).click();
     await expect(page.getByRole('heading', { level: 1, name: label })).toBeVisible();
     await page.getByRole('button', { name: t.oracle.revealAll }).click();

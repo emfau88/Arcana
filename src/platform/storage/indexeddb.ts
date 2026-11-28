@@ -17,7 +17,7 @@ import {
   isDraft,
   normalizeProfile,
   isReading,
-  isSettings,
+  normalizeSettings,
   normalizeEntitlements,
   normalizeEvent,
   normalizeFavorite,
@@ -93,6 +93,15 @@ function wrapWriteError(err: unknown): StorageError {
  * IndexedDB adapter used in the browser and inside the bundled Android WebView.
  * Writes use strict durability where supported so a completed write survives a process kill.
  */
+/**
+ * S-49: the first save of a note with text leaves `notedAt`; later edits and deleting keep it.
+ * A note with text from before 0.5 gets it on its first change, deleting included.
+ */
+function firstNoted(existing: { note?: unknown; notedAt?: string }, note: string, at: string | undefined): { notedAt?: string } {
+  const hadText = typeof existing.note === 'string' && existing.note.trim().length > 0;
+  return at !== undefined && existing.notedAt === undefined && (hadText || note.trim().length > 0) ? { notedAt: at } : {};
+}
+
 export class IndexedDbRepository implements StorageRepository {
   private db: IDBDatabase | null = null;
   private readonly factory: IDBFactory;
@@ -182,7 +191,7 @@ export class IndexedDbRepository implements StorageRepository {
       (x: unknown): T | null =>
         guard(x) ? x : null;
     return {
-      settings: keep(settings, isSettings),
+      settings: keepNormalized(settings, normalizeSettings),
       profile: keepNormalized(profile, normalizeProfile),
       draft: keep(draft, isDraft),
       personal: keepNormalized(personal, normalizePersonal),
@@ -262,14 +271,14 @@ export class IndexedDbRepository implements StorageRepository {
     }
   }
 
-  async updateDailyNote(dateKey: string, note: string): Promise<DailyRecord> {
+  async updateDailyNote(dateKey: string, note: string, at?: string): Promise<DailyRecord> {
     try {
       const tx = this.tx([DAILY], 'readwrite');
       const store = tx.objectStore(DAILY);
       const existing = await req(store.get(dateKey));
       if (!isDailyRecord(existing)) throw new StorageError('corrupt', `No readable daily record for ${dateKey}`);
       // Only the note changes; the original interpretation stays untouched.
-      const updated: DailyRecord = { ...existing, note };
+      const updated: DailyRecord = { ...existing, note, ...firstNoted(existing, note, at) };
       store.put(updated);
       await done(tx);
       return updated;
@@ -295,13 +304,13 @@ export class IndexedDbRepository implements StorageRepository {
     }
   }
 
-  async updateReadingNote(id: string, note: string): Promise<Reading> {
+  async updateReadingNote(id: string, note: string, at?: string): Promise<Reading> {
     try {
       const tx = this.tx([READINGS], 'readwrite');
       const store = tx.objectStore(READINGS);
       const existing = await req(store.get(id));
       if (!isReading(existing)) throw new StorageError('corrupt', `No readable reading ${id}`);
-      const updated: Reading = { ...existing, note };
+      const updated: Reading = { ...existing, note, ...firstNoted(existing, note, at) };
       store.put(updated);
       await done(tx);
       return updated;

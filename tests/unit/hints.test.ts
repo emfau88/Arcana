@@ -28,8 +28,10 @@ describe('discovery hint of the day (A6)', () => {
 
   it('prefers a card level over a world introduction', () => {
     const levelUps = [{ cardId: 'major-01-magician', level: 2 }];
-    expect(hintForToday({ journeyDay: 2, features: ALL, levelUps })).toEqual({ kind: 'card-level', id: 'level:major-01-magician:2' });
-    expect(hintForToday({ journeyDay: 2, features: ALL })).toEqual({ kind: 'world', id: 'world-intro:numerology' });
+    expect(hintForToday({ journeyDay: 4, features: ALL, levelUps })).toEqual({ kind: 'card-level', id: 'level:major-01-magician:2' });
+    expect(hintForToday({ journeyDay: 4, features: ALL })).toEqual({ kind: 'world', id: 'world-intro:angel-numbers' });
+    // Day 2 holds a card back (D-66) and the numbers introduction: the card back comes first.
+    expect(hintForToday({ journeyDay: 2, features: ALL })).toEqual({ kind: 'milestone', id: 'cardback:crescent' });
   });
 
   it('never points to a feature the build does not contain', () => {
@@ -40,16 +42,16 @@ describe('discovery hint of the day (A6)', () => {
   });
 
   it('is quiet on days without milestone or level', () => {
-    for (const d of [5, 8, 9, 11, 0, -1]) expect(hintForToday({ journeyDay: d, features: ALL })).toBeNull();
+    for (const d of [8, 9, 11, 12, 0, -1]) expect(hintForToday({ journeyDay: d, features: ALL })).toBeNull();
   });
 
   it('keeps the first reward of a day with several (day 100)', () => {
     expect(hintForToday({ journeyDay: 100, features: ALL })).toEqual({ kind: 'milestone', id: 'review:hundred' });
   });
 
-  it('ships chapters, weekly/monthly reviews and the star map with V04, nothing else', () => {
+  it('ships chapters, weekly/monthly reviews and the star map with V04 and the card backs with V05.5, nothing else', () => {
     for (const f of BUILD_FEATURES) expect(ALL.has(f)).toBe(true);
-    expect([...BUILD_FEATURES].sort()).toEqual(['archetype-chapters', 'reviews', 'starmap']);
+    expect([...BUILD_FEATURES].sort()).toEqual(['archetype-chapters', 'cardbacks', 'reviews', 'starmap']);
   });
 
   it('keeps the hundred-day and jubilee rewards apart until they are built', () => {

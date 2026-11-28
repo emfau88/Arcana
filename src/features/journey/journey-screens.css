@@ -8,14 +8,13 @@
   margin-bottom: var(--s-2);
 }
 
-/* ------------------------------------------------------------- Star map */
+/* ---------------------------------------- Star map: three rings (D-64, point 6 A) */
 .starmap {
-  margin: 0 auto var(--s-4);
-  width: min(100%, 420px);
-  padding: var(--s-2);
-  border-radius: var(--r-l);
-  /* A light veil keeps the stars legible on any part of the painting. */
-  background: radial-gradient(90% 80% at 50% 50%, rgba(6, 8, 18, 0.55), rgba(6, 8, 18, 0.2));
+  margin: 0 auto var(--s-2);
+  width: min(100%, 400px);
+  padding: 0;
+  /* A light veil only, so the painted sky stays in the picture. */
+  background: radial-gradient(closest-side, rgba(6, 8, 18, 0.46), rgba(6, 8, 18, 0.16) 78%, transparent);
 }
 .starmap svg {
   display: block;
@@ -23,38 +22,76 @@
   height: auto;
   overflow: visible;
 }
+.starmap__core {
+  pointer-events: none;
+}
+.starmap__orbits circle {
+  fill: none;
+  stroke: #e3c27e;
+  stroke-opacity: 0.2;
+  stroke-width: 0.7;
+}
 .starmap__line {
   fill: none;
   stroke: #e3c27e;
-  stroke-opacity: 0.22;
-  stroke-width: 1;
-  stroke-dasharray: 2 4;
+  stroke-opacity: 0.92;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px rgba(236, 208, 142, 0.65));
 }
-.starmap__line--reached {
+.starmap__star {
+  cursor: pointer;
+}
+.starmap__hit {
+  fill: transparent;
+}
+.starmap__dot {
+  fill: #d9cff0;
+  fill-opacity: 0.6;
+}
+.starmap__ghost {
+  fill: none;
+  stroke: #e3c27e;
+  stroke-opacity: 0.55;
+  stroke-width: 0.8;
+}
+.starmap__ring {
+  fill: none;
+  stroke: #9ee7df;
   stroke-opacity: 0.85;
-  stroke-width: 1.4;
-  stroke-dasharray: none;
-}
-.starmap__star--ahead circle {
-  fill: #cfc2ea;
-  fill-opacity: 0.45;
-}
-.starmap__star--current path {
-  filter: drop-shadow(0 0 6px rgba(79, 209, 197, 0.7));
+  stroke-width: 0.8;
 }
 .starmap__num {
-  font-family: var(--font-body);
-  font-size: 8.5px;
+  font-family: var(--font-display);
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-anchor: middle;
-  fill: #d8cfe6;
+  fill: #fff4d2;
+  paint-order: stroke;
+  stroke: rgba(6, 8, 18, 0.85);
+  stroke-width: 3px;
 }
-.starmap__star--ahead .starmap__num {
-  fill: #a99fbf;
+.starmap__caption {
+  margin: 0 0 var(--s-4);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.3;
+  text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95);
 }
-.starmap__star--current .starmap__num {
-  fill: #9ee7df;
+.starmap__caption-num {
+  margin-right: 4px;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--brass-400);
+}
+.starmap__caption-state {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
 }
 
 .journey-page__list {

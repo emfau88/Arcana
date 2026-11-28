@@ -1,7 +1,7 @@
 {
   "name": "personal-oracle-web",
   "private": true,
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "ARCANA / Personal Oracle (Arbeitstitel) – Web-first Orakel-App, lokal und offline, Browser + Capacitor Android",
   "type": "module",
   "engines": {

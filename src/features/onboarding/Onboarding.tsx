@@ -283,6 +283,7 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
   );
   // Design plan point 1: the way on stays in view while the profile scrolls underneath.
   const cta = <div className="sticky-action">{ctaButton}</div>;
+  // Only on the open profile: there it is the one explanation when no question was answered (D-64).
   const explain = (
     <details className="explain">
       <summary>
@@ -374,7 +375,7 @@ export function ArchetypeReveal({ parsed }: { parsed: ParsedRoute }) {
           </section>
         </div>
         <p className="small archetype__basis">{manual ? t.archetype.basisManual : fmt(t.archetype.basis, { n: answered })}</p>
-        {explain}
+        {/* Design plan point 5, variant B (D-64): no second fold-out here; "Why?" above explains the same in full. */}
       </div>
       {/* Direct child of the screen, so it sticks from the first moment it appears (also with a second voice or large text). */}
       <div className="sticky-action reveal-step" style={at(second ? REVEAL_STEPS.rest : REVEAL_STEPS.second)}>

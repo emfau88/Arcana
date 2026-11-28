@@ -54,9 +54,9 @@ export function rewardFeature(rewardId: string): Feature | null {
 
 /**
  * Features this build ships. Each package adds its own entry when the content is really there,
- * so no hint ever points to an empty page. V04: chapters, weekly/monthly reviews, star map.
+ * so no hint ever points to an empty page. V04: chapters, weekly/monthly reviews, star map. V05.5: card backs.
  */
-export const BUILD_FEATURES: ReadonlySet<Feature> = new Set<Feature>(['archetype-chapters', 'reviews', 'starmap']);
+export const BUILD_FEATURES: ReadonlySet<Feature> = new Set<Feature>(['archetype-chapters', 'reviews', 'starmap', 'cardbacks']);
 
 export type HintKind = 'milestone' | 'card-level' | 'world';
 

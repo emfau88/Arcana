@@ -45,7 +45,7 @@ Debug-APK `app-debug.apk` mit Deck v2, 7,84 MB (7.844.245 Byte), SHA-256 `c2a8bd
 | Klickbare Elemente mit Label (uiautomator) | PASS | 0 ohne Namen |
 | Touch-Ziele ≥ 48 dp | PASS | |
 | Emulator-Einstellungen wiederhergestellt | PASS | Schrift, Flugmodus, Animationen wie vorher |
-| TalkBack manuell | NOT RUN | Ersatzweise der Labelcheck oben. Folgt in G3 |
+| TalkBack manuell | Grundcheck QG-V05 auf dem Emulator: Namen, Lesereihenfolge, Fokus nach dem Wechsel PASS, zwei Vorlesefehler behoben (S-61); Durchgang mit echten Gesten NOT RUN (per adb nicht möglich) | Folgt von Hand auf echtem Gerät in V07.5 |
 | Release-Modus-Build | NOT RUN | G3/S13 |
 
 Der erste Start nach `pm clear` braucht im Emulator 7–14 s je nach Rechnerlast bis zum ersten Screen (WebView-Initialisierung, wie in G1).

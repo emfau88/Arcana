@@ -1,14 +1,27 @@
-import { useState } from 'react';
+/**
+ * The oracle as a stage (design plan point 2, variant A, D-64): the painted observatory (A03),
+ * the cards of the chosen spread in a row on the table, spreads and themes as one line each, the
+ * main action at the bottom. After drawing, the cards turn over where they lie. Spreads come
+ * from the engine of V05.2; edition spreads stay invisible without their right (no placeholders).
+ */
+import { useState, type CSSProperties } from 'react';
 import { navigate } from '../../app/router.ts';
-import { useApp } from '../../app/store.tsx';
+import { factsOf, useApp } from '../../app/store.tsx';
+import { useModules } from '../../app/useModules.ts';
 import { findCard, getTheme, resolveTheme } from '../../content/index.ts';
-import { composeReading, isFullyRevealed } from '../../domain/oracle.ts';
+import { composeDraft, isFullyRevealed } from '../../domain/oracle.ts';
+import { journeyDayToday } from '../../domain/progress.ts';
+import { availableSpreads, CLASSIC_SPREAD, getSpread, spreadTheme, type SpreadDef, type SpreadId } from '../../domain/spreads.ts';
 import { POSITIONS, type Reading, type ReadingContent, type ReadingDraft, type ThemeId } from '../../domain/types.ts';
 import { fmt, toRoman } from '../../i18n/index.ts';
 import { ConfirmDialog, Divider, useToast } from '../../ui/feedback.tsx';
 import { Flank } from '../../ui/Ornaments.tsx';
 import { IconCheck, IconEye, IconSparkle } from '../../ui/Icons.tsx';
 import { OracleCard } from '../../ui/OracleCard.tsx';
+import './oracle-stage.css';
+
+/** Number of cards in a row, for the stage layout (cards stand on the painted table). */
+const stageStyle = (n: number) => ({ '--n': n }) as CSSProperties;
 
 export function Oracle() {
   const { state } = useApp();
@@ -27,17 +40,31 @@ export function Oracle() {
 /* -------------------------------------------------------------------- Entry */
 
 function OracleEntry() {
-  const { t, pack, state, actions } = useApp();
+  const { t, pack, state, actions, has } = useApp();
   const toast = useToast();
   const locale = state.settings.locale;
   const [theme, setTheme] = useState<ThemeId>(resolveTheme(pack, state.profile?.themeId ?? pack.defaultTheme));
+  const [chosen, setChosen] = useState<SpreadId>(CLASSIC_SPREAD);
   const [busy, setBusy] = useState(false);
+  // Names, taglines and position names of the spreads (module `spreads`, 1.5 kB). Until it is
+  // there, or offline without it, the classic three cards are offered as before.
+  const { status } = useModules(['spreads']);
+  const texts = status === 'ready' ? state.modules.spreads : undefined;
+  const facts = factsOf(state);
+  const offered = texts ? availableSpreads({ has, journeyDay: journeyDayToday(facts, state.todayKey), facts }) : [];
+  const spread: SpreadDef = offered.find((s) => s.id === chosen) ?? getSpread(CLASSIC_SPREAD);
+  const fixedTheme = spread.theme === 'chosen' ? null : spreadTheme(pack, spread, theme);
+  const labels =
+    spread.id === CLASSIC_SPREAD ? POSITIONS.map((p) => pack.positionLabels[p][locale]) : spread.roles.map((_, i) => texts?.[`pos.${spread.id}.${i + 1}.label`] ?? '');
+  // A review lays the thread card face up; only the new card is drawn.
+  const toDraw = spread.review ? 1 : spread.roles.length;
+  const drawLabel = toDraw === 3 ? t.oracle.draw : t.oracle.drawCount[toDraw as 1 | 4 | 5];
 
   const draw = async () => {
     if (busy) return;
     setBusy(true);
     try {
-      await actions.startReading(theme);
+      await actions.startReading(theme, spread.id);
     } catch {
       toast(t.errors.writeFailed, 'error');
     } finally {
@@ -46,53 +73,53 @@ function OracleEntry() {
   };
 
   return (
-    <div className="screen oracle">
-      <header className="screen-head">
-        <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
-        <h1 className="display h1" tabIndex={-1}>
-          {t.oracle.title}
-        </h1>
-        <p className="muted oracle__subtitle">{t.oracle.subtitle}</p>
-      </header>
+    <div className="screen oracle oracle-stage" style={stageStyle(spread.roles.length)}>
+      <div className="oracle-stage__top">
+        <header className="screen-head">
+          <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
+          <h1 className="display h2" tabIndex={-1}>
+            {t.oracle.title}
+          </h1>
+        </header>
+      </div>
+      <ol className="stage-spread" data-n={labels.length}>
+        {labels.map((label, i) => (
+          <li key={`${spread.id}-${i}`} className="stage-spread__slot">
+            <OracleCard card={null} locale={locale} faceUp={false} size="spread" label={label} />
+            <span className="stage-spread__pos">
+              <span className="stage-spread__num">{toRoman(i + 1)}</span> {label}
+            </span>
+          </li>
+        ))}
+      </ol>
 
-      <section aria-labelledby="oracle-theme" className="oracle__section">
-        <h2 id="oracle-theme" className="panel__label">
-          {t.oracle.chooseTheme}
-        </h2>
-        <div className="choice-list" role="radiogroup" aria-labelledby="oracle-theme">
+      {offered.length > 1 ? (
+        <>
+          <div className="theme-row oracle-stage__spreads" role="radiogroup" aria-label={t.oracle.chooseSpread}>
+            {offered.map((s) => (
+              <button key={s.id} type="button" role="radio" aria-checked={spread.id === s.id} className="theme-pill" onClick={() => setChosen(s.id)}>
+                {texts?.[`spread.${s.id}.name`]}
+              </button>
+            ))}
+          </div>
+          <p className="oracle-stage__tagline">{texts?.[`spread.${spread.id}.tagline`]}</p>
+        </>
+      ) : null}
+
+      {fixedTheme ? null : (
+        <div className="theme-row" role="radiogroup" aria-label={t.oracle.chooseTheme}>
           {pack.themes.map((th) => (
-            <button key={th.id} type="button" role="radio" aria-checked={theme === th.id} className="choice" onClick={() => setTheme(th.id)}>
-              <span className="choice__mark" aria-hidden="true" />
-              <span className="choice__text">
-                <span>{th.label[locale]}</span>
-                <span className="choice__sub">{th.description[locale]}</span>
-              </span>
+            <button key={th.id} type="button" role="radio" aria-checked={theme === th.id} className="theme-pill" onClick={() => setTheme(th.id)}>
+              {th.label[locale]}
             </button>
           ))}
         </div>
-      </section>
-
-      <section aria-labelledby="oracle-positions" className="oracle__section">
-        <h2 id="oracle-positions" className="panel__label">
-          {t.oracle.positionsTitle}
-        </h2>
-        <ol className="positions">
-          {POSITIONS.map((p, i) => (
-            <li key={p} className="positions__item">
-              <span className="positions__slot" aria-hidden="true">
-                {toRoman(i + 1)}
-              </span>
-              <span className="positions__name">{pack.positionLabels[p][locale]}</span>
-              <span className="small">{t.oracle.positionHelp[p]}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-
+      )}
+      <p className="oracle-stage__theme">{getTheme(pack, fixedTheme ?? theme).description[locale]}</p>
       <p className="small oracle__ethics">{t.oracle.ethics}</p>
       <div className="sticky-action">
         <button type="button" className="btn btn--primary btn--block oracle__draw" onClick={draw} disabled={busy}>
-          <IconSparkle size={18} /> {t.oracle.draw}
+          <IconSparkle size={18} /> {drawLabel}
         </button>
       </div>
     </div>
@@ -109,10 +136,14 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
   const [saving, setSaving] = useState(false);
   const [justRevealed, setJustRevealed] = useState<Set<number>>(new Set());
   const allUp = isFullyRevealed(draft);
-  const content = allUp ? composeReading(pack, draft.cardIds, draft.themeId, locale) : null;
+  const content = allUp ? composeDraft(pack, draft, locale, { spreads: state.modules.spreads, deep: state.modules['cards-deep'] }) : null;
+  // Position names of spreads other than the classic one come from the module (V05.2).
+  const labels =
+    draft.spreadId && draft.spreadId !== CLASSIC_SPREAD ? draft.cardIds.map((_, i) => state.modules.spreads?.[`pos.${draft.spreadId}.${i + 1}.label`] ?? '') : undefined;
   const themeLabel = getTheme(pack, draft.themeId).label[locale];
+  const spreadName = draft.spreadId && draft.spreadId !== CLASSIC_SPREAD ? state.modules.spreads?.[`spread.${draft.spreadId}.name`] : undefined;
 
-  const flip = async (i: 0 | 1 | 2) => {
+  const flip = async (i: number) => {
     if (draft.revealed[i]) return;
     setJustRevealed((s) => new Set(s).add(i));
     try {
@@ -122,7 +153,7 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
     }
   };
   const flipAll = async () => {
-    setJustRevealed(new Set([0, 1, 2]));
+    setJustRevealed(new Set(draft.cardIds.map((_, i) => i).filter((i) => !draft.revealed[i])));
     try {
       await actions.revealAllReading();
     } catch {
@@ -150,18 +181,21 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
   };
 
   return (
-    <div className="screen oracle">
-      <header className="screen-head">
-        <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
-        <h1 className="display h2" tabIndex={-1}>
-          {themeLabel}
-        </h1>
-      </header>
-      {restored ? <p className="notice oracle__resumed">{t.oracle.resumed}</p> : null}
+    <div className="screen oracle oracle-stage oracle-stage--laid" style={stageStyle(draft.cardIds.length)}>
+      <div className="oracle-stage__top">
+        <header className="screen-head">
+          <Flank className="screen-head__flank">{spreadName ?? t.oracle.eyebrow}</Flank>
+          <h1 className="display h2" tabIndex={-1}>
+            {themeLabel}
+          </h1>
+        </header>
+        {restored ? <p className="notice oracle__resumed">{t.oracle.resumed}</p> : null}
+      </div>
 
       <Spread
         cardIds={draft.cardIds}
         revealed={draft.revealed}
+        labels={labels}
         animated={justRevealed}
         onFlip={allUp ? undefined : flip}
       />
@@ -212,14 +246,16 @@ function DraftReading({ draft, restored, onSaved }: { draft: ReadingDraft; resto
 function SavedReading({ reading, onNew }: { reading: Reading; onNew(): void }) {
   const { t } = useApp();
   return (
-    <div className="screen oracle">
-      <header className="screen-head">
-        <Flank className="screen-head__flank">{t.oracle.eyebrow}</Flank>
-        <h1 className="display h2" tabIndex={-1}>
-          {reading.content.themeLabel}
-        </h1>
-      </header>
-      <Spread cardIds={reading.cardIds} revealed={[true, true, true]} />
+    <div className="screen oracle oracle-stage oracle-stage--laid" style={stageStyle(reading.cardIds.length)}>
+      <div className="oracle-stage__top">
+        <header className="screen-head">
+          <Flank className="screen-head__flank">{reading.content.spreadName ?? t.oracle.eyebrow}</Flank>
+          <h1 className="display h2" tabIndex={-1}>
+            {reading.content.themeLabel}
+          </h1>
+        </header>
+      </div>
+      <Spread {...savedSpread(reading)} />
       <div className="notice oracle__saved" role="status">
         <IconCheck size={18} />
         <span>{t.oracle.saved}</span>
@@ -239,29 +275,40 @@ function SavedReading({ reading, onNew }: { reading: Reading; onNew(): void }) {
 
 /* --------------------------------------------------------------- Shared UI */
 
+/** Props of a saved reading's spread: all cards face up, stored position names for V05.2 spreads. */
+export function savedSpread(reading: Reading): { cardIds: readonly string[]; revealed: readonly boolean[]; labels?: readonly string[] } {
+  return {
+    cardIds: reading.cardIds,
+    revealed: reading.cardIds.map(() => true),
+    labels: reading.spreadId ? reading.content.positions.map((p) => p.positionLabel) : undefined,
+  };
+}
+
 export function Spread({
   cardIds,
   revealed,
+  labels,
   animated,
   onFlip,
 }: {
-  cardIds: readonly [string, string, string];
-  revealed: readonly [boolean, boolean, boolean];
+  cardIds: readonly string[];
+  revealed: readonly boolean[];
+  /** Position names; missing = the classic positions in the current language. */
+  labels?: readonly string[];
   animated?: Set<number>;
-  onFlip?: (i: 0 | 1 | 2) => void;
+  onFlip?: (i: number) => void;
 }) {
   const { t, pack, state } = useApp();
   const locale = state.settings.locale;
   return (
-    <ol className="spread">
-      {POSITIONS.map((p, i) => {
-        const idx = i as 0 | 1 | 2;
-        const card = findCard(pack, cardIds[idx]) ?? null;
-        const up = revealed[idx];
-        const posLabel = pack.positionLabels[p][locale];
+    <ol className="spread" data-n={cardIds.length} style={stageStyle(cardIds.length)}>
+      {cardIds.map((cardId, idx) => {
+        const card = findCard(pack, cardId) ?? null;
+        const up = revealed[idx] === true;
+        const posLabel = labels?.[idx] ?? pack.positionLabels[POSITIONS[idx] ?? 'situation'][locale];
         const title = card ? card.title[locale] : '';
         return (
-          <li key={p} className="spread__slot">
+          <li key={idx} className="spread__slot">
             <span className="spread__pos">{posLabel}</span>
             <OracleCard
               card={card}
@@ -275,7 +322,12 @@ export function Spread({
             <span className={`spread__name ${up ? 'is-shown' : ''}`} aria-hidden={!up}>
               {up && card ? (
                 <>
-                  <span className="spread__num">{toRoman(card.order)}</span> {title}
+                  <span className="spread__num">
+                    {toRoman(card.order)}
+                    {/* The numeral stands on its own line; without this TalkBack read "VIThe Lovers" (QG-V05). */}
+                    <span className="sr-only">, </span>
+                  </span>{' '}
+                  {title}
                 </>
               ) : (
                 <span className="spread__placeholder">◇</span>
@@ -295,6 +347,25 @@ export function Interpretation({ content }: { content: ReadingContent }) {
     <article className="interpretation">
       <p className="lead interpretation__intro rise">{content.intro}</p>
       <Divider />
+      {content.past && content.past.cards.length > 0 ? (
+        // Reviews begin with the person's own cards of the period (V05.2, S-47), stored with the reading.
+        <section className="panel past-cards rise">
+          <h3 className="panel__label">{content.past.title}</h3>
+          <ul className="past-cards__list">
+            {content.past.cards.map((c) => (
+              <li key={c.cardId} className="past-cards__item">
+                <OracleCard card={findCard(pack, c.cardId) ?? null} locale={locale} faceUp size="mini" label={c.cardTitle} />
+                <div>
+                  <p className="past-cards__title">
+                    <span className="past-cards__num">{toRoman(c.cardOrder)}</span> {c.cardTitle}
+                  </p>
+                  <p className="small italic-serif past-cards__essence">{c.essence}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
       <ol className="panel-stack interpretation__positions">
         {content.positions.map((pos, i) => {
           const card = findCard(pack, pos.cardId) ?? null;
@@ -305,6 +376,7 @@ export function Interpretation({ content }: { content: ReadingContent }) {
                 <p className="eyebrow">
                   {toRoman(i + 1)} · {pos.positionLabel}
                 </p>
+                {pos.question ? <p className="interpretation__ask">{pos.question}</p> : null}
                 <h3 className="display h3">{pos.cardTitle}</h3>
                 <p className="italic-serif interpretation__essence">{pos.essence}</p>
                 <p>{pos.text}</p>

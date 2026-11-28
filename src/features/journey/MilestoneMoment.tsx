@@ -2,7 +2,8 @@ import { navigate } from '../../app/router.ts';
 import { useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
 import { milestoneTextKey } from '../../domain/journey.ts';
-import type { Reward } from '../../domain/progress.ts';
+import { isCardBackId } from '../../domain/cardbacks.ts';
+import { milestoneAt, type Reward } from '../../domain/progress.ts';
 import { fmt, type Messages } from '../../i18n/index.ts';
 import { StarGlyph } from '../../ui/Ornaments.tsx';
 
@@ -13,6 +14,7 @@ function rewardLabel(t: Messages, r: Reward): string | null {
   if (kind === 'archetype-chapter') return t.milestone.chapter;
   if (kind === 'review') return sub === 'week' ? t.milestone.reviewWeek : t.milestone.reviewMonth;
   if (kind === 'constellation') return t.milestone.constellation;
+  if (kind === 'cardback' && isCardBackId(sub)) return fmt(t.milestone.cardBack, { name: t.profile.backs[sub] });
   return null;
 }
 
@@ -20,9 +22,15 @@ function rewardLabel(t: Messages, r: Reward): string | null {
 export function MilestoneMoment({ milestone, rewards }: { milestone: { day: number; key: string }; rewards: Reward[] }) {
   const { t, tx, actions } = useApp();
   useModules(['journey']);
-  const key = milestoneTextKey(milestone.day);
+  // The day text may speak of every reward of the day. Until all of them are built (days 2 and 10
+  // name the numbers world and the personal symbol of V06), only the built rewards are named (D-54).
+  const complete = (milestoneAt(milestone.day)?.rewards.length ?? 0) === rewards.length;
+  const key = complete ? milestoneTextKey(milestone.day) : null;
   const text = key ? tx('journey', key) : '';
   const labels = [...new Set(rewards.map((r) => rewardLabel(t, r)).filter((l): l is string => l !== null))];
+  // A card back lives in the settings, not in the grimoire (V05.5).
+  const onlyBacks = rewards.length > 0 && rewards.every((r) => r.id.startsWith('cardback:'));
+  const target = onlyBacks ? '/me/settings?from=/today' : '/grimoire/journey?from=/today';
   const close = (then?: () => void) => {
     actions.markSeen(milestone.key).catch(() => undefined);
     then?.();
@@ -36,7 +44,7 @@ export function MilestoneMoment({ milestone, rewards }: { milestone: { day: numb
       {text ? <p className="italic-serif milestone-moment__text">{text}</p> : null}
       {labels.length ? (
         <>
-          <p className="panel__label milestone-moment__label">{t.milestone.opened}</p>
+          <p className="panel__label milestone-moment__label">{onlyBacks ? t.milestone.openedBacks : t.milestone.opened}</p>
           <ul className="star-list">
             {labels.map((l) => (
               <li key={l}>
@@ -48,7 +56,7 @@ export function MilestoneMoment({ milestone, rewards }: { milestone: { day: numb
         </>
       ) : null}
       <div className="milestone-moment__actions">
-        <button type="button" className="btn btn--ghost" onClick={() => close(() => navigate('/grimoire/journey?from=/today'))}>
+        <button type="button" className="btn btn--ghost" onClick={() => close(() => navigate(target))}>
           {t.milestone.view}
         </button>
         <button type="button" className="btn btn--quiet" onClick={() => close()}>

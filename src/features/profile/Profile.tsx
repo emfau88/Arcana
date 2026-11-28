@@ -1,21 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { navigate, type ParsedRoute } from '../../app/router.ts';
-import { useApp } from '../../app/store.tsx';
+import { factsOf, useApp } from '../../app/store.tsx';
 import { useModules } from '../../app/useModules.ts';
 import { getArchetype, resolveTheme } from '../../content/index.ts';
 import { ModuleLoadError } from '../../content/modules/registry.ts';
 import { QUESTIONNAIRE_VERSION } from '../../domain/archetypes.ts';
+import { CARD_BACKS, openBacks } from '../../domain/cardbacks.ts';
+import { journeyDays } from '../../domain/progress.ts';
 import { LOCALES, type ArchetypeId, type Locale, type MotionPreference } from '../../domain/types.ts';
 import { useScreenText } from '../../i18n/screens.ts';
 import { fmt } from '../../i18n/index.ts';
 import { ConfirmDialog, useToast } from '../../ui/feedback.tsx';
 import { Flank } from '../../ui/Ornaments.tsx';
+import { backSrc, CardBackContext } from '../../ui/OracleCard.tsx';
 import { Sigil } from '../../ui/Sigil.tsx';
 import { DetailHeader } from '../grimoire/Grimoire.tsx';
 import { ArchetypePortrait } from '../../ui/Portrait.tsx';
 import { ArchetypeProfile } from '../identity/Identity.tsx';
 
-export const APP_VERSION = '0.4.1';
+export const APP_VERSION = '0.5.0';
 /** Gesehen-Markierung: the offer of questionnaire v2 was dismissed (E9, D-47). */
 export const OFFER_V2_KEY = 'offer:questionnaire-v2';
 
@@ -253,6 +256,9 @@ export function Settings({ parsed }: { parsed: ParsedRoute }) {
     }
   };
 
+  const back = useContext(CardBackContext);
+  const open = openBacks(journeyDays(factsOf(state)));
+
   const motions: { id: MotionPreference; label: string }[] = [
     { id: 'system', label: t.profile.motionSystem },
     { id: 'reduced', label: t.profile.motionReduced },
@@ -297,6 +303,33 @@ export function Settings({ parsed }: { parsed: ParsedRoute }) {
           </div>
         </div>
       </section>
+
+      {open.length > 1 ? (
+        <section className="profile__group" aria-labelledby="set-backs">
+          <h2 id="set-backs" className="panel__label">
+            {t.profile.cardBack}
+          </h2>
+          <div className="panel backs">
+            <p className="small muted backs__body">{t.profile.cardBackBody}</p>
+            <div className="backs__list" role="radiogroup" aria-labelledby="set-backs">
+              {open.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="radio"
+                  aria-checked={back === id}
+                  className="backs__item"
+                  onClick={() => void guard(() => actions.setCardBack(id))}
+                >
+                  <img src={backSrc(id, true)} alt="" width={240} height={360} decoding="async" loading="lazy" draggable={false} />
+                  <span className="backs__name">{t.profile.backs[id]}</span>
+                </button>
+              ))}
+            </div>
+            {open.length < CARD_BACKS.length ? <p className="small muted backs__more">{t.profile.cardBackMore}</p> : null}
+          </div>
+        </section>
+      ) : null}
 
       <section className="profile__group" aria-labelledby="prof-privacy">
         <h2 id="prof-privacy" className="panel__label">

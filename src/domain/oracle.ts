@@ -2,7 +2,9 @@ import { getArchetype, getCard, getTheme, resolveTheme } from '../content/index.
 import type { ContentPack } from '../content/schema.ts';
 import { localDateKey, type Clock } from './clock.ts';
 import { LENS_VARIANT, lensSourceForDay } from './lens.ts';
+import type { Facts } from './progress.ts';
 import { drawWithoutReplacement, newId, type Rng } from './random.ts';
+import { CLASSIC_SPREAD, composeSpread, drawSpread, getSpread, spreadTheme, type SpreadId, type SpreadTexts } from './spreads.ts';
 import {
   POSITIONS,
   type ArchetypeId,
@@ -76,6 +78,40 @@ export interface DailyInput {
     /** Text of the content module, undefined if the module is not loaded. */
     text: (archetypeId: ArchetypeId, cardId: CardId) => string | undefined;
   };
+  /**
+   * A4 (V05.1) rotating reflection and ritual. `encounters` counts the earlier days with the card
+   * (daily card or saved reading); `deep` gives reflections 2–3 and ritual 2 of the module
+   * cards-deep, or nothing when it is not loaded. Without it the record keeps variant 0.
+   */
+  variety?: {
+    encounters: (cardId: CardId) => number;
+    deep: (cardId: CardId) => { reflections: readonly [string, string]; ritual: string } | null | undefined;
+  };
+}
+
+/** A4 (V05.1): three reflections (1 from core, 2–3 from cards-deep) and two rituals (1 core, 2 cards-deep). */
+export const REFLECTION_VARIANTS = 3;
+export const RITUAL_VARIANTS = 2;
+
+/**
+ * Variant indices for a card met `encounters` times before (A4). Both counters advance together, so
+ * the six combinations of reflection and ritual all come up before the first one returns.
+ */
+export function varietyFor(encounters: number): { reflection: number; ritual: number } {
+  const n = Number.isFinite(encounters) && encounters > 0 ? Math.floor(encounters) : 0;
+  return { reflection: n % REFLECTION_VARIANTS, ritual: n % RITUAL_VARIANTS };
+}
+
+/** Reflection and ritual of the day: variant 0 is core; higher variants need the deep texts. */
+function pickVariety(input: DailyInput, cardId: CardId, content: DailyContent): { content: DailyContent; reflection: number; ritual: number } {
+  const deep = input.variety?.deep(cardId);
+  // Without the module (not loaded, older content) the core texts stay, stored as variant 0.
+  if (!input.variety || !deep) return { content, reflection: 0, ritual: 0 };
+  const v = varietyFor(input.variety.encounters(cardId));
+  const reflection = v.reflection === 0 ? content.reflection : deep.reflections[v.reflection - 1];
+  const ritual = v.ritual === 0 ? content.ritual : deep.ritual;
+  if (!reflection || !ritual) return { content, reflection: 0, ritual: 0 };
+  return { content: { ...content, reflection, ritual }, reflection: v.reflection, ritual: v.ritual };
 }
 
 /** Build (not persist) the record for the current local day. Persistence decides uniqueness. */
@@ -95,16 +131,22 @@ export function createDailyRecord(input: DailyInput): DailyRecord {
     note: '',
   };
   const l = input.lens;
-  if (!l) return { ...base, content: composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale) };
+  if (!l) {
+    const content = composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale);
+    if (!input.variety) return { ...base, content };
+    const v = pickVariety(input, cardId, content);
+    return { ...base, content: v.content, variant: { lens: LENS_VARIANT.main, reflection: v.reflection, ritual: v.ritual } };
+  }
   const complementId = input.archetypeId ? l.complementId : null;
   const source = lensSourceForDay(l.journeyDay, complementId);
   const lensArchetype = source === 'complement' ? complementId : input.archetypeId;
   // Missing module text: the archetype's general lens, never an empty panel.
   const lens = lensArchetype ? (l.text(lensArchetype, cardId) ?? getArchetype(input.pack, lensArchetype).lens[input.locale]) : null;
+  const v = pickVariety(input, cardId, composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale, lens));
   return {
     ...base,
-    content: composeDaily(input.pack, cardId, themeId, input.archetypeId, input.locale, lens),
-    variant: { lens: LENS_VARIANT[source], reflection: 0, ritual: 0 },
+    content: v.content,
+    variant: { lens: LENS_VARIANT[source], reflection: v.reflection, ritual: v.ritual },
     secondaryArchetypeId: complementId,
   };
 }
@@ -129,19 +171,38 @@ export function createDraft(pack: ContentPack, themeId: ThemeId, clock: Clock, r
   };
 }
 
-export function revealPosition(draft: ReadingDraft, index: 0 | 1 | 2): ReadingDraft {
-  if (draft.revealed[index]) return draft;
-  const revealed: [boolean, boolean, boolean] = [...draft.revealed];
-  revealed[index] = true;
+/**
+ * A draft for any spread (V05.2). The classic spread gives exactly the draft of `createDraft`;
+ * review spreads need the facts for the own cards of the period.
+ */
+export function createSpreadDraft(pack: ContentPack, spreadId: SpreadId, themeId: ThemeId, clock: Clock, rng: Rng, facts?: Facts): ReadingDraft {
+  const spread = getSpread(spreadId);
+  if (spread.id === CLASSIC_SPREAD) return createDraft(pack, themeId, clock, rng);
+  const drawn = drawSpread(pack, spread, rng, facts);
+  return {
+    id: newId(rng),
+    deckId: pack.deckId,
+    themeId: spreadTheme(pack, spread, themeId),
+    cardIds: drawn.cardIds,
+    revealed: drawn.revealed,
+    createdAt: clock.now().toISOString(),
+    spreadId: spread.id,
+    ...(drawn.past ? { past: drawn.past } : {}),
+  };
+}
+
+export function revealPosition(draft: ReadingDraft, index: number): ReadingDraft {
+  if (index < 0 || index >= draft.cardIds.length || draft.revealed[index]) return draft;
+  const revealed = draft.cardIds.map((_, i) => i === index || draft.revealed[i] === true);
   return { ...draft, revealed };
 }
 
 export function revealAll(draft: ReadingDraft): ReadingDraft {
-  return draft.revealed.every(Boolean) ? draft : { ...draft, revealed: [true, true, true] };
+  return isFullyRevealed(draft) ? draft : { ...draft, revealed: draft.cardIds.map(() => true) };
 }
 
 export function isFullyRevealed(draft: ReadingDraft): boolean {
-  return draft.revealed.every(Boolean);
+  return draft.cardIds.every((_, i) => draft.revealed[i] === true);
 }
 
 /**
@@ -152,7 +213,7 @@ export function isFullyRevealed(draft: ReadingDraft): boolean {
  */
 export function composeReading(
   pack: ContentPack,
-  cardIds: readonly [CardId, CardId, CardId],
+  cardIds: readonly CardId[],
   themeId: ThemeId,
   locale: Locale,
 ): ReadingContent {
@@ -169,7 +230,7 @@ export function composeReading(
       text: card.positions[position][locale],
     };
   });
-  const impulseCard = getCard(pack, cardIds[2]);
+  const impulseCard = getCard(pack, cardIds[2] as CardId);
   const synthesis = impulseCard.themes[theme.id]?.[locale];
   if (!synthesis) throw new Error(`Missing ${theme.id} text for ${impulseCard.id}`);
   return {
@@ -182,8 +243,33 @@ export function composeReading(
   };
 }
 
-export function finalizeReading(pack: ContentPack, draft: ReadingDraft, locale: Locale, clock: Clock): Reading {
+/** Content of a draft in any spread. Spreads other than the classic one need the module tables. */
+export function composeDraft(pack: ContentPack, draft: Pick<ReadingDraft, 'spreadId' | 'cardIds' | 'themeId' | 'past'>, locale: Locale, texts: SpreadTexts = {}): ReadingContent {
+  const spread = getSpread(draft.spreadId);
+  if (spread.id === CLASSIC_SPREAD) return composeReading(pack, draft.cardIds, draft.themeId, locale);
+  return composeSpread(pack, spread, draft, locale, texts);
+}
+
+export function finalizeReading(pack: ContentPack, draft: ReadingDraft, locale: Locale, clock: Clock, texts: SpreadTexts = {}): Reading {
   if (!isFullyRevealed(draft)) throw new Error('Reveal all cards before saving');
+  const spread = getSpread(draft.spreadId);
+  if (spread.id !== CLASSIC_SPREAD) {
+    return {
+      id: draft.id,
+      deckId: draft.deckId,
+      themeId: draft.themeId,
+      cardIds: [...draft.cardIds],
+      spreadId: spread.id,
+      roles: [...spread.roles],
+      locale,
+      contentVersion: pack.version,
+      content: composeSpread(pack, spread, draft, locale, texts),
+      createdAt: clock.now().toISOString(),
+      dateKey: localDateKey(clock.now()),
+      note: '',
+    };
+  }
+  // The classic spread keeps the record shape of 0.2 (no spreadId, no roles).
   return {
     id: draft.id,
     deckId: draft.deckId,

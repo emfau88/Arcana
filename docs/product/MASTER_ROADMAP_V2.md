@@ -1,6 +1,6 @@
 # MASTER_ROADMAP_V2 · Pakete, Bulks, Aufwand, Release-Umfang
 
-**Stand:** 27.11.2026 (Plan vom 26.11.2026; Fortschritt bis 0.4.1 in §0.1) · **Status:** verbindliche Planungsgrundlage. Umgesetzt wird **nur ein vom Eigentümer freigegebenes Paket**. Jedes Paket endet mit einem Bericht und wartet auf Freigabe. Grundlage: `PRODUCT_VISION_V2.md`, `PRODUCT_SYSTEMS.md`, `PROGRESSION_DESIGN.md`, `CONTENT_MASTERPLAN.md`, `INFORMATION_ARCHITECTURE.md`, `MONETIZATION_CONCEPT.md`. Bilder: `docs/visual/ASSET_REQUESTS.md`.
+**Stand:** 28.11.2026 (Plan vom 26.11.2026; Fortschritt bis in V05 in §0.1) · **Status:** verbindliche Planungsgrundlage. Umgesetzt wird **nur ein vom Eigentümer freigegebenes Paket**. Jedes Paket endet mit einem Bericht und wartet auf Freigabe. Grundlage: `PRODUCT_VISION_V2.md`, `PRODUCT_SYSTEMS.md`, `PROGRESSION_DESIGN.md`, `CONTENT_MASTERPLAN.md`, `INFORMATION_ARCHITECTURE.md`, `MONETIZATION_CONCEPT.md`. Bilder: `docs/visual/ASSET_REQUESTS.md`.
 
 **Aufwand** in Agenten-Sitzungen (eine Sitzung ≈ ein zusammenhängender Arbeitslauf mit Tests und Bericht). Kalenderzeit hängt zusätzlich an Freigaben, Bildproduktion und Textprüfung durch den Eigentümer.
 
@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. V05 beginnt erst auf Zuruf des Eigentümers (D-60); der Plan liegt auf `feature/v05-karten` (S-29). E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden in V05 eingebaut.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. **V05 läuft** seit der Freigabe vom 27.11.2026 (D-65) auf `feature/v05-karten`, Reihenfolge nach S-29: V05.1 bis V05.5 abgeschlossen, dazu die Korrektur der Enthüllung (Design-Plan Punkt 5); von V05.6 stehen das Orakel als Bühne, die Auswahl der Legungen (S-58) und das Testpaket mit Release-Build und Testanleitung (S-59, `docs/TESTPAKET.md`); offen sind E11 (App-Name und App-ID, beim Eigentümer) und QG-V05. Die Leistungsmessung vor QG-V05 (28.11.2026) reißt zwei Grenzen („Heute“ sichtbar, Erststart; `docs/visual/PERFORMANCE.md` „V05“); der Eigentümer hat eine Ausnahme gewählt, Behebung spätestens in V07.5 (D-67). QG-V05 ist geprüft (28.11.2026, PASS mit dieser Ausnahme, `docs/GATE_REPORTS.md`); den Merge hat der Eigentümer genannt. Der geschlossene Test wartet auf E11, E15 und E17. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden in V05 eingebaut.
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -131,13 +131,41 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 ### V05 · Karten, Legungen, Grimoire (0.5)
 
-- [ ] V05.1 Kartenseite und Vertiefung
-- [ ] V05.2 Rollen-Legungen
-- [ ] V05.3 Grimoire als Buch
-- [ ] V05.4 Tagebuch und Suche
-- [ ] V05.5 Kartenrücken (E10)
-- [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17)
-- [ ] QG-V05, geschlossener Test, Tag `v0.5.0`
+- [x] V05.1 Kartenseite und Vertiefung (5/5)
+  - [x] Logik: Stufen 0–4 aus Begegnungen und Studium, Ebenen kumulativ, Studium in zwei Teilen (`src/domain/study.ts`; jede Stufe in ≤ 2 Sitzungen, ungespeicherte Legungen zählen nicht, Unit)
+  - [x] Texte: Modul `cards-deep`, 22 Karten × 15 Texte in DE und EN, in drei Gruppen gegen die Bilder geschrieben; Content-Gate mit Verbotsliste für Zukunftsversprechen (S-43, S-44)
+  - [x] A4 wechselnde Reflexion und Ritual auf „Heute“: Variante aus den Begegnungstagen, im Datensatz gespeichert; 66 simulierte Tage ohne gleiche Kombination in 21 Tagen (Unit, S-45)
+  - [x] Kartenseite, Teil 1: Stufe als Mondphase und alle offenen Ebenen kumulativ, nichts Gesperrtes sichtbar (E2E Stufe 2 und 4 in DE und EN, Browser 412/360 px, Android-Emulator, S-53)
+  - [x] Kartenseite, Teil 2: Studium in zwei Teilen auf der Kartenseite, „Gelesen“ genügt, Antwort freiwillig als Tagebucheintrag; Studium öffnet Stufe 2 und 3, eine Antwort Stufe 4, übersteht Neustart (E2E DE und EN, Android-Emulator, S-54)
+- [x] V05.2 Rollen-Legungen (4/4)
+  - [x] Engine: Rollen R1–R8 und sieben Legungen (Drei Karten, Licht und Schatten, Neuanfang, Rückblick auf Woche und Monat; Zwei Wege und Verbindung nur mit `edition.spreads`); Legung und Rollen im Datensatz, die klassische Legung bleibt unverändert (`src/domain/spreads.ts`, S-46, S-47)
+  - [x] Texte: Modul `spreads` mit 72 Rahmentexten je Sprache; Content-Gate ohne Ergebnis-Positionen, Zukunftsversprechen und Aussagen über andere (S-46)
+  - [x] Matrix-Test: 10.000 gezogene Legungen je Sprache über alle Themen ohne Lücke; alte Legungen werden unverändert angezeigt (Unit, E2E)
+  - [x] Auswahl und Anzeige im Orakel mit V05.6, dabei B-12 (S-58)
+- [x] V05.3 Grimoire als Buch (3/3)
+  - [x] Buch: Einband (A15) in der Bibliothek (A04), Inhalt auf Pergament (A30) mit Vignetten (A23–A29), Kapitel I–V nur soweit gebaut (Karten, Archetypen, Tagebuch, Rituale, Reise), Kapitelanfänge, Leerzustände, „Neu“ für neue Kartenstufen; jeder gespeicherte Eintrag in ≤ 3 Taps (E2E DE und EN, Browser 412/360/320 px, Android-Emulator, S-55)
+  - [x] Design-Plan Punkt 7: im Kapitel Karten nur Entdecktes, der Rest als eine ruhige Zeile (D-63, S-55)
+  - [x] Sternkarte als drei Ringe im Kapitel Reise (D-64, Punkt 6, Variante A): Spirale nach innen, Wegenden größer, heutiger Stern leuchtet, Ziffer nur am gewählten Stern, Antippen nennt Karte, Weg und Stand, Liste bleibt Textalternative; 400 Tage beim Scrollen ≤ 16,8 ms je Frame (E2E, Browser 412/360 px, Android-Emulator, S-56)
+- [x] V05.4 Tagebuch und Suche (4/4)
+  - [x] Logik: Tagebuch als Chronik aus Tageskarten, Legungen und eigenen Einträgen; Filter nur für vorhandene Arten, nach Karte und „nur mit eigenen Worten“ (`src/domain/journal.ts`, S-48)
+  - [x] Lokale Suche ohne Groß- und Kleinschreibung, Akzente und ß: 1.000 Einträge mit Index-Aufbau rund 9 ms ≤ 50 ms (Unit)
+  - [x] Einzelne Einträge löschen: Worte weg, Tag und Kartenstufe bleiben (S-49); Schreiben, Bearbeiten, Löschen und Studium im Store, übersteht einen Neustart (Unit mit IndexedDB)
+  - [x] Tagebuch-Screen im Grimoire-Buch: freier Eintrag, Suche, Filter, „Nur mit eigenen Worten“ und Löschdialog (E2E DE und EN, Android-Emulator, S-55)
+- [x] V05.5 Kartenrücken (E10 entschieden, D-66: Tag 2, 5 und 10; Gestaltung der Auswahl als Vorschlag in der Prüfliste, S-52)
+  - [x] Freischaltung aus dem Reisetag abgeleitet, Wahl in `Settings.cardBack`, übersteht Neustart und Sicherung (Unit, E2E)
+  - [x] Auswahl in den Einstellungen, nur freigeschaltete Rücken, kein Kaufangebot, nichts Gesperrtes sichtbar
+  - [x] Rücken wechselt auf „Heute“, im Orakel und in der Sammlung; Meilenstein-Moment nennt den Rücken (Browser 412/360 px, Android-Emulator)
+- [x] Design-Plan Punkt 5 (D-64, Variante B, kleine Korrektur): Auf der Enthüllung entfällt der doppelte Aufklapper „So entsteht dein Archetyp“; alles andere bleibt (E2E, Android-Emulator, S-57)
+- [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17) (3/4)
+  - [x] Orakel als Bühne (Design-Plan Punkt 2, Variante A): Sternwarte A03, Karten in einer Reihe am Tisch, Themen als eine Zeile, Hauptaktion unten; jeder Lesetext ≥ 4,5 : 1 bei 412/360/320 px, DE/EN, 130 % (Browser, Android-Emulator, S-58)
+  - [x] Auswahl und Anzeige der Legungen aus V05.2 im Orakel: nur erlaubte Legungen, Edition unsichtbar, Rückblick ab Tag 7 mit offener Fadenkarte, Fragen je Position; B-12 behoben, Kopfzeilen bei 130 % Schrift auf einer Linie (E2E DE und EN, Android-Emulator, S-58)
+  - [x] Release-Build mit Testsignatur und Testanleitung: Version 0.5.0, eigener Testschlüssel nur lokal, Entwicklungs-ID, Rauchtest Emulator 9/9 (`docs/TESTPAKET.md`, S-59)
+  - [ ] App-Name und App-ID final (E11); geschlossener Test kann starten (Freigabe E11, E15, E17)
+- [ ] QG-V05, geschlossener Test, Tag `v0.5.0` (0/4)
+  - [x] Leistungsmessung gegen die Referenz `03abb3c` mit den absoluten Obergrenzen aus §6, zusammen mit B-08 (D-52). **Gemessen 28.11.2026, FAIL mit Ausnahme des Eigentümers (D-67), Behebung spätestens V07.5:** „Heute“ sichtbar normiert 1.260–1.313 ms (≤ 1.250), Erststart 1.500–1.704 ms (≤ 1.600, zwei von drei Runden darüber); FCP, LCP, Übertragung, Bilder, Enthüllung, Leerlauf, Start-JS und APK PASS; Android-Kaltstart NOT RUN. 560-px-Karten versucht, ohne Gewinn, zurückgenommen (S-60). Optionen mit Aufwand in `docs/visual/PERFORMANCE.md` „V05“
+  - [x] TalkBack-Grundcheck auf dem Emulator (TalkBack 16, `emulator-5554`, Einstellungen danach zurückgesetzt): TalkBack läuft mit der App ohne Absturz, alle bedienbaren Elemente haben Namen, die Lesereihenfolge auf „Heute“, im Orakel und im Grimoire ist logisch (Bedienungshilfen-Baum per uiautomator bei laufendem TalkBack), nach jedem Wechsel liegt der Fokus auf der Überschrift; zwei Vorlesefehler gefunden und unsichtbar behoben (Schlagworte und Kartennummer, S-61). **NOT RUN:** der Durchgang mit echten Wischgesten und Doppeltipp, weil TalkBack per adb eingespielte Gesten auf dem Emulator nicht als Gesten erkennt (ein Antippen löst direkt aus, die Tastaturnavigation erreicht nur die Tab-Leiste, auch in den Systemeinstellungen unzuverlässig); folgt von Hand auf einem echten Gerät in V07.5
+  - [ ] Check, alle E2E, Kontrast, Layout, DE/EN und Android auf dem Endstand; Pull Request nach `main`, Freigabe und Merge durch den Eigentümer, Tag `v0.5.0`. **Geprüft 28.11.2026, PASS:** Check 253 Unit-Tests, E2E 51 bestanden und 0 fehlgeschlagen, Kontrast und Layout in fünf Läufen (DE 412, EN 360, DE 390, DE 360 und EN 412 bei 130 %) je 0 Verstöße, Android-Emulator 13/13, Kaltstart 1,87 s; Merge vom Eigentümer genannt (D-67), Gate-Bericht `docs/GATE_REPORTS.md` „QG-V05“
+  - [ ] Version 0.5 im geschlossenen Test (nur nach Freigabe)
 
 ### V06 · Zahlen und Symbole (0.6)
 
@@ -156,6 +184,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 - [ ] V07.3 Sicherung und Wiederherstellung
 - [ ] V07.4 Edition (nur mit Freigabe E14/E15)
 - [ ] V07.5 Härtung (G3)
+  - [ ] B-08 beheben (D-67): „Heute“ sichtbar ≤ 1.250 ms und Erststart ≤ 1.600 ms gegen `03abb3c`, zuerst unsichtbar später laden (Option 1), bei Bedarf nur die aktive Sprache (Option 2); früher möglich, wenn der Eigentümer es einplant
 - [ ] V07.6 Store (G4, E18)
 - [ ] Öffentlicher Release, Tag `v1.0.0`
 
@@ -169,7 +198,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 - [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
 - [x] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19: geliefert (11/11), als WebP im Budget, eingebaut in `public/` und im Layout geprüft (Beschnitt, Kontrast, D-58)
-- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04)
+- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04): geprüft und als WebP exportiert (`art/b3/`, S-50); eingebaut: Kartenrücken (V05.5), Grimoire-Welt, Buch, Vignetten und Pergament (V05.3), A03 Orakel (V05.6, S-58); offen: Vignetten Symbole und Zahlen mit V06
 - [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
 - [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)
 - [ ] B6 · Mondwelt (nach 1.0)
@@ -266,7 +295,7 @@ Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentümer den Tagesorak
 | V05.2 Rollen-Legungen | Legungs-Engine mit Rollen R1–R8, Licht und Schatten, Neuanfang, Rückblick-Legung. Zwei Wege und Verbindung gebaut, aber nur mit `edition.spreads` sichtbar | Matrix-Test: jede Kartenkombination jeder Legung ergibt vollständigen Text in DE/EN. Kein Positionsname verspricht Zukunft (Content-Gate). Alte Readings werden unverändert angezeigt |
 | V05.3 Grimoire als Buch | Einband (A15), Inhaltsverzeichnis, 7 Kapitel mit Vignetten, Pergament (A30), Leerzustände, „Neu“-Glanz | jeder gespeicherte Eintrag in ≤ 3 Taps auffindbar (E2E). Jedes Kapitel hat einen gestalteten Leerzustand (Screenshot-Review) |
 | V05.4 Tagebuch und Suche | Tagebuch mit Filtern, Notizen aus Tageskarte und Legung zusammen mit `journal`, lokale Suche | Suche über 1.000 Einträge ≤ 50 ms. Einzelne Einträge löschbar (E2E) |
-| V05.5 Kartenrücken | Auswahl in Einstellungen, Freischaltung über Meilensteine 14 und 75 | Rücken wechselt in Heute und Orakel. Nicht freigeschaltete Rücken erscheinen nicht als Kaufangebot |
+| V05.5 Kartenrücken | Auswahl in Einstellungen, Freischaltung an den Reisetagen 2, 5 und 10 (D-66) | Rücken wechselt in Heute und Orakel. Nicht freigeschaltete Rücken erscheinen nicht als Kaufangebot |
 | V05.6 Orakel-Gestaltung und Testpaket | A03 im Orakel, Release-Build mit Testsignatur, Testanleitung, App-ID final (E11) | geschlossener Test kann starten (Freigabe E11, E17) |
 
 **Aufwand:** 7–8 Sitzungen. **Gate QG-V05:** Fertig-Kriterien, alle Perf-Budgets, TalkBack-Grundcheck, Version 0.5 im geschlossenen Test (nur nach Freigabe).
@@ -298,7 +327,7 @@ Schritte in der Checkliste §0.1. **Fertig, wenn** der Eigentümer den Tagesorak
 | V07.2 Erinnerung | lokale Benachrichtigung, Angebot ab Reisetag 3, Uhrzeit wählbar, Android-13-Berechtigung (E13) | Ablehnen wird nie erneut gefragt (E2E). Text ohne Druckwörter. Abschalten in Einstellungen wirkt sofort |
 | V07.3 Sicherung und Wiederherstellung | UI unter Ich › Einstellungen, Erstellen mit Vorschau, Prüfen, Ersetzen in einer Transaktion, Hinweis nach je 30 Reisetagen ohne Sicherung (`INFORMATION_ARCHITECTURE.md` §5.7, Format aus V03.1) | Roundtrip sichern → löschen → wiederherstellen identisch (E2E). Sicherungen aus 0.2.0 und 0.4 werden migriert. Neuere Sicherung wird ohne Änderung abgelehnt. 1.000 Einträge ≤ 2 s / ≤ 3 s. Emulator: Datei speichern und wieder einlesen. Kann bei Bedarf als Zusatz in 0.5 vorgezogen werden, falls Testnutzer neu installieren müssen |
 | V07.4 Edition (nur mit Freigabe E14/E15) | Edition-Inhalte, Play-Billing-Plugin, Kauf, Wiederherstellen, Edition-Seite | Kauf, Erstattung, offline und Wiederherstellen getestet mit Lizenztestern. Ohne Billing sind Edition-Inhalte unsichtbar (E2E) |
-| V07.5 Härtung (G3) | Q01–Q16-Matrix, TalkBack, Zeitzonen, Upgrade 0.2 → 1.0, Kaltstart, Release-Build, Lizenzliste | alle Punkte des bisherigen G3 PASS oder begründet NOT RUN |
+| V07.5 Härtung (G3) | Q01–Q16-Matrix, TalkBack, Zeitzonen, Upgrade 0.2 → 1.0, Kaltstart, Release-Build, Lizenzliste, B-08 (D-67) | alle Punkte des bisherigen G3 PASS oder begründet NOT RUN |
 | V07.6 Store (G4) | Name, Icon, Store-Texte DE/EN, Screenshots, Datenschutzerklärung, Inhaltsbewertung, Data-Safety-Angaben | Eigentümer gibt Store-Eintrag und Veröffentlichung ausdrücklich frei |
 
 **Aufwand:** 7–8 Sitzungen (ohne Billing 5–6). **Gate:** G3 (Agent), G4 (Eigentümer).
@@ -321,9 +350,9 @@ Angefordert wird **immer nur der nächste Bulk**; eingebaut, geprüft und ins Re
 |---|---|---|---|---|
 | B1 | V02 | A01 Nachtwelt, A02 Pflanzenecken | 2 | geliefert |
 | B2 | V04 | A05 Ich/Enthüllung, A06 Willkommen, A07–A14 Archetyp-Porträts, A19 Sternkarte | 11 | geliefert, eingebaut (D-58) |
-| B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | im Lieferordner vollständig, Einbau in V05 |
+| B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | exportiert (S-50), eingebaut bis auf die Vignetten Symbole und Zahlen (mit V06) |
 | B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | im Lieferordner vollständig, Einbau in V06 |
-| B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“, A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
+| B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“ (für Tag 10 nach V05 vorgezogen und exportiert, D-66, S-51), A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
 | B6 | 1.1 | A34 Mondwelt | 1 | im Lieferordner, Einbau in 1.1 |
 | B7 | 1.2 | Zusatzdeck | 23 | im Lieferordner (23 Dateien), Einbau erst nach Entscheidung |
 | zurückgestellt | – | A16 Dekor-Sheet (nur falls ein Screen es braucht), A17 figurative Ersatzkarten (E3) | – | – |
@@ -421,7 +450,7 @@ Regeln:
 |---|---|---|---|
 | E8 | Fünf Tabs mit „Entdecken“ ab V06 | ja | V06 |
 | E9 | Fragebogen v2 (7 Fragen) für Bestandsnutzer: Angebot zum Neubestimmen statt Zwang | **entschieden 26.11.2026 (D-47):** Angebot, Profil bleibt | V04 |
-| E10 | Kartenrücken als Meilenstein-Belohnung (A20–A22) | ja | V05 |
+| E10 | Kartenrücken als Meilenstein-Belohnung (A20–A22) | **entschieden 27.11.2026 (D-66):** ja, früh an den Reisetagen 2, 5 und 10 (Mondsichel, Sternenkompass, Goldenes Rad; S-51) | V05 |
 | E11 | Finaler App-Name und App-ID (lässt sich nach dem ersten Play-Upload nicht mehr ändern). Eigentümer 27.11.2026: Es gibt eine alte Live-App ohne Nutzer, die ARCANA ersetzen soll; ob ihr Eintrag überschrieben wird oder ein neuer entsteht, hängt am Kontotyp und am Erstellungsdatum des Play-Kontos (noch offen) | vor dem geschlossenen Test festlegen | V05.6 |
 | E12 | Namenszahlen erst ab 1.3 | ja | – |
 | E13 | Lokale Benachrichtigungen über das offizielle Capacitor-Plugin (Projektabhängigkeit, kostenlos, ohne Dienst) | ja | V07 |
@@ -435,13 +464,14 @@ Regeln:
 
 ## 10 · Nächste Schritte
 
-Stand 27.11.2026, nach 0.4.1. V02, V03 und V04 sind abgeschlossen.
+Stand 28.11.2026. V02, V03 und V04 sind abgeschlossen (0.4.1 auf `main`), V05 läuft auf `feature/v05-karten` (D-65).
 
-1. **Design-Plan einbauen** (D-64): Die Muster sind entschieden (Punkt 2 A, Punkt 5 B, Punkt 6 A); eingebaut wird in V05 nach der Vorlage `muster/design-plan` (S-42), mit Texten in `i18n`, Tests, Android und Kontrastmessung.
-2. **V05 freigeben und umsetzen** auf `feature/v05-karten` (D-60), Reihenfolge nach S-29: V05.1 Logik und Texte, V05.2 Legungs-Engine, V05.4 Tagebuch und Suche, dann B3 exportieren und die Screens (V05.1, V05.3, V05.5, V05.6).
-3. **Vor QG-V05:** Leistungsmessung gegen die Referenz (D-52, B-08).
-4. **Eigentümer:** E10 Kartenrücken, E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor V05.6); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) sind entschieden.
-5. **Kleine Reste:** Design-Plan Punkte 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request), noch nicht beauftragt.
+1. **V05 fertig bauen:** Sternkarte als drei Ringe (Punkt 6 A, S-56), Korrektur der Enthüllung (Punkt 5 B, S-57) und Orakel als Bühne mit der Auswahl der Legungen und B-12 (Punkt 2 A, S-58) sind gebaut (28.11.2026), ebenso das Testpaket (Release-Build 0.5.0 mit Testsignatur und Testanleitung, S-59, `docs/TESTPAKET.md`); E11 (App-Name und App-ID) liegt beim Eigentümer, bis dahin bleibt der geschlossene Test BLOCKED. Der Branch `muster/design-plan` (S-42) wird nicht gemergt und kann nach QG-V05 gelöscht werden.
+2. **QG-V05 geprüft** (28.11.2026, PASS mit Ausnahme D-67, `docs/GATE_REPORTS.md`). Die Leistungsmessung gegen die Referenz ist gelaufen: „Heute“ sichtbar und Erststart liegen knapp über den Grenzen, alles andere hält (`docs/visual/PERFORMANCE.md` „V05“). **Eigentümer 28.11.2026 (D-67):** Ausnahme wie D-52, Behebung spätestens in V07.5 (Option 1, bei Bedarf Option 2), V05 nach den übrigen Prüfungen mergen. Es folgen Android-Kaltstart, TalkBack-Grundcheck, alle Prüfungen auf dem Endstand, Gate-Bericht und Pull Request nach `main`.
+3. **Eigentümer:** gesammelte Durchsicht der Prüfliste „Nachprüfen“ in `SELF_DECISIONS.md` (bleibt wie bei V04 für Rückmeldungen offen); E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor dem geschlossenen Test; das Testpaket steht); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) und E10 (D-66) sind entschieden.
+4. **Lücke im Plan:** Das Ex Libris (persönliche erste Seite, `PRODUCT_SYSTEMS.md` E4, Release 1.0) hat noch keinen Bulk. Es braucht die Kernzahlen und das Symbol, passt also zu V06.6; die Teilen-Vorlage J5 bleibt in V07.1. Die Veredelung an Reisetag 50 hängt daran.
+5. **Zu prüfen vor dem geschlossenen Test:** V07.3 Sicherung und Wiederherstellung vorziehen, falls Tester neu installieren müssen (in §3 schon als Möglichkeit genannt).
+6. **Kleine Reste:** Design-Plan Punkte 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request), noch nicht beauftragt.
 
 ## 11 · Ergänzungen nach der Freigabe (26.11.2026)
 

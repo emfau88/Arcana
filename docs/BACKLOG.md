@@ -14,8 +14,8 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 
 ## Härtung (G3)
 
-- [ ] Release-Modus-Testbuild mit zulässiger Testsignatur, SHA-256, Größe, Startup, Reveal und Scroll. Kaltstart auf ruhigem Rechner nachmessen (zuletzt 3,8 s unter Last).
-- [ ] TalkBack manuell auf dem Emulator (bisher nur ein uiautomator-Labelcheck).
+- [ ] Release-Modus-Testbuild mit zulässiger Testsignatur, SHA-256, Größe, Startup, Reveal und Scroll. Kaltstart auf ruhigem Rechner nachmessen (zuletzt 3,8 s unter Last). Testbuild, Signatur, SHA-256 und Größe erledigt (V05.6, S-59, `docs/TESTPAKET.md`); Startup, Reveal und Scroll im Release-Build folgen in QG-V05 (die Browser-Messung ist gelaufen, `docs/visual/PERFORMANCE.md` „V05“).
+- [ ] TalkBack von Hand mit echten Wischgesten und Doppeltipp, auf einem echten Gerät (V07.5). Der Grundcheck in QG-V05 (Namen, Lesereihenfolge, Fokus nach dem Wechsel, S-61) lief auf dem Emulator; Gesten lassen sich dort per adb nicht einspielen, und die Tastaturnavigation von TalkBack erreichte nur die Tab-Leiste. Auf dem Gerät prüfen, ob der Inhalt per Wischen in der richtigen Reihenfolge erreichbar ist.
 - [x] Upgrade-Pfad der IndexedDB (Schema-Version 2) testen: Unit-Tests mit drei Fixtures (V03.1) und Android 0.2.0 → 0.3.0 mit echtem Datenbestand, 9/9 PASS (QG-V03, `scripts/android-migration.mjs`).
 - [ ] Zeitzonenwechsel bei laufender App und Tageswechsel im Hintergrund (Android) gezielt testen.
 - [ ] Optionaler PWA-Cache (Service Worker) prüfen: Offline auch im Browser.
@@ -33,7 +33,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [x] Kartenkunst ersetzt durch Deck v2 (D-26, D-27).
 - [ ] Archetyp-Sigillen und App-Icon an das gemalte Deck angleichen (eigener kleiner Auftrag).
 - [ ] Optional nachbessern: XII (Baum kein klares T, Lichtkranz schwach), XVII (sieben kleine Sterne fehlen), Rückseite wirkt flacher als die Vorderseiten.
-- [ ] Grimoire-Sammlung: Am Anfang sind fast alle Karten verdeckt. Entdeckte Karten hervorheben oder filtern.
+- [x] Grimoire-Sammlung: Am Anfang sind fast alle Karten verdeckt. Entdeckte Karten hervorheben oder filtern. Erledigt mit V05.3: Im Kapitel Karten stehen nur die entdeckten, der Rest ist eine Zeile (Design-Plan Punkt 7, S-55).
 - [ ] Lange Kartentitel (Längenklasse `l`, z. B. „Die Hohepriesterin“) sind in der kleinen Rasteransicht klein.
 - [ ] Menschliches Lektorat aller Texte (Ton, Rhythmus). XIII und XV dabei ruhig halten.
 - [x] Optional 5. oder 6. Frage im Fragebogen. Erledigt in V04.1: sieben Fragen, Ergänzungs-Archetyp, Angebot an Bestandsnutzer (D-53).
@@ -45,6 +45,12 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] Optional: Willkommen als „Buch als Bühne“ neu anordnen, damit A06 unabgedunkelt wirkt (S-27).
 - [ ] V07.5, echtes Gerät: Bildschirmwechsel auf bildreiche Screens (Enthüllung, „Heute“, Grimoire) mit `scripts/android-trace.mjs` messen; auf dem Emulator bleibt ein langer Frame von 100–230 ms (B-13, S-31).
 - [ ] V07.5, echtes Gerät: Das Android-WebView holt `favicon.svg` bei jeder Navigation und liest es als SVG-Dokument (38–54 ms Hauptthread). Auf dem Emulator ohne messbare Wirkung auf die Frames; auf dem Gerät prüfen, ob sich das Entfernen in der App lohnt (S-31).
+
+## Leistung (B-08, Ausnahme des Eigentümers D-67, Behebung spätestens in V07.5)
+
+- [ ] Option 1, kleine Variante (unsichtbar, ≈ 1,5–2 h mit Messung): Orakel, Willkommen mit Fragebogen und die Detailteile des Grimoires als eigene Chunks laden und im Leerlauf vorladen; die Identität erst nach dem ersten Bild berechnen. Ziel: „Heute“ sichtbar ≤ 1.250 ms, Erststart ≤ 1.600 ms (`docs/visual/PERFORMANCE.md` „V05“).
+- [ ] Option 2, große Variante (unsichtbar, weitere ≈ 1,5–2 h, riskanter): nur die aktive Sprache der Oberflächen- und Kartentexte im Start-JS, die andere beim Sprachwechsel nachladen.
+- [ ] Falls weder 1 noch 2 reicht: Raumbild auf „Heute“ nach der Karte laden (sichtbar, nur nach Rückfrage).
 
 ## Bekannte Kleinigkeiten
 

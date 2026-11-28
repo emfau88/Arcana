@@ -89,7 +89,7 @@ export function cardEncounters(facts: Facts): Map<CardId, CardEncounters> {
     const e = get(d.cardId);
     e.days.add(d.dateKey);
     e.themes.add(d.themeId);
-    if (hasText(d.note)) e.reflections++;
+    if (hasText(d.note) || d.notedAt) e.reflections++;
   }
   for (const r of facts.readings) {
     const day = readingDateKey(r);
@@ -99,7 +99,7 @@ export function cardEncounters(facts: Facts): Map<CardId, CardEncounters> {
       e.days.add(day);
       e.themes.add(r.themeId);
       e.roles.add(r.content.positions[i]?.position ?? POSITIONS[i] ?? 'extra');
-      if (hasText(r.note)) e.reflections++;
+      if (hasText(r.note) || r.notedAt) e.reflections++;
     });
   }
   const part2 = new Set<CardId>();
@@ -113,8 +113,9 @@ export function cardEncounters(facts: Facts): Map<CardId, CardEncounters> {
     const e = out.get(cardId);
     if (e?.studied.part1) e.studied.part2 = true;
   }
+  // A study answer or an own reflection on the card. A deleted entry keeps counting (S-49).
   for (const j of facts.journal ?? []) {
-    if (j.kind === 'study' && j.refs.cardId && hasText(j.text)) get(j.refs.cardId).reflections++;
+    if ((j.kind === 'study' || j.kind === 'reflection') && j.refs.cardId && (hasText(j.text) || j.deletedAt)) get(j.refs.cardId).reflections++;
   }
   return out;
 }
@@ -166,21 +167,35 @@ export interface Milestone {
   rewards: Reward[];
 }
 
-/** Fixed milestones up to 365 (PROGRESSION_DESIGN §3.2). Rhythmic ones are added in `milestoneAt`. */
+/**
+ * Fixed milestones up to 365 (PROGRESSION_DESIGN §3.2). Rhythmic ones are added in `milestoneAt`.
+ * The three card backs open early, on journey days 2, 5 and 10 (owner, D-66).
+ */
 export const FIXED_MILESTONES: ReadonlyArray<{ day: number; rewards: Reward[] }> = [
   { day: 1, rewards: [{ kind: 'design', id: 'grimoire-cover' }] },
-  { day: 2, rewards: [{ kind: 'content', id: 'world-intro:numerology' }] },
+  {
+    day: 2,
+    rewards: [
+      { kind: 'design', id: 'cardback:crescent' },
+      { kind: 'content', id: 'world-intro:numerology' },
+    ],
+  },
   { day: 3, rewards: [{ kind: 'content', id: 'archetype-chapter:1' }] },
   { day: 4, rewards: [{ kind: 'content', id: 'world-intro:angel-numbers' }] },
+  { day: 5, rewards: [{ kind: 'design', id: 'cardback:compass' }] },
   { day: 6, rewards: [{ kind: 'content', id: 'world-intro:symbols' }] },
   { day: 7, rewards: [{ kind: 'content', id: 'review-spread' }] },
-  { day: 10, rewards: [{ kind: 'design', id: 'personal-symbol' }] },
-  { day: 14, rewards: [{ kind: 'design', id: 'cardback:crescent' }] },
+  {
+    day: 10,
+    rewards: [
+      { kind: 'design', id: 'personal-symbol' },
+      { kind: 'design', id: 'cardback:golden-wheel' },
+    ],
+  },
   { day: 21, rewards: [{ kind: 'content', id: 'archetype-chapter:2' }] },
   { day: 42, rewards: [{ kind: 'content', id: 'archetype-chapter:3' }] },
   { day: 50, rewards: [{ kind: 'design', id: 'ex-libris:gilded' }] },
   { day: 63, rewards: [{ kind: 'content', id: 'archetype-chapter:4' }] },
-  { day: 75, rewards: [{ kind: 'design', id: 'cardback:compass' }] },
   {
     day: 100,
     rewards: [
@@ -189,7 +204,6 @@ export const FIXED_MILESTONES: ReadonlyArray<{ day: number; rewards: Reward[] }>
       { kind: 'design', id: 'constellation:hundred' },
     ],
   },
-  { day: 365, rewards: [{ kind: 'design', id: 'cardback:golden-wheel' }] },
 ];
 
 /** Design unlocks for jubilees, fixed order, never for sale (§3.3). */

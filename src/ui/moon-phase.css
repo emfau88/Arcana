@@ -1,0 +1,15 @@
+/* Moon phase as the level of a card (PRODUCT_SYSTEMS D3). */
+.moon-phase {
+  flex: none;
+}
+.moon-phase__dark {
+  fill: rgba(10, 8, 20, 0.65);
+}
+.moon-phase__lit {
+  fill: var(--brass-200);
+}
+.moon-phase__rim {
+  fill: none;
+  stroke: var(--brass-300);
+  stroke-width: 1;
+}

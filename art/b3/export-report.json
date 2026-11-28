@@ -1,0 +1,252 @@
+{
+  "files": [
+    {
+      "file": "world/bg-oracle.webp",
+      "size": "1024x1536",
+      "kb": 214.6,
+      "budgetKb": 320,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "world/bg-oracle-720.webp",
+      "size": "720x1080",
+      "kb": 106.6,
+      "budgetKb": 160,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "world/bg-grimoire.webp",
+      "size": "1024x1536",
+      "kb": 178.2,
+      "budgetKb": 320,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "world/bg-grimoire-720.webp",
+      "size": "720x1080",
+      "kb": 88.8,
+      "budgetKb": 160,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "world/grimoire-book.webp",
+      "size": "900x600",
+      "kb": 137.8,
+      "budgetKb": 140,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "backs/cardback-crescent.webp",
+      "size": "720x1080",
+      "kb": 127.9,
+      "budgetKb": 140,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "backs/thumbs/cardback-crescent.webp",
+      "size": "240x360",
+      "kb": 19.4,
+      "budgetKb": 30,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "backs/cardback-compass.webp",
+      "size": "720x1080",
+      "kb": 111.9,
+      "budgetKb": 140,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "backs/thumbs/cardback-compass.webp",
+      "size": "240x360",
+      "kb": 19.7,
+      "budgetKb": 30,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "world/parchment-tile.webp",
+      "size": "512x512",
+      "kb": 5.1,
+      "budgetKb": 90,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "vignettes/cards.webp",
+      "size": "320x320",
+      "kb": 29.3,
+      "budgetKb": 30,
+      "quality": 0.76,
+      "ok": true
+    },
+    {
+      "file": "vignettes/archetypes.webp",
+      "size": "320x320",
+      "kb": 28.2,
+      "budgetKb": 30,
+      "quality": 0.84,
+      "ok": true
+    },
+    {
+      "file": "vignettes/symbols.webp",
+      "size": "320x320",
+      "kb": 29.9,
+      "budgetKb": 30,
+      "quality": 0.68,
+      "ok": true
+    },
+    {
+      "file": "vignettes/journal.webp",
+      "size": "320x320",
+      "kb": 29.5,
+      "budgetKb": 30,
+      "quality": 0.76,
+      "ok": true
+    },
+    {
+      "file": "vignettes/rituals.webp",
+      "size": "320x320",
+      "kb": 29.6,
+      "budgetKb": 30,
+      "quality": 0.72,
+      "ok": true
+    },
+    {
+      "file": "vignettes/numbers.webp",
+      "size": "320x320",
+      "kb": 29.3,
+      "budgetKb": 30,
+      "quality": 0.8,
+      "ok": true
+    },
+    {
+      "file": "vignettes/journey.webp",
+      "size": "320x320",
+      "kb": 28.4,
+      "budgetKb": 30,
+      "quality": 0.8,
+      "ok": true
+    },
+    {
+      "file": "vignettes/tailpiece.webp",
+      "size": "320x320",
+      "kb": 18.2,
+      "budgetKb": 30,
+      "quality": 0.92,
+      "ok": true
+    }
+  ],
+  "checks": {
+    "vignettes": [
+      {
+        "name": "cards",
+        "box": [
+          48,
+          98,
+          288,
+          315
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "archetypes",
+        "box": [
+          425,
+          106,
+          302,
+          301
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "symbols",
+        "box": [
+          810,
+          103,
+          300,
+          307
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "journal",
+        "box": [
+          1195,
+          98,
+          298,
+          316
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "rituals",
+        "box": [
+          41,
+          611,
+          302,
+          314
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "numbers",
+        "box": [
+          425,
+          615,
+          302,
+          306
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "journey",
+        "box": [
+          810,
+          615,
+          301,
+          306
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "tailpiece",
+        "box": [
+          1194,
+          702,
+          301,
+          132
+        ],
+        "touchesCell": false
+      }
+    ],
+    "vignetteSquare": 334,
+    "book": {
+      "transparent": 0.585,
+      "opaque": 0,
+      "partial": 0.415,
+      "corners": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "parchment": {
+      "seamX": 0,
+      "seamY": 0,
+      "neighbour": 0.28,
+      "lMin": 86.8,
+      "lMax": 88.1,
+      "lRange": 1.2
+    }
+  }
+}
