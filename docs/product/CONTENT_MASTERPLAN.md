@@ -125,7 +125,7 @@ Weitere Testvektoren (Pflicht im Unit-Test): 29.11.1987 → Monat 11, Tag 29 →
 
 **Zusammengesetzte Deutung:** Ziffern-Grundbedeutung (0–9) plus Muster: Wiederholung (`777`), Spiegel (`1221`), Treppe (`1234`, `4321`), Paar (`1122`), Rahmen (`1001`), gemischt. Die Seite sagt offen: „aus den Ziffern zusammengesetzt“.
 
-**Symbole (24, endgültige Liste nach Abgleich mit den Bildern von Deck v2 in V06):** Sonne, Mond, Stern, Lotus, Schlüssel, Schmetterling, Phönix, Schlange, Baum, Eule, Krone, Kelch, Schwert, Stab, Rose, Lilie, Auge, Feder, Rad, Säulen, Waage, Laterne, Lemniskate, Ähre. Jedes Symbol verweist auf die Karten, in deren **Bild** es tatsächlich vorkommt (nicht auf die Tradition allein).
+**Symbole (24, endgültige Liste nach Abgleich mit den Bildern von Deck v2 in V06):** Sonne, Mond, Stern, Lotus, Schlüssel, Schmetterling, Phönix, Schlange, Baum, Eule, Krone, Kelch, Schwert, Stab, Rose, Lilie, Auge, Feder, Rad, Säulen, Waage, Laterne, Lemniskate, Ähre. Jedes Symbol verweist auf die Karten, in deren **Bild** es tatsächlich vorkommt (nicht auf die Tradition allein). **Abgleich 28.11.2026 (S-64):** 17 Symbole stehen in mindestens einem Bild (Zuordnung in `src/content/symbols.ts`). Lotus, Schmetterling, Phönix, Schlange, Eule, Auge und Feder kommen in keinem Bild vor; sie bleiben, weil sie seit V04 Resonanzsymbole der Archetypen sind, nennen aber keine Karte als Bildort, sondern ihre Archetypen, und werden über deren Karten entdeckt.
 
 **Mondphasen (1.1):** Neumond, zunehmende Sichel, erstes Viertel, zunehmender Mond, Vollmond, abnehmender Mond, letztes Viertel, abnehmende Sichel. Hauptphasen gelten für den lokalen Kalendertag, in den der exakte Zeitpunkt fällt. Die Zwischenphasen füllen die Tage dazwischen.
 

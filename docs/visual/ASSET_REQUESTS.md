@@ -27,8 +27,8 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 | A21 | `cardback-compass.png` | B3 / V05 | Kartenrücken „Sternenkompass“ (Reisetag 5, D-66) | einzeln | eingebaut (`public/cards/backs/`, V05.5, S-52) |
 | A23–A29 | `grimoire-vignettes.png` | B3 / V05 | 7 Kapitel-Vignetten plus Schlussvignette | ein Sheet, transparent | Karten, Archetypen, Tagebuch, Rituale, Reise und Schlussvignette eingebaut (`public/world/vignettes/`, V05.3, S-55); Symbole und Zahlen mit V06 |
 | A30 | `parchment-tile.png` | B3 / V05 | Pergament der Buchseiten | einzeln, kachelbar | eingebaut (`public/world/`, Inhalt und Kapitelanfänge, V05.3, S-55) |
-| A32 | `bg-discover.png` | B4 / V06 | Entdecken (Zahlen, Engelszahlen, Symbole) | einzeln | geliefert (Lieferordner), Einbau in V06 |
-| A33 | `symbols-sheet-1.png`, `symbols-sheet-2.png` | B4 / V06 | 24 Symbole des Lexikons | 2 Sheets, transparent | geliefert (Lieferordner), Einbau in V06 nach finaler Symbolliste |
+| A32 | `bg-discover.png` | B4 / V06 | Entdecken (Zahlen, Engelszahlen, Symbole) | einzeln | geprüft und exportiert (`art/b4/world/`, S-63), Einbau mit dem Entdecken-Tab |
+| A33 | `symbols-sheet-1.png`, `symbols-sheet-2.png` | B4 / V06 | 24 Symbole des Lexikons | 2 Sheets, transparent | Liste mit den Kartenbildern abgeglichen (S-64), geprüft und exportiert (`art/b4/symbols/`, 256 px und 96 px, S-63), Einbau mit dem Lexikon |
 | A18 | `store-feature.png` | B5 / V07 | Store-Grafik 1024 × 500 | einzeln | geliefert (Lieferordner), Einbau in V07 nach E11 (Name) |
 | A22 | `cardback-golden-wheel.png` | B5 / V05 | Kartenrücken „Goldenes Rad“ (Reisetag 10, D-66) | einzeln | eingebaut (`public/cards/backs/`, V05.5, S-52) |
 | A31 | `cardback-edition.png` | B5 / V07 | Kartenrücken der Edition | einzeln | geliefert (Lieferordner), Einbau nur mit Billing-Freigabe (E14) |
@@ -42,7 +42,7 @@ Dieses Manifest legt fest, welche Bilder extern (z. B. mit ChatGPT) erzeugt werd
 - [x] B1 · A01, A02 geliefert und eingebaut (V02)
 - [x] B2 · für V04, Ablauf in §0.1 · geliefert 26.11.2026 (11/11), als WebP exportiert (D-55) und mit den V04-Screens in `public/` eingebaut (27.11.2026, D-58)
 - [ ] B3 · für V05 · im Lieferordner vollständig (7 Dateien: A03, A04, A15, A20, A21, A23–A29 als ein Sheet, A30; Stand 27.11.2026); **geprüft und als WebP exportiert** (27.11.2026, 18 Dateien im Budget unter `art/b3/`, S-50); eingebaut: A20, A21 (V05.5), A04, A15, Vignetten, A30 (V05.3), A03 (V05.6); offen: Vignetten Symbole und Zahlen mit V06
-- [ ] B4 · für V06 · im Lieferordner vollständig (3 Dateien: A32, zwei Symbol-Sheets A33; Stand 27.11.2026); Einbau in V06
+- [ ] B4 · für V06 · im Lieferordner vollständig (3 Dateien: A32, zwei Symbol-Sheets A33; Stand 27.11.2026); **geprüft und als WebP exportiert** (28.11.2026, 50 Dateien im Budget unter `art/b4/`, S-63; Symbolliste gegen die Kartenbilder S-64); Einbau mit den Screens in V06
 - [ ] B5 · für V07 · im Lieferordner vollständig (3 Dateien: A18, A22, A31; Stand 27.11.2026); A22 für V05 vorgezogen und exportiert (27.11.2026, `art/b5/`, S-51); A18 Einbau in V07, A31 nur mit Billing
 - [ ] B6 · für 1.1 · im Lieferordner vollständig (A34); Einbau in 1.1
 - [ ] B7 · für 1.2 · im Lieferordner vollständig (Rücken und 22 Karten, Stand 27.11.2026); Prüfung und Einbau erst nach der Entscheidung für das Zusatzdeck

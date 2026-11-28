@@ -169,7 +169,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 ### V06 · Zahlen und Symbole (0.6)
 
-Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahlen`. **Läuft seit 28.11.2026** (Zuruf des Eigentümers, D-69; E8 fünf Tabs und Ex Libris in V06.6 entschieden).
+Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahlen`. **Läuft seit 28.11.2026** (Zuruf des Eigentümers, D-69; E8 fünf Tabs und Ex Libris in V06.6 entschieden). Schritt 0 erledigt: Symbolliste gegen die Kartenbilder (S-64), B4 exportiert (S-63).
 
 - [ ] V06.1 Entdecken-Tab (E8)
 - [ ] V06.2 Numerologie
@@ -353,7 +353,7 @@ Angefordert wird **immer nur der nächste Bulk**; eingebaut, geprüft und ins Re
 | B1 | V02 | A01 Nachtwelt, A02 Pflanzenecken | 2 | geliefert |
 | B2 | V04 | A05 Ich/Enthüllung, A06 Willkommen, A07–A14 Archetyp-Porträts, A19 Sternkarte | 11 | geliefert, eingebaut (D-58) |
 | B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | exportiert (S-50), eingebaut bis auf die Vignetten Symbole und Zahlen (mit V06) |
-| B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | im Lieferordner vollständig, Einbau in V06 |
+| B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | geprüft und exportiert (S-63), Einbau in V06 |
 | B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“ (für Tag 10 nach V05 vorgezogen und exportiert, D-66, S-51), A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
 | B6 | 1.1 | A34 Mondwelt | 1 | im Lieferordner, Einbau in 1.1 |
 | B7 | 1.2 | Zusatzdeck | 23 | im Lieferordner (23 Dateien), Einbau erst nach Entscheidung |

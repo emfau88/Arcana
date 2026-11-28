@@ -72,6 +72,8 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-60 | 28.11.2026 | Kartenbilder in 560 px (Reserve aus D-52) | versucht und zurückgenommen: Bilder auf „Heute“ ≈ 130 KB kleiner, aber „Heute sichtbar“ ohne messbaren Gewinn und die Enthüllung mit mehr Rucklern; die Karten bleiben bei 720 px, die Entscheidung über die Leistung liegt beim Eigentümer | QG-V05, D-52, B-08, PERFORMANCE.md „V05“ |
 | S-61 | 28.11.2026 | Vorlesefehler aus dem TalkBack-Grundcheck | unsichtbare Pausen nur für Screenreader: Komma zwischen den Schlagworten auf „Heute“ und nach der Kartennummer in der Legung; Bild pixelgleich | QG-V05, TalkBack |
 | S-62 | 28.11.2026 | Reihenfolge in V06 | Symbol-Abgleich mit den Kartenbildern zuerst, dann Logik und Texte (Numerologie, Engelszahlen, Symbole), danach B4 und die Screens mit dem Entdecken-Tab (nach E8), zuletzt die zweite Säule; Plan in `docs/V06_PLAN.md` | V06 |
+| S-63 | 28.11.2026 | Export von B4 | wie B2 und B3 nach `art/b4/`; A32 in 1024 und 720 px; 24 Symbole aus beiden Sheets in einem gemeinsamen Maßstab, 256 px (≤ 20 KB) und zusätzlich 96 px für Listen (≤ 6 KB); Alpha in 32 Stufen, sieben Generator-Pünktchen beim Export weggelassen | V06 Schritt 0 |
+| S-64 | 28.11.2026 | Symbolliste gegen die Kartenbilder | alle 24 bleiben; 17 stehen in Bildern und nennen diese Karten, sieben (Lotus, Schmetterling, Phönix, Schlange, Eule, Auge, Feder) stehen in keinem Bild und werden über die Karten ihrer Archetypen entdeckt | V06 Schritt 0 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -895,3 +897,31 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 **Alternativen:** mit dem Entdecken-Tab beginnen (früh sichtbar, braucht aber E8 vorher und hätte Screens ohne Inhalte); jede Welt senkrecht durchbauen, also Numerologie ganz mit Screens, dann Engelszahlen, dann Symbole (früher auf dem Handy prüfbar, aber Tab, Hub und Grimoire würden dreimal angefasst); B-08 Option 1 vorziehen (der Start wäre vorher leichter, aber der Eigentümer hat die Behebung auf später gelegt, D-67).
 
 **Wechsel kostet:** nichts; die Schritte 1–3 sind voneinander unabhängig.
+
+## S-63 · Export von B4
+
+**Entschieden:** Die drei B4-Master sind geprüft und mit `scripts/export-art.mjs b4` in 50 WebP-Dateien exportiert, alle im Budget (`art/b4/export-report.json`, Kontaktbogen `docs/visual/evidence/v06-b4-export.webp`). Wie bei B2 und B3 liegen sie unter `art/b4/` und kommen erst mit dem Screen, der sie zeigt, nach `public/`.
+
+- **A32 Entdecken-Welt:** 1024 × 1536 (151 KB) und 720 × 1080 (78 KB), Qualität 0,92. Die Armillarsphäre sitzt oben in der Mitte, ab etwa 30 % Höhe ist die Mitte ruhig und dunkel, keine Ziffern oder Zeichen.
+- **A33 Symbole:** Beide Sheets werden im Raster 4 × 3 geschnitten, alle 24 im selben Maßstab (Quadrat = größtes Motiv plus 6 % Luft, 279 px im Master → 256 px), damit die Goldlinien überall gleich stark wirken. Kein Motiv berührt den Rand seiner Zelle.
+- **Budget:** WebP speichert den Alphakanal verlustfrei; Phönix und Baum lagen deshalb auch bei Qualität 0,48 noch über 20 KB. Mit dem Alphakanal in 32 statt 256 Stufen (weich sind nur die Kanten, der Schein ist Farbe) passen alle: höchstens 19,9 KB. Bei 160 px ist kein Unterschied zu sehen.
+- **Pünktchen:** Unter Schlüssel, Schmetterling und Säulen lagen winzige Flecken aus dem Generator. Freistehende Flecken unter 30 Pixeln werden beim Export weggelassen (3 und 4 je Sheet); Strahlen, Funken und Ketten sind viel größer und bleiben. Die Master bleiben unverändert.
+- **Zusätzlich 96 px:** Listen zeigen Symbole mit 48 px. Eine Liste mit 24 Bildern zu je 256 px wären ≈ 390 KB, mit 96 px ≈ 112 KB (höchstens 5,8 KB je Datei). Das ist eine unsichtbare Optimierung; die Detailseite nutzt 256 px.
+
+**Warum:** gleiches Vorgehen wie B2 und B3, damit Web-Build und APK erst wachsen, wenn ein Screen die Bilder zeigt; der gemeinsame Maßstab hält die 24 als eine Serie zusammen.
+
+**Alternativen:** Qualität weiter senken (hilft kaum, weil der Alphakanal die Größe bestimmt); die zwei schweren Symbole über dem Budget lassen (21 und 24 KB, nur auf ihrer Detailseite geladen); ein anderer Kodierer mit verlustbehaftetem Alpha (neues Werkzeug, Export nicht mehr über das Playwright-Chromium des Projekts); nur 256 px auch in Listen (einfacher, aber gut 280 KB mehr je Listenaufruf).
+
+**Wechsel kostet:** ein erneuter Lauf von `scripts/export-art.mjs b4`.
+
+## S-64 · Symbolliste gegen die Kartenbilder
+
+**Entschieden:** Alle 22 Kartenbilder von Deck v2 sind einzeln angesehen (dazu die in V05 gegen die Bilder geprüften Texte „Symbolik des Bildes“). 17 der 24 Symbole stehen sichtbar in mindestens einem Bild; die Zuordnung steht in `src/content/symbols.ts` (`SYMBOL_CARDS`, Test `tests/unit/symbols.test.ts`). Beispiele: Mond in acht Bildern (Hohepriesterin, Hierophant, Wagen, Eremit, Rad, Teufel, Turm, Mond), Säulen bei Hohepriesterin, Hierophant und Gerechtigkeit, Lilie bei Magier, Herrscherin (eingraviert auf dem Herzschild) und Kraft (wächst aus dem Stein), Krone nur am Turm.
+
+Sieben Symbole stehen in keinem Bild: Lotus, Schmetterling, Phönix, Schlange, Eule, Auge und Feder. Sie **bleiben**, weil sie seit V04 Resonanzsymbole der Archetypen sind (Auge, Phönix, Feder, Eule und Lotus sogar Leitsymbole, also das persönliche Symbol an Reisetag 10) und ihre Bilder geliefert sind. Sie nennen keine Karte als Bildort, sondern ihre Archetypen („Leitsymbol der Weisen“), und werden über deren drei Resonanzkarten entdeckt: Erreicht eine dieser Karten Stufe 3, ist das Symbol entdeckt. So ist jedes der 24 Symbole ohne Zufall erreichbar, und das Grimoire kann ehrlich „x von 24“ zeigen.
+
+**Warum:** Der Masterplan verlangt Verweise nur auf Bilder, in denen ein Symbol wirklich vorkommt. Die sieben zu streichen hieße, die Resonanz und die Leitsymbole aus V04 zu ändern, die im Profil schon sichtbar sind, und sieben gelieferte Bilder zu verwerfen.
+
+**Alternativen:** die sieben durch Motive ersetzen, die in den Bildern stehen (etwa Löwe, Kette, Krug, Granatapfel, Herz, Lorbeer, Posaune; braucht neue Bilder oder SVG-Ersatz und ändert die Resonanz aus V04); die sieben behalten, aber nur über den Meilenstein an Tag 10 entdecken (dann blieben die meisten für immer Silhouetten, das Kapitel wäre nie vollständig); die Tradition als Bildort zählen (widerspricht §6).
+
+**Wechsel kostet:** eine Tabelle in `src/content/symbols.ts` und die Texte der betroffenen Symbole.
