@@ -186,7 +186,7 @@ Pull Requests [#5](https://github.com/emfau88/Arcana/pull/5) (D-62) und [#6](htt
 
 ## QG-V05 · Karten, Legungen, Grimoire — PASS mit Ausnahme (D-67), Merge vom Eigentümer genannt 28.11.2026
 
-Version 0.5.0 · Pull Request PRLINK · Merge nach einem grünen Gate (D-67), danach Tag `v0.5.0`
+Version 0.5.0 · Pull Request [#8](https://github.com/emfau88/Arcana/pull/8) · Merge nach einem grünen Gate (D-67), danach Tag `v0.5.0`
 
 | Prüfung | Ergebnis |
 |---|---|
