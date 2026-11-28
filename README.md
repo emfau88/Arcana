@@ -4,8 +4,8 @@
 
 Link auf dem Handy öffnen (Chrome oder Safari). Die App läuft komplett im Browser. Alle Eingaben bleiben lokal auf deinem Gerät, es gibt kein Konto, keinen Server und kein Tracking.
 
-> **Stand: Version 0.4.1 (27.11.2026).** Drei von sechs Paketen bis zum Release 1.0 sind fertig: Tagesorakel (V02), Fundament (V03), Identität und Reise (V04).
-> Enthalten sind 22 gemalte Karten (Deck v2, siehe [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md)), 6 Themen, 8 Archetypen mit Fragebogen und die Narrenreise, alles in Deutsch und Englisch. Als Nächstes kommt V05 (Kartenvertiefung, Legungen, Grimoire als Buch, Tagebuch). Die Seite wird bei jedem Push auf `main` automatisch neu gebaut.
+> **Stand: Version 0.5.0 (28.11.2026).** Vier von sechs Paketen bis zum Release 1.0 sind fertig: Tagesorakel (V02), Fundament (V03), Identität und Reise (V04), Karten, Legungen und Grimoire (V05).
+> Enthalten sind 22 gemalte Karten (Deck v2, siehe [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md)), 6 Themen, 8 Archetypen mit Fragebogen und die Narrenreise, alles in Deutsch und Englisch. Dazu kommen Kartenvertiefung mit Kartenstudium, Legungen mit Rollen, das Grimoire als Buch mit Tagebuch und Kartenrücken. Als Nächstes kommt V06 (Zahlen und Symbole). Die Seite wird bei jedem Push auf `main` automatisch neu gebaut.
 
 ---
 
