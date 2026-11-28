@@ -67,6 +67,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-55 | 28.11.2026 | Grimoire als Buch, Teil 1 | Einband (A15) mit den Namen der eigenen Archetypen in der Bibliothek (A04), Inhalt auf Pergament (A30) mit Vignetten; nur gebaute Kapitel, römisch I–V (Karten, Archetypen, Tagebuch, Rituale, Reise); Kapitelanfang als Pergamentseite; Karten: nur Entdecktes, der Rest als eine Zeile (Design-Plan Punkt 7); Tagebuch mit Schreiben, Suche, Filtern und Löschdialog; Rituale mit „Heute gemacht“, leer drei Einstiegsrituale; „Neu“ für eine neue Kartenstufe erst ab dem ersten Öffnen des Buchs | V05.3, V05.4, PRODUCT_SYSTEMS E, D-63 |
 | S-56 | 28.11.2026 | Sternkarte als drei Ringe | Variante A aus dem Muster unverändert übernommen: drei Ringe, Spirale nach innen, Wegenden größer, heutiger Stern leuchtet, Ziffer nur am gewählten Stern; die Zeile darunter nennt Station, Karte, Weg („Der innere Weg“) und Stand mit den vorhandenen Texten; Trefferfläche je Stern Radius 18; vollendete Runden klein in derselben Spiralform | V05.3, D-64 Punkt 6 |
 | S-57 | 28.11.2026 | Aufklapper auf der Enthüllung | entfällt nur nach einer Enthüllung mit Archetyp (wie im Muster, Variante B); beim offenen Profil bleibt er, dort ist er ohne beantwortete Frage die einzige Erklärung; Text `howItWorks` bleibt deshalb | D-64 Punkt 5 |
+| S-58 | 28.11.2026 | Orakel als Bühne mit den Legungen | Muster A übernommen und auf 2–5 Karten erweitert: Legungen als eigene Zeile über den Themen mit Kurzbeschreibung, Karten in einer Reihe am Tisch, Breite wie bei drei Karten; Rückblick legt die Fadenkarte offen und zieht eine; Fragen der Positionen und „Deine Woche in Karten“ in der Deutung; Kopfzeilen per Subgrid (B-12); Kontrast auf A03 mit Hof und Körperfarbe | V05.6, V05.2, D-64 Punkt 2 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -97,6 +98,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] **Grimoire als Buch** (V05.3, S-55, Nachweis `docs/visual/evidence/v05-grimoire-buch.webp`, `v05-grimoire-leer.webp` und `v05-grimoire-buch-android.webp`): Buch in der Bibliothek, Inhalt und Kapitelanfänge auf Pergament, Listen auf dunklen Panels. Passen Größe des Buchs (der Inhalt beginnt erst nach dem ersten Bildschirm) und die Zeile „17 weitere Karten warten auf ihren Tag.“ statt der verdeckten Rücken?
 - [ ] **Meilenstein-Moment an Reisetag 1** (S-55): Soll das Buch am ersten Tag mit einem Moment „Dein Grimoire ist aufgeschlagen“ begrüßt werden? Dafür müsste die Freischaltung vom Ex Libris (Tag 50) getrennt werden; bisher ist er aus.
 - [ ] **Sternkarte als drei Ringe** (V05.3, S-56, Nachweis `docs/visual/evidence/v05-sternkarte.webp` und `v05-sternkarte-android.webp`): gebaut wie das gewählte Muster A. Neu gegenüber dem Muster: Die Zeile unter der Karte nennt den Weg mit den Namen von „Heute“ („Der innere Weg · heute“), und die vollendeten Runden erscheinen klein als dieselbe Spirale. Passt das, oder soll beim Antippen zusätzlich der Stationstext erscheinen?
+- [ ] **Orakel als Bühne mit den Legungen** (V05.6, S-58, Nachweis `docs/visual/evidence/v05-orakel.webp`, `v05-orakel-klein.webp` und `v05-orakel-android.webp`): gebaut wie Muster A, dazu die Legungen als eigene Knopfzeile über den Themen mit Kurzbeschreibung. Neu gegenüber dem Muster: vier Karten werden schmaler, der Rückblick zeigt die Fadenkarte offen, die Deutung nennt die Frage jeder Position und beim Rückblick alle eigenen Karten der Woche. Für den Kontrast liegen unter den Positionsnamen weiche dunkle Höfe, graue Texte sind auf dieser Bühne hell. Passt das, oder soll die Auswahl der Legung ein eigener Schritt sein oder die letzte Legung gemerkt werden?
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -815,3 +817,26 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Überall entfernen und den Text löschen: Wer alle Fragen überspringt, erfährt dann auf diesem Screen nicht, wie ein Archetyp entsteht.
 
 **Wechsel kostet:** eine Zeile in `src/features/onboarding/Onboarding.tsx` und die Prüfung im E2E-Test „with reduced motion the reveal shows everything at once“.
+
+## S-58 · Orakel als Bühne mit den Legungen
+
+**Entschieden:** Das Orakel steht in der gemalten Sternwarte (A03) wie im gewählten Muster A (D-64 Punkt 2): Karten in einer Reihe auf dem Tisch, Themen als eine Zeile, Hauptaktion unten; nach dem Ziehen drehen sich die Karten an derselben Stelle um. Dazu kommen die Legungen aus V05.2:
+- **Auswahl:** eine zweite Zeile gleicher Knöpfe über den Themen, darunter die Kurzbeschreibung der gewählten Legung. Angeboten wird nur, was `availableSpreads` erlaubt: Drei Karten, Licht und Schatten, Neuanfang, ab Reisetag 7 der Wochenrückblick, ab Tag 30 der Monatsrückblick. Zwei Wege und Verbindung bleiben ohne Billing unsichtbar, auch nicht als Platzhalter. Ohne Modul `spreads` (offline vor dem ersten Laden) bleibt es bei den drei Karten ohne Auswahlzeile. Jeder Besuch beginnt mit „Drei Karten“.
+- **Reihe für 2–5 Karten:** Die Karten bleiben so breit wie bei drei Karten und werden nur bei vier oder fünf schmaler; die Reihe ist mittig. Der Tisch-Abstand rechnet mit der Kartenhöhe, so stehen alle Größen auf der Tischkante. Die Hauptaktion nennt die Zahl („Vier Karten ziehen“, beim Rückblick „Eine Karte ziehen“).
+- **Rückblick:** Die Fadenkarte aus den eigenen Karten liegt offen, gezogen wird nur die neue. In der Deutung steht nach der Einleitung „Deine Woche in Karten“ bzw. „Dein Monat in Karten“ mit allen eigenen Karten des Zeitraums (kleine Karte, Titel, Essenz), denn die Einleitung sagt, dass die Legung mit diesen Karten beginnt.
+- **Deutung:** Unter dem Positionsnamen steht die Frage der Position (nur bei den neuen Legungen; die klassische Legung hat keine). Über der gezogenen Legung steht der Name der Legung statt „Freie Legung“; die klassische behält „Freie Legung“.
+- **B-12:** Name, Karte und Titel jeder Position teilen sich drei Zeilen (CSS-Subgrid). Bricht ein Name bei 130 % Schrift um, rücken alle Karten gemeinsam; sie bleiben auf einer Linie. Das gilt auch im Grimoire.
+- **Kontrast auf A03:** Das Mondfenster hinter den Positionsnamen und der beleuchtete Tisch sind heller als die anderen Räume; mit den Halos des Musters lagen 20 Lesetexte unter 4,5 : 1 (bis 2,4 : 1). Ohne das Bild zu verändern: unter kurzen Namen und der Themenzeile ein weicher dunkler Hof (der Halo aus D-49, nur breiter), Kurzbeschreibung, Einleitung, Hinweis und „Legung verwerfen“ in der Körperfarbe statt Grau (wie S-23), Geisterknöpfe und die Gespeichert-Zeile mit dunkler Fläche wie im Raum von „Ich“. Danach 0 Texte unter dem Minimum bei 412, 360 und 320 px, DE und EN, auch bei 130 % Schrift.
+- **Prüfwerkzeug:** `scripts/contrast-audit.mjs` zählt Text, der unter den mindestens 90 % deckenden Teil des Schleiers der klebenden Hauptaktion gescrollt ist, als verdeckt. Der Schleier lässt Taps durch, darum sah der Prüfer ihn nicht und maß Text, der dort gar nicht lesbar ist, gegen den Goldknopf (1,1 : 1). Derselbe Text wird an der Scrollstelle gemessen, an der er frei steht, wie jeder andere verdeckte Text.
+
+**Warum:** Das Muster ist vom Eigentümer gewählt; die Erweiterungen bleiben in seiner Sprache (Knopfzeile, Reihe, Halo). Eine Zeile mehr ist der kürzeste Weg zur Legung, ohne die Karten vom Tisch zu schieben.
+
+**Alternativen:**
+- Legungen in einem Auswahlblatt oder als Liste mit Beschreibung: mehr Platz für Erklärungen, aber ein Tap mehr und ein neues Muster.
+- Legungen als Kartenreihe vor den Themen (ein eigener Schritt): klarer, aber zwei Schritte bis zum Ziehen.
+- Fünf Karten in zwei Reihen: größere Karten, aber kein Tisch mehr in einer Reihe; Variante B (Fächer) hatte der Eigentümer abgewählt.
+- Letzte Legung merken statt jedes Mal „Drei Karten“: bequemer, braucht aber ein neues gespeichertes Feld.
+- Rückblick-Karten am Ende der Deutung oder als schmale Reihe nur mit Bildern: kürzer beim Monat (bis zu 22 Karten), aber die Einleitung verweist auf sie am Anfang, und ohne Essenz fehlt der Rückblick.
+- Kontrast mit dunklerem Schleier über dem Fenster oder kleinen Schildern unter den Namen: sicher, aber sichtbar anders als das gewählte Muster.
+
+**Wechsel kostet:** Auswahl und Reihe in `src/features/oracle/Oracle.tsx`, Gestaltung in `src/features/oracle/oracle-stage.css`; die E2E-Tests `tests/e2e/oracle.spec.ts` prüfen Angebot, Neuanfang und Rückblick.

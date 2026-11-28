@@ -24,7 +24,7 @@
 
 Wird nach **jedem Bulk** abgehakt (AGENTS.md). `[x]` = erledigt und auf dem Arbeitsbranch gepusht, `[ ]` = offen. Details zu jedem Bulk in §3, Belege in `docs/PROJECT_STATUS.md`.
 
-**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. **V05 läuft** seit der Freigabe vom 27.11.2026 (D-65) auf `feature/v05-karten`, Reihenfolge nach S-29: V05.1, V05.3, V05.4 und V05.5 abgeschlossen, dazu die Korrektur der Enthüllung (Design-Plan Punkt 5), V05.2 (Engine) gebaut; offen sind V05.6 mit Orakel-Gestaltung, Auswahl der Legungen und Testpaket sowie QG-V05. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden in V05 eingebaut.
+**Aktuell:** V02 abgeschlossen (Tag `v0.2.1`). V03 freigegeben und gemergt (Pull Request [#3](https://github.com/emfau88/Arcana/pull/3), Tag `v0.3.0`); B-07 und die Leistungsmessung sind per Eigentümer-Ausnahme verschoben (D-52). V04 freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`, D-61): alle Bulks fertig, B-07 mit Variante B (D-59), B-13 und B-14 behoben (S-30, S-31), Pages-Vorschau aktualisiert. **V05 läuft** seit der Freigabe vom 27.11.2026 (D-65) auf `feature/v05-karten`, Reihenfolge nach S-29: V05.1 bis V05.5 abgeschlossen, dazu die Korrektur der Enthüllung (Design-Plan Punkt 5); von V05.6 stehen das Orakel als Bühne und die Auswahl der Legungen (S-58); offen sind das Testpaket (E11) und QG-V05. E9 und E20 entschieden (D-47). Selbst entschiedene Punkte mit Alternativen: `docs/SELF_DECISIONS.md` (D-56). **0.4.1** (27.11.2026, Tag `v0.4.1`): Textdurchsicht aller Texte in DE und EN (D-62) und die Punkte 1, 3 und 4 des Design-Plans (D-63) sind gemergt; die Punkte 2, 5 und 6 sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden in V05 eingebaut.
 
 Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fertig, wenn“ in §3), in Klammern erledigt/gesamt. Spätere Pakete zeigen nur ihre Bulks; ihre Unterpunkte werden beim Start ausgeklappt.
 
@@ -137,11 +137,11 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] A4 wechselnde Reflexion und Ritual auf „Heute“: Variante aus den Begegnungstagen, im Datensatz gespeichert; 66 simulierte Tage ohne gleiche Kombination in 21 Tagen (Unit, S-45)
   - [x] Kartenseite, Teil 1: Stufe als Mondphase und alle offenen Ebenen kumulativ, nichts Gesperrtes sichtbar (E2E Stufe 2 und 4 in DE und EN, Browser 412/360 px, Android-Emulator, S-53)
   - [x] Kartenseite, Teil 2: Studium in zwei Teilen auf der Kartenseite, „Gelesen“ genügt, Antwort freiwillig als Tagebucheintrag; Studium öffnet Stufe 2 und 3, eine Antwort Stufe 4, übersteht Neustart (E2E DE und EN, Android-Emulator, S-54)
-- [ ] V05.2 Rollen-Legungen (3/4)
+- [x] V05.2 Rollen-Legungen (4/4)
   - [x] Engine: Rollen R1–R8 und sieben Legungen (Drei Karten, Licht und Schatten, Neuanfang, Rückblick auf Woche und Monat; Zwei Wege und Verbindung nur mit `edition.spreads`); Legung und Rollen im Datensatz, die klassische Legung bleibt unverändert (`src/domain/spreads.ts`, S-46, S-47)
   - [x] Texte: Modul `spreads` mit 72 Rahmentexten je Sprache; Content-Gate ohne Ergebnis-Positionen, Zukunftsversprechen und Aussagen über andere (S-46)
   - [x] Matrix-Test: 10.000 gezogene Legungen je Sprache über alle Themen ohne Lücke; alte Legungen werden unverändert angezeigt (Unit, E2E)
-  - [ ] Auswahl und Anzeige im Orakel (Screen) mit V05.6, dabei B-12
+  - [x] Auswahl und Anzeige im Orakel mit V05.6, dabei B-12 (S-58)
 - [x] V05.3 Grimoire als Buch (3/3)
   - [x] Buch: Einband (A15) in der Bibliothek (A04), Inhalt auf Pergament (A30) mit Vignetten (A23–A29), Kapitel I–V nur soweit gebaut (Karten, Archetypen, Tagebuch, Rituale, Reise), Kapitelanfänge, Leerzustände, „Neu“ für neue Kartenstufen; jeder gespeicherte Eintrag in ≤ 3 Taps (E2E DE und EN, Browser 412/360/320 px, Android-Emulator, S-55)
   - [x] Design-Plan Punkt 7: im Kapitel Karten nur Entdecktes, der Rest als eine ruhige Zeile (D-63, S-55)
@@ -156,9 +156,9 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
   - [x] Auswahl in den Einstellungen, nur freigeschaltete Rücken, kein Kaufangebot, nichts Gesperrtes sichtbar
   - [x] Rücken wechselt auf „Heute“, im Orakel und in der Sammlung; Meilenstein-Moment nennt den Rücken (Browser 412/360 px, Android-Emulator)
 - [x] Design-Plan Punkt 5 (D-64, Variante B, kleine Korrektur): Auf der Enthüllung entfällt der doppelte Aufklapper „So entsteht dein Archetyp“; alles andere bleibt (E2E, Android-Emulator, S-57)
-- [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17) (0/4)
-  - [ ] Orakel als Bühne (Design-Plan Punkt 2, Variante A): Sternwarte A03, drei Karten in einer Reihe am Tisch, Themen als eine Zeile, Hauptaktion unten
-  - [ ] Auswahl und Anzeige der Legungen aus V05.2 im Orakel, dabei B-12 (Kopfzeilen bei 130 % Schrift auf einer Linie)
+- [ ] V05.6 Orakel-Gestaltung und Testpaket (E11, E15, E17) (2/4)
+  - [x] Orakel als Bühne (Design-Plan Punkt 2, Variante A): Sternwarte A03, Karten in einer Reihe am Tisch, Themen als eine Zeile, Hauptaktion unten; jeder Lesetext ≥ 4,5 : 1 bei 412/360/320 px, DE/EN, 130 % (Browser, Android-Emulator, S-58)
+  - [x] Auswahl und Anzeige der Legungen aus V05.2 im Orakel: nur erlaubte Legungen, Edition unsichtbar, Rückblick ab Tag 7 mit offener Fadenkarte, Fragen je Position; B-12 behoben, Kopfzeilen bei 130 % Schrift auf einer Linie (E2E DE und EN, Android-Emulator, S-58)
   - [ ] Release-Build mit Testsignatur und Testanleitung
   - [ ] App-Name und App-ID final (E11); geschlossener Test kann starten (Freigabe E11, E15, E17)
 - [ ] QG-V05, geschlossener Test, Tag `v0.5.0` (0/4)
@@ -197,7 +197,7 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 - [x] B1 · A01 Nachtwelt, A02 Pflanzenecken (V02)
 - [x] B2 · A05 + A07 Stilprobe → A08–A14 → A06 → A19: geliefert (11/11), als WebP im Budget, eingebaut in `public/` und im Layout geprüft (Beschnitt, Kontrast, D-58)
-- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04): geprüft und als WebP exportiert (`art/b3/`, S-50); eingebaut: Kartenrücken (V05.5), Grimoire-Welt, Buch, Vignetten und Pergament (V05.3); offen: A03 Orakel mit V05.6, Vignetten Symbole und Zahlen mit V06
+- [ ] B3 · Orakel, Grimoire, Buch, Kartenrücken, Vignetten, Pergament (nach QG-V04): geprüft und als WebP exportiert (`art/b3/`, S-50); eingebaut: Kartenrücken (V05.5), Grimoire-Welt, Buch, Vignetten und Pergament (V05.3), A03 Orakel (V05.6, S-58); offen: Vignetten Symbole und Zahlen mit V06
 - [ ] B4 · Entdecken-Welt, Symbol-Sheets (nach QG-V05)
 - [ ] B5 · Store-Grafik, Kartenrücken (nach QG-V06)
 - [ ] B6 · Mondwelt (nach 1.0)
@@ -349,7 +349,7 @@ Angefordert wird **immer nur der nächste Bulk**; eingebaut, geprüft und ins Re
 |---|---|---|---|---|
 | B1 | V02 | A01 Nachtwelt, A02 Pflanzenecken | 2 | geliefert |
 | B2 | V04 | A05 Ich/Enthüllung, A06 Willkommen, A07–A14 Archetyp-Porträts, A19 Sternkarte | 11 | geliefert, eingebaut (D-58) |
-| B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | exportiert (S-50), eingebaut bis auf A03 (mit V05.6) und die Vignetten Symbole und Zahlen (mit V06) |
+| B3 | V05 | A03 Orakel, A04 Grimoire, A15 Buch, A20/A21 Kartenrücken, A23–A29 Kapitel-Vignetten (ein Sheet), A30 Pergament | 13 (7 Dateien) | exportiert (S-50), eingebaut bis auf die Vignetten Symbole und Zahlen (mit V06) |
 | B4 | V06 | A32 Entdecken-Welt, A33 Symbole (2 Sheets à 12) | 3 Dateien | im Lieferordner vollständig, Einbau in V06 |
 | B5 | V07 | A18 Store-Grafik, A22 Kartenrücken „Goldenes Rad“ (für Tag 10 nach V05 vorgezogen und exportiert, D-66, S-51), A31 Edition-Rücken (nur mit Billing) | 2–3 | im Lieferordner (3 Dateien), Einbau in V07 |
 | B6 | 1.1 | A34 Mondwelt | 1 | im Lieferordner, Einbau in 1.1 |
@@ -465,7 +465,7 @@ Regeln:
 
 Stand 28.11.2026. V02, V03 und V04 sind abgeschlossen (0.4.1 auf `main`), V05 läuft auf `feature/v05-karten` (D-65).
 
-1. **V05 fertig bauen:** Sternkarte als drei Ringe (Punkt 6 A, S-56) und Korrektur der Enthüllung (Punkt 5 B, S-57) sind gebaut (28.11.2026); es folgt V05.6 Orakel als Bühne (Punkt 2 A) mit der Auswahl der Legungen und B-12, danach das Testpaket. Vorlage für die Muster: `muster/design-plan` (S-42), nicht mergen.
+1. **V05 fertig bauen:** Sternkarte als drei Ringe (Punkt 6 A, S-56), Korrektur der Enthüllung (Punkt 5 B, S-57) und Orakel als Bühne mit der Auswahl der Legungen und B-12 (Punkt 2 A, S-58) sind gebaut (28.11.2026); es folgt das Testpaket (Release-Build mit Testsignatur, Testanleitung; E11 beim Eigentümer). Der Branch `muster/design-plan` (S-42) wird nicht gemergt und kann nach QG-V05 gelöscht werden.
 2. **Vor QG-V05:** Leistungsmessung gegen die Referenz (D-52, B-08) und TalkBack-Grundcheck.
 3. **Eigentümer:** gesammelte Durchsicht der Prüfliste „Nachprüfen“ in `SELF_DECISIONS.md` vor dem Merge; E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor dem Testpaket in V05.6); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) und E10 (D-66) sind entschieden.
 4. **Lücke im Plan:** Das Ex Libris (persönliche erste Seite, `PRODUCT_SYSTEMS.md` E4, Release 1.0) hat noch keinen Bulk. Es braucht die Kernzahlen und das Symbol, passt also zu V06.6; die Teilen-Vorlage J5 bleibt in V07.1. Die Veredelung an Reisetag 50 hängt daran.
