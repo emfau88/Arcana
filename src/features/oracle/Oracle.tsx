@@ -322,7 +322,12 @@ export function Spread({
             <span className={`spread__name ${up ? 'is-shown' : ''}`} aria-hidden={!up}>
               {up && card ? (
                 <>
-                  <span className="spread__num">{toRoman(card.order)}</span> {title}
+                  <span className="spread__num">
+                    {toRoman(card.order)}
+                    {/* The numeral stands on its own line; without this TalkBack read "VIThe Lovers" (QG-V05). */}
+                    <span className="sr-only">, </span>
+                  </span>{' '}
+                  {title}
                 </>
               ) : (
                 <span className="spread__placeholder">◇</span>

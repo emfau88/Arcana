@@ -224,9 +224,13 @@ export function Today() {
                 {keywords.split(' · ').map((k, i) => (
                   <span key={k}>
                     {i > 0 ? (
-                      <span className="today__kw-sep" aria-hidden="true">
-                        {' ✦ '}
-                      </span>
+                      <>
+                        {/* TalkBack read the keywords as one word (QG-V05); the pause is for screen readers only. */}
+                        <span className="sr-only">, </span>
+                        <span className="today__kw-sep" aria-hidden="true">
+                          {' ✦ '}
+                        </span>
+                      </>
                     ) : null}
                     {k}
                   </span>
