@@ -65,6 +65,8 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-53 | 27.11.2026 | Kartenseite, Teil 1 | Stufe als Mondphase mit Namen unter Titel und Essenz, darunter jede offene Ebene in einem eigenen Panel in der Reihenfolge der Stufen; nicht Geöffnetes fehlt einfach; das Profilthema steht oben als Botschaft, die Themenliste zeigt dann die anderen fünf; eigener Lade-Chunk | V05.1, PRODUCT_SYSTEMS D, D3, D4 |
 | S-54 | 27.11.2026 | Kartenstudium (Kartenseite, Teil 2) | eigenes Panel direkt unter der Stufe, öffnet sich an Ort und Stelle; Teil 1 „Hinschauen“, Teil 2 „Dein Leben“; „Gelesen“ genügt, eine Antwort ist freiwillig und wird zum Tagebucheintrag; danach ein ruhiger Satz mit der neuen Stufe und der Weg zu Teil 2; beliebig oft wiederholbar | V05.1, PRODUCT_SYSTEMS D2, PROGRESSION_DESIGN §4 |
 | S-55 | 28.11.2026 | Grimoire als Buch, Teil 1 | Einband (A15) mit den Namen der eigenen Archetypen in der Bibliothek (A04), Inhalt auf Pergament (A30) mit Vignetten; nur gebaute Kapitel, römisch I–V (Karten, Archetypen, Tagebuch, Rituale, Reise); Kapitelanfang als Pergamentseite; Karten: nur Entdecktes, der Rest als eine Zeile (Design-Plan Punkt 7); Tagebuch mit Schreiben, Suche, Filtern und Löschdialog; Rituale mit „Heute gemacht“, leer drei Einstiegsrituale; „Neu“ für eine neue Kartenstufe erst ab dem ersten Öffnen des Buchs | V05.3, V05.4, PRODUCT_SYSTEMS E, D-63 |
+| S-56 | 28.11.2026 | Sternkarte als drei Ringe | Variante A aus dem Muster unverändert übernommen: drei Ringe, Spirale nach innen, Wegenden größer, heutiger Stern leuchtet, Ziffer nur am gewählten Stern; die Zeile darunter nennt Station, Karte, Weg („Der innere Weg“) und Stand mit den vorhandenen Texten; Trefferfläche je Stern Radius 18; vollendete Runden klein in derselben Spiralform | V05.3, D-64 Punkt 6 |
+| S-57 | 28.11.2026 | Aufklapper auf der Enthüllung | entfällt nur nach einer Enthüllung mit Archetyp (wie im Muster, Variante B); beim offenen Profil bleibt er, dort ist er ohne beantwortete Frage die einzige Erklärung; Text `howItWorks` bleibt deshalb | D-64 Punkt 5 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -94,6 +96,7 @@ Was nach dem Alleingang auf jeden Fall angesehen werden sollte. Abgehakt wird er
 - [ ] **Kartenstudium** (V05.1, S-54, Nachweis `docs/visual/evidence/v05-kartenstudium.webp` und `v05-kartenstudium-android.webp`): Panel „Kartenstudium“ direkt unter der Stufe mit einem Satz und „Studium beginnen“; geöffnet zeigt es den Impuls, ein freiwilliges Antwortfeld und „Gelesen“ bzw. „Antwort festhalten“. Soll das Studium lieber unter den Ebenen stehen oder als eigene Seite öffnen?
 - [ ] **Grimoire als Buch** (V05.3, S-55, Nachweis `docs/visual/evidence/v05-grimoire-buch.webp`, `v05-grimoire-leer.webp` und `v05-grimoire-buch-android.webp`): Buch in der Bibliothek, Inhalt und Kapitelanfänge auf Pergament, Listen auf dunklen Panels. Passen Größe des Buchs (der Inhalt beginnt erst nach dem ersten Bildschirm) und die Zeile „17 weitere Karten warten auf ihren Tag.“ statt der verdeckten Rücken?
 - [ ] **Meilenstein-Moment an Reisetag 1** (S-55): Soll das Buch am ersten Tag mit einem Moment „Dein Grimoire ist aufgeschlagen“ begrüßt werden? Dafür müsste die Freischaltung vom Ex Libris (Tag 50) getrennt werden; bisher ist er aus.
+- [ ] **Sternkarte als drei Ringe** (V05.3, S-56, Nachweis `docs/visual/evidence/v05-sternkarte.webp` und `v05-sternkarte-android.webp`): gebaut wie das gewählte Muster A. Neu gegenüber dem Muster: Die Zeile unter der Karte nennt den Weg mit den Namen von „Heute“ („Der innere Weg · heute“), und die vollendeten Runden erscheinen klein als dieselbe Spirale. Passt das, oder soll beim Antippen zusätzlich der Stationstext erscheinen?
 
 ## S-01 · Ergänzungs-Archetyp
 
@@ -779,3 +782,36 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Meilenstein-Moment am Reisetag 1 („grimoire-cover“) jetzt einschalten: Er teilt sich die Freischaltung mit dem Ex Libris (Tag 50), das noch nicht gebaut ist; beides müsste getrennt werden. Bleibt als Frage in der Prüfliste.
 
 **Wechsel kostet:** `src/features/grimoire/Book.tsx` und `book.css`, `src/domain/book.ts`, die Texte im Block `book` von `src/i18n/screens.*.ts`, die Wege in `src/app/router.ts` und `tests/e2e/book.spec.ts`.
+
+## S-56 · Sternkarte als drei Ringe
+
+**Entschieden:** Die Sternkarte im Kapitel Reise übernimmt Variante A aus dem Muster (S-42, D-64 Punkt 6) ohne Änderung der Optik: Die 21 Stationen einer Runde stehen auf drei Ringen (äußerer Weg außen, innerer Weg darin, höherer Weg in der Mitte), Station I oben, im Uhrzeigersinn. Jeder Ring beginnt einen halben Schritt nach dem letzten Stern des vorigen, so führt der Weg als eine Spirale nach innen: ein Bogen entlang des Rings, ein gerader Schritt zum nächsten. Gezeichnet wird nur der erreichte Weg (golden, leicht leuchtend), dazu die drei Ringe als feine Bahnen. Wegenden (VII, XIV, XXI) sind größer, noch nicht erreichte Wegenden als Umriss; der heutige Stern leuchtet; nur der gewählte Stern trägt seine römische Ziffer (zuerst der heutige). Antippen wählt einen Stern; darunter nennt eine Zeile Station, Karte, Weg und Stand und wird Screenreadern angesagt (`aria-live`).
+
+- **Texte:** keine neuen. Der Weg nutzt die Namen von „Heute“ („Der äußere Weg“, EN “The outer path”), der Stand die Wörter der Liste („erreicht“, „heute“, „noch vor dir“). Das Muster hatte eigene, nicht übersetzte Kurzformen („Äußerer Weg“).
+- **Geometrie** als reine Funktion in `src/domain/starmap.ts` (`starPosition`, `wayPath`, `RING_RADII`), Zeichenfläche 320 × 320. Kein Stern liegt näher als 36 Einheiten am nächsten, die unsichtbare Trefferfläche hat Radius 18 (im Muster 15) und überlappt so nirgends (Unit).
+- **Vollendete Runden** erscheinen klein in derselben Spirale statt in der alten Schlangenlinie (gleiche Größe und Farben wie bisher).
+- **Barrierefreiheit:** Die Karte bleibt ein Bild mit Beschriftung („Sternkarte der Runde 1: 9 von 21 Stationen erreicht“), die Liste darunter bleibt die vollständige Textalternative. Die Sterne selbst sind keine Knöpfe.
+
+**Warum:** Der Eigentümer hat am Muster entschieden (D-64), also gilt die Optik des Musters. Vorhandene Texte halten DE und EN gleich und vermeiden zwei Namen für denselben Weg. Die Geometrie im Modell macht sie testbar und hält die Zeichnung konstant klein (21 Sterne bei jedem Reisetag).
+
+**Alternativen:**
+- Sterne als Knöpfe für Tastatur und TalkBack: 21 zusätzliche Fokusziele vor der Liste, die dasselbe sagt; die Liste ist der ruhigere Weg.
+- Beim Antippen auch den Stationstext zeigen: mehr Inhalt an der Karte, aber eine zweite Stelle neben dem Panel „Deine Station“. Steht als Frage in der Prüfliste.
+- Vollendete Runden in der alten Form lassen: zwei Formen für dasselbe Sternbild.
+- Trefferfläche 15 wie im Muster: kleiner als nötig, auf dem Emulator aber ebenfalls treffsicher.
+
+**Wechsel kostet:** `src/domain/starmap.ts`, `StarMapFigure` in `src/features/journey/JourneyScreens.tsx` und `journey-screens.css`, dazu `tests/unit/journey-screens.test.ts` und der Sternkarten-Test in `tests/e2e/identity.spec.ts`. Gespeichert wird nichts; die Karte wird aus den Reisetagen abgeleitet.
+
+**Geprüft:** `npm run check` PASS (253 Unit-Tests, Start-JS 144,2 kB), E2E Sternkarte mit Antippen PASS, Kontrast DE 412 und EN 360 ohne Verstoß, Scrollen mit 400 Tagen bei 4× CPU-Drosselung Median 16,7 ms und Maximum 16,8 ms je Frame (wie V04.5), Android-Emulator PASS mit echtem Antippen.
+
+## S-57 · Aufklapper auf der Enthüllung
+
+**Entschieden:** Nach einer Enthüllung mit Archetyp entfällt der Aufklapper „So entsteht dein Archetyp“ (D-64 Punkt 5, Variante B); „Warum?“ steht direkt darüber und erklärt dasselbe ausführlich aus den eigenen Antworten. Alles andere bleibt wie in 0.4.1. Beim offenen Profil („Dein Weg bleibt offen“) bleibt der Aufklapper: Wer keine Frage beantwortet hat, sieht dort kein „Warum?“, und er ist die einzige Erklärung. Der Text `archetype.howItWorks` bleibt deshalb in DE und EN.
+
+**Warum:** So steht es im Muster, das der Eigentümer gewählt hat (Variante B entfernte ihn nur im Archetyp-Zweig). Leitlinie aus D-64: Inhalte lieber sichtbar lassen als verstecken.
+
+**Alternativen:**
+- Auch beim offenen Profil entfernen, wenn „Warum?“ dort erscheint (ab einer beantworteten Frage): konsequenter, aber nicht Teil des gezeigten Musters.
+- Überall entfernen und den Text löschen: Wer alle Fragen überspringt, erfährt dann auf diesem Screen nicht, wie ein Archetyp entsteht.
+
+**Wechsel kostet:** eine Zeile in `src/features/onboarding/Onboarding.tsx` und die Prüfung im E2E-Test „with reduced motion the reveal shows everything at once“.
