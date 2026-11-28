@@ -135,7 +135,8 @@ Weitere Testvektoren (Pflicht im Unit-Test): 29.11.1987 → Monat 11, Tag 29 →
 |---|---|
 | alle | „wird passieren“, „garantiert“, „mit Sicherheit“, „das Universum will“, „dein Schicksal ist“, Gedanken/Gefühle anderer („er denkt an dich“), Heilung, Diagnose, Geldversprechen |
 | journey | „verloren“, „verpasst“, „Serie“, „Streak“, „nur noch“, „beeil“, „letzte Chance“, „vergiss nicht“ |
-| numbers (Engelszahlen) | „Engel sagen dir“, „ist ein Zeichen, dass er/sie“, „bedeutet sicher“, „Zwillingsflamme kommt“ |
+| angels (Engelszahlen, eigenes Modul seit S-66) | „Engel sagen dir“, „ist ein Zeichen, dass er/sie“, „bedeutet sicher“, „Zwillingsflamme kommt“ |
+| symbols | „schützt dich“, „bringt Glück“, „Glücksbringer“, Talisman, Amulett (S-67) |
 | moon | „der Mond bewirkt“, „heilt“, „Energie reinigt“ als Tatsache |
 | Rituale (alle Module) | „Kerze“, „Feuer“, „Räucher“, „Kristall kaufen“, „Salbei“, Substanzen, Fasten |
 | Teilen-Vorlagen | Platzhalter für Notiz, Antwort, Geburtsdatum dürfen nicht existieren (Typ-Prüfung) |

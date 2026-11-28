@@ -76,6 +76,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-64 | 28.11.2026 | Symbolliste gegen die Kartenbilder | alle 24 bleiben; 17 stehen in Bildern und nennen diese Karten, sieben (Lotus, Schmetterling, Phönix, Schlange, Eule, Auge, Feder) stehen in keinem Bild und werden über die Karten ihrer Archetypen entdeckt | V06 Schritt 0 |
 | S-65 | 28.11.2026 | Numerologie: Logik und Texte | Rechenweg als Daten aus der Funktion; Zyklen auf dem lokalen Datumsschlüssel; Tagestext wechselt im Neun-Tage-Block; Herausforderungen geschrieben, aber nur mit Edition; Geburtsjahr ab 1900; Karten-Sätze beschreiben die Bilder von Deck v2 | V06 Schritt 1 |
 | S-66 | 28.11.2026 | Engelszahlen: Logik und Texte | eigenes Modul `angels`; Liste der 22 aus dem Masterplan (mit 1221 und 1001); acht Muster; Uhrzeit ohne führende Null so, wie sie dasteht; Begegnung als Tagebucheintrag mit optionalem Ort-Wort; Häufigkeit ohne gelöschte Einträge | V06 Schritt 2 |
+| S-67 | 28.11.2026 | Symbol-Lexikon: Logik und Texte | Entdeckung abgeleitet aus Kartenstufe 3 der Quellkarten oder ab Reisetag 10 als Leitsymbol jedes Hauptarchetyps, unter dem eine Tageskarte gezogen wurde; Bildbezug nur für die 17 Symbole im Bild; Referenzprüfung im Inhalts-Gate; eigene Verbotsliste gegen Schutz- und Glücksversprechen | V06 Schritt 3 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -963,3 +964,19 @@ Sieben Symbole stehen in keinem Bild: Lotus, Schmetterling, Phönix, Schlange, E
 **Alternativen:** Engelszahlen im Modul `numbers` (ein Modul weniger, aber „Heute“ lädt dann 7 KB mehr); Uhrzeiten auf vier Ziffern auffüllen (9:15 → 0915, entspricht nicht dem, was auf vielen Uhren steht); nur die 22 kuratierten Folgen (jede andere Zahl ohne Antwort, widerspricht H1); die Häufigkeit mit gelöschten Einträgen (dann bliebe eine gelöschte Begegnung in der Liste sichtbar); ein eigener Speicher für Begegnungen (neues Schema, mehr Migration).
 
 **Wechsel kostet:** einzelne Funktionen in `src/domain/angel.ts` oder einzelne Texte; das Ort-Wort ist ein optionales Feld und kann ungenutzt bleiben.
+
+## S-67 · Symbol-Lexikon: Logik und Texte
+
+**Entschieden:** Das Symbol-Lexikon steht als Ableitung in `src/domain/symbol-discovery.ts` und als eigenes Inhaltsmodul `symbols` (120 Texte je Sprache: Name, Bedeutung, Licht, Schatten, Reflexion), beide mit Tests. Die Screens kommen mit dem Entdecken-Tab (Schritt 4), die Hervorhebung im Grimoire und „Dein Symbol“ mit Schritt 5.
+
+- **Entdeckt** ist ein Symbol, sobald eine seiner Quellkarten (`symbolSources`, S-64) Kartenstufe 3 erreicht, oder ab Reisetag 10, wenn es das persönliche Symbol ist (Leitsymbol des Hauptarchetyps, PROGRESSION_DESIGN Tag 10). Gespeichert wird nichts.
+- **Archetyp gewechselt:** Es zählt das Leitsymbol jedes Hauptarchetyps, unter dem eine Tageskarte gezogen wurde, und das des aktuellen. So kommt bei einem Wechsel ein Symbol dazu, keins geht verloren (wie bei den Kartenstufen). Ein neutrales Profil hat kein persönliches Symbol, die Karten-Entdeckung gilt trotzdem.
+- **Bildbezug:** Nur die 17 Symbole, die in einem Kartenbild stehen, sprechen von „diesem Deck“ und nennen nur Karten aus ihrer Liste (Test für Englisch, Durchsicht für Deutsch). Die sieben ohne Bild erzählen nur die Überlieferung.
+- **Texte:** Jede Bedeutung nennt die Überlieferung („gilt traditionell als“), nie eine Wirkung. Eine eigene Verbotsliste hält Schutz- und Glücksversprechen, Talismane und Amulette fern. Die Ritual-Liste gilt hier nicht, weil Symbole keine Rituale tragen und der Stab im Tarot zum Element Feuer gehört. Namen gleich wie im Modul `archetypes` (Test).
+- **Referenzen:** Das Inhalts-Gate prüft jetzt je Modul auch Verweise (`refs`): Jede Karte eines Symbols existiert, und jedes Symbol ist über mindestens eine Karte entdeckbar.
+
+**Warum:** Abgeleitete Entdeckung kann nicht auseinanderlaufen und wirkt rückwirkend, so wie die übrigen Fortschritte (D-09). Wer den Archetyp ändert, soll nichts verlieren, was schon sichtbar war.
+
+**Alternativen:** nur der aktuelle Hauptarchetyp (einfacher, aber ein Wechsel nähme ein entdecktes Symbol wieder weg); das persönliche Symbol als gespeichertes Ereignis an Tag 10 (neues Feld, Migration, widerspricht „ableiten statt zählen“); Symbole ohne Bild über eine eigene Stufe statt über die Karten ihrer Archetypen (mehr Regeln, kein Mehrwert); die Ritual-Verbotsliste auch hier (dann dürfte der Stab nicht beim Element Feuer stehen).
+
+**Wechsel kostet:** eine Funktion in `src/domain/symbol-discovery.ts` oder einzelne Texte.

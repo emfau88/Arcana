@@ -127,7 +127,7 @@ level(e) =
 | Archetyp | Kapitel I–IV über Reisetage (3, 21, 42, 63), Ergänzungskapitel bei 100 | `journeyDays` |
 | Numerologie | Profil vollständig, sobald Geburtsdatum eingetragen. Jahresverlauf (Edition) | Daten + Entitlement |
 | Engelszahlen | eigene Begegnungen und Favoriten; häufigste eigene Zahl im Ex Libris | Tagebuch |
-| Symbole | entdeckt über Kartenstufe 3 (Symbole der Karte) und Meilenstein Tag 10 | Ableitung aus Kartenstufen |
+| Symbole | entdeckt über Kartenstufe 3 (Symbole der Karte; Symbole ohne Bild über die Karten ihrer Archetypen) und Meilenstein Tag 10 (Leitsymbol jedes Hauptarchetyps, unter dem eine Tageskarte gezogen wurde, S-67) | Ableitung aus Kartenstufen |
 | Mond (1.1) | Zyklen mit Intention + Reflexion | Tagebuch |
 
 ## 6 · Welten vorstellen, nicht freischalten
