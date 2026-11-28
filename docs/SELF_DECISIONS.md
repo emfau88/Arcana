@@ -75,6 +75,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-63 | 28.11.2026 | Export von B4 | wie B2 und B3 nach `art/b4/`; A32 in 1024 und 720 px; 24 Symbole aus beiden Sheets in einem gemeinsamen Maßstab, 256 px (≤ 20 KB) und zusätzlich 96 px für Listen (≤ 6 KB); Alpha in 32 Stufen, sieben Generator-Pünktchen beim Export weggelassen | V06 Schritt 0 |
 | S-64 | 28.11.2026 | Symbolliste gegen die Kartenbilder | alle 24 bleiben; 17 stehen in Bildern und nennen diese Karten, sieben (Lotus, Schmetterling, Phönix, Schlange, Eule, Auge, Feder) stehen in keinem Bild und werden über die Karten ihrer Archetypen entdeckt | V06 Schritt 0 |
 | S-65 | 28.11.2026 | Numerologie: Logik und Texte | Rechenweg als Daten aus der Funktion; Zyklen auf dem lokalen Datumsschlüssel; Tagestext wechselt im Neun-Tage-Block; Herausforderungen geschrieben, aber nur mit Edition; Geburtsjahr ab 1900; Karten-Sätze beschreiben die Bilder von Deck v2 | V06 Schritt 1 |
+| S-66 | 28.11.2026 | Engelszahlen: Logik und Texte | eigenes Modul `angels`; Liste der 22 aus dem Masterplan (mit 1221 und 1001); acht Muster; Uhrzeit ohne führende Null so, wie sie dasteht; Begegnung als Tagebucheintrag mit optionalem Ort-Wort; Häufigkeit ohne gelöschte Einträge | V06 Schritt 2 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -944,3 +945,21 @@ Sieben Symbole stehen in keinem Bild: Lotus, Schmetterling, Phönix, Schlange, E
 **Alternativen:** den Rechenweg in der Oberfläche aus dem Datum neu aufbauen (zwei Rechenwege, die auseinanderlaufen können); den Tagestext zufällig wählen (gleiches Datum, anderer Text, widerspricht der Unveränderlichkeit); die Herausforderungen erst mit Billing schreiben (dann fehlen sie beim Inhalts-Gate und in der Durchsicht); die Karten-Sätze nach der Tradition statt nach dem Bild (Magier mit erhobenem Arm, den es in diesem Deck nicht gibt).
 
 **Wechsel kostet:** eine Funktion in `numbers-keys.ts` (Tagestext) oder einzelne Texte; die Rechenlogik ist durch die Testvektoren festgelegt.
+
+## S-66 · Engelszahlen: Logik und Texte
+
+**Entschieden:** Die Engelszahlen stehen als reine Logik in `src/domain/angel.ts` und als eigenes Inhaltsmodul `angels` (160 Texte je Sprache), beide mit Tests (Eigenschaftstest über alle Eingaben aus 1–4 Ziffern, jede Uhrzeit und 5.000 Stichproben aus 5–6 Ziffern; Inhalts-Gate; Markierungstest). Die Screens kommen mit dem Entdecken-Tab (Schritt 4).
+
+- **Eigenes Modul:** `angels` statt eines größeren `numbers`. „Heute“ braucht nur die Texte der Tageszahl; die Engelszahlen lädt allein die Seite, die sie zeigt (7 KB gzip je Sprache).
+- **Die 22:** Es gilt die Liste aus `CONTENT_MASTERPLAN.md` §6 (mit 1221 und 1001). `PRODUCT_SYSTEMS.md` H1 nannte nur 21 Folgen und ist angeglichen.
+- **Eingabe:** 1–6 Ziffern oder eine Uhrzeit `h:mm` bzw. `hh:mm` (0:00 bis 23:59). Die Uhrzeit zählt mit ihren Ziffern so, wie sie dasteht: `9:15` ist 915, `09:15` ist 0915. Einziger Sonderfall ist `0000` → 000 (Masterplan). Ungültiges ergibt keine Seite, nie eine geratene.
+- **Muster:** acht, in fester Reihenfolge geprüft: einzeln, Wiederholung, Treppe, Spiegel, Wechsel (1212, 123123), Doppel (1122), Rahmen (1231), gemischt. Jede andere Folge bekommt eine zusammengesetzte Deutung aus dem Mustertext und den Grundbedeutungen ihrer Ziffern, die häufigste zuerst; sie ist sichtbar als „aus den Ziffern zusammengesetzt“ gekennzeichnet (H2, mit den Screens).
+- **Begegnung festhalten (H3):** ein Tagebucheintrag der Art `number-encounter` mit der Folge, optional einem kurzen Ort-Wort (höchstens 40 Zeichen, neues optionales Feld `refs.place`, rein additiv) und optional einer Notiz. Wie jeder Tagebucheintrag zählt sie als Reisetag.
+- **Häufigkeit (H4):** zählt die eigenen Folgen, die häufigste zuerst. Gelöschte Einträge zählen nicht mit, so wie sie auch im Tagebuch fehlen; der Reisetag bleibt trotzdem (S-49).
+- **Texte:** Jede Bedeutung nennt die Tradition („gilt traditionell als“, „in der Deutung der Engelszahlen“), die 666 wird ruhig und ohne Angstbild gedeutet, die Mini-Rituale brauchen nur Papier, Stift, Fenster, Atem oder die eigenen Hände. Eine eigene Verbotsliste hält Botschaften von Engeln, Aussagen über andere Menschen („Zeichen, dass er …“), Gewissheit und „Zwillingsflamme“ fern.
+
+**Warum:** Nachschlagen muss für jede Zahl funktionieren, die jemand sieht; der Eigenschaftstest belegt das. Die Begegnung als Tagebucheintrag braucht keinen neuen Speicher und fügt sich in Reise, Tagebuch und Sicherung ein, die es schon gibt.
+
+**Alternativen:** Engelszahlen im Modul `numbers` (ein Modul weniger, aber „Heute“ lädt dann 7 KB mehr); Uhrzeiten auf vier Ziffern auffüllen (9:15 → 0915, entspricht nicht dem, was auf vielen Uhren steht); nur die 22 kuratierten Folgen (jede andere Zahl ohne Antwort, widerspricht H1); die Häufigkeit mit gelöschten Einträgen (dann bliebe eine gelöschte Begegnung in der Liste sichtbar); ein eigener Speicher für Begegnungen (neues Schema, mehr Migration).
+
+**Wechsel kostet:** einzelne Funktionen in `src/domain/angel.ts` oder einzelne Texte; das Ort-Wort ist ein optionales Feld und kann ungenutzt bleiben.

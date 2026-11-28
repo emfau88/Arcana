@@ -221,7 +221,7 @@ Die 6 Themen bleiben Filter für Rahmentexte und Botschaft (klassisch, Licht und
 
 | # | Funktion | Release | Free/Edition |
 |---|---|---|---|
-| H1 | **Nachschlagen** jeder Zahlenfolge (Ziffern, Uhrzeit `11:11`). 22 kuratierte Folgen mit vollem Text (111 … 999, 000, 1111, 2222, 1010, 1212, 1234, 1122, 1313, 1414, 2121, 0101; `11:11` = 1111, `22:22` = 2222) | 1.0 | Free |
+| H1 | **Nachschlagen** jeder Zahlenfolge (Ziffern, Uhrzeit `11:11`). 22 kuratierte Folgen mit vollem Text (Liste in `CONTENT_MASTERPLAN.md` §6: 000, 111 … 999, 0101, 1001, 1010, 1111, 1122, 1212, 1221, 1234, 1313, 1414, 2121, 2222; `11:11` = 1111, `22:22` = 2222; angeglichen in S-66) | 1.0 | Free |
 | H2 | **Zusammengesetzte Deutung** für jede andere Folge aus Ziffern-Grundbedeutungen und Muster (Wiederholung, Spiegel, Treppe). Sichtbar gekennzeichnet: „aus den Ziffern zusammengesetzt“ | 1.0 | Free |
 | H3 | **Begegnung festhalten**: Zahl, Datum, optional Ort-Stichwort und Notiz (Tagebuch). Begegnungen zählen als Reisetag (B1) | 1.0 | Free |
 | H4 | Favoriten, Häufigkeit eigener Zahlen im Grimoire (Kapitel Zahlen) | 1.0 | Free |

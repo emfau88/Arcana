@@ -146,7 +146,7 @@ interface JournalEntry {               // store 'journal', keyPath id, Index dat
   kind: 'reflection' | 'study' | 'number-encounter' | 'moon-intention' | 'moon-reflection' | 'free';
   dateKey: string;                     // lokaler Tag
   text: string;                        // darf leer sein (z. B. Begegnung ohne Notiz)
-  refs: { cardId?: CardId; readingId?: string; sequence?: string; moonCycle?: string; ritualId?: string };
+  refs: { cardId?: CardId; readingId?: string; sequence?: string; place?: string /* Ort-Wort einer Begegnung, V06 */; moonCycle?: string; ritualId?: string };
   createdAt: string; updatedAt: string;
 }
 
