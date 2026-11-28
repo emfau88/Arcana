@@ -14,7 +14,7 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 
 ## Härtung (G3)
 
-- [ ] Release-Modus-Testbuild mit zulässiger Testsignatur, SHA-256, Größe, Startup, Reveal und Scroll. Kaltstart auf ruhigem Rechner nachmessen (zuletzt 3,8 s unter Last). Testbuild, Signatur, SHA-256 und Größe erledigt (V05.6, S-59, `docs/TESTPAKET.md`); Startup, Reveal und Scroll im Release-Build folgen mit der Leistungsmessung vor QG-V05.
+- [ ] Release-Modus-Testbuild mit zulässiger Testsignatur, SHA-256, Größe, Startup, Reveal und Scroll. Kaltstart auf ruhigem Rechner nachmessen (zuletzt 3,8 s unter Last). Testbuild, Signatur, SHA-256 und Größe erledigt (V05.6, S-59, `docs/TESTPAKET.md`); Startup, Reveal und Scroll im Release-Build folgen in QG-V05 (die Browser-Messung ist gelaufen, `docs/visual/PERFORMANCE.md` „V05“).
 - [ ] TalkBack manuell auf dem Emulator (bisher nur ein uiautomator-Labelcheck).
 - [x] Upgrade-Pfad der IndexedDB (Schema-Version 2) testen: Unit-Tests mit drei Fixtures (V03.1) und Android 0.2.0 → 0.3.0 mit echtem Datenbestand, 9/9 PASS (QG-V03, `scripts/android-migration.mjs`).
 - [ ] Zeitzonenwechsel bei laufender App und Tageswechsel im Hintergrund (Android) gezielt testen.
@@ -45,6 +45,12 @@ Priorität: P0 = Produktkern (G2/G3), später = nach Eigentümerfreigabe. Keine 
 - [ ] Optional: Willkommen als „Buch als Bühne“ neu anordnen, damit A06 unabgedunkelt wirkt (S-27).
 - [ ] V07.5, echtes Gerät: Bildschirmwechsel auf bildreiche Screens (Enthüllung, „Heute“, Grimoire) mit `scripts/android-trace.mjs` messen; auf dem Emulator bleibt ein langer Frame von 100–230 ms (B-13, S-31).
 - [ ] V07.5, echtes Gerät: Das Android-WebView holt `favicon.svg` bei jeder Navigation und liest es als SVG-Dokument (38–54 ms Hauptthread). Auf dem Emulator ohne messbare Wirkung auf die Frames; auf dem Gerät prüfen, ob sich das Entfernen in der App lohnt (S-31).
+
+## Leistung (B-08, Entscheidung des Eigentümers vor QG-V05)
+
+- [ ] Option 1, kleine Variante (unsichtbar, ≈ 1,5–2 h mit Messung): Orakel, Willkommen mit Fragebogen und die Detailteile des Grimoires als eigene Chunks laden und im Leerlauf vorladen; die Identität erst nach dem ersten Bild berechnen. Ziel: „Heute“ sichtbar ≤ 1.250 ms, Erststart ≤ 1.600 ms (`docs/visual/PERFORMANCE.md` „V05“).
+- [ ] Option 2, große Variante (unsichtbar, weitere ≈ 1,5–2 h, riskanter): nur die aktive Sprache der Oberflächen- und Kartentexte im Start-JS, die andere beim Sprachwechsel nachladen.
+- [ ] Falls weder 1 noch 2 reicht: Raumbild auf „Heute“ nach der Karte laden (sichtbar, nur nach Rückfrage).
 
 ## Bekannte Kleinigkeiten
 

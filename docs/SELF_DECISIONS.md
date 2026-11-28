@@ -69,6 +69,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-57 | 28.11.2026 | Aufklapper auf der Enthüllung | entfällt nur nach einer Enthüllung mit Archetyp (wie im Muster, Variante B); beim offenen Profil bleibt er, dort ist er ohne beantwortete Frage die einzige Erklärung; Text `howItWorks` bleibt deshalb | D-64 Punkt 5 |
 | S-58 | 28.11.2026 | Orakel als Bühne mit den Legungen | Muster A übernommen und auf 2–5 Karten erweitert: Legungen als eigene Zeile über den Themen mit Kurzbeschreibung, Karten in einer Reihe am Tisch, Breite wie bei drei Karten; Rückblick legt die Fadenkarte offen und zieht eine; Fragen der Positionen und „Deine Woche in Karten“ in der Deutung; Kopfzeilen per Subgrid (B-12); Kontrast auf A03 mit Hof und Körperfarbe | V05.6, V05.2, D-64 Punkt 2 |
 | S-59 | 28.11.2026 | Testsignatur des Testpakets | eigener Testschlüssel, nur lokal (`android/keystore.properties`, per `.gitignore` ausgeschlossen), Entwicklungs-App-ID, Version 0.5.0; nicht der spätere Play-Upload-Schlüssel | V05.6, E11, RELEASE_CHECKLIST |
+| S-60 | 28.11.2026 | Kartenbilder in 560 px (Reserve aus D-52) | versucht und zurückgenommen: Bilder auf „Heute“ ≈ 130 KB kleiner, aber „Heute sichtbar“ ohne messbaren Gewinn und die Enthüllung mit mehr Rucklern; die Karten bleiben bei 720 px, die Entscheidung über die Leistung liegt beim Eigentümer | QG-V05, D-52, B-08, PERFORMANCE.md „V05“ |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -856,3 +857,16 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Version erst beim Tag erhöhen: hielte die Nummer an den Tag gebunden, Testende hätten aber „0.4.1“ gesehen.
 
 **Wechsel kostet:** Ein neuer Testschlüssel bedeutet einmal deinstallieren auf jedem Testgerät (Daten weg). Der Wechsel auf die finale App-ID ist für Android eine neue App, also ebenfalls eine Neuinstallation; deshalb die Empfehlung, die Sicherung (V07.3) vor den geschlossenen Test zu ziehen (Roadmap §10 Punkt 5).
+
+## S-60 · Kartenbilder in 560 px
+
+**Entschieden:** Die Reserve aus D-52 wurde vor QG-V05 gebaut und gemessen, dann zurückgenommen. Große Karten luden per `srcset`/`sizes` eine 560 × 840-Fassung neben der 720er (Heldenkarte höchstens 272 CSS-px, also 544 Gerätepixel bei 2×); die Bildqualität war geprüft (PSNR ≥ 35 dB). Gemessen mit `scripts/perf.mjs` abwechselnd gegen die Referenz: Bilder auf „Heute“ 318–352 KB statt 473 KB, „Heute sichtbar“ normiert 1.260 / 1.297 / 1.357 ms gegen 1.260 / 1.311 / 1.313 ms ohne die Änderung, also kein messbarer Gewinn. Die Enthüllung hatte 2–3 Ruckler statt 1, zweimal über der Grenze von 2. Die Karten bleiben bei 720 px.
+
+**Warum:** Der Engpass ist nicht die Bildgröße, sondern die Zeit bis der Browser die Bilder überhaupt anfragt (größeres Start-JS, `docs/visual/PERFORMANCE.md` „V05“). 26 zusätzliche Dateien (1,5 MB im Repo und in der APK), ein zweiter Exportschritt und ein mögliches Risiko für die Enthüllung lohnen sich ohne Gewinn nicht.
+
+**Alternativen:**
+- Behalten, weil es Daten spart: 130–155 KB weniger je Start auf „Heute“, aber die Grenze wird trotzdem gerissen und die Enthüllung ist unsicher.
+- Nur die Rückseite in 560 px: kleinster Eingriff, gleiche Ursache, gleiches Ergebnis zu erwarten.
+- Mit mehr Läufen klären, ob die Ruckler an der Änderung liegen: kostet ≈ 30 min Messzeit für eine Änderung, die das Problem nicht löst.
+
+**Wechsel kostet:** ≈ 30 min: Exportskript für die Mittelgröße (Pillow, wie `scripts/assets/export-cards.py`), `srcset`/`sizes` in `src/ui/OracleCard.tsx`, Prüfung im Content-Gate, danach neu messen.

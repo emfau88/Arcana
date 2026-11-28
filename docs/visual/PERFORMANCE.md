@@ -143,3 +143,37 @@ Gemessen auf dem Emulator `Pixel_7` (2 GB RAM, Host-GPU über den GL-Übersetzer
 **B-14:** Die Karte war nach ≈ 0,5 s gezeichnet; danach wartete `toBlob`, weil Chromium PNG auf dem Hauptthread nur in Leerlaufphasen kodiert und eine ganz ruhige Seite keine erzeugt (feste Fristen auf Android 4 s + 9 s). Lösung S-30: Kodierung im Worker.
 
 **B-13:** Beim Wechsel ist der Hauptthread fast frei; der GPU-Thread rastert in Schritten zu 15–21 ms (36 verworfene Frames in 1,5 s). Einzelne Ebenen auszublenden änderte nichts. Vorladen von Schrift, Raum und Porträt auf dem Themenschritt (S-31) nimmt den zweiten langen Frame weg. Der erste bleibt und tritt auf dem Emulator bei jedem Wechsel auf einen bildreichen Screen auf; Messung auf einem echten Gerät in V07.5.
+
+## V05 · Messung vor QG-V05 (D-52, B-08), 28.11.2026
+
+Gemessen mit `scripts/perf.mjs` unter den festen Bedingungen, abwechselnd gegen die Referenz `main` @ `03abb3c` (eigener Build im selben Lauf), 3 Runden zu je 5 Läufen. Der Rechner war nebenher belastet (CPU-Last 40–88 %), deshalb ist jeder Wert auf die Referenz derselben Runde normiert: Wert × Basiswert ÷ Referenz. Rohdaten beider Serien: `docs/visual/perf/v05-qg-ab.json`.
+
+**Serie A: `feature/v05-karten` @ `54dd029` (Stand des Branches)**
+
+| Kennzahl | Runde 1 / 2 / 3 | Grenze (§6) | Ergebnis |
+|---|---|---|---|
+| „Heute“ sichtbar, normiert | 1.260 / 1.311 / 1.313 ms (roh 1.292 / 1.352 / 1.281 ms, Referenz roh 1.021 / 1.027 / 972 ms) | ≤ 1.250 ms | **FAIL** (alle Runden, auch roh) |
+| Erststart, normiert | 1.704 / 1.500 / 1.646 ms (roh 1.193 / 1.038 / 1.150 ms, Referenz roh 929 / 918 / 927 ms) | ≤ 1.600 ms | **FAIL** (2 von 3 Runden) |
+| FCP „Heute“, normiert | 543 / 561 / 528 ms | ≤ 900 ms | PASS |
+| LCP „Heute“, normiert | 1.122 / 1.266 / 1.099 ms | ≤ 1.400 ms | PASS |
+| Übertragung „Heute“ / davon Bilder | 780 KB / 473 KB | ≤ 900 KB / ≤ 600 KB | PASS |
+| Enthüllung | 52 / 55 / 57 fps, je 1 Ruckler, schlechtester Frame 50–67 ms | ≥ 50 fps, ≤ 2 Ruckler, ≤ 120 ms | PASS |
+| Leerlauf | 0 laufende Animationen | 0 | PASS |
+| Start-JS | 144,6 kB gzip | ≤ 160 kB | PASS |
+| Android-Kaltstart | – | ≤ 3,0 s | **NOT RUN** (Emulator aus; folgt kalt gestartet mit dem Debug-Build, vergleichbar mit V03) |
+| APK | Release 12,9 MB, Debug 14,1 MB | ≤ 25 MB | PASS |
+
+**Ursache (Ladeverlauf und CPU-Profil unter 4× Drosselung):** Seit der Referenz ist der Hauptteil des Start-JS von 121,5 auf 137,8 KB gzip gewachsen (V03 bis V05: Datenmodell, Identität, Reise, Grimoire, Legungen). Der Browser braucht länger, bis er den Code ausgeführt und die Seite einmal aufgebaut hat; erst dann fragt er Kartenrückseite und Raumbild an. Die Rückseite startet bei ≈ 722 ms statt ≈ 608 ms, und `bg-today-720` und die Rückseite halten das `load`-Ereignis auf, an dem die Kennzahl endet. Die Bilder selbst sind nicht der Engpass: Übertragung und Bildanteil liegen deutlich unter den Grenzen.
+
+**Versuch: Kartenbilder in 560 px (S-60, Reserve aus D-52), nicht übernommen.** Große Karten luden per `srcset`/`sizes` eine 560 × 840-Fassung (Bildqualität geprüft, PSNR ≥ 35 dB). Serie B, gleiche Bedingungen: Bilder auf „Heute“ 318–352 KB statt 473 KB, aber „Heute“ sichtbar normiert 1.260 / 1.297 / 1.357 ms, also kein messbarer Gewinn; Erststart 1.572 / 1.718 / 1.827 ms. Die Enthüllung hatte 2 / 3 / 3 Ruckler (schlechtester Frame 83–117 ms) gegen je 1 in Serie A und bei der Referenz; ob das an der Änderung lag oder am Rauschen (eine Messung je Runde), ist offen. Weil die Änderung das Problem nicht löst und ein Risiko für die Enthüllung trägt, ist sie zurückgenommen; der Stand des Branches ist Serie A.
+
+**Ergebnis:** B-08 ist nicht behoben. Zwei absolute Grenzen werden gerissen: „Heute“ sichtbar um ≈ 10–60 ms (normiert), der Erststart in zwei von drei Runden um ≈ 50–100 ms. Alle übrigen gemessenen Grenzen halten.
+
+**Optionen (Entscheidung beim Eigentümer):**
+
+| Option | Was | Sichtbar? | Aufwand mit neuer Messung | Erwartung |
+|---|---|---|---|---|
+| 1 · Kleine Variante (Empfehlung) | Orakel, Willkommen mit Fragebogen und die Detailteile des Grimoires erst bei Bedarf laden und im Leerlauf vorladen; die Identität erst nach dem ersten Bild berechnen | nein | ≈ 1,5–2 h | Start-JS sinkt um geschätzt 8–12 kB gzip (Orakel, Willkommen und Grimoire-Teile sind im Quelltext ≈ 11 kB gzip), „Heute“ wird früher fertig; ob es unter 1.250 ms reicht, zeigt erst die Messung |
+| 2 · Große Variante (zusätzlich) | nur die aktive Sprache der Oberflächen- und Kartentexte laden, die andere erst beim Sprachwechsel | nein | weitere ≈ 1,5–2 h | weitere ≈ 10–15 kB gzip (die Kartentexte beider Sprachen stecken im Start-JS), aber riskanter (Sprachwechsel, Tests, Content-Gate) |
+| 3 · Ausnahme wie D-52 | Ergebnis hinnehmen, Behebung in der Härtung V07.5 | nein | – | QG-V05 mit dokumentierter Ausnahme |
+| 4 · Raumbild nach der Karte laden | Das Gemälde erscheint einen Augenblick nach der Karte | **ja** (nur nach Rückfrage) | ≈ 1 h | „Heute“ sichtbar dürfte deutlich sinken, das Bild blendet aber sichtbar später ein |

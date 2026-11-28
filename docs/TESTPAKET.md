@@ -88,5 +88,5 @@ Build vom 28.11.2026 (Stand des Commits mit dieser Datei). Vor dem geschlossenen
 | Signatur | PASS: APK Signature Scheme v2 gültig, ein Signierer, `CN=Arcana Test Signature, O=Test, C=DE`, Zertifikat-SHA-256 `69fb6ce85ae7f8f806a77e6d40327beba35e5d4a3dda5e4f20d824bb1a71e01d` |
 | Manifest | PASS: Version 0.5.0 (6), minSdk 24, targetSdk 36, nicht debugbar, Sicherung aus, keine Remote-URL; Berechtigung `INTERNET` plus die app-interne `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` aus AndroidX |
 | Rauchtest Android-Emulator (Pixel 7, emulator-5554, App-Daten frisch) | PASS 9/9 mit echten Taps: Start, Willkommen überspringen, Heute, Orakel mit Legungsauswahl, drei Karten ziehen, alle aufdecken, speichern, „Neue Legung“ erscheint, kein Absturz und kein ANR im Logcat; Aufnahmen `docs/visual/evidence/v05-testpaket-android.webp` |
-| Leistung im Release-Build | NOT RUN: folgt mit der Leistungsmessung vor QG-V05 (D-52, Roadmap §6) |
+| Leistung im Release-Build | NOT RUN: Die Browser-Messung vor QG-V05 ist gelaufen (`docs/visual/PERFORMANCE.md` „V05“, zwei Grenzen gerissen); der Android-Kaltstart folgt in QG-V05 |
 | Echtes Gerät | NOT RUN: nur Emulator (AGENTS.md) |

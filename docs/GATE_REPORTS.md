@@ -186,4 +186,4 @@ Pull Requests [#5](https://github.com/emfau88/Arcana/pull/5) (D-62) und [#6](htt
 
 ## Nächstes Gate
 
-QG-V05 (Karten, Legungen, Grimoire) mit geschlossenem Test. V05 beginnt erst auf Zuruf des Eigentümers (D-60); die Punkte 2, 5 und 6 des Design-Plans sind an Mustern entschieden (D-64) und werden in V05 eingebaut.
+QG-V05 (Karten, Legungen, Grimoire) mit geschlossenem Test. V05 läuft seit D-65 auf `feature/v05-karten`; alle Bulks bis auf das Gate sind gebaut. Stand 28.11.2026: Die Leistungsmessung vor dem Gate reißt zwei Grenzen („Heute“ sichtbar, Erststart; `docs/visual/PERFORMANCE.md` „V05“), der Eigentümer wählt zwischen unsichtbarer Behebung und Ausnahme. Offen für das Gate: Android-Kaltstart, TalkBack-Grundcheck, alle Prüfungen auf dem Endstand, dieser Bericht, Pull Request nach `main`. Der geschlossene Test wartet auf E11, E15 und E17.
