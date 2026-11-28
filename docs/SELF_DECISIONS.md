@@ -70,6 +70,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-58 | 28.11.2026 | Orakel als Bühne mit den Legungen | Muster A übernommen und auf 2–5 Karten erweitert: Legungen als eigene Zeile über den Themen mit Kurzbeschreibung, Karten in einer Reihe am Tisch, Breite wie bei drei Karten; Rückblick legt die Fadenkarte offen und zieht eine; Fragen der Positionen und „Deine Woche in Karten“ in der Deutung; Kopfzeilen per Subgrid (B-12); Kontrast auf A03 mit Hof und Körperfarbe | V05.6, V05.2, D-64 Punkt 2 |
 | S-59 | 28.11.2026 | Testsignatur des Testpakets | eigener Testschlüssel, nur lokal (`android/keystore.properties`, per `.gitignore` ausgeschlossen), Entwicklungs-App-ID, Version 0.5.0; nicht der spätere Play-Upload-Schlüssel | V05.6, E11, RELEASE_CHECKLIST |
 | S-60 | 28.11.2026 | Kartenbilder in 560 px (Reserve aus D-52) | versucht und zurückgenommen: Bilder auf „Heute“ ≈ 130 KB kleiner, aber „Heute sichtbar“ ohne messbaren Gewinn und die Enthüllung mit mehr Rucklern; die Karten bleiben bei 720 px, die Entscheidung über die Leistung liegt beim Eigentümer | QG-V05, D-52, B-08, PERFORMANCE.md „V05“ |
+| S-61 | 28.11.2026 | Vorlesefehler aus dem TalkBack-Grundcheck | unsichtbare Pausen nur für Screenreader: Komma zwischen den Schlagworten auf „Heute“ und nach der Kartennummer in der Legung; Bild pixelgleich | QG-V05, TalkBack |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -870,3 +871,16 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Mit mehr Läufen klären, ob die Ruckler an der Änderung liegen: kostet ≈ 30 min Messzeit für eine Änderung, die das Problem nicht löst.
 
 **Wechsel kostet:** ≈ 30 min: Exportskript für die Mittelgröße (Pillow, wie `scripts/assets/export-cards.py`), `srcset`/`sizes` in `src/ui/OracleCard.tsx`, Prüfung im Content-Gate, danach neu messen.
+
+## S-61 · Vorlesefehler aus dem TalkBack-Grundcheck
+
+**Entschieden:** Im TalkBack-Grundcheck (QG-V05, Emulator) las der Bedienungshilfen-Baum zwei Stellen ohne Pause: die Schlagworte auf „Heute“ als ein Wort („AwakeningReflectionCalling“, die Sterne dazwischen sind zu Recht ausgeblendet) und in der Legung Kartennummer und Titel („VIThe Lovers“, die Nummer steht als Block über dem Titel). Beide bekommen ein Komma, das nur Screenreader sehen (`.sr-only`): jetzt „Awakening, Reflection, Calling“ und „VI, The Lovers“. Das Bild bleibt gleich (Zeile der Schlagworte auf dem Emulator pixelgleich).
+
+**Warum:** Gehört zum Grundcheck und ist ohne sichtbare Änderung behebbar; die Optik bleibt unangetastet (AGENTS.md).
+
+**Alternativen:**
+- Die Sterne nicht mehr ausblenden: TalkBack würde „Stern“ oder das Zeichen vorlesen.
+- `aria-label` am Absatz: an einem Absatz ohne Rolle lesen Screenreader es nicht verlässlich.
+- Nummer und Titel als getrennte Zeilen im Baum: ändert das Markup der Kopfzeilen, an denen B-12 (Subgrid) hängt.
+
+**Wechsel kostet:** je eine Zeile in `src/features/today/Today.tsx` und `src/features/oracle/Oracle.tsx`.

@@ -184,6 +184,24 @@ Pull Requests [#5](https://github.com/emfau88/Arcana/pull/5) (D-62) und [#6](htt
 | Kontrast der klebenden Leiste | NOT RUN |
 | Leistung gegen die Referenz | NOT RUN (D-52) |
 
+## QG-V05 · Karten, Legungen, Grimoire — PASS mit Ausnahme (D-67), Merge vom Eigentümer genannt 28.11.2026
+
+Version 0.5.0 · Pull Request PRLINK · Merge nach einem grünen Gate (D-67), danach Tag `v0.5.0`
+
+| Prüfung | Ergebnis |
+|---|---|
+| Check | PASS, 253 Unit-Tests, Content-Gate 0 Fehler und 0 Warnungen, Start-JS 144,7 kB (Grenze 160 kB) |
+| E2E | PASS, 51 bestanden, 65 bewusst übersprungen, 0 fehlgeschlagen (alle Specs, Produktions-Build) |
+| Kontrast | PASS, jeder Lesetext jedes Screens ≥ Mindestwert: DE 412 (529 Texte), EN 360 (514), DE 390 (515), DE 360 bei 130 % (528), EN 412 bei 130 % (528); je 0 darunter |
+| Layout | PASS, in denselben fünf Läufen kein seitliches Scrollen und kein Text außerhalb des Bildschirms (`scripts/evidence.mjs`, alle Screens) |
+| Android-Emulator | PASS 13/13, dazu Systemschrift 130 % und 200 % ohne Abschneiden (Sichtprüfung); Kaltstart Median 1,87 s (Grenze 3,0 s; Debug-Build, Rechnerlast ≈ 80 %); APK Debug 14,2 MB, Release 12,9 MB (Grenze 25 MB) |
+| TalkBack-Grundcheck | PASS mit Einschränkung: Namen, Lesereihenfolge (Heute, Orakel, Grimoire) und Fokus nach dem Wechsel geprüft, zwei Vorlesefehler unsichtbar behoben (S-61). Durchgang mit echten Wischgesten NOT RUN (per adb auf dem Emulator nicht möglich), folgt von Hand in V07.5 |
+| Leistung gegen die Referenz | FAIL mit Ausnahme des Eigentümers (D-67): „Heute“ sichtbar 1.260–1.313 ms (≤ 1.250), Erststart 1.500–1.704 ms (≤ 1.600); FCP, LCP, Übertragung, Bilder, Enthüllung, Leerlauf und Start-JS PASS; B-08 wird spätestens in V07.5 behoben |
+| Geschlossener Test | BLOCKED: E11 (App-Name und App-ID), E15 und E17 (Play-Konto, Testgruppe) beim Eigentümer; das Testpaket steht (S-59, `docs/TESTPAKET.md`) |
+| Prüfliste „Nachprüfen“ | bleibt für Rückmeldungen offen, wie bei V04 (D-61) |
+
+Nachweise: `docs/visual/evidence/v05-qg-android.webp` (TalkBack, Systemschrift, Flugmodus), `docs/visual/PERFORMANCE.md` „V05“, `docs/visual/perf/v05-qg-ab.json`.
+
 ## Nächstes Gate
 
-QG-V05 (Karten, Legungen, Grimoire) mit geschlossenem Test. V05 läuft seit D-65 auf `feature/v05-karten`; alle Bulks bis auf das Gate sind gebaut. Stand 28.11.2026: Die Leistungsmessung vor dem Gate reißt zwei Grenzen („Heute“ sichtbar, Erststart; `docs/visual/PERFORMANCE.md` „V05“), der Eigentümer wählt zwischen unsichtbarer Behebung und Ausnahme. Offen für das Gate: Android-Kaltstart, TalkBack-Grundcheck, alle Prüfungen auf dem Endstand, dieser Bericht, Pull Request nach `main`. Der geschlossene Test wartet auf E11, E15 und E17.
+QG-V06 (Zahlen und Symbole). V06 beginnt erst auf Zuruf des Eigentümers. Vorher offen: E8 (fünf Tabs), für den geschlossenen Test E11, E15 und E17.
