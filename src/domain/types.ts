@@ -209,6 +209,8 @@ export interface JournalRefs {
   cardId?: CardId;
   readingId?: string;
   sequence?: string;
+  /** Short place word of a number encounter (V06.3, H3). */
+  place?: string;
   moonCycle?: string;
   ritualId?: string;
 }
