@@ -1,10 +1,10 @@
 import type { MouseEvent } from 'react';
 import { navigate, type Route } from '../app/router.ts';
 import { useApp } from '../app/store.tsx';
-import { IconGrimoire, IconOracle, IconProfile, IconToday } from './Icons.tsx';
+import { IconDiscover, IconGrimoire, IconOracle, IconProfile, IconToday } from './Icons.tsx';
 import './tabbar.css';
 
-type Tab = 'today' | 'oracle' | 'grimoire' | 'profile';
+type Tab = 'today' | 'oracle' | 'discover' | 'grimoire' | 'profile';
 
 function activeTab(route: Route): Tab | null {
   switch (route.name) {
@@ -12,6 +12,14 @@ function activeTab(route: Route): Tab | null {
       return 'today';
     case 'oracle':
       return 'oracle';
+    case 'discover':
+    case 'numbers':
+    case 'number':
+    case 'angels':
+    case 'angel':
+    case 'symbols':
+    case 'symbol':
+      return 'discover';
     case 'grimoire':
     case 'card':
     case 'day':
@@ -24,6 +32,7 @@ function activeTab(route: Route): Tab | null {
       return 'grimoire';
     case 'profile':
     case 'settings':
+    case 'birthdate':
     case 'why':
     case 'share':
       return 'profile';
@@ -38,6 +47,7 @@ export function TabBar({ route }: { route: Route }) {
   const tabs: { id: Tab; label: string; Icon: typeof IconToday; path: string; badge?: boolean }[] = [
     { id: 'today', label: t.nav.today, Icon: IconToday, path: '/today' },
     { id: 'oracle', label: t.nav.oracle, Icon: IconOracle, path: '/oracle', badge: state.draft !== null },
+    { id: 'discover', label: t.nav.discover, Icon: IconDiscover, path: '/discover' },
     { id: 'grimoire', label: t.nav.grimoire, Icon: IconGrimoire, path: '/grimoire' },
     { id: 'profile', label: t.nav.profile, Icon: IconProfile, path: '/me' },
   ];

@@ -182,6 +182,48 @@ await shot('grimoire-tagebuch');
 await page.locator('.journal__item').filter({ has: page.locator('.ocard--mini').nth(2) }).locator('.history__row').click();
 await settle(700);
 await shot('legung-detail');
+// V06: the Discover tab (hub, numbers with a synthetic birth date, a master number, angel numbers,
+// a curated and a composed reading, the symbol lexicon and one symbol without a card picture).
+const hash = async (h, ms = 700) => {
+  await page.goto(new URL(h, baseUrl).toString());
+  await settle(ms);
+};
+await page.getByRole('link', { name: L ? 'Entdecken' : 'Discover' }).click();
+await settle(700);
+await shot('entdecken');
+await page.getByRole('searchbox').fill('11');
+await settle(300);
+await shot('entdecken-suche');
+await hash('#/discover/numbers?from=/discover');
+await shot('zahlen-einladung');
+await page.getByRole('button', { name: L ? 'Geburtsdatum eintragen' : 'Add date of birth' }).click();
+await settle(500);
+await page.getByLabel(L ? 'Geburtsdatum' : 'Date of birth', { exact: true }).fill('1990-07-14');
+await page.getByRole('button', { name: L ? 'Speichern' : 'Save', exact: true }).click();
+await settle(600);
+await shot('geburtsdatum');
+await page.getByRole('button', { name: L ? 'Zu deinen Zahlen' : 'To your numbers' }).click();
+await settle(600);
+await page.locator('.discover-details summary').click();
+await settle(300);
+await shot('zahlen');
+if (only === 'all') await shot('zahlen-lang', { long: true });
+await hash('#/discover/numbers/22?from=/discover/numbers');
+await shot('zahl-22');
+await hash('#/discover/angel?from=/discover');
+await shot('engelszahlen');
+await hash('#/discover/angel/11:11?from=/discover/angel');
+await shot('engelszahl-1111');
+await hash('#/discover/angel/4711?from=/discover/angel');
+await page.getByRole('button', { name: L ? 'Begegnung festhalten' : 'Note this encounter' }).click();
+await settle(400);
+await shot('engelszahl-4711');
+await hash('#/discover/symbols?from=/discover');
+await shot('symbole');
+await hash('#/discover/symbols/owl?from=/discover/symbols');
+await shot('symbol-eule');
+if (only === 'all') await shot('symbol-eule-lang', { long: true });
+
 // V04: "Profil" became "Ich" / "Me" (#/me); language, motion and privacy moved to #/me/settings.
 await page.getByRole('link', { name: L ? 'Ich' : 'Me' }).click();
 await page.waitForSelector('.me__pillar, .profile__archetype');

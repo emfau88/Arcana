@@ -20,6 +20,17 @@ export type Route =
   | { name: 'reading'; id: string }
   | { name: 'profile' }
   | { name: 'settings' }
+  /** Voluntary birth date (V06, G1). */
+  | { name: 'birthdate' }
+  /** The Discover tab (V06.1): hub, numbers, angel numbers, symbols. */
+  | { name: 'discover' }
+  | { name: 'numbers' }
+  | { name: 'number'; n: string }
+  | { name: 'angels' }
+  /** Any input as typed ('1111', '11:11'); the page reads it with `lookupAngel`. */
+  | { name: 'angel'; raw: string }
+  | { name: 'symbols' }
+  | { name: 'symbol'; id: string }
   | { name: 'archetypes' }
   | { name: 'archetypeDetail'; id: string }
   | { name: 'journey' }
@@ -77,7 +88,22 @@ export function parsePath(rawPath: string): ParsedRoute {
       case 'me':
       case 'profile': // V04: "Profil" became "Ich" (#/me); the old path stays valid.
         if (seg[1] === undefined) return { name: 'profile' };
+        if (seg[1] === 'birthdate' && seg[2] === undefined) return { name: 'birthdate' };
         return seg[1] === 'settings' && seg[2] === undefined ? { name: 'settings' } : { name: 'notfound', path };
+      case 'discover':
+        if (seg.length > 3) return { name: 'notfound', path };
+        switch (seg[1]) {
+          case undefined:
+            return { name: 'discover' };
+          case 'numbers':
+            return seg[2] ? { name: 'number', n: seg[2] } : { name: 'numbers' };
+          case 'angel':
+            return seg[2] ? { name: 'angel', raw: seg[2] } : { name: 'angels' };
+          case 'symbols':
+            return seg[2] ? { name: 'symbol', id: seg[2] } : { name: 'symbols' };
+          default:
+            return { name: 'notfound', path };
+        }
       case 'share':
         if (seg[1] === 'archetype' && seg.length <= 3) return { name: 'share', template: 'archetype', id: seg[2] ?? '' };
         return { name: 'notfound', path };
@@ -88,9 +114,26 @@ export function parsePath(rawPath: string): ParsedRoute {
   return { route, from, path };
 }
 
-const ALLOWED_FROM = new Set(['/today', '/oracle', '/grimoire', '/grimoire/history', '/grimoire/cards', '/grimoire/journal', '/grimoire/rituals', '/me', '/profile', '/archetype', '/grimoire/archetypes', '/grimoire/journey']);
+const ALLOWED_FROM = new Set([
+  '/today',
+  '/oracle',
+  '/grimoire',
+  '/grimoire/history',
+  '/grimoire/cards',
+  '/grimoire/journal',
+  '/grimoire/rituals',
+  '/me',
+  '/profile',
+  '/archetype',
+  '/grimoire/archetypes',
+  '/grimoire/journey',
+  '/discover',
+  '/discover/numbers',
+  '/discover/angel',
+  '/discover/symbols',
+]);
 /** Pages with an id that may be the origin of another page (`from` carries the id). */
-const FROM_PATTERN = /^\/grimoire\/(archetypes\/[a-z]+|review\/(week|month)\/\d{1,3})$/;
+const FROM_PATTERN = /^\/(?:grimoire\/(archetypes\/[a-z]+|review\/(week|month)\/\d{1,3})|discover\/(numbers\/\d{1,2}|symbols\/[a-z]+|angel\/\d{1,2}(:\d{2}|\d{0,4})))$/;
 
 function isSafePath(path: string): boolean {
   return ALLOWED_FROM.has(path) || FROM_PATTERN.test(path);
@@ -138,6 +181,20 @@ export function backTarget(parsed: ParsedRoute): string | 'exit' {
       return safeFrom ?? '/grimoire';
     case 'settings':
       return '/me';
+    case 'birthdate':
+      return safeFrom ?? '/me';
+    case 'discover':
+      return '/today';
+    case 'numbers':
+    case 'angels':
+    case 'symbols':
+      return safeFrom ?? '/discover';
+    case 'number':
+      return safeFrom ?? '/discover/numbers';
+    case 'angel':
+      return safeFrom ?? '/discover/angel';
+    case 'symbol':
+      return safeFrom ?? '/discover/symbols';
     case 'archetypeDetail':
       return safeFrom ?? '/grimoire/archetypes';
     case 'review':

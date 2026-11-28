@@ -40,6 +40,15 @@ export const IconOracle = (p: IconProps) => (
   </Svg>
 );
 
+/** Discover: a compass star in a ring (IA §2, tab 3). */
+export const IconDiscover = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="m12 4.6 1.6 5.8 5.8 1.6-5.8 1.6-1.6 5.8-1.6-5.8-5.8-1.6 5.8-1.6z" />
+    <path d="m15.4 8.6-1.2 1.2M8.6 15.4l1.2-1.2M8.6 8.6l1.2 1.2M15.4 15.4l-1.2-1.2" strokeWidth={1.1} />
+  </Svg>
+);
+
 /** Grimoire: bound book with a ribbon. */
 export const IconGrimoire = (p: IconProps) => (
   <Svg {...p}>

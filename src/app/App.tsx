@@ -26,6 +26,7 @@ const loadJourney = () => import('../features/journey/JourneyScreens.tsx');
 const loadProfile = () => import('../features/profile/Profile.tsx');
 const loadShare = () => import('../features/share/SharePreview.tsx');
 const loadBook = () => import('../features/grimoire/Book.tsx');
+const loadDiscover = () => import('../features/discover/Discover.tsx');
 const WhyScreen = lazy(() => loadIdentity().then((m) => ({ default: m.WhyScreen })));
 const ArchetypeLibrary = lazy(() => loadIdentity().then((m) => ({ default: m.ArchetypeLibrary })));
 const ArchetypeDetail = lazy(() => loadIdentity().then((m) => ({ default: m.ArchetypeDetail })));
@@ -37,10 +38,18 @@ const Settings = lazy(() => loadProfile().then((m) => ({ default: m.Settings }))
 const SharePreview = lazy(() => loadShare().then((m) => ({ default: m.SharePreview })));
 const Book = lazy(() => loadBook().then((m) => ({ default: m.Book })));
 const BookChapter = lazy(() => loadBook().then((m) => ({ default: m.BookChapter })));
+const DiscoverHub = lazy(() => loadDiscover().then((m) => ({ default: m.DiscoverHub })));
+const NumbersPage = lazy(() => loadDiscover().then((m) => ({ default: m.NumbersPage })));
+const NumberPage = lazy(() => loadDiscover().then((m) => ({ default: m.NumberPage })));
+const AngelsPage = lazy(() => loadDiscover().then((m) => ({ default: m.AngelsPage })));
+const AngelPage = lazy(() => loadDiscover().then((m) => ({ default: m.AngelPage })));
+const SymbolsPage = lazy(() => loadDiscover().then((m) => ({ default: m.SymbolsPage })));
+const SymbolPage = lazy(() => loadDiscover().then((m) => ({ default: m.SymbolPage })));
+const BirthdatePage = lazy(() => loadDiscover().then((m) => ({ default: m.BirthdatePage })));
 
 /** `texts` loads content modules the first path needs later (the reveal after the questions). */
 function prefetchScreens(texts: () => Promise<unknown>): () => void {
-  const go = () => void Promise.all([loadIdentity(), loadJourney(), loadProfile(), loadShare(), loadBook(), texts()]).catch(() => undefined);
+  const go = () => void Promise.all([loadIdentity(), loadJourney(), loadProfile(), loadShare(), loadBook(), loadDiscover(), texts()]).catch(() => undefined);
   if (typeof window.requestIdleCallback === 'function') {
     const id = window.requestIdleCallback(go, { timeout: 4000 });
     return () => window.cancelIdleCallback(id);
@@ -95,6 +104,7 @@ function sceneOf(route: Route): WorldScene {
       return 'profile';
     case 'why':
     case 'share':
+    case 'birthdate':
       // Sub-pages of "Ich": the same room, dimmed like the calm screens (long text, lists).
       return 'profile-calm';
     case 'journey':
@@ -111,6 +121,16 @@ function sceneOf(route: Route): WorldScene {
     case 'oracle':
       // V05.6 (D-64 point 2 A): the oracle is a stage in the painted observatory (A03).
       return 'oracle';
+    case 'discover':
+      // V06.5 (B4): the hall of knowledge (A32); its sub-pages dim it for their long texts.
+      return 'discover';
+    case 'numbers':
+    case 'number':
+    case 'angels':
+    case 'angel':
+    case 'symbols':
+    case 'symbol':
+      return 'discover-calm';
     default:
       return 'calm';
   }
@@ -272,6 +292,30 @@ export function App() {
       break;
     case 'share':
       screen = <SharePreview key={route.id} id={route.id} parsed={parsed} />;
+      break;
+    case 'birthdate':
+      screen = <BirthdatePage parsed={parsed} />;
+      break;
+    case 'discover':
+      screen = <DiscoverHub parsed={parsed} />;
+      break;
+    case 'numbers':
+      screen = <NumbersPage parsed={parsed} />;
+      break;
+    case 'number':
+      screen = <NumberPage key={route.n} n={route.n} parsed={parsed} />;
+      break;
+    case 'angels':
+      screen = <AngelsPage parsed={parsed} />;
+      break;
+    case 'angel':
+      screen = <AngelPage key={route.raw} raw={route.raw} parsed={parsed} />;
+      break;
+    case 'symbols':
+      screen = <SymbolsPage parsed={parsed} />;
+      break;
+    case 'symbol':
+      screen = <SymbolPage key={route.id} id={route.id} parsed={parsed} />;
       break;
     case 'notfound':
       screen = <Today />;

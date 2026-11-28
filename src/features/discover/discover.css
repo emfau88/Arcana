@@ -1,0 +1,533 @@
+/* The Discover tab (V06.1, V06.5): hub, numbers, angel numbers, symbols, birth date.
+   Loaded with its chunk only. Builds on the shared panels, chips and buttons; new here are the
+   code-drawn medallions (G5: numerals never in the art) and the grids of the three worlds. */
+
+.discover__head {
+  text-align: center;
+}
+.discover__intro {
+  max-width: 34rem;
+  margin-inline: auto;
+}
+.discover__status {
+  margin: 0 0 var(--s-4);
+  text-align: center;
+}
+.discover__symbolic {
+  margin: var(--s-5) 0 0;
+  text-align: center;
+  color: var(--text-3);
+}
+.discover__center {
+  text-align: center;
+}
+.discover__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-4);
+}
+.discover__essence {
+  text-align: center;
+  margin: 0;
+}
+.discover__keywords {
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.04em;
+  color: var(--brass-300);
+}
+.discover__next,
+.discover__actions {
+  margin-top: var(--s-5);
+}
+.discover__actions {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: center;
+}
+.discover__actions > .btn--block {
+  justify-self: stretch;
+}
+.discover__edit,
+.discover__invite {
+  margin-top: var(--s-3);
+}
+
+/* Inputs: the same field as the journal note, one line high. */
+.discover__input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px var(--s-3);
+  border-radius: var(--r-s);
+  border: 1px solid var(--surface-line);
+  background: rgba(8, 6, 16, 0.55);
+  color: var(--text-1);
+  font: inherit;
+  font-size: 1rem;
+  color-scheme: dark;
+}
+.discover__input::placeholder {
+  color: var(--text-3);
+}
+.discover__input[aria-invalid='true'] {
+  border-color: var(--error);
+}
+
+/* ------------------------------------------------------------ Medallion */
+.medallion {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  color: var(--brass-400);
+}
+.medallion--s {
+  width: 48px;
+  height: 48px;
+}
+.medallion--l {
+  width: 112px;
+  height: 112px;
+}
+.medallion__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+.medallion__ring path {
+  fill: currentColor;
+  stroke: none;
+}
+.medallion__label {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--gold-200);
+  font-variant-numeric: lining-nums;
+}
+.medallion--s .medallion__label {
+  font-size: 1.25rem;
+}
+.medallion--l .medallion__label {
+  font-size: 3rem;
+}
+.medallion--long .medallion__label {
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+.medallion--s.medallion--long .medallion__label {
+  font-size: 0.78rem;
+}
+.medallion--l.medallion--long .medallion__label {
+  font-size: 1.7rem;
+}
+.discover__hero-medallion {
+  margin: 0 auto var(--s-3);
+  filter: drop-shadow(0 0 18px rgba(216, 184, 121, 0.22));
+}
+.discover__hero-symbol {
+  display: block;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto var(--s-3);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------------------ Hub */
+.discover-search {
+  display: grid;
+  gap: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.discover-search .small {
+  margin: 0;
+}
+.discover-search__hits {
+  display: grid;
+  gap: var(--s-2);
+  margin: var(--s-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.discover-search__hit {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: 52px;
+  padding: 6px var(--s-3);
+  border: 1px solid var(--surface-line);
+  border-radius: var(--r-s);
+  background: rgba(196, 185, 208, 0.05);
+  color: var(--text-1);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.discover-search__hit img {
+  flex: none;
+  border-radius: 50%;
+}
+.discover-search__hit:hover {
+  border-color: var(--brass-line);
+}
+
+.discover-worlds {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.discover-world {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  min-height: 96px;
+  font: inherit;
+  color: var(--text-1);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--dur-med, 240ms) var(--ease-out);
+}
+.discover-world:hover {
+  border-color: var(--brass-line-strong);
+}
+.discover-world__emblem {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+}
+.discover-world__symbol {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+.discover-world__text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.discover-world__title {
+  margin: 0;
+}
+.discover-world__body {
+  color: var(--text-2);
+}
+
+/* -------------------------------------------------------------- Numbers */
+.discover-core {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-3);
+  padding: 0;
+  list-style: none;
+}
+.discover-core__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'm label' 'm words';
+  align-items: center;
+  column-gap: var(--s-3);
+  width: 100%;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: var(--text-1);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.discover-core__item .medallion {
+  grid-area: m;
+}
+.discover-core__label {
+  grid-area: label;
+  font-weight: 700;
+}
+.discover-core__keywords {
+  grid-area: words;
+  color: var(--text-2);
+}
+.discover-details {
+  margin: 0 0 var(--s-2);
+}
+.discover-details p {
+  margin: 0 0 var(--s-2);
+}
+.discover-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--brass-300);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.discover-path {
+  margin: var(--s-2) 0;
+  padding: 0;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.7;
+}
+.discover-path__label {
+  display: inline-block;
+  min-width: 4.5rem;
+  color: var(--text-3);
+  font-size: var(--fs-small);
+}
+.discover-path__sum {
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+/* Two columns on phones, three from about 412 px: long keywords ("Verantwortung") fit whole. */
+.discover-numbers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: var(--s-3) var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.discover-numbers__item {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 4px;
+  width: 100%;
+  padding: var(--s-2) 2px;
+  border: 0;
+  border-radius: var(--r-s);
+  background: none;
+  color: var(--text-1);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+.discover-numbers__item:hover .medallion {
+  color: var(--brass-300);
+}
+.discover-numbers__master {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brass-400);
+}
+.discover-numbers__keywords {
+  color: var(--text-2);
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* -------------------------------------------------------- Angel numbers */
+.discover-angel-form {
+  display: grid;
+  gap: var(--s-2);
+}
+.discover-angel-form__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.discover-angel-form__row .discover__input {
+  flex: 1 1 10rem;
+  width: auto;
+  font-variant-numeric: tabular-nums;
+}
+.discover-angel-form__row .btn {
+  flex: 0 0 auto;
+}
+.discover-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.discover-chips--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+}
+.discover-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+  min-height: 48px;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--brass-line);
+  background: rgba(216, 184, 121, 0.06);
+  color: var(--text-1);
+  font: inherit;
+  cursor: pointer;
+}
+.discover-chip:hover {
+  border-color: var(--brass-line-strong);
+}
+.discover-chip__seq {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.1;
+  color: var(--gold-200);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.discover-digits {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.discover-digits li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+.discover-digits__keyword {
+  display: block;
+  font-weight: 700;
+  color: var(--brass-300);
+}
+.discover-digits__meaning {
+  display: block;
+}
+.discover-encounter {
+  display: grid;
+  gap: var(--s-2);
+  width: 100%;
+}
+.discover-encounter .small {
+  margin: 0 0 var(--s-2);
+}
+.discover-encounter__label {
+  font-weight: 600;
+  font-size: var(--fs-small);
+  color: var(--text-2);
+}
+.discover-encounter__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.discover__favorite {
+  gap: var(--s-2);
+}
+.discover__fav-star {
+  opacity: 0.55;
+}
+.discover__fav-star.is-on {
+  opacity: 1;
+  color: var(--brass-300);
+}
+
+/* -------------------------------------------------------------- Symbols */
+.discover-symbols {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.75rem, 1fr));
+  gap: var(--s-3) var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.discover-symbols__item {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: var(--s-2) 2px;
+  border: 1px solid transparent;
+  border-radius: var(--r-m);
+  background: rgba(14, 11, 26, 0.55);
+  color: var(--text-1);
+  font: inherit;
+  cursor: pointer;
+}
+.discover-symbols__item:hover {
+  border-color: var(--brass-line);
+}
+.discover-symbols__item img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.discover-symbols__name {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.discover-symbols__fav {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  color: var(--brass-300);
+}
+
+/* Cards in the number and symbol pages: same faces as the archetype resonance. */
+.discover-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin: var(--s-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ----------------------------------------------------------- Birth date */
+.birthdate__form {
+  display: grid;
+  gap: var(--s-3);
+}
+.birthdate__privacy {
+  text-align: center;
+  margin: 0;
+}
+.birthdate__saved p {
+  margin: 0 0 var(--s-3);
+}
+
+/* Free-standing text over the painted hall (A32, light sphere at the top): the design's dark halo,
+   as on "Heute" and "Ich" (D-49). */
+:is(.stage--scene-discover, .stage--scene-discover-calm) :is(.flank__text, .screen-head h1, .discover__essence, .discover__keywords, .discover__tags) {
+  text-shadow: 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 2px rgba(6, 8, 18, 0.9);
+}
+/* Free-standing small text: brighter grey plus the stronger halo, as in the light column of "Ich". */
+:is(.stage--scene-discover, .stage--scene-discover-calm) :is(.discover__intro, .discover__center, .discover__symbolic, .birthdate__privacy) {
+  color: var(--text-2);
+  text-shadow: 0 0 4px rgba(6, 8, 18, 0.9), 0 1px 10px rgba(6, 8, 18, 0.95), 0 0 18px rgba(6, 8, 18, 0.85);
+}
+/* The hub shows the hall undimmed: its intro sits over the lit sphere and reads in the body colour
+   (at 130 % text and 360 px the grey reached only 4.3:1). */
+.stage--scene-discover .discover__intro {
+  color: var(--text-1);
+}
+/* Lighter gold for the eyebrow over the lit sphere, as on the card of "Heute". */
+:is(.stage--scene-discover, .stage--scene-discover-calm) .flank__text {
+  color: var(--gold-200);
+}

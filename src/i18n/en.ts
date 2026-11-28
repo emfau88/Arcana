@@ -19,6 +19,7 @@ export const en: Messages = {
     label: 'Main navigation',
     today: 'Today',
     oracle: 'Oracle',
+    discover: 'Discover',
     grimoire: 'Grimoire',
     profile: 'Me',
   },

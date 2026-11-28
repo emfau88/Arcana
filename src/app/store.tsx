@@ -14,6 +14,7 @@ import {
   revealPosition,
 } from '../domain/oracle.ts';
 import type { CardBackId } from '../domain/cardbacks.ts';
+import { isPlausibleBirthDate } from '../domain/numerology.ts';
 import { editedEntry, erasedEntry, newJournalEntry, type JournalItem, type WritableKind } from '../domain/journal.ts';
 import { lensKey } from '../domain/lens.ts';
 import { cardEncounters, journeyDayToday, type Facts } from '../domain/progress.ts';
@@ -26,10 +27,13 @@ import type {
   ArchetypeId,
   CardId,
   DailyRecord,
+  Favorite,
+  FavoriteKind,
   JournalEntry,
   JournalRefs,
   Locale,
   MotionPreference,
+  PersonalData,
   Profile,
   Reading,
   ReadingDraft,
@@ -54,6 +58,10 @@ export interface AppState {
   journal: JournalEntry[];
   /** Append-only activities such as a finished study part (V05.1). */
   events: ActivityEvent[];
+  /** Voluntary birth date (V06, G1): local only, deletable on its own, never shared. */
+  personal: PersonalData | null;
+  /** Saved angel numbers and symbols (V06, H4). */
+  favorites: Favorite[];
   draft: ReadingDraft | null;
   /** Gesehen-Markierungen (e.g. a dismissed offer). Facts only, never counters. */
   seen: SeenFlag[];
@@ -80,6 +88,8 @@ type Action =
   | { type: 'reading'; reading: Reading }
   | { type: 'journal'; entry: JournalEntry }
   | { type: 'event'; event: ActivityEvent }
+  | { type: 'personal'; personal: PersonalData | null }
+  | { type: 'favorite'; favorite: Favorite; on: boolean }
   | { type: 'seen'; flag: SeenFlag }
   | { type: 'today'; key: string }
   | { type: 'pending'; answers: Answers; theme: ThemeId | null }
@@ -120,6 +130,12 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, events: upsert(state.events, action.event, (e) => e.id === action.event.id) };
     case 'seen':
       return { ...state, seen: upsert(state.seen, action.flag, (s) => s.key === action.flag.key) };
+    case 'personal':
+      return { ...state, personal: action.personal };
+    case 'favorite': {
+      const rest = state.favorites.filter((f) => f.key !== action.favorite.key);
+      return { ...state, favorites: action.on ? [...rest, action.favorite] : rest };
+    }
     case 'today':
       return state.todayKey === action.key ? state : { ...state, todayKey: action.key };
     case 'pending':
@@ -134,6 +150,8 @@ function reducer(state: AppState, action: Action): AppState {
         readings: [],
         journal: [],
         events: [],
+        personal: null,
+        favorites: [],
         draft: null,
         seen: [],
         skippedCorrupt: 0,
@@ -184,6 +202,14 @@ export interface AppActions {
   clearAllData(): Promise<void>;
   /** Records that something was seen or dismissed (idempotent, the first time wins). */
   markSeen(key: string): Promise<void>;
+  /** Saves the voluntary birth date (V06, G1). Refuses a date that is not a plausible birth date. */
+  setBirthDate(birthDate: string): Promise<void>;
+  /** Deletes the birth date on its own (G1); nothing else changes. */
+  deleteBirthDate(): Promise<void>;
+  /** Adds or removes a favourite (angel number or symbol, H4). Returns whether it is now a favourite. */
+  toggleFavorite(kind: FavoriteKind, id: string): Promise<boolean>;
+  /** Notes an angel number encounter as a journal entry (H3); it counts as a day of the journey. */
+  recordEncounter(raw: string, note: string, place: string): Promise<JournalEntry>;
 }
 
 interface AppContextValue {
@@ -229,6 +255,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
     readings: [],
     journal: [],
     events: [],
+    personal: null,
+    favorites: [],
     draft: null,
     seen: [],
     skippedCorrupt: 0,
@@ -282,6 +310,8 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
             readings: snap.readings,
             journal: snap.journal,
             events: snap.events,
+            personal: snap.personal,
+            favorites: snap.favorites,
             draft: snap.draft,
             seen: snap.seen,
             skippedCorrupt: snap.skippedCorrupt,
@@ -586,6 +616,43 @@ export function AppProvider({ children, repo: repoProp, clock = systemClock, rng
       async markSeen(key) {
         const flag = await repo.markSeen(key, clock.now().toISOString());
         dispatch({ type: 'seen', flag });
+      },
+
+      async setBirthDate(birthDate) {
+        const now = clock.now();
+        if (!isPlausibleBirthDate(birthDate, localDateKey(now))) throw new Error('Not a plausible birth date');
+        const personal: PersonalData = { ...stateRef.current.personal, birthDate, savedAt: now.toISOString() };
+        await repo.putPersonal(personal);
+        dispatch({ type: 'personal', personal });
+      },
+
+      async deleteBirthDate() {
+        await repo.deletePersonal();
+        dispatch({ type: 'personal', personal: null });
+      },
+
+      async toggleFavorite(kind, id) {
+        const key = `${kind}:${id}`;
+        const existing = stateRef.current.favorites.find((f) => f.key === key);
+        if (existing) {
+          await repo.deleteFavorite(key);
+          dispatch({ type: 'favorite', favorite: existing, on: false });
+          return false;
+        }
+        const favorite: Favorite = { key, kind, id, createdAt: clock.now().toISOString() };
+        await repo.putFavorite(favorite);
+        dispatch({ type: 'favorite', favorite, on: true });
+        return true;
+      },
+
+      async recordEncounter(raw, note, place) {
+        // The angel lookup belongs to the Discover chunk; only that screen records encounters, so
+        // the start bundle does not carry it (V06 step limit: start JS at most +2 kB).
+        const { newEncounterEntry } = await import('../domain/angel.ts');
+        const entry = newEncounterEntry(raw, note, place, clock.now(), newId(rng));
+        await repo.putJournalEntry(entry);
+        dispatch({ type: 'journal', entry });
+        return entry;
       },
     }),
     [repo, clock, rng, pack, persistSettings, loadSpreadTexts],

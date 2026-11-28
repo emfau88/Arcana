@@ -11,7 +11,7 @@ import './world.css';
  * Everything here is static after a short entrance: a few stars twinkle three times
  * (≈10 s) and then the scene is completely still (E5). Reduced motion: no animation.
  */
-export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap' | 'grimoire' | 'oracle';
+export type WorldScene = 'today' | 'calm' | 'welcome' | 'profile' | 'profile-calm' | 'starmap' | 'grimoire' | 'oracle' | 'discover' | 'discover-calm';
 
 const base = import.meta.env.BASE_URL;
 /** Painted backgrounds by scene; filled when the assets from ASSET_REQUESTS.md arrive. */
@@ -30,6 +30,9 @@ const WORLD_IMAGES: Partial<Record<WorldScene, { src: string; srcSmall: string; 
   grimoire: { src: 'world/bg-grimoire.webp', srcSmall: 'world/bg-grimoire-720.webp' },
   // B3 (S-50, S-58): A03 the observatory; the cards of the oracle stand on its table (V05.6).
   oracle: { src: 'world/bg-oracle.webp', srcSmall: 'world/bg-oracle-720.webp' },
+  // B4 (V06.5): A32 the hall of knowledge with the armillary sphere; dimmed behind the long pages.
+  discover: { src: 'world/bg-discover.webp', srcSmall: 'world/bg-discover-720.webp' },
+  'discover-calm': { src: 'world/bg-discover.webp', srcSmall: 'world/bg-discover-720.webp' },
 };
 const CORNERS = ['tl', 'tr', 'bl', 'br'] as const;
 const SMALL_SCREEN = '(max-width: 520px)';

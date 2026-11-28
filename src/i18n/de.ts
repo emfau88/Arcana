@@ -17,6 +17,7 @@ export const de = {
     label: 'Hauptnavigation',
     today: 'Heute',
     oracle: 'Orakel',
+    discover: 'Entdecken',
     grimoire: 'Grimoire',
     profile: 'Ich',
   },

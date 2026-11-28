@@ -37,7 +37,8 @@
 }
 .tabbar ul {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* Five tabs since V06 (E8): about 72 px each on a 360 px screen. */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   margin: 0 auto;
   padding: 0;
   list-style: none;
@@ -135,4 +136,20 @@
 .tabbar__label {
   line-height: 1.2;
   text-align: center;
+}
+/* Five tabs (V06, E8): a label never runs into its neighbour. Where a column is too narrow for the
+   longest label in bold ("Entdecken", "Discover"), on 320 px or with large system text, all labels
+   shrink together just enough; at 360 px and wider with normal text nothing changes (S-68).
+   Android's system font size multiplies every font-size after CSS (text zoom), so the cap is
+   divided by it, as for the card inscriptions (card.css). Engines without container units keep
+   the plain size. */
+.tabbar li {
+  container-type: inline-size;
+}
+.tabbar__label {
+  font-size: 1em;
+  font-size: min(1em, calc(17cqi / var(--text-zoom, 1)));
+}
+:root:lang(en) .tabbar__label {
+  font-size: min(1em, calc(19cqi / var(--text-zoom, 1)));
 }
