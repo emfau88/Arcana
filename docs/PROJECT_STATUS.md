@@ -9,7 +9,7 @@ Ein neuer Agent liest zuerst diese Datei, dann `AGENTS.md`, `docs/DECISIONS.md` 
 | Was | Wo |
 |---|---|
 | Projektroot (neu, isoliert) | `%USERPROFILE%\Documents\PersonalOracle-Web` |
-| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.5.0, Tag `v0.5.0`), `feature/v05-karten` = V05 (gemergt, D-68; trägt danach nur noch Doku zum Merge), `feature/v04-identitaet`, `feature/v03-fundament` und `design/visual-overhaul` = V04, V03 und V02 (gemergt, bleiben als Referenz), `fix/v04-texte` und `fix/v041-layout` = 0.4.1 (gemergt). Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
+| Git | eigenes Repo, Remote `https://github.com/emfau88/Arcana` (öffentlich). `main` = freigegebener Stand (0.5.0, Tag `v0.5.0`), `feature/v06-zahlen` = V06 (bisher nur der Umsetzungsplan `docs/V06_PLAN.md`, Start auf Zuruf), `feature/v05-karten` = V05 (gemergt, D-68, Doku-Nachtrag #9 ebenfalls gemergt), `feature/v04-identitaet`, `feature/v03-fundament` und `design/visual-overhaul` = V04, V03 und V02 (gemergt, bleiben als Referenz), `fix/v04-texte` und `fix/v041-layout` = 0.4.1 (gemergt). Sicherung je Paket mit Commits, Push, Nachweisen und Tags (D-40, `AGENTS.md`) |
 | Preview (Handy) | https://emfau88.github.io/Arcana/ (GitHub Pages aus `main`, Workflow `.github/workflows/pages.yml`) |
 | Design-Vorschau | https://emfau88.github.io/Arcana/preview/ (Branch `design/visual-overhaul`, eigene Datenbank, D-29) |
 | Produktplan V2 | `docs/product/` (Vision, Systeme, Progression, Inhalte, Informationsarchitektur, Monetarisierung, Masterplan V02–V07) |
@@ -183,7 +183,7 @@ Prüfungen auf dem Branch: `npm run check` PASS (204 Unit-Tests, Content-Gate 0 
 
 ## Nächstes Arbeitspaket
 
-**V05 ist gemergt** (28.11.2026, Pull Request [#8](https://github.com/emfau88/Arcana/pull/8), `50601a8`, Tag `v0.5.0`, D-68). V06 (Zahlen und Symbole) beginnt erst auf Zuruf des Eigentümers; vorher offen E8 (fünf Tabs). Die Liste unten ist der Verlauf von V05.
+**V05 ist gemergt** (28.11.2026, Pull Request [#8](https://github.com/emfau88/Arcana/pull/8), `50601a8`, Tag `v0.5.0`, D-68). Der Doku-Pull-Request [#9](https://github.com/emfau88/Arcana/pull/9) ist ebenfalls gemergt (`abe61d3`). **V06 (Zahlen und Symbole) ist geplant** (`docs/V06_PLAN.md`, S-62, Branch `feature/v06-zahlen`): Symbol-Abgleich mit den Kartenbildern, dann Numerologie, Engelszahlen und Symbol-Lexikon als Logik und Texte, danach B4 und der Entdecken-Tab, zuletzt die zweite Säule in „Heute“, „Ich“ und im Grimoire. V06 beginnt erst auf Zuruf des Eigentümers; offen sind E8 (fünf Tabs, vor Schritt 4) und das Ex Libris in V06.6 (vor Schritt 5). Die Liste unten ist der Verlauf von V05.
 
 V04 ist freigegeben und gemergt (Pull Request [#4](https://github.com/emfau88/Arcana/pull/4), `8b2419b`, Tag `v0.4.0`), danach 0.4.1 mit Textdurchsicht und den ersten Design-Korrekturen (Tag `v0.4.1`); `main` ist in `feature/v05-karten` übernommen. Die Punkte 2, 5 und 6 des Design-Plans sind an Mustern entschieden (D-64: Orakel A, Enthüllung B, Sternkarte A) und werden mit den V05-Screens eingebaut; Vorlage ist der Branch `muster/design-plan` (S-42). Der Eigentümer hat V05 am 27.11.2026 freigegeben (D-65). Reihenfolge (S-29):
 

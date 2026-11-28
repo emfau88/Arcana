@@ -71,6 +71,7 @@ Nicht hier, sondern weiter beim Eigentümer: Veröffentlichung, Kosten, Billing,
 | S-59 | 28.11.2026 | Testsignatur des Testpakets | eigener Testschlüssel, nur lokal (`android/keystore.properties`, per `.gitignore` ausgeschlossen), Entwicklungs-App-ID, Version 0.5.0; nicht der spätere Play-Upload-Schlüssel | V05.6, E11, RELEASE_CHECKLIST |
 | S-60 | 28.11.2026 | Kartenbilder in 560 px (Reserve aus D-52) | versucht und zurückgenommen: Bilder auf „Heute“ ≈ 130 KB kleiner, aber „Heute sichtbar“ ohne messbaren Gewinn und die Enthüllung mit mehr Rucklern; die Karten bleiben bei 720 px, die Entscheidung über die Leistung liegt beim Eigentümer | QG-V05, D-52, B-08, PERFORMANCE.md „V05“ |
 | S-61 | 28.11.2026 | Vorlesefehler aus dem TalkBack-Grundcheck | unsichtbare Pausen nur für Screenreader: Komma zwischen den Schlagworten auf „Heute“ und nach der Kartennummer in der Legung; Bild pixelgleich | QG-V05, TalkBack |
+| S-62 | 28.11.2026 | Reihenfolge in V06 | Symbol-Abgleich mit den Kartenbildern zuerst, dann Logik und Texte (Numerologie, Engelszahlen, Symbole), danach B4 und die Screens mit dem Entdecken-Tab (nach E8), zuletzt die zweite Säule; Plan in `docs/V06_PLAN.md` | V06 |
 
 ## Nachprüfen (Prüfliste für den Eigentümer)
 
@@ -884,3 +885,13 @@ Gespeichert wird wie bisher der fertige Text. Die klassische Legung behält Entw
 - Nummer und Titel als getrennte Zeilen im Baum: ändert das Markup der Kopfzeilen, an denen B-12 (Subgrid) hängt.
 
 **Wechsel kostet:** je eine Zeile in `src/features/today/Today.tsx` und `src/features/oracle/Oracle.tsx`.
+
+## S-62 · Reihenfolge in V06
+
+**Entschieden:** V06 läuft auf `feature/v06-zahlen`, abgezweigt von `main` (0.5.0 plus Doku-Pull-Request #9). Zuerst werden die 24 Symbole mit den 22 Kartenbildern abgeglichen, weil Texte, Verweise und die Symbolbilder an dieser Liste hängen. Danach entstehen, ohne Oberfläche prüfbar, die Numerologie (V06.2), die Engelszahlen (V06.3) und das Symbol-Lexikon (V06.4) als Logik und Texte. Dann folgen B4 und die Screens mit dem Entdecken-Tab (V06.1 und V06.5, nach E8) und zuletzt die Verbindungen der zweiten Säule (V06.6). Der Plan mit „Fertig, wenn“, Belegen, Regeln und Risiken steht in `docs/V06_PLAN.md`.
+
+**Warum:** wie S-29: Die Textmenge (≈ 500 je Sprache) ist der Engpass, und Logik und Texte sind ohne Oberfläche vollständig testbar. E8 ist noch offen, also kann der Tab warten, ohne dass die Arbeit steht. Weltvorstellungen und „Dein Symbol“ dürfen erst erscheinen, wenn ihre Seiten existieren (D-54), darum kommt die Verbindung zuletzt.
+
+**Alternativen:** mit dem Entdecken-Tab beginnen (früh sichtbar, braucht aber E8 vorher und hätte Screens ohne Inhalte); jede Welt senkrecht durchbauen, also Numerologie ganz mit Screens, dann Engelszahlen, dann Symbole (früher auf dem Handy prüfbar, aber Tab, Hub und Grimoire würden dreimal angefasst); B-08 Option 1 vorziehen (der Start wäre vorher leichter, aber der Eigentümer hat die Behebung auf später gelegt, D-67).
+
+**Wechsel kostet:** nichts; die Schritte 1–3 sind voneinander unabhängig.

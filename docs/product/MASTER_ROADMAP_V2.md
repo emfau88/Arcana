@@ -169,6 +169,8 @@ Beim **laufenden Paket** sind die Unterpunkte jedes Bulks ausgeklappt (aus „Fe
 
 ### V06 · Zahlen und Symbole (0.6)
 
+Umsetzungsplan: `docs/V06_PLAN.md` (S-62, 28.11.2026), Branch `feature/v06-zahlen`; Start auf Zuruf des Eigentümers.
+
 - [ ] V06.1 Entdecken-Tab (E8)
 - [ ] V06.2 Numerologie
 - [ ] V06.3 Engelszahlen
@@ -464,12 +466,12 @@ Regeln:
 
 ## 10 · Nächste Schritte
 
-Stand 28.11.2026. V02 bis V05 sind abgeschlossen und gemergt (0.5.0 auf `main`, Tag `v0.5.0`, D-68). V06 beginnt erst auf Zuruf des Eigentümers.
+Stand 28.11.2026. V02 bis V05 sind abgeschlossen und gemergt (0.5.0 auf `main`, Tag `v0.5.0`, D-68; Doku-Pull-Request #9 ebenfalls gemergt). Der Umsetzungsplan für V06 steht in `docs/V06_PLAN.md` (S-62) auf dem Branch `feature/v06-zahlen`; V06 beginnt erst auf Zuruf des Eigentümers.
 
 1. **V05 fertig bauen:** Sternkarte als drei Ringe (Punkt 6 A, S-56), Korrektur der Enthüllung (Punkt 5 B, S-57) und Orakel als Bühne mit der Auswahl der Legungen und B-12 (Punkt 2 A, S-58) sind gebaut (28.11.2026), ebenso das Testpaket (Release-Build 0.5.0 mit Testsignatur und Testanleitung, S-59, `docs/TESTPAKET.md`); E11 (App-Name und App-ID) liegt beim Eigentümer, bis dahin bleibt der geschlossene Test BLOCKED. Der Branch `muster/design-plan` (S-42) wird nicht gemergt und kann nach QG-V05 gelöscht werden.
 2. **QG-V05 geprüft** (28.11.2026, PASS mit Ausnahme D-67, `docs/GATE_REPORTS.md`). Die Leistungsmessung gegen die Referenz ist gelaufen: „Heute“ sichtbar und Erststart liegen knapp über den Grenzen, alles andere hält (`docs/visual/PERFORMANCE.md` „V05“). **Eigentümer 28.11.2026 (D-67):** Ausnahme wie D-52, Behebung spätestens in V07.5 (Option 1, bei Bedarf Option 2), V05 nach den übrigen Prüfungen mergen. Es folgen Android-Kaltstart, TalkBack-Grundcheck, alle Prüfungen auf dem Endstand, Gate-Bericht und Pull Request nach `main`.
-3. **Eigentümer:** gesammelte Durchsicht der Prüfliste „Nachprüfen“ in `SELF_DECISIONS.md` (bleibt wie bei V04 für Rückmeldungen offen); E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor dem geschlossenen Test; das Testpaket steht); E8 fünf Tabs (vor V06). E19 (D-43), E9 und E20 (D-47) und E10 (D-66) sind entschieden.
-4. **Lücke im Plan:** Das Ex Libris (persönliche erste Seite, `PRODUCT_SYSTEMS.md` E4, Release 1.0) hat noch keinen Bulk. Es braucht die Kernzahlen und das Symbol, passt also zu V06.6; die Teilen-Vorlage J5 bleibt in V07.1. Die Veredelung an Reisetag 50 hängt daran.
+3. **Eigentümer:** gesammelte Durchsicht der Prüfliste „Nachprüfen“ in `SELF_DECISIONS.md` (bleibt wie bei V04 für Rückmeldungen offen); E11 Name und App-ID, E15 und E17 Play-Konto und geschlossener Test (vor dem geschlossenen Test; das Testpaket steht); E8 fünf Tabs (vor V06.1, Schritt 4 des V06-Plans) und das Ex Libris in V06.6 (vor Schritt 5). E19 (D-43), E9 und E20 (D-47) und E10 (D-66) sind entschieden.
+4. **Lücke im Plan:** Das Ex Libris (persönliche erste Seite, `PRODUCT_SYSTEMS.md` E4, Release 1.0) hat noch keinen Bulk. Es braucht die Kernzahlen und das Symbol, passt also zu V06.6; die Teilen-Vorlage J5 bleibt in V07.1. Die Veredelung an Reisetag 50 hängt daran. Der V06-Plan schlägt den Einbau in V06.6 vor; der Eigentümer entscheidet.
 5. **Zu prüfen vor dem geschlossenen Test:** V07.3 Sicherung und Wiederherstellung vorziehen, falls Tester neu installieren müssen (in §3 schon als Möglichkeit genannt).
 6. **Kleine Reste:** Design-Plan Punkte 8 (Mindestschrift 12 px) und 9 (Prüfbreite 375 px, automatische Prüfung je Pull Request), noch nicht beauftragt.
 
