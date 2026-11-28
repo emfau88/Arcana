@@ -1,6 +1,6 @@
 # V06-Plan · Zahlen und Symbole (0.6)
 
-**Stand:** 28.11.2026 · Entwurf des Agenten, **wartet auf den Zuruf des Eigentümers** (V06 beginnt erst dann). Reihenfolge und Alternativen: `docs/SELF_DECISIONS.md` S-62.
+**Stand:** 28.11.2026 · Plan des Agenten, **vom Eigentümer am 28.11.2026 freigegeben** (D-69): V06 läuft, E8 und Ex Libris wie empfohlen. Reihenfolge und Alternativen: `docs/SELF_DECISIONS.md` S-62.
 **Grundlage:** `docs/product/MASTER_ROADMAP_V2.md` §5 „V06“ und §6, `PRODUCT_SYSTEMS.md` C10, E (Kapitel III und VI, E4), G, H und J4, `CONTENT_MASTERPLAN.md` §1–9, `INFORMATION_ARCHITECTURE.md` §2 und §5, `PROGRESSION_DESIGN.md` §5–6, `docs/visual/ASSET_REQUESTS.md` A25, A28, A32 und A33.
 
 **Ziel:** Ein neuer Tab „Entdecken“ bündelt zwei Wissenswelten: Zahlen mit Engelszahlen, und Symbole. Die Numerologie wird die zweite Säule der Identität und ist mit „Heute“, „Ich“ und dem Grimoire verbunden. Am Ende steht Version 0.6.0.
@@ -49,9 +49,9 @@ Nach jedem Schritt: getrennte Commits (Code, Nachweise, Doku), Push auf `feature
 
 | # | Frage | Empfehlung | gebraucht vor |
 |---|---|---|---|
-| Start | V06 beginnen | – | Schritt 0 |
-| E8 | Fünf Tabs mit „Entdecken“ | ja. Die Alternative wäre ein Einstieg über „Heute“ und das Grimoire; das ist schlechter, weil Nachschlagen (Engelszahl gesehen, sofort suchen) einen direkten Weg braucht | Schritt 4 |
-| Ex Libris | Die persönliche erste Seite des Grimoires (E4, Release 1.0) hat noch keinen Bulk; sie braucht die Kernzahlen und das Symbol | in V06.6 einbauen; die Teilen-Vorlage J5 bleibt in V07.1 | Schritt 5 |
+| Start | V06 beginnen | **entschieden (D-69)** | Schritt 0 |
+| E8 | Fünf Tabs mit „Entdecken“ | **entschieden (D-69): ja.** Die Alternative wäre ein Einstieg über „Heute“ und das Grimoire; das ist schlechter, weil Nachschlagen (Engelszahl gesehen, sofort suchen) einen direkten Weg braucht | Schritt 4 |
+| Ex Libris | Die persönliche erste Seite des Grimoires (E4, Release 1.0) hat noch keinen Bulk; sie braucht die Kernzahlen und das Symbol | **entschieden (D-69):** in V06.6 einbauen; die Teilen-Vorlage J5 bleibt in V07.1 | Schritt 5 |
 
 Kann warten: E14 Billing (vor V07), E11, E15 und E17 (geschlossener Test; das Test-Update aus QG-V06 bleibt bis dahin BLOCKED), E18 Lektorat.
 

@@ -148,7 +148,7 @@ Drei **gemeinsame Systeme** tragen alles: **Identität** (Wer bin ich?), **Reise
 | E1 | Buch-Präsentation: Pergament-Seiten (`--parchment`), Kapitel-Vignetten (A23–A29), Ornamente per SVG, Seitenwechsel als Übergang (reduziert: Überblenden) | 1.0 | Free |
 | E2 | **„Neu im Grimoire“**: kleiner Teal-Glanz an neuen Einträgen, bis sie angesehen wurden | 1.0 | Free |
 | E3 | Suche über Tagebuch und Lexika (lokal) | 1.0 | Free |
-| E4 | **Ex Libris**: persönliche erste Seite (Archetyp, Kernzahlen, Symbol, Reisetag), teilbar ohne private Daten | 1.0 | Free |
+| E4 | **Ex Libris**: persönliche erste Seite (Archetyp, Kernzahlen, Symbol, Reisetag), teilbar ohne private Daten. Gebaut in V06.6 (D-69), die Teilen-Vorlage J5 in V07.1 | 1.0 | Free |
 | E5 | **Lokale Sicherung und Wiederherstellung**: alle eigenen Daten als eine versionierte Datei exportieren und auf demselben oder einem neuen Gerät wiederherstellen (ersetzen nach Vorschau und Bestätigung). Geburtsdatum nur auf Wunsch enthalten. Details `INFORMATION_ARCHITECTURE.md` §5.7 | 1.0 (spätestens) | Free (Datensicherung ist kein Premium) |
 | E6 | **Visueller PDF-Export** des Grimoires (gestaltete Seiten zum Lesen oder Drucken), unabhängig von der Sicherung | 1.2+ | Free oder Edition (E19) |
 | E6 | Zusätzliche Kapitel (Mond 1.1, Träume 1.3+) erscheinen, wenn die Welt erscheint | 1.1+ | je nach Welt |
