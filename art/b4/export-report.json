@@ -1,0 +1,653 @@
+{
+  "files": [
+    {
+      "file": "world/bg-discover.webp",
+      "size": "1024x1536",
+      "kb": 151.2,
+      "budgetKb": 320,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "world/bg-discover-720.webp",
+      "size": "720x1080",
+      "kb": 78,
+      "budgetKb": 160,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/sun.webp",
+      "size": "256x256",
+      "kb": 19.3,
+      "budgetKb": 20,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/sun.webp",
+      "size": "96x96",
+      "kb": 5.8,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/moon.webp",
+      "size": "256x256",
+      "kb": 16.4,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/moon.webp",
+      "size": "96x96",
+      "kb": 4.3,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/star.webp",
+      "size": "256x256",
+      "kb": 15.4,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/star.webp",
+      "size": "96x96",
+      "kb": 4.4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/lotus.webp",
+      "size": "256x256",
+      "kb": 16.9,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/lotus.webp",
+      "size": "96x96",
+      "kb": 4.5,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/key.webp",
+      "size": "256x256",
+      "kb": 10.1,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/key.webp",
+      "size": "96x96",
+      "kb": 3,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/butterfly.webp",
+      "size": "256x256",
+      "kb": 19.8,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/butterfly.webp",
+      "size": "96x96",
+      "kb": 5.2,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/phoenix.webp",
+      "size": "256x256",
+      "kb": 18.6,
+      "budgetKb": 20,
+      "quality": 0.8,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/phoenix.webp",
+      "size": "96x96",
+      "kb": 5.8,
+      "budgetKb": 6,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/serpent.webp",
+      "size": "256x256",
+      "kb": 17.9,
+      "budgetKb": 20,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/serpent.webp",
+      "size": "96x96",
+      "kb": 5.1,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/tree.webp",
+      "size": "256x256",
+      "kb": 19.9,
+      "budgetKb": 20,
+      "quality": 0.76,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/tree.webp",
+      "size": "96x96",
+      "kb": 5.7,
+      "budgetKb": 6,
+      "quality": 0.8,
+      "ok": true
+    },
+    {
+      "file": "symbols/owl.webp",
+      "size": "256x256",
+      "kb": 19,
+      "budgetKb": 20,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/owl.webp",
+      "size": "96x96",
+      "kb": 5.4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/crown.webp",
+      "size": "256x256",
+      "kb": 18.6,
+      "budgetKb": 20,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/crown.webp",
+      "size": "96x96",
+      "kb": 5.4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/chalice.webp",
+      "size": "256x256",
+      "kb": 17.4,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/chalice.webp",
+      "size": "96x96",
+      "kb": 4.7,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/sword.webp",
+      "size": "256x256",
+      "kb": 7.8,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/sword.webp",
+      "size": "96x96",
+      "kb": 2.4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/staff.webp",
+      "size": "256x256",
+      "kb": 14.3,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/staff.webp",
+      "size": "96x96",
+      "kb": 3.9,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/rose.webp",
+      "size": "256x256",
+      "kb": 19.1,
+      "budgetKb": 20,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/rose.webp",
+      "size": "96x96",
+      "kb": 5.4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/lily.webp",
+      "size": "256x256",
+      "kb": 17.4,
+      "budgetKb": 20,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/lily.webp",
+      "size": "96x96",
+      "kb": 5.3,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/eye.webp",
+      "size": "256x256",
+      "kb": 17.9,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/eye.webp",
+      "size": "96x96",
+      "kb": 5.1,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/feather.webp",
+      "size": "256x256",
+      "kb": 14.8,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/feather.webp",
+      "size": "96x96",
+      "kb": 4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/wheel.webp",
+      "size": "256x256",
+      "kb": 17.5,
+      "budgetKb": 20,
+      "quality": 0.88,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/wheel.webp",
+      "size": "96x96",
+      "kb": 5.4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/pillars.webp",
+      "size": "256x256",
+      "kb": 13.2,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/pillars.webp",
+      "size": "96x96",
+      "kb": 3.7,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/scales.webp",
+      "size": "256x256",
+      "kb": 19.4,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/scales.webp",
+      "size": "96x96",
+      "kb": 5.4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/lantern.webp",
+      "size": "256x256",
+      "kb": 12.9,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/lantern.webp",
+      "size": "96x96",
+      "kb": 3.5,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/lemniscate.webp",
+      "size": "256x256",
+      "kb": 13.6,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/lemniscate.webp",
+      "size": "96x96",
+      "kb": 4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/wheat.webp",
+      "size": "256x256",
+      "kb": 15,
+      "budgetKb": 20,
+      "quality": 0.92,
+      "ok": true
+    },
+    {
+      "file": "symbols/thumbs/wheat.webp",
+      "size": "96x96",
+      "kb": 4,
+      "budgetKb": 6,
+      "quality": 0.92,
+      "ok": true
+    }
+  ],
+  "checks": {
+    "specksRemoved": {
+      "symbols-sheet-1.png": 3,
+      "symbols-sheet-2.png": 4
+    },
+    "symbols": [
+      {
+        "name": "sun",
+        "box": [
+          65,
+          43,
+          254,
+          255
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "moon",
+        "box": [
+          461,
+          51,
+          231,
+          240
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "star",
+        "box": [
+          832,
+          44,
+          255,
+          254
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "lotus",
+        "box": [
+          1212,
+          68,
+          264,
+          206
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "key",
+        "box": [
+          135,
+          384,
+          116,
+          221
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "butterfly",
+        "box": [
+          448,
+          384,
+          256,
+          196
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "phoenix",
+        "box": [
+          833,
+          384,
+          255,
+          256
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "serpent",
+        "box": [
+          1243,
+          384,
+          203,
+          256
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "tree",
+        "box": [
+          63,
+          723,
+          258,
+          258
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "owl",
+        "box": [
+          469,
+          723,
+          214,
+          258
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "crown",
+        "box": [
+          829,
+          744,
+          263,
+          218
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "chalice",
+        "box": [
+          1241,
+          725,
+          207,
+          256
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "sword",
+        "box": [
+          123,
+          43,
+          139,
+          256
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "staff",
+        "box": [
+          500,
+          44,
+          153,
+          255
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "rose",
+        "box": [
+          835,
+          46,
+          251,
+          249
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "lily",
+        "box": [
+          1222,
+          43,
+          245,
+          256
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "eye",
+        "box": [
+          62,
+          385,
+          259,
+          254
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "feather",
+        "box": [
+          481,
+          384,
+          191,
+          256
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "wheel",
+        "box": [
+          830,
+          384,
+          261,
+          256
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "pillars",
+        "box": [
+          1249,
+          384,
+          190,
+          208
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "scales",
+        "box": [
+          65,
+          724,
+          254,
+          257
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "lantern",
+        "box": [
+          508,
+          724,
+          138,
+          258
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "lemniscate",
+        "box": [
+          829,
+          791,
+          263,
+          124
+        ],
+        "touchesCell": false
+      },
+      {
+        "name": "wheat",
+        "box": [
+          1262,
+          723,
+          165,
+          258
+        ],
+        "touchesCell": false
+      }
+    ],
+    "symbolSquare": 279
+  }
+}

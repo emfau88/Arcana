@@ -1,9 +1,12 @@
 // Exports delivered image masters (PNG) to the WebP sizes of docs/visual/ASSET_REQUESTS.md and
 // checks them against the size budgets. Masters are only read, never changed (no retouch). The only
-// crop is the one ASSET_REQUESTS asks for: the vignette sheet A23–A29 is cut into single files.
+// crops are the ones ASSET_REQUESTS asks for: the vignette sheet A23–A29 and the symbol sheets A33
+// are cut into single files. The only cleanup: stray specks of the generator (free-standing spots
+// under 30 px on the symbol sheets) are left out of the exported files; the masters stay as they are.
 // Usage: node scripts/export-art.mjs <bulk> <masterDir> <outDir>
 //   bulk: b2 (A05, A06, A19 backgrounds; A07–A14 portraits)
 //         b3 (A03, A04 backgrounds; A15 book; A20, A21 card backs; A23–A29 vignettes; A30 parchment)
+//         b4 (A32 discover background; A33 two symbol sheets, cut into 24 single symbols)
 //         b5 (A22 card back, pulled into V05 by D-66; A18 and A31 follow in V07)
 // Encoding uses the project's Playwright Chromium (canvas → WebP); nothing is downloaded.
 // The large size is the master's own size (1024 × 1536, like A01): no upscaling.
@@ -13,8 +16,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const [, , bulk, masterDir, outDir] = process.argv;
-if (!['b2', 'b3', 'b5'].includes(bulk) || !masterDir || !outDir) {
-  console.error('Usage: node scripts/export-art.mjs b2|b3|b5 <masterDir> <outDir>');
+if (!['b2', 'b3', 'b4', 'b5'].includes(bulk) || !masterDir || !outDir) {
+  console.error('Usage: node scripts/export-art.mjs b2|b3|b4|b5 <masterDir> <outDir>');
   process.exit(2);
 }
 
@@ -22,7 +25,7 @@ if (!['b2', 'b3', 'b5'].includes(bulk) || !masterDir || !outDir) {
  * One output file. Sizes and budgets from ASSET_REQUESTS. `src` = source rectangle in the master
  * (only for the vignette sheet); without it the whole master is scaled (same aspect required).
  */
-const job = (master, dir, name, w, h, budgetKb, src) => ({ master, dir, name, w, h, budgetKb, src });
+const job = (master, dir, name, w, h, budgetKb, src, alphaSteps = 0) => ({ master, dir, name, w, h, budgetKb, src, alphaSteps });
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
@@ -38,6 +41,86 @@ async function master(name) {
 }
 const dataUrl = (png) => `data:image/png;base64,${png.toString('base64')}`;
 
+/**
+ * Symbol sheets: removes free-standing spots smaller than `minArea` pixels (alpha > 24, 8-neighbour
+ * components), then returns the cleaned sheet as PNG plus the motif bounds of every cell of the
+ * cols × rows grid. Rays, sparks and chains are far larger than a speck and stay.
+ */
+async function cleanSheet(page, src, cols, rows, minArea) {
+  const r = await page.evaluate(
+    async ({ src, cols, rows, minArea }) => {
+      const img = new Image();
+      img.src = src;
+      await img.decode();
+      const c = document.createElement('canvas');
+      const W = (c.width = img.naturalWidth);
+      const H = (c.height = img.naturalHeight);
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const im = ctx.getImageData(0, 0, W, H);
+      const on = (i) => im.data[i * 4 + 3] > 24;
+      const seen = new Uint8Array(W * H);
+      let specks = 0;
+      for (let start = 0; start < W * H; start++) {
+        if (seen[start] || !on(start)) continue;
+        const comp = [start];
+        seen[start] = 1;
+        for (let k = 0; k < comp.length; k++) {
+          const p = comp[k];
+          const x = p % W;
+          const y = (p - x) / W;
+          for (let dy = -1; dy <= 1; dy++)
+            for (let dx = -1; dx <= 1; dx++) {
+              const nx = x + dx;
+              const ny = y + dy;
+              if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+              const q = ny * W + nx;
+              if (!seen[q] && on(q)) {
+                seen[q] = 1;
+                comp.push(q);
+              }
+            }
+        }
+        if (comp.length < minArea) {
+          specks++;
+          // the spot and its faint rim (alpha <= 24 around it) go
+          for (const p of comp) {
+            const x = p % W;
+            const y = (p - x) / W;
+            for (let dy = -2; dy <= 2; dy++)
+              for (let dx = -2; dx <= 2; dx++) {
+                const nx = x + dx;
+                const ny = y + dy;
+                if (nx >= 0 && ny >= 0 && nx < W && ny < H) im.data[(ny * W + nx) * 4 + 3] = 0;
+              }
+          }
+        }
+      }
+      ctx.putImageData(im, 0, 0);
+      const cw = W / cols;
+      const ch = H / rows;
+      const boxes = [];
+      for (let r = 0; r < rows; r++)
+        for (let col = 0; col < cols; col++) {
+          let x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1;
+          for (let y = Math.floor(r * ch); y < (r + 1) * ch; y++)
+            for (let x = Math.floor(col * cw); x < (col + 1) * cw; x++)
+              if (im.data[(y * W + x) * 4 + 3] > 24) {
+                if (x < x0) x0 = x;
+                if (x > x1) x1 = x;
+                if (y < y0) y0 = y;
+                if (y > y1) y1 = y;
+              }
+          const touches = x0 <= col * cw + 1 || x1 >= (col + 1) * cw - 2 || y0 <= r * ch + 1 || y1 >= (r + 1) * ch - 2;
+          boxes.push({ x0, y0, x1, y1, touches });
+        }
+      return { url: c.toDataURL('image/png'), boxes, specks };
+    },
+    { src, cols, rows, minArea },
+  );
+  return { png: Buffer.from(r.url.split(',')[1], 'base64'), boxes: r.boxes, specks: r.specks };
+}
+
 const JOBS = [];
 const checks = {};
 if (bulk === 'b2') {
@@ -51,6 +134,37 @@ if (bulk === 'b2') {
     JOBS.push(job(`archetype-${id}.png`, 'archetypes', `archetype-${id}-240.webp`, 240, 360, 30));
     // Share image (V04.7, loaded lazily): master size, budget like the large backgrounds.
     JOBS.push(job(`archetype-${id}.png`, 'archetypes', `archetype-${id}-1024.webp`, 1024, 1536, 320));
+  }
+} else if (bulk === 'b4') {
+  // A32: the discover world, same sizes as the other backgrounds (like A01).
+  JOBS.push(job('bg-discover.png', 'world', 'bg-discover.webp', 1024, 1536, 320));
+  JOBS.push(job('bg-discover.png', 'world', 'bg-discover-720.webp', 720, 1080, 160));
+  // A33: two sheets, 4 × 3 each, in the order of the prompt. All 24 symbols keep one scale (same line
+  // weight), so one square fits the largest motif plus 6 % air, centred on each motif's own bounds.
+  const SHEETS = [
+    ['symbols-sheet-1.png', ['sun', 'moon', 'star', 'lotus', 'key', 'butterfly', 'phoenix', 'serpent', 'tree', 'owl', 'crown', 'chalice']],
+    ['symbols-sheet-2.png', ['sword', 'staff', 'rose', 'lily', 'eye', 'feather', 'wheel', 'pillars', 'scales', 'lantern', 'lemniscate', 'wheat']],
+  ];
+  const all = [];
+  checks.specksRemoved = {};
+  for (const [file, ids] of SHEETS) {
+    const { png, boxes, specks } = await cleanSheet(page, dataUrl(await master(file)), 4, 3, 30);
+    masters.set(`clean:${file}`, png);
+    checks.specksRemoved[file] = specks;
+    boxes.forEach((b, i) => all.push({ file, id: ids[i], ...b }));
+  }
+  const side = Math.ceil(Math.max(...all.map((b) => Math.max(b.x1 - b.x0, b.y1 - b.y0))) * 1.06);
+  checks.symbols = all.map((b) => ({ name: b.id, box: [b.x0, b.y0, b.x1 - b.x0 + 1, b.y1 - b.y0 + 1], touchesCell: b.touches }));
+  checks.symbolSquare = side;
+  for (const b of all) {
+    const cx = (b.x0 + b.x1) / 2;
+    const cy = (b.y0 + b.y1) / 2;
+    const rect = [cx - side / 2, cy - side / 2, side, side];
+    // WebP keeps alpha lossless, so fine motifs (phoenix, tree) stay over 20 KB at any colour quality.
+    // Alpha in 32 steps (only the edges are soft, the glow is colour) brings them in (S-63).
+    JOBS.push(job(`clean:${b.file}`, 'symbols', `${b.id}.webp`, 256, 256, 20, rect, 32));
+    // Lists show symbols at 48 px: a 96 px file (2× density) keeps a list of 24 small (S-63).
+    JOBS.push(job(`clean:${b.file}`, 'symbols/thumbs', `${b.id}.webp`, 96, 96, 6, rect, 32));
   }
 } else if (bulk === 'b5') {
   // Same sizes as the B3 card backs (ASSET_REQUESTS A20–A22).
@@ -180,14 +294,14 @@ if (bulk === 'b2') {
 
 const rows = [];
 let failed = 0;
-for (const { master: name, dir, name: out, w, h, budgetKb, src } of JOBS) {
+for (const { master: name, dir, name: out, w, h, budgetKb, src, alphaSteps } of JOBS) {
   const png = await master(name);
   // Highest quality that fits the budget: start like A01 (0.92), step down, never below 0.6.
   let q = 0.92;
   let webp;
   for (;;) {
     const url = await page.evaluate(
-      async ({ src, w, h, q, rect }) => {
+      async ({ src, w, h, q, rect, alphaSteps }) => {
         const img = new Image();
         img.src = src;
         await img.decode();
@@ -204,9 +318,15 @@ for (const { master: name, dir, name: out, w, h, budgetKb, src } of JOBS) {
           const k = w / sw;
           ctx.drawImage(img, -sx * k, -sy * k, img.naturalWidth * k, img.naturalHeight * k);
         } else ctx.drawImage(img, 0, 0, w, h);
+        if (alphaSteps) {
+          const d = ctx.getImageData(0, 0, w, h);
+          const k = 255 / (alphaSteps - 1);
+          for (let i = 3; i < d.data.length; i += 4) d.data[i] = Math.round(Math.round(d.data[i] / k) * k);
+          ctx.putImageData(d, 0, 0);
+        }
         return c.toDataURL('image/webp', q);
       },
-      { src: dataUrl(png), w, h, q, rect: src ?? null },
+      { src: dataUrl(png), w, h, q, rect: src ?? null, alphaSteps },
     );
     webp = Buffer.from(url.split(',')[1], 'base64');
     if (webp.length <= budgetKb * 1024 || q <= 0.6) break;
