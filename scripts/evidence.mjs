@@ -56,7 +56,8 @@ async function shot(name, { long = false } = {}) {
   const file = join(outDir, `${String(n).padStart(2, '0')}-${name}-${tag}.png`);
   // Layout gate (MASTER_ROADMAP §6): the page does not scroll sideways, and no visible text sticks
   // out of the viewport (the scroll container clips sideways, so cut text would go unnoticed).
-  // Decoration (aria-hidden, e.g. light rays of the card stage) may overflow on purpose.
+  // Decoration (aria-hidden, e.g. light rays of the card stage) may overflow on purpose, and so may
+  // the pills of the oracle's spread and theme rows (`.theme-row`, V05.6), which scroll sideways by design.
   const over = await page.evaluate(() => {
     const vw = document.documentElement.clientWidth;
     const cut = [];
@@ -65,7 +66,7 @@ async function shot(name, { long = false } = {}) {
       if (![...el.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim())) continue;
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) continue;
-      if (r.right > vw + 1 || r.left < -1) cut.push(`${el.tagName.toLowerCase()}.${String(el.className).split(' ')[0]} "${el.textContent.trim().slice(0, 30)}"`);
+      if ((r.right > vw + 1 || r.left < -1) && !el.closest('.theme-row')) cut.push(`${el.tagName.toLowerCase()}.${String(el.className).split(' ')[0]} "${el.textContent.trim().slice(0, 30)}"`);
     }
     return { page: document.documentElement.scrollWidth - vw, cut };
   });
@@ -173,11 +174,12 @@ await shot('orakel-gespeichert');
 
 await page.getByRole('link', { name: 'Grimoire' }).click();
 await settle(700);
-await shot('grimoire-sammlung');
-await page.getByRole('tab', { name: L ? 'Verlauf' : 'History' }).click();
+await shot('grimoire-buch');
+// V05.3: the Grimoire is a book; the saved reading lives in chapter III, the journal (with three mini cards).
+await page.getByRole('button', { name: new RegExp(`^III ${L ? 'Tagebuch' : 'Journal'}`) }).click();
 await settle(500);
-await shot('grimoire-verlauf');
-await page.locator('.history__row').first().click();
+await shot('grimoire-tagebuch');
+await page.locator('.journal__item').filter({ has: page.locator('.ocard--mini').nth(2) }).locator('.history__row').click();
 await settle(700);
 await shot('legung-detail');
 // V04: "Profil" became "Ich" / "Me" (#/me); language, motion and privacy moved to #/me/settings.
@@ -193,7 +195,7 @@ await shot('einstellungen', { long: only === 'all' });
 await page.getByRole('button', { name: L ? 'Zurück' : 'Back' }).click();
 await settle(600);
 // Manual archetype correction (all eight archetypes + open profile).
-await page.getByRole('button', { name: L ? 'Selbst wählen' : 'Choose myself' }).click();
+await page.getByRole('button', { name: L ? 'Selbst wählen' : 'Choose it myself' }).click();
 await settle(500);
 await page.locator('#prof-choose').scrollIntoViewIfNeeded();
 await settle(300);
