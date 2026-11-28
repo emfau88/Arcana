@@ -621,6 +621,10 @@ h1[tabindex='-1']:focus {
   align-self: end;
 }
 .spread__name {
+  /* B-15: a long card name ("Hohepriesterin" at 130 % text on 360 px) breaks inside its column
+     instead of running past the screen edge; at normal text size every name fits unbroken. */
+  overflow-wrap: anywhere;
+  hyphens: auto;
   min-height: 2.6em;
   text-align: center;
   font-family: var(--font-display);

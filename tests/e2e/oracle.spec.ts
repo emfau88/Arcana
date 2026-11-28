@@ -107,4 +107,18 @@ test('B-12: at 130 % text the cards of a drawn spread stay on one line', async (
   expect(tops).toHaveLength(3);
   expect(new Set(tops).size).toBe(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+
+  // B-15: the draw is random, so the longest single word of the 22 names ("Hohepriesterin") is set
+  // into every position; it breaks inside its column instead of running past the screen edge.
+  const edges = await page.locator('.spread__name').evaluateAll((els) =>
+    els.map((e) => {
+      e.textContent = 'II · Die Hohepriesterin';
+      const range = document.createRange();
+      range.selectNodeContents(e);
+      const r = range.getBoundingClientRect();
+      return [Math.round(r.left), Math.round(r.right)];
+    }),
+  );
+  const width = await page.evaluate(() => document.documentElement.clientWidth);
+  for (const [left, right] of edges) expect(left >= -1 && right <= width + 1, `name ${left}–${right} within ${width}`).toBe(true);
 });
