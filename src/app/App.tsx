@@ -108,6 +108,9 @@ function sceneOf(route: Route): WorldScene {
     case 'reading':
       // B3 (V05.3): the book lies in the grimoire library (A04), dimmed for its long pages.
       return 'grimoire';
+    case 'oracle':
+      // V05.6 (D-64 point 2 A): the oracle is a stage in the painted observatory (A03).
+      return 'oracle';
     default:
       return 'calm';
   }

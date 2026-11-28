@@ -570,50 +570,6 @@ h1[tabindex='-1']:focus {
 }
 
 /* -------------------------------------------------------------- Oracle */
-.oracle__subtitle {
-  max-width: 32ch;
-}
-.oracle__section {
-  margin-bottom: var(--s-5);
-}
-
-.positions {
-  display: grid;
-  /* minmax(0, …): a long word (e.g. "Herausforderung" at 130 % text) must not widen its column */
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.positions__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-}
-.positions__slot {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  max-width: 92px;
-  aspect-ratio: 2 / 3;
-  border-radius: 8px;
-  border: 1px dashed var(--brass-line-strong);
-  background: radial-gradient(closest-side, rgba(216, 184, 121, 0.1), transparent);
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--brass-300);
-  margin-bottom: 4px;
-}
-.positions__name {
-  font-weight: 700;
-  font-size: 0.92rem;
-  max-width: 100%;
-  hyphens: auto;
-  overflow-wrap: break-word;
-}
 .oracle__draw {
   margin-top: var(--s-2);
 }
@@ -627,17 +583,21 @@ h1[tabindex='-1']:focus {
 }
 .spread {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--s-3);
+  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
+  column-gap: var(--s-3);
+  row-gap: var(--s-2);
   margin: 0 0 var(--s-4);
   padding: 0;
   list-style: none;
 }
+/* B-12: name, card and title of every position share three rows (subgrid). A name that wraps
+   at 130 % text moves all cards down together, so they stay on one line. */
 .spread__slot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--s-2);
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: var(--s-2);
+  justify-items: center;
   min-width: 0;
 }
 .spread__pos {
@@ -658,6 +618,7 @@ h1[tabindex='-1']:focus {
   min-height: 2.4em;
   display: flex;
   align-items: flex-end;
+  align-self: end;
 }
 .spread__name {
   min-height: 2.6em;
@@ -1181,7 +1142,7 @@ h1[tabindex='-1']:focus {
     --fs-h1: 2rem;
   }
   .spread {
-    gap: var(--s-2);
+    column-gap: var(--s-2);
   }
   .collection {
     gap: var(--s-3) var(--s-2);

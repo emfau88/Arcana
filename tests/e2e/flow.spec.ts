@@ -229,7 +229,7 @@ test('all six themes give a complete three-card reading (DE/EN)', async ({ page 
   expect(CONTENT.themes).toHaveLength(6);
   for (const [i, theme] of CONTENT.themes.entries()) {
     const label = theme.label[locale];
-    await page.locator('.choice').filter({ has: page.getByText(label, { exact: true }) }).click();
+    await page.getByRole('radiogroup', { name: t.oracle.chooseTheme }).getByRole('radio', { name: label, exact: true }).click();
     await page.getByRole('button', { name: t.oracle.draw }).click();
     await expect(page.getByRole('heading', { level: 1, name: label })).toBeVisible();
     await page.getByRole('button', { name: t.oracle.revealAll }).click();

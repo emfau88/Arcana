@@ -93,15 +93,10 @@ export const de = {
   oracle: {
     eyebrow: 'Freie Legung',
     title: 'Befrage das Orakel',
-    subtitle: 'Wähle ein Thema. Drei Karten zeigen dir drei Blickwinkel darauf.',
     chooseTheme: 'Thema',
-    positionsTitle: 'Die drei Positionen',
-    positionHelp: {
-      situation: 'Wo du gerade stehst',
-      challenge: 'Was dich herausfordert',
-      impulse: 'Was dich weiterführen kann',
-    },
+    chooseSpread: 'Legung',
     draw: 'Drei Karten ziehen',
+    drawCount: { 1: 'Eine Karte ziehen', 4: 'Vier Karten ziehen', 5: 'Fünf Karten ziehen' },
     revealAll: 'Alle aufdecken',
     tapToReveal: 'Tippe auf die Karten, um sie aufzudecken.',
     cardHidden: '{position}: verdeckte Karte. Zum Aufdecken tippen.',

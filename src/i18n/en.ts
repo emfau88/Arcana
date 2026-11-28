@@ -95,15 +95,10 @@ export const en: Messages = {
   oracle: {
     eyebrow: 'Free reading',
     title: 'Ask the oracle',
-    subtitle: 'Choose a theme. Three cards show you three perspectives on it.',
     chooseTheme: 'Theme',
-    positionsTitle: 'The three positions',
-    positionHelp: {
-      situation: 'Where you stand right now',
-      challenge: 'What challenges you',
-      impulse: 'What can carry you on',
-    },
+    chooseSpread: 'Spread',
     draw: 'Draw three cards',
+    drawCount: { 1: 'Draw one card', 4: 'Draw four cards', 5: 'Draw five cards' },
     revealAll: 'Reveal all',
     tapToReveal: 'Tap the cards to turn them over.',
     cardHidden: '{position}: face-down card. Tap to reveal.',
